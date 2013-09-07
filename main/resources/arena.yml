@@ -1,0 +1,10 @@
+ARENADEFAULTS:
+ minPlayers: 4
+ maxPlayers: 8
+ isEnabled: false
+ maxTime: 480000
+ arenaPath: "arena.arenas"
+arena:
+  total: 0
+  lastId: 0
+  arenas:

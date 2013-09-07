@@ -1,0 +1,13 @@
+firstRun: true
+enable: true
+enableLobbyProtection: false
+ignoreWorlds:
+  - world_the_end
+  - world_nether
+autoJoinLobby: false
+## Set this to true if server only running SSB
+dedicatedSSB: true
+jumpPower: 1
+jumpInLobby: true
+classesEnabled:
+  - Creeper
