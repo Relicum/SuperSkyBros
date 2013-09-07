@@ -3,7 +3,6 @@ package com.relicum.scb.arena;
 import com.relicum.scb.SCB;
 import com.relicum.scb.configs.ArenaConfig;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
-import com.sun.istack.internal.Nullable;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.util.Vector;
 
@@ -148,7 +147,6 @@ public class ArenaIO {
 	}
 
 	@SuppressWarnings("unchecked")
-	@Nullable
 	public Map<Integer, Arena> loadArenas() {
 
 
