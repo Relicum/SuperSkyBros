@@ -1,7 +1,8 @@
 ﻿#################
 ## Eclipse
 #################
-
+src/
+test/
 *.pydevproject
 .metadata
 bin/
