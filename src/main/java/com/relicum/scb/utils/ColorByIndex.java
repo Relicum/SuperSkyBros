@@ -85,6 +85,7 @@ public class ColorByIndex {
 		return getColorByIndex(i);
 	}
 
+    @Deprecated
 	private LeatherArmorMeta getLeatherMeta() {
 
 		LeatherArmorMeta itm = (LeatherArmorMeta) new ItemStack(0).getItemMeta();

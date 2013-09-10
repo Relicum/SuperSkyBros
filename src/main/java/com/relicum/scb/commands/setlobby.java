@@ -78,7 +78,7 @@ public class setlobby extends SubBase {
 
 
 		player.sendMessage(SCB.MM.getAdminMessage("command.message.setlobbySuccess"));
-
+        SCB.getInstance().getLogger().info("Lobby Region and Spawn Point have Been Successfully Set");
 
 		return true;
 	}

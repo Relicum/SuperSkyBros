@@ -1,12 +1,9 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.events.NoFallTPDamageEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 /**
  * Bukkit-SCB
@@ -41,7 +38,7 @@ public class join extends SubBase {
 				return false;
 			} else {
 				teleportToLobby(player, tpto);
-				player.sendMessage(SCB.MM.getMessage("command.message.teleportToLobby"));
+
 				return true;
 			}
 
@@ -72,7 +69,7 @@ public class join extends SubBase {
 				if (!p.teleport(l)) {
 					System.out.println("Error teleporting player to lobby");
 				}
-				Bukkit.getServer().getPluginManager().callEvent(new NoFallTPDamageEvent(p, EntityDamageEvent.DamageCause.FALL, 0.10D));
+                p.sendMessage(SCB.MM.getMessage("command.message.teleportToLobby"));
 			}
 		}, 10L);
 

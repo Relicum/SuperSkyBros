@@ -80,6 +80,7 @@ public class LobbyManager implements Listener {
 			return true;
 		}
 
+        SCB.getInstance().getLogger().info("No Lobby Spawn Point was been set yet");
 
 		return false;
 	}

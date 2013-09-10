@@ -42,7 +42,7 @@ command:
     noSelection: "Error: you must make a selection first before trying to create an arena"
     autoJoinSuccess: "You have success set autojoin to &7%nn%"
     autoJoinInvaildArg: "Error: You can only pass True of False as a parameter"
-    setlobbySuccess: "You have sucsessfully created a Lobby Region and Lobby Spawn Point"
+    setlobbySuccess: "You have successfully created a Lobby Region and Lobby Spawn Point"
     setlobbyFail: "Error: You have failed to set the Lobby Region and Spawn Point. Did you use WorldEdit to select the 2 Region points first?"
     setlobbyNoSel: "Error: You have not made 2 valid world edit selection points. Aborting ..."
     autoProtectInvaildArg: "Error: You can only pass True of False as a parameter"

@@ -58,7 +58,7 @@ public class MessageManager {
 		setupMessageColors("system.color");
 		setPrefix("system.prefix");
 		noPerm = setNoPermMessage();
-		p.getLogger().info("Mess Config Successfully Loaded");
+		p.getLogger().info("Messages Config Successfully Loaded");
 
 	}
 

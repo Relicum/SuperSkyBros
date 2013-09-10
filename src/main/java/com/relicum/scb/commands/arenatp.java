@@ -1,12 +1,11 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.events.NoFallTPDamageEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.io.IOException;
 
@@ -26,19 +25,27 @@ public class arenatp extends SubBase {
 	public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
 		Integer id = null;
 		Location tpto = null;
+        Location below = null;
 		Chunk ch = null;
+        Block b = null;
 		try {
 			Integer s = SCB.getInstance().ARM.total;
 			id = Integer.parseInt(args[0]);
 			tpto = SCB.getInstance().ARM.getArenaById(id).getAreg().getadminSpawn();
+            tpto.add(0.5D,1.0D,0.5D);
+            below = new Location(tpto.getWorld(),tpto.getX(),tpto.getY(),tpto.getZ());
+            below.subtract(0.00D,1.00D,0.00D);
+            b = below.getBlock();
+            b.setType(Material.GLASS);
 			ch = tpto.getChunk();
 			player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.arenatpLoading"));
 			if (!ch.load()) {
 				player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.arenatpLoadingFail"));
 			} else {
 
-				teleportToLobby(player, tpto);
-				Bukkit.getServer().getPluginManager().callEvent(new NoFallTPDamageEvent(player, EntityDamageEvent.DamageCause.FALL, 0.10D));
+
+				teleportToLobby(player, tpto,args[0]);
+
 			}
 		} catch (Exception e) {
 			String me = SCB.getMessageManager().getErrorMessage("command.message.arenatpDoesNotExist");
@@ -60,17 +67,19 @@ public class arenatp extends SubBase {
 	 * @return boolean
 	 * @throws IllegalArgumentException
 	 */
-	public boolean teleportToLobby(final Player p, final Location l) {
-
+	public boolean teleportToLobby(final Player p, final Location l,final String a) {
+        String mess = SCB.getMessageManager().getAdminMessage("command.message.arenatpSuccess");
+        final String tmp = mess.replace("%ID%",a);
 		SCB.getInstance().getServer().getScheduler().runTaskLater(SCB.getInstance(), new Runnable() {
 			@Override
 			public void run() {
-				Bukkit.getServer().getPluginManager().callEvent(new NoFallTPDamageEvent(p, EntityDamageEvent.DamageCause.FALL, 0.10D));
-				if (!p.teleport(l)) {
+                System.out.println("Location going to is " + l.getX() + " " + l.getY() + " " + l.getZ());
+                if (!p.teleport(l)) {
 					System.out.println("Error teleporting player to lobby");
 				}
+                p.sendMessage(tmp);
 			}
-		}, 10L);
+		}, 20L);
 
 		return true;
 	}

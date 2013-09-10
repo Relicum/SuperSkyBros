@@ -4,6 +4,7 @@ import com.relicum.scb.classes.Creeper;
 import com.relicum.scb.commands.CommandManager;
 import com.relicum.scb.configs.ArenaConfig;
 import com.relicum.scb.configs.LobbyConfig;
+import com.relicum.scb.configs.SignConfig;
 import com.relicum.scb.configs.SpawnConfig;
 import com.relicum.scb.listeners.*;
 import com.relicum.scb.utils.Helper;
@@ -64,12 +65,24 @@ public class SCB extends JavaPlugin {
 	public ArenaConfig ARC;
 
 	public ArenaManager ARM;
-	public SpawnConfig SPC;
+    /**
+     * Spawn Config Object
+     */
+    public SpawnConfig SPC;
 
+    /**
+     * Sign Config Manager
+     */
+    public SignConfig SNC;
+    /**
+     * The SignManager
+     */
+    public SignManager SNM;
 	/**
 	 * The Creeper.
 	 */
 	public Creeper co;
+
 	protected ArrayList<Permission> plist = new ArrayList<>();
 	protected PluginManager pm = Bukkit.getServer().getPluginManager();
 
@@ -132,69 +145,11 @@ public class SCB extends JavaPlugin {
 
 		p = this;
 		BukkitInterface.setServer(this.getServer());
-		getServer().getScheduler().scheduleSyncDelayedTask(p, new Startup(), 15);
+
 
 		this.getConfig().options().copyDefaults(true);
 		this.saveDefaultConfig();
-
-
-	/*	if (!getConfig().getBoolean("firstRun")) {
-			//this.groupSpawn = new YamlConfiguration();
-
-		}
-
-
-
-		this.LBC = new LobbyConfig("lobby.yml");
-		this.LBC.getConfig().options().copyDefaults(true);
-		this.LBC.saveConfig();
-
-
-		this.SPC = new SpawnConfig("spawns.yml");
-		this.SPC.getConfig().options().copyDefaults(true);
-		this.SPC.saveConfig();
-
-		this.ARC = new ArenaConfig("arena.yml");
-		this.ARC.getConfig().options().copyDefaults(true);
-		this.ARC.saveConfig();
-		this.ARM = new ArenaManager(this);
-
-
-		SettingsManager.getInstance().setup(p);
-		MM = new MessageManager(this);
-		if (!this.getConfig().getBoolean("enable")) {
-			getLogger().info("SCB is being disabled due to it enable being false in config.yml");
-			this.pm.disablePlugin(this);
-			return;
-
-		}
-
-		if (!this.LBC.getConfig().getBoolean("LOBBYSET") && this.getConfig().getBoolean("autoJoinLobby")) {
-			getLogger().severe("SSB is been disabled as you have not set the Lobby Spawn and have autojoin set to true please set autojoin to false and set the Lobby Spawn first");
-			this.pm.disablePlugin(this);
-			return;
-
-		}
-		this.LBS = new LobbyManager();
-		this.pm.registerEvents(new PlayerJoin(this), this);
-		this.pm.registerEvents(new PlayerQuit(this), this);
-		this.pm.registerEvents(new PlayerLoginNoPerm(this), this);
-		this.pm.registerEvents(new PlayerTP(), this);
-		this.loadLobbyEvents();
-
-
-		//noinspection LocalVariableOfConcreteClass
-		CommandExecutor cm = new CommandManager(p);
-		getCommand("ssb").setExecutor(cm);
-		getCommand("ssba").setExecutor(cm);
-		getCommand("ssb").setPermissionMessage(MM.getNoPerm());
-		getCommand("ssba").setPermissionMessage(MM.getNoPerm());
-
-
-		//WorldEditManager.getInstance().setup(p);
-		Helper.getInstance().setup(p);
-		//ArenaIO ia = new ArenaIO();
-		//ia.loadArenas();*/
+        getServer().getScheduler().scheduleSyncDelayedTask(p, new Startup(), 15);
 	}
 
 	/**
@@ -213,6 +168,7 @@ public class SCB extends JavaPlugin {
 		LBC.saveConfig();
 		ARC.saveConfig();
 		SPC.saveConfig();
+        SNC.saveConfig();
 		this.saveConfig();
 
 
@@ -227,8 +183,8 @@ public class SCB extends JavaPlugin {
 
 		if (this.getConfig().getBoolean("enableLobbyProtection")) {
 			System.out.println("Loading Lobby Events in SSB");
-			this.pm.registerEvents(new LobbyBlockBreak(this), this);
-			this.pm.registerEvents(new LobbyBlockPlace(this), this);
+			p.pm.registerEvents(new LobbyBlockBreak(p), p);
+			p.pm.registerEvents(new LobbyBlockPlace(p), p);
 
 		}
 
@@ -245,10 +201,16 @@ public class SCB extends JavaPlugin {
 		System.out.println("UnLoading Lobby Events in SSB");
 	}
 
-	class Startup extends SCB implements Runnable {
 
+    protected class Startup implements Runnable {
 
-		/**
+        SCB p;
+
+        public Startup() {
+            this.p = SCB.getInstance();
+        }
+
+        /**
 		 * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread causes
 		 * the object's <code>run</code> method to be called in that separately executing thread.
 		 * <p/>
@@ -277,6 +239,10 @@ public class SCB extends JavaPlugin {
 			p.SPC.getConfig().options().copyDefaults(true);
 			p.SPC.saveConfig();
 
+            p.SNC = new SignConfig("signs.yml");
+            p.SNC.getConfig().options().copyDefaults(true);
+            p.SNC.saveConfig();
+
 			p.ARC = new ArenaConfig("arena.yml");
 			p.ARC.getConfig().options().copyDefaults(true);
 			p.ARC.saveConfig();
@@ -302,9 +268,11 @@ public class SCB extends JavaPlugin {
 			p.pm.registerEvents(new PlayerJoin(p), p);
 			p.pm.registerEvents(new PlayerQuit(p), p);
 			p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
-			p.pm.registerEvents(new PlayerTP(), p);
+
 			p.loadLobbyEvents();
 
+
+            p.SNM = new SignManager();
 
 			//noinspection LocalVariableOfConcreteClass
 			CommandExecutor cm = new CommandManager(p);
@@ -314,10 +282,9 @@ public class SCB extends JavaPlugin {
 			p.getCommand("ssba").setPermissionMessage(MM.getNoPerm());
 
 
-			//WorldEditManager.getInstance().setup(p);
+			//TODO Must refactor out this Helper Class
 			Helper.getInstance().setup(p);
-			//ArenaIO ia = new ArenaIO();
-			//ia.loadArenas();
+
 		}
 	}
 
