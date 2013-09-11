@@ -7,5 +7,5 @@ package com.relicum.scb.arena;
  * @version 0.1
  */
 public enum ArenaStatus {
-	WAITING, GAMESTART, INGAME, GAMEEND, PREBUILT
+	WAITING, GAMESTART, INGAME, GAMEEND, PREBUILT, DISABLED
 };

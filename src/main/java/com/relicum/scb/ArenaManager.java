@@ -122,5 +122,23 @@ public class ArenaManager {
 		}
 		return true;
 	}
+
+    /**
+     * Returns Set of Arena Id's
+     *
+     * @return Set<String>
+     */
+    public Set<String> getArenaIds(){
+        return this.arenaIds;
+    }
+
+    public void saveArenaById(Integer i){
+
+        Arena arena = getArenaById(i);
+        ArenaIO AI = new ArenaIO();
+        AI.saveArena(arena);
+    }
+
+
 }
 
