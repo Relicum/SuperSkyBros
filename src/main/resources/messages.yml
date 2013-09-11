@@ -27,6 +27,7 @@ command:
     setlobbyprotection: "&bSet spawn protection on or off. If in a game world turn off as all Block and Places are denied Pass True to activate. Default on"
     arenatp: "&bTp to any arenas admin use only. Pass the Arena ID that you wish to TP to"
     leave: "&bLeave the game and return to the Lobby or if in the Lobby leave the lobby"
+    enable: "&bEnable an Arena by ID. Pass the relevent arena id you wish to enable"
   message:
     worldOnBlackList: "Sorry this world is on the world blacklist. Remove it and restart the server and try again."
     joinNoLocation: "You can not use this as the Lobby Location has not been set yet"
@@ -53,12 +54,16 @@ command:
     arenatpSuccess: "You have arrived at Arena &7%ID%&r"
     arenatpLoading: "Loading spawn chunk ............."
     arenatpLoadingFail: "Error: The spawn chunk would not load aborting TP"
-    modifyException: "Error: Could not set the Arena ID &7%ID%&b are you sure it is valid ?"
+    modifyException: "Error: Could not set the Arena ID &7%ID%&5 are you sure it is valid ?"
     modifySuccess: "You have sucsessfully set Arena ID &7%ID%&a to modify mode when finished set ID to 0"
     setSpawnSuccess: "New arena spawn point created, number &7%ID%"
     setspawnNoArenaSet: "You need to use the modify command and set the arena id you want to modify"
     setspawnNotInArena: "Error: you have tried to set a spawn point that is not in an arena"
     setspawnFail: "Unknown error saving spawn point, see logs for more details"
+    enableNoIdFound: "Could not enable the arena. Could not find Arena &7%ID%&r"
+    enableSuccess: "Arena &7%ID%&a has successfully been enabled"
+    enableFailedToSave: "Error: Failed to save arena &7%ID%"
+    enableMisMatch: "Error: The Arena ID &7%ID%&5 is not the same as the modify id &7%MID%&5 you set"
 listeners:
   playerJoin:
     noLobbySet: "There is currently no lobby spawn set for SSB please set one"

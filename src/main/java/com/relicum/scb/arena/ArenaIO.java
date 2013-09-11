@@ -90,11 +90,11 @@ public class ArenaIO {
 
 		setWorld(ar.getWorld().getName());
 		setMap(ar.getMn());
-		setEnable(this.defaults.getBoolean("isEnabled"));
+		//setEnable(this.defaults.getBoolean("isEnabled"));
 		setMinPlayers(this.defaults.getInt("minPlayers"));
 		setMaxPlayers(this.defaults.getInt("maxPlayers"));
 		setMaxTime(this.defaults.getLong("maxTime"));
-		setStatus(ArenaStatus.PREBUILT);
+		setStatus(ArenaStatus.DISABLED);
 		setArenaId(last);
 		setPerm("ssb.player.arena." + last.toString());
 		setvMin(ar.getMinVector());
@@ -119,7 +119,7 @@ public class ArenaIO {
 		ConfigurationSection cs = config.getConfig().getConfigurationSection(path);
 		Arena arena = this.makeArena(last, cs);
 		if (SCB.getInstance().ARM.addNewArena(arena)) {
-			System.out.println("Arena sucessfully added to Arena Manager");
+			System.out.println("Arena successfully added to Arena Manager");
 		}
 		return true;
 	}
@@ -482,6 +482,9 @@ public class ArenaIO {
 	 */
 	public void setStatus(ArenaStatus status) {
 		this.status = status;
+        if(status.name().equalsIgnoreCase("DISABLED")){
+            this.enable = false;
+        }
 	}
 
 	/**
@@ -564,4 +567,26 @@ public class ArenaIO {
 	public void setAGP(ArenaGroupSpawn a) {
 		this.AGP = a;
 	}
+
+    public boolean saveArena(Arena arena){
+
+        try{
+            ConfigurationSection cs = config.getConfig().getConfigurationSection("arena.arenas." + arena.getArenaId());
+            cs.set("chunks",arena.getChunk());
+            cs.set("enabled",arena.isEnabled());
+            cs.set("settings.maxTime",arena.getMaxGameTime());
+            cs.set("settings.maxPlayers",arena.getMaxPlayers());
+            cs.set("settings.minPlayers",arena.getMinPlayers());
+            cs.set("status",arena.getArenaStatus().name());
+            cs.set("umap", arena.getUniqueMap());
+            cs.set("permission",arena.getPermmission());
+            cs.set("world",arena.getArenaWorld().getName());
+            config.saveConfig();
+
+            return true;
+        } catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

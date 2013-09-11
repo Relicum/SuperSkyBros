@@ -71,6 +71,7 @@ public class CommandManager implements CommandExecutor {
 		clist.put("listarenas", new listarenas());
 		clist.put("arenatp", new arenatp());
 		clist.put("leave", new leave());
+        clist.put("enable", new enable());
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package com.relicum.scb.arena;
 
+import com.relicum.scb.SCB;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
 import com.relicum.scb.objects.spawns.ArenaSpawn;
 import org.bukkit.Bukkit;
@@ -91,8 +92,8 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
 	@Override
 	public void saveArena() {
-		//To change body of implemented methods use File | Settings | File Templates.
-	}
+        SCB.getInstance().ARM.saveArenaById(getArenaId());
+    }
 
 	/**
 	 * Sets arena name.
@@ -139,8 +140,18 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 		return 0;
 	}
 
-	public void setStatus(String em) {
-
+    /**
+     * Needs to be a valid ArenaStatus option
+     *
+     * @param String
+     */
+    public void setStatus(String em) {
+/*        if(em.equalsIgnoreCase("DISABLED")){
+            this.enable = false;
+            status = ArenaStatus.valueOf(em);
+            this.saveArena();
+            return;
+        }*/
 		status = ArenaStatus.valueOf(em);
 	}
 
