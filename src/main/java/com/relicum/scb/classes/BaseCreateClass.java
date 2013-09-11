@@ -15,108 +15,108 @@ import java.util.Map;
  */
 public class BaseCreateClass {
 
-	/**
-	 *
-	 */
-	private String perm;
+    /**
+     *
+     */
+    private String perm;
 
-	/**
-	 * Public Readable name for the class
-	 */
-	private String name;
+    /**
+     * Public Readable name for the class
+     */
+    private String name;
 
-	/**
-	 * Stores the Armours class
-	 *
-	 * @see com.relicum.ssb.classes.utils.Armour
-	 */
-	public Armour armour;
+    /**
+     * Stores the Armours class
+     *
+     * @see com.relicum.ssb.classes.utils.Armour
+     */
+    public Armour armour;
 
-	/**
-	 * The outer map holding all the Class Elements
-	 */
-	protected Map<String, Object> outer = new HashMap<>();
+    /**
+     * The outer map holding all the Class Elements
+     */
+    protected Map<String, Object> outer = new HashMap<>();
 
-	public IColoredArmour leatherMeta;
+    public IColoredArmour leatherMeta;
 
-	/**
-	 * Instantiates a new Create class. The name of the player class will be the name of the java class so think carefully
-	 * about the names. The Class permission is also auto built based on the prefix scb.class. folled by the class name in
-	 * lower case.
-	 */
-	public BaseCreateClass() {
+    /**
+     * Instantiates a new Create class. The name of the player class will be the name of the java class so think carefully
+     * about the names. The Class permission is also auto built based on the prefix scb.class. folled by the class name in
+     * lower case.
+     */
+    public BaseCreateClass() {
 
-		this.name = getClass().getSimpleName().toString();
-		this.armour = new Armour();
-		this.perm = "ssb.class." + name.toLowerCase();
-
-
-	}
+        this.name = getClass().getSimpleName();
+        this.armour = new Armour();
+        this.perm = "ssb.class." + name.toLowerCase();
 
 
-	/**
-	 * Get armour. All settings are applied direct to this object
-	 *
-	 * @return the armour
-	 */
-	public Armour getArmour() {
+    }
 
-		return this.armour;
-	}
 
-	/**
-	 * Get the class name. This is auto built from the name of the class itself. Eg if the class was called Creeper name
-	 * would equal Creeper.
-	 *
-	 * @return String string
-	 */
-	public String getName() {
+    /**
+     * Get armour. All settings are applied direct to this object
+     *
+     * @return the armour
+     */
+    public Armour getArmour() {
 
-		return this.name;
-	}
+        return this.armour;
+    }
 
-	/**
-	 * Save to file.
-	 *
-	 * @param file the file
-	 * @return the boolean
-	 */
-	public boolean saveToFile(String file) {
+    /**
+     * Get the class name. This is auto built from the name of the class itself. Eg if the class was called Creeper name
+     * would equal Creeper.
+     *
+     * @return String string
+     */
+    public String getName() {
 
-		return true;
-	}
+        return this.name;
+    }
 
-	/**
-	 * Load from file. Pass name of File Returns true of success
-	 *
-	 * @param file String
-	 * @return the boolean
-	 */
-	public boolean loadFromFile(String file) {
-		//TODO "This method probably doesn't below here"
-		return true;
-	}
+    /**
+     * Save to file.
+     *
+     * @param file the file
+     * @return the boolean
+     */
+    public boolean saveToFile(String file) {
 
-	private void createHashSave() {
+        return true;
+    }
 
-		outer.put(ItemEnum.ARMOR.name(), this.armour);
+    /**
+     * Load from file. Pass name of File Returns true of success
+     *
+     * @param file String
+     * @return the boolean
+     */
+    public boolean loadFromFile(String file) {
+        //TODO "This method probably doesn't below here"
+        return true;
+    }
 
-	}
+    private void createHashSave() {
 
-	private void deasembleHashFromSave() {
-		//todo Look to abstract this out to an interface
+        outer.put(ItemEnum.ARMOR.name(), this.armour);
 
-		this.armour = (Armour) outer.get(ItemEnum.ARMOR.name());
-	}
+    }
 
-	/**
-	 * Gets the permission for the class. This is auto build. The prefix is scb.player. followed by the name of the class
-	 * in lower case. So if class was called Creeper the permission would be scb.player.creeper.
-	 *
-	 * @return the String
-	 */
-	public String getPerm() {
-		return perm;
-	}
+    private void deasembleHashFromSave() {
+        //todo Look to abstract this out to an interface
+
+        this.armour = (Armour) outer.get(ItemEnum.ARMOR.name());
+    }
+
+    /**
+     * Gets the permission for the class. This is auto build. The prefix is scb.player. followed by the name of the class
+     * in lower case. So if class was called Creeper the permission would be scb.player.creeper.
+     *
+     * @return the String
+     */
+    public String getPerm() {
+        return perm;
+    }
 
 }

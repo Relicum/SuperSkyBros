@@ -28,6 +28,7 @@ command:
     arenatp: "&bTp to any arenas admin use only. Pass the Arena ID that you wish to TP to"
     leave: "&bLeave the game and return to the Lobby or if in the Lobby leave the lobby"
     enable: "&bEnable an Arena by ID. Pass the relevent arena id you wish to enable"
+    disable: "&bDisable an Arena by ID. Pass the relevent arena id you wish to disable"
   message:
     worldOnBlackList: "Sorry this world is on the world blacklist. Remove it and restart the server and try again."
     joinNoLocation: "You can not use this as the Lobby Location has not been set yet"
@@ -64,6 +65,7 @@ command:
     enableSuccess: "Arena &7%ID%&a has successfully been enabled"
     enableFailedToSave: "Error: Failed to save arena &7%ID%"
     enableMisMatch: "Error: The Arena ID &7%ID%&5 is not the same as the modify id &7%MID%&5 you set"
+    disabledSuccess: "Arena &7%ID%&a has successfully been disabled"
 listeners:
   playerJoin:
     noLobbySet: "There is currently no lobby spawn set for SSB please set one"

@@ -22,7 +22,6 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -34,37 +33,37 @@ import java.util.ArrayList;
  */
 public class SCB extends JavaPlugin {
 
-	/**
-	 * The constant MM.
-	 */
-	public static MessageManager MM;
-	/**
-	 * Holds a static p of itself as a JavaPlugin object
-	 */
-	@SuppressWarnings("StaticVariableOfConcreteClass")
-	public static SCB p;
-	/**
-	 * The Group spawn file.
-	 */
-	public File groupSpawnFile = null;
-	/**
-	 * The Group spawn.
-	 */
-	public FileConfiguration groupSpawn = null;
-	/**
-	 * The LBS.
-	 */
-	public LobbyManager LBS;
-	/**
-	 * Lobby Config Object
-	 */
-	public LobbyConfig LBC;
-	/**
-	 * Arena Config Object
-	 */
-	public ArenaConfig ARC;
+    /**
+     * The constant MM.
+     */
+    public static MessageManager MM;
+    /**
+     * Holds a static p of itself as a JavaPlugin object
+     */
+    @SuppressWarnings("StaticVariableOfConcreteClass")
+    public static SCB p;
+    /**
+     * The Group spawn file.
+     */
+    public File groupSpawnFile = null;
+    /**
+     * The Group spawn.
+     */
+    public FileConfiguration groupSpawn = null;
+    /**
+     * The LBS.
+     */
+    public LobbyManager LBS;
+    /**
+     * Lobby Config Object
+     */
+    public LobbyConfig LBC;
+    /**
+     * Arena Config Object
+     */
+    public ArenaConfig ARC;
 
-	public ArenaManager ARM;
+    public ArenaManager ARM;
     /**
      * Spawn Config Object
      */
@@ -78,128 +77,129 @@ public class SCB extends JavaPlugin {
      * The SignManager
      */
     public SignManager SNM;
-	/**
-	 * The Creeper.
-	 */
-	public Creeper co;
+    /**
+     * The Creeper.
+     */
+    public Creeper co;
 
-	protected ArrayList<Permission> plist = new ArrayList<>();
-	protected PluginManager pm = Bukkit.getServer().getPluginManager();
+    protected ArrayList<Permission> plist = new ArrayList<>();
+    protected PluginManager pm = Bukkit.getServer().getPluginManager();
 
-	/**
-	 * Gets p.
-	 *
-	 * @return the p
-	 */
-	public static SCB getInstance() {
-		return p;
-	}
+    /**
+     * Gets p.
+     *
+     * @return the p
+     */
+    public static SCB getInstance() {
+        return p;
+    }
 
-	/**
-	 * Get Instance of MessageManager
-	 *
-	 * @return MessageManager message manager
-	 */
-	public static MessageManager getMessageManager() {
+    /**
+     * Get Instance of MessageManager
+     *
+     * @return MessageManager message manager
+     */
+    public static MessageManager getMessageManager() {
 
-		return MM;
-	}
+        return MM;
+    }
 
-	public static WorldEditPlugin getWorldEdit() {
+    public static WorldEditPlugin getWorldEdit() {
 
-		Plugin WE = BukkitInterface.getServer().getPluginManager().getPlugin("WorldEdit");
+        Plugin WE = BukkitInterface.getServer().getPluginManager().getPlugin("WorldEdit");
 
-		if ((WE instanceof WorldEditPlugin)) {
-			return (WorldEditPlugin) WE;
+        if ((WE instanceof WorldEditPlugin)) {
+            return (WorldEditPlugin) WE;
 
-		}
+        }
 
-		return null;
+        return null;
 
-	}
+    }
 
-	/**
-	 * On load. Registers any ConfigurationSerializable files at onLoad Before other things have started to load
-	 */
-	public void onLoad() {
-
-
-	}
-
-	/**
-	 * On enable.
-	 */
-	@Override
-	public void onEnable() {
+    /**
+     * On load. Registers any ConfigurationSerializable files at onLoad Before other things have started to load
+     */
+    public void onLoad() {
 
 
-		try {
-			@SuppressWarnings("LocalVariableOfConcreteClass")
-			Metrics metrics = new Metrics(this);
+    }
+
+    /**
+     * On enable.
+     */
+    @Override
+    public void onEnable() {
+
+        p = this;
+
+		/*try {
+            @SuppressWarnings("LocalVariableOfConcreteClass")
+            MetricsLite metrics = new MetricsLite(p);
 			metrics.start();
 		} catch (IOException e) {
 
 			System.out.println(e.getStackTrace().toString());
-		}
+		}*/
 
 
-		p = this;
-		BukkitInterface.setServer(this.getServer());
+        BukkitInterface.setServer(this.getServer());
 
 
-		this.getConfig().options().copyDefaults(true);
-		this.saveDefaultConfig();
+        this.getConfig().options().copyDefaults(true);
+        this.saveDefaultConfig();
+
         getServer().getScheduler().scheduleSyncDelayedTask(p, new Startup(), 15);
-	}
+    }
 
-	/**
-	 * On disable.
-	 */
-	@Override
-	public void onDisable() {
+    /**
+     * On disable.
+     */
+    @Override
+    public void onDisable() {
 
-		if (SCB.getInstance().getConfig().getBoolean("firstRun")) {
+        if (SCB.getInstance().getConfig().getBoolean("firstRun")) {
 
-			SCB.getInstance().getConfig().set("firstRun", false);
-			this.saveConfig();
-		}
+            SCB.getInstance().getConfig().set("firstRun", false);
+            this.saveConfig();
+        }
 
-		LBS.removeAllPlayers();
-		LBC.saveConfig();
-		ARC.saveConfig();
-		SPC.saveConfig();
+        LBS.removeAllPlayers();
+        LBC.saveConfig();
+        ARC.saveConfig();
+        SPC.saveConfig();
         SNC.saveConfig();
-		this.saveConfig();
+        this.saveConfig();
 
 
-	}
+    }
 
-	public void addPerm(String pe) {
+    public void addPerm(String pe) {
 
-		this.plist.add(new Permission(pe));
-	}
+        this.plist.add(new Permission(pe));
+    }
 
-	public void loadLobbyEvents() {
+    public void loadLobbyEvents() {
 
-		if (this.getConfig().getBoolean("enableLobbyProtection")) {
-			System.out.println("Loading Lobby Events in SSB");
-			p.pm.registerEvents(new LobbyBlockBreak(p), p);
-			p.pm.registerEvents(new LobbyBlockPlace(p), p);
+        if (this.getConfig().getBoolean("enableLobbyProtection")) {
+            System.out.println("Loading Lobby Events in SSB");
+            p.pm.registerEvents(new LobbyBlockBreak(p), p);
+            p.pm.registerEvents(new LobbyBlockPlace(p), p);
 
-		}
+        }
 
-	}
+    }
 
-	public void unloadLobbyEvents() {
+    public void unloadLobbyEvents() {
 
-		LobbyBlockBreak bl = new LobbyBlockBreak(this);
-		LobbyBlockPlace bp = new LobbyBlockPlace(this);
+        LobbyBlockBreak bl = new LobbyBlockBreak(this);
+        LobbyBlockPlace bp = new LobbyBlockPlace(this);
 
-		BlockBreakEvent.getHandlerList().unregister(bl);
-		BlockPlaceEvent.getHandlerList().unregister(bp);
+        BlockBreakEvent.getHandlerList().unregister(bl);
+        BlockPlaceEvent.getHandlerList().unregister(bp);
 
-		System.out.println("UnLoading Lobby Events in SSB");
-	}
+        System.out.println("UnLoading Lobby Events in SSB");
+    }
 
 
     protected class Startup implements Runnable {
@@ -211,98 +211,99 @@ public class SCB extends JavaPlugin {
         }
 
         /**
-		 * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread causes
-		 * the object's <code>run</code> method to be called in that separately executing thread.
-		 * <p/>
-		 * The general contract of the method <code>run</code> is that it may take any action whatsoever.
-		 *
-		 * @see Thread#run()
-		 */
-		@Override
-		public void run() {
+         * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread causes
+         * the object's <code>run</code> method to be called in that separately executing thread.
+         * <p/>
+         * The general contract of the method <code>run</code> is that it may take any action whatsoever.
+         *
+         * @see Thread#run()
+         */
+        @Override
+        public void run() {
 
-			PluginManager pm = Bukkit.getServer().getPluginManager();
-
-
-			if (!p.getConfig().getBoolean("firstRun")) {
-				//p.groupSpawn = new YamlConfiguration();
-
-			}
+            PluginManager pm = Bukkit.getServer().getPluginManager();
 
 
-			p.LBC = new LobbyConfig("lobby.yml");
-			p.LBC.getConfig().options().copyDefaults(true);
-			p.LBC.saveConfig();
+            if (!p.getConfig().getBoolean("firstRun")) {
+                //p.groupSpawn = new YamlConfiguration();
+
+            }
 
 
-			p.SPC = new SpawnConfig("spawns.yml");
-			p.SPC.getConfig().options().copyDefaults(true);
-			p.SPC.saveConfig();
+            p.LBC = new LobbyConfig("lobby.yml");
+            p.LBC.getConfig().options().copyDefaults(true);
+            p.LBC.saveConfig();
+
+
+            p.SPC = new SpawnConfig("spawns.yml");
+            p.SPC.getConfig().options().copyDefaults(true);
+            p.SPC.saveConfig();
 
             p.SNC = new SignConfig("signs.yml");
             p.SNC.getConfig().options().copyDefaults(true);
             p.SNC.saveConfig();
 
-			p.ARC = new ArenaConfig("arena.yml");
-			p.ARC.getConfig().options().copyDefaults(true);
-			p.ARC.saveConfig();
-			p.ARM = new ArenaManager(p);
+            p.ARC = new ArenaConfig("arena.yml");
+            p.ARC.getConfig().options().copyDefaults(true);
+            p.ARC.saveConfig();
+            p.ARM = new ArenaManager(p);
 
 
-			SettingsManager.getInstance().setup(p);
-			MM = new MessageManager(p);
-			if (!p.getConfig().getBoolean("enable")) {
-				getLogger().info("SCB is being disabled due to it enable being false in config.yml");
-				p.pm.disablePlugin(p);
-				return;
+            SettingsManager.getInstance().setup(p);
+            MM = new MessageManager(p);
+            if (!p.getConfig().getBoolean("enable")) {
+                getLogger().info("SCB is being disabled due to it enable being false in config.yml");
+                p.pm.disablePlugin(p);
+                return;
 
-			}
+            }
 
-			if (!p.LBC.getConfig().getBoolean("LOBBYSET") && p.getConfig().getBoolean("autoJoinLobby")) {
-				getLogger().severe("SSB is been disabled as you have not set the Lobby Spawn and have autojoin set to true please set autojoin to false and set the Lobby Spawn first");
-				p.pm.disablePlugin(p);
-				return;
+            if (!p.LBC.getConfig().getBoolean("LOBBYSET") && p.getConfig().getBoolean("autoJoinLobby")) {
+                getLogger().severe("SSB is been disabled as you have not set the Lobby Spawn and have autojoin set to true please set autojoin to false and set the Lobby Spawn first");
+                p.pm.disablePlugin(p);
+                return;
 
-			}
-			p.LBS = new LobbyManager();
-			p.pm.registerEvents(new PlayerJoin(p), p);
-			p.pm.registerEvents(new PlayerQuit(p), p);
-			p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
+            }
+            p.LBS = new LobbyManager();
+            p.pm.registerEvents(new PlayerJoin(p), p);
+            p.pm.registerEvents(new PlayerQuit(p), p);
+            p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
+            p.pm.registerEvents(new ArenaDisable(p), p);
 
-			p.loadLobbyEvents();
+            p.loadLobbyEvents();
 
 
             p.SNM = new SignManager();
 
-			//noinspection LocalVariableOfConcreteClass
-			CommandExecutor cm = new CommandManager(p);
-			p.getCommand("ssb").setExecutor(cm);
-			p.getCommand("ssba").setExecutor(cm);
-			p.getCommand("ssb").setPermissionMessage(MM.getNoPerm());
-			p.getCommand("ssba").setPermissionMessage(MM.getNoPerm());
+            //noinspection LocalVariableOfConcreteClass
+            CommandExecutor cm = new CommandManager(p);
+            p.getCommand("ssb").setExecutor(cm);
+            p.getCommand("ssba").setExecutor(cm);
+            p.getCommand("ssb").setPermissionMessage(MM.getNoPerm());
+            p.getCommand("ssba").setPermissionMessage(MM.getNoPerm());
 
 
-			//TODO Must refactor out this Helper Class
-			Helper.getInstance().setup(p);
+            //TODO Must refactor out this Helper Class
+            Helper.getInstance().setup(p);
 
-		}
-	}
+        }
+    }
 
-	private void fileExists(String fi) {
+    private void fileExists(String fi) {
 
-		File file = new File(getDataFolder(), fi);
-		FileConfiguration fCon;
+        File file = new File(getDataFolder(), fi);
+        FileConfiguration fCon;
 
 
-		try {
-			if (!file.exists()) {
-				file.createNewFile();
-				fCon = YamlConfiguration.loadConfiguration(SCB.getInstance().getResource(fi));
-				fCon.save(file);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+                fCon = YamlConfiguration.loadConfiguration(SCB.getInstance().getResource(fi));
+                fCon.save(file);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	}
+    }
 }
