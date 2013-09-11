@@ -18,40 +18,40 @@ import org.bukkit.event.player.PlayerJoinEvent;
 @SuppressWarnings("deprecation")
 public class PlayerJoin implements Listener, Cancellable {
 
-	private SCB plugin;
-	private boolean cancel = false;
+    private SCB plugin;
+    private boolean cancel = false;
 
-	public PlayerJoin(SCB plugin) {
-		this.plugin = plugin;
+    public PlayerJoin(SCB plugin) {
+        this.plugin = plugin;
 
-	}
+    }
 
-	@EventHandler(priority = EventPriority.MONITOR)
-	public void playJoin(PlayerJoinEvent e) {
-		Player pl = e.getPlayer();
-		setCancelled(true);
-		if (e.getPlayer().hasPermission("ssba.admin")) {
-			ChatColor b = ChatColor.BOLD;
-			String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
-			pl.sendMessage(pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros Alpha " + SCB.getInstance().getDescription().getVersion() + " this should not be run on a live server be warned");
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void playJoin(PlayerJoinEvent e) {
+        Player pl = e.getPlayer();
+        setCancelled(true);
+        if (e.getPlayer().hasPermission("ssba.admin")) {
+            ChatColor b = ChatColor.BOLD;
+            String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
+            pl.sendMessage(pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros Beta " + SCB.getInstance().getDescription().getVersion() + " this should not be run on a live server be warned");
 
-		}
+        }
 
-		System.out.println("Player Join Event " + pl.getDisplayName() + " has joined");
-		if (plugin.getConfig().getBoolean("autoJoinLobby")) {
+        System.out.println("Player Join Event " + pl.getDisplayName() + " has joined");
+        if (plugin.getConfig().getBoolean("autoJoinLobby")) {
 
-			pl.performCommand("ssb join");
-		}
+            pl.performCommand("ssb join");
+        }
 
-	}
+    }
 
-	@Override
-	public boolean isCancelled() {
-		return this.cancel;
-	}
+    @Override
+    public boolean isCancelled() {
+        return this.cancel;
+    }
 
-	@Override
-	public void setCancelled(boolean b) {
-		this.cancel = b;
-	}
+    @Override
+    public void setCancelled(boolean b) {
+        this.cancel = b;
+    }
 }

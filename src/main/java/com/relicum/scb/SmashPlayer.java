@@ -1,7 +1,7 @@
 package com.relicum.scb;
 
-import java.util.List;
-import java.util.Map;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 /**
  * Smash Player
@@ -12,44 +12,18 @@ import java.util.Map;
 public class SmashPlayer {
 
 
+    private String p;
 
 
-	private Boolean inWorld;
-	private String world;
-	private String smasher;
-	private int x;
-	private int y;
-	private int z;
-	private List<String> l;
-	private Map<String, Object> ms;
+    public SmashPlayer(Player player) {
+        this.p = player.getName();
+    }
 
-	public SmashPlayer(String n) {
-		this.smasher = n;
-	}
+    public Player getPlayer() {
+        return Bukkit.getPlayerExact(p);
+    }
 
-
-	public boolean isInWorld() {
-		return inWorld;
-	}
-
-	public String getWorld() {
-		return world;
-	}
-
-
-	public String getSmasher() {
-		return smasher;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public int getZ() {
-		return z;
-	}
+    public static SmashPlayer wrap(Player player) {
+        return new SmashPlayer(player);
+    }
 }

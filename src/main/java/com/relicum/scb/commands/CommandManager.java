@@ -3,11 +3,12 @@ package com.relicum.scb.commands;
 import com.relicum.scb.SCB;
 import com.relicum.scb.SettingsManager;
 import com.relicum.scb.utils.MessageManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.SimplePluginManager;
+import org.bukkit.plugin.PluginManager;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -208,12 +209,8 @@ public class CommandManager implements CommandExecutor {
         return command;
     }
 
-    /**
-     * Returns an instance of CommandMap which Can then be used to correctly register the command and details with Bukkit
-     *
-     * @return CommandMap
-     */
-    public CommandMap getCommandMap() {
+
+/*    public CommandMap getCommandMap() {
         CommandMap commandMap = null;
 
         try {
@@ -222,6 +219,28 @@ public class CommandManager implements CommandExecutor {
                 f.setAccessible(true);
 
                 commandMap = (CommandMap) f.get(plugin.getServer().getPluginManager());
+            }
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
+        return commandMap;
+    }*/
+
+    /**
+     * Returns an instance of CommandMap which Can then be used to correctly register the command and details with Bukkit
+     *
+     * @return CommandMap
+     */
+    public CommandMap getCommandMap() {
+        CommandMap commandMap = null;
+        PluginManager pm = Bukkit.getServer().getPluginManager();
+        try {
+            if (pm instanceof PluginManager) {
+                Field f = pm.getClass().getDeclaredField("commandMap");
+                f.setAccessible(true);
+
+                commandMap = (CommandMap) f.get(pm);
             }
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
