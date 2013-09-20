@@ -1,6 +1,6 @@
 name: SuperSkyBros
 main: com.relicum.scb.SCB
-version: 0.2.01
+version: 0.2.02
 authors: [Relicum, slideroller, ThePengwin]
 depends: [WorldEdit]
 prefix: SSB
