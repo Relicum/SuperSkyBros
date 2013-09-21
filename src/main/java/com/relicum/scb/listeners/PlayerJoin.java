@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
+
 /**
  * Bukkit-SCB
  *
@@ -36,7 +37,9 @@ public class PlayerJoin implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void playJoin(PlayerJoinEvent e) {
-
+        if (SettingsManager.getInstance().notWorlds().contains(e.getPlayer().getWorld().getName()) && !plugin.getConfig().getBoolean("dedicatedSSB")) {
+            return;
+        }
         if (SettingsManager.getInstance().notWorlds().contains(e.getPlayer().getWorld().getName()) && plugin.getConfig().getBoolean("dedicatedSSB") && !e.getPlayer().isOp()) {
             e.setJoinMessage(null);
             System.out.println("Player Join Event has been thrown");
@@ -79,12 +82,19 @@ public class PlayerJoin implements Listener {
             //System.out.println("Player " + pl.getName() + " trying to join lobby who has a UUID of " + pl.getUUID().toString());
 
             if (pl.hasPermission("ssb.player.join")) {
+                pl.setpStatus(playerStatus.JOINEDSERVER);
                 plugin.LBS.addPlayer(pl);
-                e.setJoinMessage("Super Sky Bros");
+                String tmp;
+                e.setJoinMessage(tmp = ChatColor.translateAlternateColorCodes('&', SCB.getMessageManager().getRawMessage("system.autoJoin").replace("%player%", e.getPlayer().getName())));
                 System.out.println("Starting inv update in load");
                 pl.getInventory().setItem(8, new ItemStack(Material.EMERALD));
                 pl.teleportToLobby();
+                pl.setpStatus(playerStatus.LOBBY);
                 System.out.println("Finished loading inv on load");
+            } else {
+                e.setJoinMessage("");
+
+                pl.kickPlayer(SCB.getMessageManager().getErrorMessage("system.noJoinPerm"));
             }
 
 

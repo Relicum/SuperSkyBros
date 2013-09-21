@@ -67,7 +67,7 @@ public class CommandManager implements CommandExecutor {
         clist.put("setspawn", new setspawn());
         clist.put("join", new join());
         clist.put("modify", new modify());
-        clist.put("setautojoin", new setautojoin());
+        clist.put("setdedicated", new setdedicated());
         clist.put("setlobby", new setlobby());
         clist.put("setlobbyprotection", new setlobbyprotection());
         clist.put("listarenas", new listarenas());

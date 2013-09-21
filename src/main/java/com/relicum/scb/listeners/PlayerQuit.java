@@ -6,6 +6,9 @@ import com.relicum.scb.SmashPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
+import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -30,7 +33,9 @@ public class PlayerQuit implements Listener {
     @EventHandler
     public void playQuit(PlayerQuitEvent e) {
 
-
+        if (Result.KICK_OTHER.equals(Result.KICK_OTHER)) {
+            e.setQuitMessage(null);
+        }
         if (plugin.LBS.isInLobby(e.getPlayer().getName())) {
 
             System.out.println("Player quit event happened for " + e.getPlayer().getName());

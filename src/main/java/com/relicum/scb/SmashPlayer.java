@@ -86,7 +86,7 @@ public class SmashPlayer extends BukkitPlayer {
 
     public void setpStatus(playerStatus pls) {
 
-        this.setpStatus(pls);
+        this.pStatus = pls;
     }
 
 
@@ -176,7 +176,7 @@ public class SmashPlayer extends BukkitPlayer {
                 if (!SCB.getInstance().getConfig().getBoolean("dedicatedSSB"))
                     getPlayer().sendMessage(SCB.MM.getMessage("command.message.teleportToLobby"));
             }
-        }, 10L);
+        }, 1L);
 
         return true;
     }

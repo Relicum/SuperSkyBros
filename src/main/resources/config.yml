@@ -6,9 +6,8 @@ ignoreWorlds:
   - test
   - world_the_end
   - world_nether
-autoJoinLobby: false
 ## Set this to true if server only running SSB on this instance of Minecraft Server
-dedicatedSSB: true
+dedicatedSSB: SET TO true or false
 jumpPower: 1
 jumpInLobby: true
 classesEnabled:
