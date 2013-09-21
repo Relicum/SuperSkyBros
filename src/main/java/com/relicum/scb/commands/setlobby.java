@@ -79,7 +79,10 @@ public class setlobby extends SubBase {
 
         SCB.getInstance().LBS.setLobbyRegion(region);
 
-
+        SCB.getInstance().getConfig().set("enableLobbyProtection", true);
+        SCB.getInstance().saveConfig();
+        SCB.getInstance().reloadConfig();
+        SCB.getInstance().loadLobbyEvents();
         player.sendMessage(SCB.MM.getAdminMessage("command.message.setlobbySuccess"));
         SCB.getInstance().getLogger().info("Lobby Region and Spawn Point have Been Successfully Set");
 

@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
  * @author Relicum
  * @version 0.1
  */
-public class setautojoin extends SubBase {
+public class setdedicated extends SubBase {
 
     /**
      * @param player Player
@@ -22,7 +22,7 @@ public class setautojoin extends SubBase {
         String toSet = args[0].toLowerCase();
 
         if (!toSet.equalsIgnoreCase("true") && (!toSet.equalsIgnoreCase("false"))) {
-            player.sendMessage(SCB.MM.getErrorMessage("command.message.autoJoinInvaildArg"));
+            player.sendMessage(SCB.MM.getErrorMessage("command.message.setdedicatedInvaildArg"));
             System.out.println("The arg passed was " + args[0]);
             return true;
         }
@@ -32,11 +32,11 @@ public class setautojoin extends SubBase {
             setTo = true;
 
 
-        SCB.getInstance().getConfig().set("autoJoinLobby", setTo);
+        SCB.getInstance().getConfig().set("dedicatedSSB", setTo);
         SCB.getInstance().saveConfig();
         SCB.getInstance().reloadConfig();
 
-        String res = SCB.getMessageManager().getAdminMessage("command.message.autoJoinSuccess");
+        String res = SCB.getMessageManager().getAdminMessage("command.message.setdedicatedSuccess");
         String re = res.replace("%nn%", toSet);
         player.sendMessage(re);
 
@@ -51,7 +51,7 @@ public class setautojoin extends SubBase {
      */
     @Override
     public void setmDescription() {
-        mNode = "setautojoin";
+        mNode = "setdedicated";
     }
 
 
@@ -73,7 +73,7 @@ public class setautojoin extends SubBase {
      */
     @Override
     public String setPermission() {
-        return "ssba.admin.setautojoin";
+        return "ssba.admin.setdedicated";
     }
 
 
@@ -84,7 +84,7 @@ public class setautojoin extends SubBase {
      */
     @Override
     public String setUsage() {
-        return "/ssba setautojoin [true:false]";
+        return "/ssba setdedicated [true:false]";
     }
 
 
@@ -95,7 +95,7 @@ public class setautojoin extends SubBase {
      */
     @Override
     public String setLabel() {
-        return "ssba setautojoin";
+        return "ssba setdedicated";
     }
 
 
@@ -106,6 +106,6 @@ public class setautojoin extends SubBase {
      */
     @Override
     public String setCmd() {
-        return "ssba setautojoin";
+        return "ssba setdedicated";
     }
 }

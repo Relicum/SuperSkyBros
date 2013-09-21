@@ -329,14 +329,6 @@ public class SCB extends JavaPlugin {
             //TODO Must refactor out this Helper Class
             Helper.getInstance().setup(p);
 
-
-            if (!p.LBC.getConfig().getBoolean("LOBBYSET") && p.getConfig().getBoolean("autoJoinLobby")) {
-                getLogger().severe("SSB is been disabled as you have not set the Lobby Spawn and have autojoin set to true please set autojoin to false in config.yml and set the Lobby Spawn first");
-                p.pm.disablePlugin(p);
-
-
-            }
-
             //Debug Commands
             if (p.getConfig().getBoolean("debugCommands")) {
 
