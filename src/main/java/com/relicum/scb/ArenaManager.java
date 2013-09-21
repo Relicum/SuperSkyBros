@@ -17,13 +17,18 @@ import java.util.Set;
 public class ArenaManager {
 
     public SCB plugin;
+
     public Integer total;
+
     private Map<Integer, Arena> thearenas;
+
     private Map<String, Integer> nameToId = new HashMap<>();
+
     private Set<String> arenaIds;
 
 
     private Integer current;
+
 
     public ArenaManager(SCB p) {
 
@@ -31,6 +36,7 @@ public class ArenaManager {
         setup();
 
     }
+
 
     public void setup() {
 
@@ -41,7 +47,7 @@ public class ArenaManager {
             ArenaIO Aio = new ArenaIO();
             thearenas = Aio.loadArenas();
             arenaIds = Aio.getArenaKeys();
-            for (String k : arenaIds) {
+            for ( String k : arenaIds ) {
                 String na = thearenas.get(Integer.parseInt(k)).getUniqueMap();
                 nameToId.put(na, Integer.parseInt(k));
             }
@@ -53,12 +59,14 @@ public class ArenaManager {
         }
     }
 
+
     public boolean removeArena(Integer i, String n) {
 
         this.thearenas.remove(i);
         this.nameToId.remove(n);
         return true;
     }
+
 
     /**
      * Get an arena by Id
@@ -71,21 +79,24 @@ public class ArenaManager {
         return this.thearenas.get(i);
     }
 
+
     public Arena getArenaByName(String s) {
 
         return thearenas.get(nameToId.get(s));
     }
 
+
     public ArrayList<String> getListMessages() {
         ArrayList<String> mess = new ArrayList<String>();
 
 
-        for (String k : arenaIds) {
+        for ( String k : arenaIds ) {
             Arena ad = this.getArenaById(Integer.parseInt(k));
             mess.add(ad.getArenaListMessage());
         }
         return mess;
     }
+
 
     /**
      * Gets current Arena ID stored by modify command
@@ -96,6 +107,7 @@ public class ArenaManager {
         return current;
     }
 
+
     /**
      * Sets Arena ID that you wish to modify
      *
@@ -105,10 +117,12 @@ public class ArenaManager {
         this.current = current;
     }
 
+
     public boolean checkBlockLocation(org.bukkit.util.Vector v) {
 
         return this.getArenaById(this.getCurrent()).getAreg().isAABB(v);
     }
+
 
     /**
      * Add new arena on the fly.
@@ -130,6 +144,7 @@ public class ArenaManager {
         return true;
     }
 
+
     /**
      * Returns Set of Arena Id's
      *
@@ -139,11 +154,24 @@ public class ArenaManager {
         return this.arenaIds;
     }
 
+
+    /**
+     * Save an ArenaById
+     *
+     * @param Integer
+     */
     public void saveArenaById(Integer i) {
 
         Arena arena = getArenaById(i);
         ArenaIO AI = new ArenaIO();
         AI.saveArena(arena);
+    }
+
+
+    public Map<Integer, Arena> getAllArenas() {
+
+        return thearenas;
+
     }
 
 

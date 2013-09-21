@@ -15,135 +15,146 @@ import java.text.ParseException;
  */
 public abstract class ISpawn extends ILocationImpl {
 
-	protected String ty;
-	public String Perm;
+    protected String ty;
 
-	/**
-	 * Constructor that takes a Location Returns an instance of itself for chaining
-	 *
-	 * @param Loc Location
-	 * @exception NullPointerException
-	 */
-	protected ISpawn(Location Loc) {
-		super(Loc);
-	}
-
-	@Override
-	public float getDirection(Float yaw) {
-		return super.getDirection(yaw);
-	}
+    public String Perm;
 
 
-	/**
-	 * Set The type of spawn
-	 *
-	 * @param lt String
-	 */
-	public void setType(String lt) {
-
-		ty = LocationType.valueOf(lt).name();
-	}
-
-	/**
-	 * Get the type of spawn
-	 *
-	 * @return String
-	 */
-	public String getType() {
-
-		return ty.toString();
-
-	}
+    /**
+     * Constructor that takes a Location Returns an instance of itself for chaining
+     *
+     * @param Loc Location
+     * @throws NullPointerException
+     */
+    protected ISpawn(Location Loc) {
+        super(Loc);
+    }
 
 
-	/**
-	 * Set the permission to go to  spawn
-	 *
-	 * @param per String
-	 */
-	public abstract void setPerm(String per);
+    @Override
+    public float getDirection(Float yaw) {
+        return super.getDirection(yaw);
+    }
 
-	/**
-	 * Get the permission to use the spawn.
-	 *
-	 * @return boolean
-	 */
-	public abstract String getPerm();
 
-	/**
-	 * Teleports the player to the given location
-	 *
-	 * @param p Player
-	 * @param l Location
-	 * @return boolean
-	 */
-	public abstract boolean teleportToLobby(Player p, Location l);
+    /**
+     * Set The type of spawn
+     *
+     * @param lt String
+     */
+    public void setType(String lt) {
 
-	/**
-	 * Method used to save the data to storage
-	 *
-	 * @return boolean
-	 */
-	public abstract boolean save();
+        ty = LocationType.valueOf(lt).name();
+    }
 
-	/**
-	 * Method used to load the data from storage
-	 *
-	 * @return boolean
-	 */
-	public abstract boolean load();
 
-	/**
-	 * Gets the X co-ord
-	 *
-	 * @return double
-	 */
-	public double getX() {
-		DecimalFormat f = new DecimalFormat("0.00");
-		String fd = f.format(Loc.getX());
-		try {
-			return (double) f.parse(fd);
+    /**
+     * Get the type of spawn
+     *
+     * @return String
+     */
+    public String getType() {
 
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return Loc.getX();
-	}
+        return ty.toString();
 
-	/**
-	 * Gets the Y co-ord
-	 *
-	 * @return double
-	 */
-	public double getY() {
+    }
 
-		return Loc.getY();
-	}
 
-	/**
-	 * Gets the Z co-ord
-	 *
-	 * @return double
-	 */
-	public double getZ() {
-		DecimalFormat f = new DecimalFormat("0.00");
-		String fd = f.format(Loc.getZ());
-		try {
-			return (double) f.parse(fd);
+    /**
+     * Set the permission to go to  spawn
+     *
+     * @param per String
+     */
+    public abstract void setPerm(String per);
 
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return Loc.getZ();
-	}
+    /**
+     * Get the permission to use the spawn.
+     *
+     * @return boolean
+     */
+    public abstract String getPerm();
 
-	public float getYaw() {
+    /**
+     * Teleports the player to the given location
+     *
+     * @param p Player
+     * @param l Location
+     * @return boolean
+     */
+    public abstract boolean teleportToLobby(Player p, Location l);
 
-		return getDirection(Loc.getYaw());
-	}
+    /**
+     * Method used to save the data to storage
+     *
+     * @return boolean
+     */
+    public abstract boolean save();
 
-	public float getPitch() {
+    /**
+     * Method used to load the data from storage
+     *
+     * @return boolean
+     */
+    public abstract boolean load();
 
-		return Loc.getPitch();
-	}
+
+    /**
+     * Gets the X co-ord
+     *
+     * @return double
+     */
+    public double getX() {
+        DecimalFormat f = new DecimalFormat("0.00");
+        String fd = f.format(Loc.getX());
+        try {
+            return (double) f.parse(fd);
+
+        }
+        catch ( ParseException e ) {
+            e.printStackTrace();
+        }
+        return Loc.getX();
+    }
+
+
+    /**
+     * Gets the Y co-ord
+     *
+     * @return double
+     */
+    public double getY() {
+
+        return Loc.getY();
+    }
+
+
+    /**
+     * Gets the Z co-ord
+     *
+     * @return double
+     */
+    public double getZ() {
+        DecimalFormat f = new DecimalFormat("0.00");
+        String fd = f.format(Loc.getZ());
+        try {
+            return (double) f.parse(fd);
+
+        }
+        catch ( ParseException e ) {
+            e.printStackTrace();
+        }
+        return Loc.getZ();
+    }
+
+
+    public float getYaw() {
+
+        return getDirection(Loc.getYaw());
+    }
+
+
+    public float getPitch() {
+
+        return Loc.getPitch();
+    }
 }

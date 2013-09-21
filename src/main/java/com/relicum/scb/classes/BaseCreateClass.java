@@ -39,10 +39,11 @@ public class BaseCreateClass {
 
     public IColoredArmour leatherMeta;
 
+
     /**
-     * Instantiates a new Create class. The name of the player class will be the name of the java class so think carefully
-     * about the names. The Class permission is also auto built based on the prefix scb.class. folled by the class name in
-     * lower case.
+     * Instantiates a new Create class. The name of the player class will be the name of the java class so think
+     * carefully about the names. The Class permission is also auto built based on the prefix scb.class. folled by the
+     * class name in lower case.
      */
     public BaseCreateClass() {
 
@@ -64,6 +65,7 @@ public class BaseCreateClass {
         return this.armour;
     }
 
+
     /**
      * Get the class name. This is auto built from the name of the class itself. Eg if the class was called Creeper name
      * would equal Creeper.
@@ -74,6 +76,7 @@ public class BaseCreateClass {
 
         return this.name;
     }
+
 
     /**
      * Save to file.
@@ -86,6 +89,7 @@ public class BaseCreateClass {
         return true;
     }
 
+
     /**
      * Load from file. Pass name of File Returns true of success
      *
@@ -97,11 +101,13 @@ public class BaseCreateClass {
         return true;
     }
 
+
     private void createHashSave() {
 
         outer.put(ItemEnum.ARMOR.name(), this.armour);
 
     }
+
 
     private void deasembleHashFromSave() {
         //todo Look to abstract this out to an interface
@@ -109,9 +115,10 @@ public class BaseCreateClass {
         this.armour = (Armour) outer.get(ItemEnum.ARMOR.name());
     }
 
+
     /**
-     * Gets the permission for the class. This is auto build. The prefix is scb.player. followed by the name of the class
-     * in lower case. So if class was called Creeper the permission would be scb.player.creeper.
+     * Gets the permission for the class. This is auto build. The prefix is scb.player. followed by the name of the
+     * class in lower case. So if class was called Creeper the permission would be scb.player.creeper.
      *
      * @return the String
      */

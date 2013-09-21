@@ -12,46 +12,52 @@ import org.bukkit.World;
 
 
 public abstract class SpawnInstance implements Spawnable, SpawnableInstance {
-	static int classCount = 0;
 
-	final Integer spawnId = classCount++;
-	Location loc;
+    static int classCount = 0;
 
-	/**
-	 * Construct is passed a Location
-	 *
-	 * @param location
-	 */
-	public SpawnInstance(Location location) {
+    final Integer spawnId = classCount++;
 
-		this.loc = location;
+    Location loc;
 
-	}
 
-	/**
-	 * Get the World the location is in
-	 *
-	 * @return World
-	 */
-	public World getWorld() {
-		return loc != null ? loc.getWorld() : null;
-	}
+    /**
+     * Construct is passed a Location
+     *
+     * @param location
+     */
+    public SpawnInstance(Location location) {
 
-	/**
-	 * Set Location
-	 *
-	 * @param l Location
-	 */
-	public void setLocation(Location l) {
-		this.loc = l;
-	}
+        this.loc = location;
 
-	/**
-	 * Get Location
-	 *
-	 * @return Location
-	 */
-	public Location getLocation() {
-		return loc;
-	}
+    }
+
+
+    /**
+     * Get the World the location is in
+     *
+     * @return World
+     */
+    public World getWorld() {
+        return loc != null ? loc.getWorld() : null;
+    }
+
+
+    /**
+     * Set Location
+     *
+     * @param l Location
+     */
+    public void setLocation(Location l) {
+        this.loc = l;
+    }
+
+
+    /**
+     * Get Location
+     *
+     * @return Location
+     */
+    public Location getLocation() {
+        return loc;
+    }
 }

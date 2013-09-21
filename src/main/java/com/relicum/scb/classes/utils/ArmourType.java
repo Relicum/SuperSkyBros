@@ -7,5 +7,5 @@ package com.relicum.scb.classes.utils;
  * @version 0.1
  */
 public enum ArmourType {
-	HELMET, CHESTPLATE, LEGGINGS, BOOTS
+    HELMET, CHESTPLATE, LEGGINGS, BOOTS
 }

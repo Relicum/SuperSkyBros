@@ -12,77 +12,83 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public abstract class IArmour {
 
-	/**
-	 * Stores the Material of the Armours
-	 */
-	public ArmourEnum em;
-	/**
-	 * The ItemMeta
-	 */
-	public ItemMeta itm;
-	/**
-	 * ItemStack
-	 */
-	public ItemStack it;
+    /**
+     * Stores the Material of the Armours
+     */
+    public ArmourEnum em;
 
-	/**
-	 * Instantiates a new I armour impl.
-	 */
-	public void IArmour(Integer i) {
+    /**
+     * The ItemMeta
+     */
+    public ItemMeta itm;
+
+    /**
+     * ItemStack
+     */
+    public ItemStack it;
 
 
-	}
-
-	/**
-	 * Gets armour as ItemStack
-	 *
-	 * @return the ItemStack
-	 */
-
-	public ItemStack getArmour() {
-		return it;
-	}
-
-	/**
-	 * Sets armour by Material
-	 *
-	 * @param mat Material
-	 */
-	public void setArmour(Material mat) {
-		this.it = new ItemStack(mat);
-
-	}
+    /**
+     * Instantiates a new I armour impl.
+     */
+    public void IArmour(Integer i) {
 
 
-	/**
-	 * Gets colored armour item meta.
-	 *
-	 * @param i Integer
-	 * @return ItemMeta armour item meta
-	 */
-	public ItemMeta getArmourItemMeta(Integer i) {
-		itm = it.getItemMeta();
-		return itm;
-	}
+    }
 
 
-	/**
-	 * Save item meta.
-	 */
-	public void saveItemMeta() {
+    /**
+     * Gets armour as ItemStack
+     *
+     * @return the ItemStack
+     */
 
-		it.setItemMeta(itm);
+    public ItemStack getArmour() {
+        return it;
+    }
 
-	}
 
-	/**
-	 * Sets armour material.
-	 *
-	 * @param emm ArmourEnum
-	 */
-	public void setArmourMaterial(ArmourEnum emm) {
+    /**
+     * Sets armour by Material
+     *
+     * @param mat Material
+     */
+    public void setArmour(Material mat) {
+        this.it = new ItemStack(mat);
 
-		this.em = ArmourEnum.valueOf(emm.toString().toUpperCase());
-	}
+    }
+
+
+    /**
+     * Gets colored armour item meta.
+     *
+     * @param i Integer
+     * @return ItemMeta armour item meta
+     */
+    public ItemMeta getArmourItemMeta(Integer i) {
+        itm = it.getItemMeta();
+        return itm;
+    }
+
+
+    /**
+     * Save item meta.
+     */
+    public void saveItemMeta() {
+
+        it.setItemMeta(itm);
+
+    }
+
+
+    /**
+     * Sets armour material.
+     *
+     * @param emm ArmourEnum
+     */
+    public void setArmourMaterial(ArmourEnum emm) {
+
+        this.em = ArmourEnum.valueOf(emm.toString().toUpperCase());
+    }
 
 }

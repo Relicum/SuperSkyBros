@@ -12,9 +12,9 @@ import org.bukkit.util.Vector;
 public class ArenaRegion extends IRegion {
 
 
-	public ArenaRegion(Vector min, Vector max, Vector ad, Integer i, String wo, String mn) {
-		super(min, max, ad, i, wo, mn);
-	}
+    public ArenaRegion(Vector min, Vector max, Vector ad, Integer i, String wo, String mn) {
+        super(min, max, ad, i, wo, mn);
+    }
 
 
 }

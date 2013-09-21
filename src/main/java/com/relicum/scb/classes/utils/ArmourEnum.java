@@ -7,6 +7,6 @@ package com.relicum.scb.classes.utils;
  * @version 0.1
  */
 public enum ArmourEnum {
-	LEATHER, IRON, GOLD, CHAINMAIL, DIAMOND
+    LEATHER, IRON, GOLD, CHAINMAIL, DIAMOND
 
 }

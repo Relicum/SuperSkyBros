@@ -11,30 +11,31 @@ import org.bukkit.inventory.ItemStack;
  */
 public abstract class IClassArmour implements IColoredArmour {
 
-	private ItemEnum itemType = ItemEnum.ARMOR;
-
-	/**
-	 * @return ItemEnum
-	 */
-	public ItemEnum getItemType() {
-
-		return itemType;
-	}
+    private ItemEnum itemType = ItemEnum.ARMOR;
 
 
-	public abstract void setArmourColor(Color co);
+    /**
+     * @return ItemEnum
+     */
+    public ItemEnum getItemType() {
 
-	public abstract void setArmourMaterial(ArmourEnum m);
+        return itemType;
+    }
 
-	public abstract ItemStack[] getAllArmour(ArmourEnum em);
 
-	public abstract ItemStack getHelmet(ArmourEnum em);
+    public abstract void setArmourColor(Color co);
 
-	public abstract ItemStack getChestPlate(ArmourEnum em);
+    public abstract void setArmourMaterial(ArmourEnum m);
 
-	public abstract ItemStack getLeggings(ArmourEnum em);
+    public abstract ItemStack[] getAllArmour(ArmourEnum em);
 
-	public abstract ItemStack getBoots(ArmourEnum em);
+    public abstract ItemStack getHelmet(ArmourEnum em);
+
+    public abstract ItemStack getChestPlate(ArmourEnum em);
+
+    public abstract ItemStack getLeggings(ArmourEnum em);
+
+    public abstract ItemStack getBoots(ArmourEnum em);
 
 
 }

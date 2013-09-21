@@ -20,50 +20,53 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
  */
 public class LobbyBlockBreak implements Listener, Cancellable {
 
-	/**
-	 * The Plugin.
-	 */
-	public SCB plugin;
+    /**
+     * The Plugin.
+     */
+    public SCB plugin;
 
-	public Vector min;
-	public Vector max;
-	public String world;
+    public Vector min;
 
-	/**
-	 * Instantiates a new Lobby block break.
-	 *
-	 * @param pl the pl
-	 */
-	public LobbyBlockBreak(JavaPlugin pl) {
-		this.plugin = (SCB) pl;
-		this.min = plugin.LBS.getLobbyRegion().getMinVector();
-		this.max = plugin.LBS.getLobbyRegion().getMaxVector();
-		this.world = plugin.LBS.getLobbyRegion().getWorld().getName();
+    public Vector max;
 
-	}
+    public String world;
 
 
-	/**
-	 * Lobby break.
-	 *
-	 * @param BlockBreakEvent the event
-	 */
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void lobbyBreak(BlockBreakEvent e) {
+    /**
+     * Instantiates a new Lobby block break.
+     *
+     * @param pl the pl
+     */
+    public LobbyBlockBreak(JavaPlugin pl) {
+        this.plugin = (SCB) pl;
+        this.min = plugin.LBS.getLobbyRegion().getMinVector();
+        this.max = plugin.LBS.getLobbyRegion().getMaxVector();
+        this.world = plugin.LBS.getLobbyRegion().getWorld().getName();
+
+    }
 
 
-		Player player = e.getPlayer();
-		String wo = player.getWorld().getName();
+    /**
+     * Lobby break.
+     *
+     * @param BlockBreakEvent the event
+     */
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void lobbyBreak(BlockBreakEvent e) {
 
-		if (!player.hasPermission("ssba.admin.breakblocks") && !player.isOp() && this.world.equals(wo)) {
-			if (SCB.getInstance().LBS.getLobbyRegion().isAABB(e.getBlock().getLocation().toVector())) {
-				e.setCancelled(true);
-				player.sendMessage(SCB.MM.getErrorMessage("listeners.blockbreak.lobbyBreak"));
-			}
-		}
+
+        Player player = e.getPlayer();
+        String wo = player.getWorld().getName();
+
+        if (!player.hasPermission("ssba.admin.breakblocks") && !player.isOp() && this.world.equals(wo)) {
+            if (SCB.getInstance().LBS.getLobbyRegion().isAABB(e.getBlock().getLocation().toVector())) {
+                e.setCancelled(true);
+                player.sendMessage(SCB.MM.getErrorMessage("listeners.blockbreak.lobbyBreak"));
+            }
+        }
 
 		/*String ha = this.generateHash(e.getBlock());
-		if (SCB.getInstance().LBS.getHashList().contains(ha)) {
+        if (SCB.getInstance().LBS.getHashList().contains(ha)) {
 			if (!player.hasPermission("ssba.admin.breakblocks") && !player.isOp()) {
 				e.setCancelled(true);
 				player.sendMessage(SCB.MM.getErrorMessage("listeners.blockbreak.lobbyBreak"));
@@ -71,40 +74,43 @@ public class LobbyBlockBreak implements Listener, Cancellable {
 		}*/
 
 
-	}
+    }
 
-	/**
-	 * Is cancelled.
-	 *
-	 * @return the boolean
-	 */
-	@Override
-	public boolean isCancelled() {
-		return false;
-	}
 
-	/**
-	 * Sets cancelled.
-	 *
-	 * @param b the b
-	 */
-	@Override
-	public void setCancelled(boolean b) {
+    /**
+     * Is cancelled.
+     *
+     * @return the boolean
+     */
+    @Override
+    public boolean isCancelled() {
+        return false;
+    }
 
-	}
 
-	/**
-	 * Generate hash.
-	 *
-	 * @param block the block
-	 * @return the string
-	 */
-	public String generateHash(Block block) {
+    /**
+     * Sets cancelled.
+     *
+     * @param b the b
+     */
+    @Override
+    public void setCancelled(boolean b) {
 
-		Integer mi = block.getChunk().getX();
-		Integer ma = block.getChunk().getZ();
-		Integer th = mi * ma;
+    }
 
-		return Base64Coder.encodeString(th.toString() + block.getWorld().getName());
-	}
+
+    /**
+     * Generate hash.
+     *
+     * @param block the block
+     * @return the string
+     */
+    public String generateHash(Block block) {
+
+        Integer mi = block.getChunk().getX();
+        Integer ma = block.getChunk().getZ();
+        Integer th = mi * ma;
+
+        return Base64Coder.encodeString(th.toString() + block.getWorld().getName());
+    }
 }

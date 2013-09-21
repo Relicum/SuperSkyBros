@@ -1,8 +1,7 @@
 package com.relicum.scb.objects.signs;
 
 /**
- * SuperSkyBros
- * First Created 11/09/13
+ * SuperSkyBros First Created 11/09/13
  *
  * @author Relicum
  * @version 0.1

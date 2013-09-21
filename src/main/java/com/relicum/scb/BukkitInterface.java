@@ -11,34 +11,37 @@ import org.bukkit.World;
  */
 public class BukkitInterface {
 
-	/**
-	 * Static p of BukkitInterface Server
-	 */
+    /**
+     * Static p of BukkitInterface Server
+     */
 
-	static Server server;
+    static Server server;
 
-	/**
-	 * Returns a p of a World by String name
-	 *
-	 * @param name String
-	 * @return World
-	 */
-	public static World getWorld(String name) {
-		return server.getWorld(name);
-	}
 
-	/**
-	 * Sets the p of Bukkit Server
-	 *
-	 * @param server Server
-	 */
-	public static void setServer(Server server) {
-		BukkitInterface.server = server;
-	}
+    /**
+     * Returns a p of a World by String name
+     *
+     * @param name String
+     * @return World
+     */
+    public static World getWorld(String name) {
+        return server.getWorld(name);
+    }
 
-	public static Server getServer() {
 
-		return server;
-	}
+    /**
+     * Sets the p of Bukkit Server
+     *
+     * @param server Server
+     */
+    public static void setServer(Server server) {
+        BukkitInterface.server = server;
+    }
+
+
+    public static Server getServer() {
+
+        return server;
+    }
 
 }

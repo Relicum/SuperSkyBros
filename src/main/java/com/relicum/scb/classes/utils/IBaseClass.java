@@ -8,8 +8,8 @@ package com.relicum.scb.classes.utils;
  */
 public interface IBaseClass {
 
-	public String getName();
+    public String getName();
 
 
-	public ItemEnum getType();
+    public ItemEnum getType();
 }

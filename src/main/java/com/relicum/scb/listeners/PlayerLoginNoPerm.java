@@ -15,21 +15,23 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class PlayerLoginNoPerm implements Listener {
 
-	public SCB plugin;
-
-	public PlayerLoginNoPerm(JavaPlugin p) {
-		this.plugin = (SCB) p;
-	}
-
-	@EventHandler(priority = EventPriority.HIGHEST)
-	public void preLogin(PlayerLoginEvent e) {
+    public SCB plugin;
 
 
-		if (plugin.getConfig().getBoolean("autoJoinLobby")) {
-			if (!e.getPlayer().hasPermission("ssb.player.join")) {
-				e.disallow(PlayerLoginEvent.Result.KICK_OTHER, SCB.getMessageManager().getRawMessage("system.kickJoinNoPerm"));
+    public PlayerLoginNoPerm(JavaPlugin p) {
+        this.plugin = (SCB) p;
+    }
 
-			}
-		}
-	}
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void preLogin(PlayerLoginEvent e) {
+
+
+        if (plugin.getConfig().getBoolean("autoJoinLobby")) {
+            if (!e.getPlayer().hasPermission("ssb.player.join")) {
+                e.disallow(PlayerLoginEvent.Result.KICK_OTHER, SCB.getMessageManager().getRawMessage("system.kickJoinNoPerm"));
+
+            }
+        }
+    }
 }

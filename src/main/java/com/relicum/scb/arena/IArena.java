@@ -13,30 +13,30 @@ import org.bukkit.util.Vector;
  */
 public interface IArena {
 
-	String getArenaName();
+    String getArenaName();
 
-	Integer getArenaId();
+    Integer getArenaId();
 
-	ArenaStatus getArenaStatus();
+    ArenaStatus getArenaStatus();
 
-	boolean isEnabled();
+    boolean isEnabled();
 
-	ArenaGroupSpawn getSpawnGroup();
+    ArenaGroupSpawn getSpawnGroup();
 
-	int getMaxPlayers();
+    int getMaxPlayers();
 
-	int getMinPlayers();
+    int getMinPlayers();
 
-	String getPermmission();
+    String getPermmission();
 
-	Long getMaxGameTime();
+    Long getMaxGameTime();
 
-	Vector getAdminSpawn();
+    Vector getAdminSpawn();
 
-	World getArenaWorld();
+    World getArenaWorld();
 
-	void loadArena();
+    void loadArena();
 
-	void saveArena();
+    void saveArena();
 
 }

@@ -8,15 +8,15 @@ package com.relicum.scb.objects.spawns;
  */
 public interface Spawnable {
 
-	/**
-	 * Despawn
-	 */
-	public void despawn();
+    /**
+     * Despawn
+     */
+    public void despawn();
 
-	/**
-	 * Spawn
-	 *
-	 * @return int
-	 */
-	public int spawn();
+    /**
+     * Spawn
+     *
+     * @return int
+     */
+    public int spawn();
 }

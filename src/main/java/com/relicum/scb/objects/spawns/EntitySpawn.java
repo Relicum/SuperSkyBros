@@ -15,11 +15,14 @@ import java.util.List;
  * @version 3.8.8
  */
 public class EntitySpawn extends SpawnInstance {
+
     private EntityType et;
+
     int number = 1;
 
 
     List<LivingEntity> uids = new ArrayList<LivingEntity>();
+
 
     /**
      * Constructor
@@ -44,31 +47,33 @@ public class EntitySpawn extends SpawnInstance {
         this.number = number;
     }
 
+
     /**
-     * Trys To Spawn an Instance of an Entity by ID If it's still alive, clears the ID if it's not. Or spawns the entity at
-     * the Location and returns the UID
+     * Trys To Spawn an Instance of an Entity by ID If it's still alive, clears the ID if it's not. Or spawns the entity
+     * at the Location and returns the UID
      *
      * @return Integer
      */
     public int spawn() {
-        for (LivingEntity id : uids) {
+        for ( LivingEntity id : uids ) {
             if (!id.isDead()) {
                 return spawnId;
             } /// The entities are already spawned
         }
         uids.clear();
-        for (int i = 0; i < number; i++) {
+        for ( int i = 0; i < number; i++ ) {
             LivingEntity le = (LivingEntity) loc.getWorld().spawnEntity(loc, et);
             uids.add(le);
         }
         return spawnId;
     }
 
+
     /**
      * Despawns the Entity and removes it.
      */
     public void despawn() {
-        for (LivingEntity id : uids) {
+        for ( LivingEntity id : uids ) {
             if (!id.isDead()) {
                 id.remove();
             }
@@ -76,19 +81,21 @@ public class EntitySpawn extends SpawnInstance {
         uids.clear();
     }
 
+
     /**
      * The entity is tamed if it's possible
      *
      * @param tamer AnimalTamer
      */
     public void setOwner(AnimalTamer tamer) {
-        for (LivingEntity id : uids) {
+        for ( LivingEntity id : uids ) {
             if (!id.isDead() && id instanceof Tameable) {
                 ((Tameable) id).setTamed(true);
                 ((Tameable) id).setOwner(tamer);
             }
         }
     }
+
 
     /**
      * Returns the entity by String name
@@ -100,6 +107,7 @@ public class EntitySpawn extends SpawnInstance {
         return et.getName();
     }
 
+
     /**
      * Returns the Entity ID
      *
@@ -108,6 +116,7 @@ public class EntitySpawn extends SpawnInstance {
     public int getNumber() {
         return number;
     }
+
 
     @Override
     public String toString() {

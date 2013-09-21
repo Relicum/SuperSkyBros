@@ -1,13 +1,18 @@
 package com.relicum.scb.listeners;
 
+import com.relicum.scb.BukkitInterface;
 import com.relicum.scb.SCB;
+import com.relicum.scb.SettingsManager;
+import com.relicum.scb.SmashPlayer;
+import com.relicum.scb.utils.playerStatus;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Bukkit-SCB
@@ -15,43 +20,77 @@ import org.bukkit.event.player.PlayerJoinEvent;
  * @author Relicum
  * @version 0.1
  */
-@SuppressWarnings("deprecation")
-public class PlayerJoin implements Listener, Cancellable {
+
+public class PlayerJoin implements Listener {
 
     private SCB plugin;
-    private boolean cancel = false;
+
+    private playerStatus status;
+
 
     public PlayerJoin(SCB plugin) {
         this.plugin = plugin;
 
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void playJoin(PlayerJoinEvent e) {
-        Player pl = e.getPlayer();
-        setCancelled(true);
-        if (e.getPlayer().hasPermission("ssba.admin")) {
+
+        if (SettingsManager.getInstance().notWorlds().contains(e.getPlayer().getWorld().getName()) && plugin.getConfig().getBoolean("dedicatedSSB") && !e.getPlayer().isOp()) {
+            e.setJoinMessage(null);
+            System.out.println("Player Join Event has been thrown");
+            e.getPlayer().kickPlayer(SCB.getMessageManager().getErrorMessage("system.kickJoinWorldBlacklisted"));
+            System.out.println("Player " + e.getPlayer().getName() + " was kicked trying to the world " + e.getPlayer().getWorld().getName() + " which is on the black list you can change this in the config.yml");
+            return;
+        }
+
+
+        if (e.getPlayer().hasPermission("ssba.admin") || e.getPlayer().isOp()) {
+            e.setJoinMessage(null);
             ChatColor b = ChatColor.BOLD;
             String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
-            pl.sendMessage(pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros Beta " + SCB.getInstance().getDescription().getVersion() + " this should not be run on a live server be warned");
+            e.getPlayer().sendMessage(pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros Beta " + SCB.getInstance().getDescription().getVersion() + " this should not be run on a live server be warned");
 
         }
 
-        System.out.println("Player Join Event " + pl.getDisplayName() + " has joined");
-        if (plugin.getConfig().getBoolean("autoJoinLobby")) {
 
-            pl.performCommand("ssb join");
+        if (plugin.getConfig().getBoolean("dedicatedSSB")) {
+
+            SmashPlayer pl = new SmashPlayer(e.getPlayer());
+
+            if (!SCB.getInstance().LBC.getConfig().contains("LOBBY.REGION")) {
+                if (pl.isOp()) {
+                    e.setJoinMessage(SCB.getMessageManager().getErrorMessage("system.opAutoJoinOverRide"));
+                    plugin.getLogger().severe("You need to set a lobby spawn or players can not join");
+
+                    return;
+
+                } else {
+
+                    e.setJoinMessage(null);
+                    pl.kickPlayer(SCB.getMessageManager().getErrorMessage("system.noLobby"));
+                    plugin.getLogger().severe(e.getPlayer().getName() + " has been kicked as you have not set a Lobby Spawn yet");
+                    return;
+                }
+            }
+            // pl.setpStatus(playerStatus.JOINEDSERVER);
+            //plugin.getLogger().info(pl.getName() + " Has joined the server");
+            //System.out.println("Player " + pl.getName() + " trying to join lobby who has a UUID of " + pl.getUUID().toString());
+
+            if (pl.hasPermission("ssb.player.join")) {
+                plugin.LBS.addPlayer(pl);
+                e.setJoinMessage("Super Sky Bros");
+                System.out.println("Starting inv update in load");
+                pl.getInventory().setItem(8, new ItemStack(Material.EMERALD));
+                pl.teleportToLobby();
+                System.out.println("Finished loading inv on load");
+            }
+
+
         }
 
     }
 
-    @Override
-    public boolean isCancelled() {
-        return this.cancel;
-    }
 
-    @Override
-    public void setCancelled(boolean b) {
-        this.cancel = b;
-    }
 }

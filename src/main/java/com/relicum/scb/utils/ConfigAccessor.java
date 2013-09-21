@@ -17,84 +17,92 @@ import java.util.logging.Level;
  */
 public class ConfigAccessor {
 
-	private String fileName;
-	private JavaPlugin plugin;
+    private String fileName;
 
-	private File configFile;
-	private FileConfiguration fileConfiguration;
+    private JavaPlugin plugin;
 
-	/**
-	 * Default Constructor
-	 *
-	 * @param plugin   JavaPlugin
-	 * @param fileName String
-	 */
-	public ConfigAccessor(JavaPlugin plugin, String fileName) {
+    private File configFile;
 
-		if (plugin == null)
-			throw new IllegalArgumentException("plugin cannot be null");
-		if (!plugin.isInitialized())
-			throw new IllegalArgumentException("plugin must be initiaized");
-		this.plugin = plugin;
-		this.fileName = fileName;
-		File dataFolder = plugin.getDataFolder();
-		if (dataFolder == null)
-			throw new IllegalStateException();
-		this.configFile = new File(plugin.getDataFolder(), fileName);
-	}
+    private FileConfiguration fileConfiguration;
 
-	/**
-	 * Get config as instance of FileConfiguration
-	 *
-	 * @return FileConfiguration
-	 */
-	public FileConfiguration getConfig() {
 
-		if (fileConfiguration == null) {
-			this.reloadConfig();
-		}
-		return fileConfiguration;
-	}
+    /**
+     * Default Constructor
+     *
+     * @param plugin   JavaPlugin
+     * @param fileName String
+     */
+    public ConfigAccessor(JavaPlugin plugin, String fileName) {
 
-	/**
-	 * Reloads the config fiule
-	 */
-	public void reloadConfig() {
+        if (plugin == null)
+            throw new IllegalArgumentException("plugin cannot be null");
+        if (!plugin.isInitialized())
+            throw new IllegalArgumentException("plugin must be initiaized");
+        this.plugin = plugin;
+        this.fileName = fileName;
+        File dataFolder = plugin.getDataFolder();
+        if (dataFolder == null)
+            throw new IllegalStateException();
+        this.configFile = new File(plugin.getDataFolder(), fileName);
+    }
 
-		fileConfiguration = YamlConfiguration.loadConfiguration(configFile);
 
-		// Look for defaults in the jar
-		InputStream defConfigStream = plugin.getResource(fileName);
-		if (defConfigStream != null) {
-			YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
-			fileConfiguration.setDefaults(defConfig);
-		}
-	}
+    /**
+     * Get config as instance of FileConfiguration
+     *
+     * @return FileConfiguration
+     */
+    public FileConfiguration getConfig() {
 
-	/**
-	 * Saves the config file
-	 */
-	public void saveConfig() {
+        if (fileConfiguration == null) {
+            this.reloadConfig();
+        }
+        return fileConfiguration;
+    }
 
-		if (fileConfiguration == null || configFile == null) {
-			return;
-		} else {
-			try {
-				getConfig().save(configFile);
-			} catch (IOException ex) {
-				plugin.getLogger().log(Level.SEVERE, "Could not save config to " + configFile, ex);
-			}
-		}
-	}
 
-	/**
-	 * Saves the default config
-	 */
-	public void saveDefaultConfig() {
+    /**
+     * Reloads the config fiule
+     */
+    public void reloadConfig() {
 
-		if (!configFile.exists()) {
-			this.plugin.saveResource(fileName, false);
-		}
-	}
+        fileConfiguration = YamlConfiguration.loadConfiguration(configFile);
+
+        // Look for defaults in the jar
+        InputStream defConfigStream = plugin.getResource(fileName);
+        if (defConfigStream != null) {
+            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
+            fileConfiguration.setDefaults(defConfig);
+        }
+    }
+
+
+    /**
+     * Saves the config file
+     */
+    public void saveConfig() {
+
+        if (fileConfiguration == null || configFile == null) {
+            return;
+        } else {
+            try {
+                getConfig().save(configFile);
+            }
+            catch ( IOException ex ) {
+                plugin.getLogger().log(Level.SEVERE, "Could not save config to " + configFile, ex);
+            }
+        }
+    }
+
+
+    /**
+     * Saves the default config
+     */
+    public void saveDefaultConfig() {
+
+        if (!configFile.exists()) {
+            this.plugin.saveResource(fileName, false);
+        }
+    }
 }
 

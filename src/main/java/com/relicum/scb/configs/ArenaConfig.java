@@ -8,20 +8,24 @@ package com.relicum.scb.configs;
  */
 public class ArenaConfig extends IConfig {
 
-	public Integer totalArenas;
-	public Integer lastId;
+    public Integer totalArenas;
 
-	public ArenaConfig(String filename) {
-		super(filename);
-	}
+    public Integer lastId;
 
-	public void setTotalArenas() {
 
-		totalArenas = this.getConfig().getInt("arena.total");
-	}
+    public ArenaConfig(String filename) {
+        super(filename);
+    }
 
-	public void setLastId() {
 
-		lastId = this.getConfig().getInt("arena.lastId");
-	}
+    public void setTotalArenas() {
+
+        totalArenas = this.getConfig().getInt("arena.total");
+    }
+
+
+    public void setLastId() {
+
+        lastId = this.getConfig().getInt("arena.lastId");
+    }
 }

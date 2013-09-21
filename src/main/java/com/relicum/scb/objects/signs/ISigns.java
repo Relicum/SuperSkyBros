@@ -5,8 +5,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import java.util.ArrayList;
 
 /**
- * SuperSkyBros Sign Class Interface
- * First Created 11/09/13
+ * SuperSkyBros Sign Class Interface First Created 11/09/13
  *
  * @author Relicum
  * @version 0.1

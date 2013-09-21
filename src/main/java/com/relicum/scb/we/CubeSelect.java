@@ -15,49 +15,52 @@ import org.bukkit.World;
 public class CubeSelect extends CuboidSelection {
 
 
-	/**
-	 * Constructor
-	 *
-	 * @param w World
-	 */
+    /**
+     * Constructor
+     *
+     * @param w World
+     */
 
-	public CubeSelect(World wo, Location pos1, Location pos2) {
-		super(wo, pos1, pos2);
+    public CubeSelect(World wo, Location pos1, Location pos2) {
+        super(wo, pos1, pos2);
 
-	}
+    }
 
 
-	/**
-	 * Returns a CuboidRegion based on the selection made;
-	 *
-	 * @return CuboidRegion
-	 * @exception IncompleteRegionException
-	 */
-	@Override
-	public CuboidRegion getRegion() {
+    /**
+     * Returns a CuboidRegion based on the selection made;
+     *
+     * @return CuboidRegion
+     * @throws IncompleteRegionException
+     */
+    @Override
+    public CuboidRegion getRegion() {
 
-		try {
-			return (CuboidRegion) this.getRegionSelector().getRegion();
-		} catch (IncompleteRegionException e) {
-			System.out.println(e.getStackTrace().toString());
-		}
+        try {
+            return (CuboidRegion) this.getRegionSelector().getRegion();
+        }
+        catch ( IncompleteRegionException e ) {
+            System.out.println(e.getStackTrace().toString());
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * Set the region.
-	 *
-	 * @param cu CuboidRegion
-	 * @return boolean
-	 */
-	public boolean setTheRegion(CuboidRegion cu) {
-		try {
-			this.setRegion(cu);
-			return true;
-		} catch (Exception e) {
-			System.out.println(e.getStackTrace().toString());
-			return false;
-		}
-	}
+
+    /**
+     * Set the region.
+     *
+     * @param cu CuboidRegion
+     * @return boolean
+     */
+    public boolean setTheRegion(CuboidRegion cu) {
+        try {
+            this.setRegion(cu);
+            return true;
+        }
+        catch ( Exception e ) {
+            System.out.println(e.getStackTrace().toString());
+            return false;
+        }
+    }
 }

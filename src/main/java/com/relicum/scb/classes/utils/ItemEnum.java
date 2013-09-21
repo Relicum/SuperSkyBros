@@ -7,5 +7,5 @@ package com.relicum.scb.classes.utils;
  * @version 0.1
  */
 public enum ItemEnum {
-	ITEM, ARMOR, EFFECT, ENCHANT, COLOREDARMOR, WEAPON
+    ITEM, ARMOR, EFFECT, ENCHANT, COLOREDARMOR, WEAPON
 }

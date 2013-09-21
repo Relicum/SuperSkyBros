@@ -11,22 +11,22 @@ import org.bukkit.World;
  */
 public interface IASPAWN {
 
-	Integer getSpawnId();
+    Integer getSpawnId();
 
-	double getX();
+    double getX();
 
-	double getY();
+    double getY();
 
-	double getZ();
+    double getZ();
 
-	float getYAW();
+    float getYAW();
 
-	float getPitch();
+    float getPitch();
 
-	World getWorld();
+    World getWorld();
 
-	Integer getTypeId();
+    Integer getTypeId();
 
-	Location getLocation();
+    Location getLocation();
 
 }

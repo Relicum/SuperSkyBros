@@ -3,58 +3,72 @@ package com.relicum.scb.objects.spawns;
 import com.relicum.scb.utils.SerializerUtil;
 
 public class TimedSpawn {
-	static int count = 0;
-	SpawnInstance sg;
-	final int id = count++;
 
-	Long firstSpawnTime, respawnInterval, timeToDespawn;
+    static int count = 0;
 
-	public TimedSpawn(long firstSpawnTime, long respawnTime, long timeToDespawn, SpawnInstance sg) {
-		this.firstSpawnTime = firstSpawnTime;
-		this.sg = sg;
-		this.respawnInterval = respawnTime;
-		this.timeToDespawn = timeToDespawn;
+    SpawnInstance sg;
 
-	}
+    final int id = count++;
 
-	public Long getRespawnTime() {
-		return respawnInterval;
-	}
+    Long firstSpawnTime, respawnInterval, timeToDespawn;
 
-	public void setRespawnTime(Long timeToNext) {
-		this.respawnInterval = timeToNext;
-	}
 
-	public Long getFirstSpawnTime() {
-		return firstSpawnTime;
-	}
+    public TimedSpawn(long firstSpawnTime, long respawnTime, long timeToDespawn, SpawnInstance sg) {
+        this.firstSpawnTime = firstSpawnTime;
+        this.sg = sg;
+        this.respawnInterval = respawnTime;
+        this.timeToDespawn = timeToDespawn;
 
-	public void setFirstSpawnTime(Long timeToStart) {
-		this.firstSpawnTime = timeToStart;
-	}
+    }
 
-	public void despawn() {
-		sg.despawn();
-	}
 
-	public int spawn() {
-		return sg.spawn();
-	}
+    public Long getRespawnTime() {
+        return respawnInterval;
+    }
 
-	public int getId() {
-		return id;
-	}
 
-	public SpawnInstance getSpawn() {
-		return sg;
-	}
+    public void setRespawnTime(Long timeToNext) {
+        this.respawnInterval = timeToNext;
+    }
 
-	public Long getTimeToDespawn() {
-		return timeToDespawn;
-	}
 
-	@Override
-	public String toString() {
-		return "[TimedSpawn " + id + " loc=" + SerializerUtil.getLocString(sg.getLocation()) + " sg=" + sg + "]";
-	}
+    public Long getFirstSpawnTime() {
+        return firstSpawnTime;
+    }
+
+
+    public void setFirstSpawnTime(Long timeToStart) {
+        this.firstSpawnTime = timeToStart;
+    }
+
+
+    public void despawn() {
+        sg.despawn();
+    }
+
+
+    public int spawn() {
+        return sg.spawn();
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+
+    public SpawnInstance getSpawn() {
+        return sg;
+    }
+
+
+    public Long getTimeToDespawn() {
+        return timeToDespawn;
+    }
+
+
+    @Override
+    public String toString() {
+        return "[TimedSpawn " + id + " loc=" + SerializerUtil.getLocString(sg.getLocation()) + " sg=" + sg + "]";
+    }
 }

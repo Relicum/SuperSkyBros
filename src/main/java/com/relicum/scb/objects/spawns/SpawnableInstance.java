@@ -11,10 +11,10 @@ import org.bukkit.Location;
 public interface SpawnableInstance {
 
 
-	/**
-	 * SetSpawn Location
-	 *
-	 * @param l Location
-	 */
-	public void setLocation(Location l);
+    /**
+     * SetSpawn Location
+     *
+     * @param l Location
+     */
+    public void setLocation(Location l);
 }

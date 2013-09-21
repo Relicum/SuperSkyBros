@@ -10,13 +10,14 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @version 0.1
  */
 public class Configs extends ConfigAccessor {
-	/**
-	 * Default Constructor
-	 *
-	 * @param plugin   JavaPlugin
-	 * @param fileName String
-	 */
-	public Configs(JavaPlugin plugin, String fileName) {
-		super(plugin, fileName);
-	}
+
+    /**
+     * Default Constructor
+     *
+     * @param plugin   JavaPlugin
+     * @param fileName String
+     */
+    public Configs(JavaPlugin plugin, String fileName) {
+        super(plugin, fileName);
+    }
 }

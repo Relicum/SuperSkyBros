@@ -2,6 +2,7 @@ package com.relicum.scb;
 
 import com.relicum.scb.classes.Creeper;
 import com.relicum.scb.commands.CommandManager;
+import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.ArenaConfig;
 import com.relicum.scb.configs.LobbyConfig;
 import com.relicum.scb.configs.SignConfig;
@@ -33,37 +34,45 @@ import java.util.ArrayList;
  */
 public class SCB extends JavaPlugin {
 
+
     /**
      * The constant MM.
      */
     public static MessageManager MM;
+
     /**
      * Holds a static p of itself as a JavaPlugin object
      */
     @SuppressWarnings("StaticVariableOfConcreteClass")
     public static SCB p;
+
     /**
      * The Group spawn file.
      */
     public File groupSpawnFile = null;
+
     /**
      * The Group spawn.
      */
     public FileConfiguration groupSpawn = null;
+
     /**
      * The LBS.
      */
     public LobbyManager LBS;
+
     /**
      * Lobby Config Object
      */
     public LobbyConfig LBC;
+
     /**
      * Arena Config Object
      */
     public ArenaConfig ARC;
 
     public ArenaManager ARM;
+
     /**
      * Spawn Config Object
      */
@@ -73,17 +82,21 @@ public class SCB extends JavaPlugin {
      * Sign Config Manager
      */
     public SignConfig SNC;
+
     /**
      * The SignManager
      */
     public SignManager SNM;
+
     /**
      * The Creeper.
      */
     public Creeper co;
 
     protected ArrayList<Permission> plist = new ArrayList<>();
+
     protected PluginManager pm = Bukkit.getServer().getPluginManager();
+
 
     /**
      * Gets p.
@@ -94,6 +107,7 @@ public class SCB extends JavaPlugin {
         return p;
     }
 
+
     /**
      * Get Instance of MessageManager
      *
@@ -103,6 +117,7 @@ public class SCB extends JavaPlugin {
 
         return MM;
     }
+
 
     public static WorldEditPlugin getWorldEdit() {
 
@@ -117,6 +132,7 @@ public class SCB extends JavaPlugin {
 
     }
 
+
     /**
      * On load. Registers any ConfigurationSerializable files at onLoad Before other things have started to load
      */
@@ -124,6 +140,7 @@ public class SCB extends JavaPlugin {
 
 
     }
+
 
     /**
      * On enable.
@@ -148,15 +165,35 @@ public class SCB extends JavaPlugin {
 
         this.getConfig().options().copyDefaults(true);
         this.saveDefaultConfig();
+        if (!p.getConfig().isBoolean("dedicatedSSB")) {
 
-        getServer().getScheduler().scheduleSyncDelayedTask(p, new Startup(), 15);
+            getLogger().severe("****************************************************");
+            getLogger().severe("You MUST set in config.yml if this Minecraft Server");
+            getLogger().severe("is dedicated to SuperSkyBros or it has other games");
+            getLogger().severe("types running along side it.");
+            getLogger().severe("Please open the config.yml for SSB,");
+            getLogger().severe("If this Minecraft server is dedicated to SSB ");
+            getLogger().severe("set 'dedicatedSSB:' true in config.yml or ");
+            getLogger().severe("If not set 'dedicatedSSB:' false in config.yml");
+            getLogger().severe("The plugin will not run until you have done this");
+            getLogger().severe("*****************************************************");
+            getLogger().severe("SSB has been disabled due to 'dedicatedSSB' not being set in the config");
+            p.pm.disablePlugin(p);
+        } else
+            getServer().getScheduler().scheduleSyncDelayedTask(p, new Startup(), 15);
     }
+
 
     /**
      * On disable.
      */
     @Override
     public void onDisable() {
+
+        if (!p.getConfig().isBoolean("dedicatedSSB")) {
+            this.saveConfig();
+            return;
+        }
 
         if (SCB.getInstance().getConfig().getBoolean("firstRun")) {
 
@@ -165,19 +202,26 @@ public class SCB extends JavaPlugin {
         }
 
         LBS.removeAllPlayers();
-        LBC.saveConfig();
-        ARC.saveConfig();
-        SPC.saveConfig();
-        SNC.saveConfig();
-        this.saveConfig();
+        try {
+            LBC.saveConfig();
+            ARC.saveConfig();
+            SPC.saveConfig();
+            SNC.saveConfig();
+            this.saveConfig();
+        }
+        catch ( Exception e ) {
+            return;
+        }
 
 
     }
+
 
     public void addPerm(String pe) {
 
         this.plist.add(new Permission(pe));
     }
+
 
     public void loadLobbyEvents() {
 
@@ -189,6 +233,7 @@ public class SCB extends JavaPlugin {
         }
 
     }
+
 
     public void unloadLobbyEvents() {
 
@@ -206,13 +251,15 @@ public class SCB extends JavaPlugin {
 
         SCB p;
 
+
         public Startup() {
             this.p = SCB.getInstance();
         }
 
+
         /**
-         * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread causes
-         * the object's <code>run</code> method to be called in that separately executing thread.
+         * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread
+         * causes the object's <code>run</code> method to be called in that separately executing thread.
          * <p/>
          * The general contract of the method <code>run</code> is that it may take any action whatsoever.
          *
@@ -258,17 +305,13 @@ public class SCB extends JavaPlugin {
 
             }
 
-            if (!p.LBC.getConfig().getBoolean("LOBBYSET") && p.getConfig().getBoolean("autoJoinLobby")) {
-                getLogger().severe("SSB is been disabled as you have not set the Lobby Spawn and have autojoin set to true please set autojoin to false and set the Lobby Spawn first");
-                p.pm.disablePlugin(p);
-                return;
 
-            }
             p.LBS = new LobbyManager();
             p.pm.registerEvents(new PlayerJoin(p), p);
             p.pm.registerEvents(new PlayerQuit(p), p);
             p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
-            p.pm.registerEvents(new ArenaDisable(p), p);
+
+            //p.pm.registerEvents(new ArenaChangeStatus(p), p);
 
             p.loadLobbyEvents();
 
@@ -286,8 +329,25 @@ public class SCB extends JavaPlugin {
             //TODO Must refactor out this Helper Class
             Helper.getInstance().setup(p);
 
+
+            if (!p.LBC.getConfig().getBoolean("LOBBYSET") && p.getConfig().getBoolean("autoJoinLobby")) {
+                getLogger().severe("SSB is been disabled as you have not set the Lobby Spawn and have autojoin set to true please set autojoin to false in config.yml and set the Lobby Spawn first");
+                p.pm.disablePlugin(p);
+
+
+            }
+
+            //Debug Commands
+            if (p.getConfig().getBoolean("debugCommands")) {
+
+                p.getCommand("vList").setExecutor(new DebugManager(p));
+                p.getCommand("vList").setPermissionMessage("Only runs from console");
+
+                System.out.println("Debug Commands installed");
+            }
         }
     }
+
 
     private void fileExists(String fi) {
 
@@ -301,7 +361,8 @@ public class SCB extends JavaPlugin {
                 fCon = YamlConfiguration.loadConfiguration(SCB.getInstance().getResource(fi));
                 fCon.save(file);
             }
-        } catch (Exception e) {
+        }
+        catch ( Exception e ) {
             e.printStackTrace();
         }
 

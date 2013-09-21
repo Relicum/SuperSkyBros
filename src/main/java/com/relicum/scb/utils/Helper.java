@@ -18,94 +18,104 @@ import java.io.File;
  */
 public class Helper {
 
-	private static Helper instance = new Helper();
-	protected static SCB pl;
+    private static Helper instance = new Helper();
 
-	private Helper() {
-
-	}
-
-	public static Helper getInstance() {
-
-		return instance;
-	}
-
-	public void setup(SCB p) {
-		Helper.pl = p;
-	}
+    protected static SCB pl;
 
 
-	public boolean fileExists(String fi) {
+    private Helper() {
 
-		File file = new File(pl.getDataFolder(), fi);
+    }
 
-		try {
-			if (!file.exists()) {
-				return false;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return true;
-	}
 
-	/**
-	 * @param fi String
-	 * @return boolean
-	 */
-	public boolean loadFile(String fi) {
+    public static Helper getInstance() {
 
-		File file = new File(pl.getDataFolder(), fi);
-		try {
-			if (file.createNewFile()) {
-				FileConfiguration fCon = YamlConfiguration.loadConfiguration(pl.getResource(fi));
-				fCon.save(file);
-				return true;
-			}
+        return instance;
+    }
 
-		} catch (Exception e) {
-			e.printStackTrace();
 
-		}
-		return false;
-	}
+    public void setup(SCB p) {
+        Helper.pl = p;
+    }
 
-	/**
-	 * Returns players current world name as a string
-	 *
-	 * @param pl Player
-	 * @return String
-	 */
-	public String getPlayersCurrentWorld(Player pl) {
 
-		return pl.getWorld().toString();
-	}
+    public boolean fileExists(String fi) {
 
-	/**
-	 * Returns players current world as a World object
-	 *
-	 * @param pl Player
-	 * @return World
-	 */
-	public World getPlayersWorld(Player pl) {
+        File file = new File(pl.getDataFolder(), fi);
 
-		return pl.getWorld();
-	}
+        try {
+            if (!file.exists()) {
+                return false;
+            }
+        }
+        catch ( Exception e ) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 
-	/**
-	 * Returns the player current location as a Vector
-	 *
-	 * @param pl Player
-	 * @return Vector
-	 */
-	public Vector currentPlayerLocation(Player pl) {
 
-		Location loc = pl.getLocation();
+    /**
+     * @param fi String
+     * @return boolean
+     */
+    public boolean loadFile(String fi) {
 
-		Vector v = new Vector(loc.getX(), loc.getY(), loc.getZ());
+        File file = new File(pl.getDataFolder(), fi);
+        try {
+            if (file.createNewFile()) {
+                FileConfiguration fCon = YamlConfiguration.loadConfiguration(pl.getResource(fi));
+                fCon.save(file);
+                return true;
+            }
 
-		return v;
-	}
+        }
+        catch ( Exception e ) {
+            e.printStackTrace();
+
+        }
+        return false;
+    }
+
+
+    /**
+     * Returns players current world name as a string
+     *
+     * @param pl Player
+     * @return String
+     */
+    public String getPlayersCurrentWorld(Player pl) {
+
+        return pl.getWorld().toString();
+    }
+
+
+    /**
+     * Returns players current world as a World object
+     *
+     * @param pl Player
+     * @return World
+     */
+    public World getPlayersWorld(Player pl) {
+
+        return pl.getWorld();
+    }
+
+
+    /**
+     * Returns the player current location as a Vector
+     *
+     * @param pl Player
+     * @return Vector
+     */
+    public Vector currentPlayerLocation(Player pl) {
+
+        Location loc = pl.getLocation();
+
+        Vector v = new Vector(loc.getX(), loc.getY(), loc.getZ());
+
+        return v;
+    }
 
 
 }

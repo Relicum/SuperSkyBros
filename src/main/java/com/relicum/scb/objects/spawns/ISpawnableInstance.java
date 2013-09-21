@@ -11,17 +11,17 @@ import org.bukkit.util.Vector;
  */
 public interface ISpawnableInstance {
 
-	/**
-	 * Get Spawn Vector
-	 *
-	 * @return Vector
-	 */
-	public Vector getVector();
+    /**
+     * Get Spawn Vector
+     *
+     * @return Vector
+     */
+    public Vector getVector();
 
-	/**
-	 * Get world.
-	 *
-	 * @return World
-	 */
-	public World getWorld();
+    /**
+     * Get world.
+     *
+     * @return World
+     */
+    public World getWorld();
 }

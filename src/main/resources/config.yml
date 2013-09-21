@@ -1,13 +1,16 @@
 firstRun: true
+debugCommands: true
 enable: true
 enableLobbyProtection: false
 ignoreWorlds:
+  - test
   - world_the_end
   - world_nether
 autoJoinLobby: false
-## Set this to true if server only running SSB
+## Set this to true if server only running SSB on this instance of Minecraft Server
 dedicatedSSB: true
 jumpPower: 1
 jumpInLobby: true
 classesEnabled:
   - Creeper
+

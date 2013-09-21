@@ -10,15 +10,16 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class Template extends JavaPlugin {
 
-	Template template;
+    Template template;
 
 
-	public void onEnable() {
+    public void onEnable() {
 
-		template = this;
-	}
+        template = this;
+    }
 
-	public void onDisable() {
 
-	}
+    public void onDisable() {
+
+    }
 }

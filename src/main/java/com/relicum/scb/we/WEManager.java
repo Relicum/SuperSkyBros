@@ -17,42 +17,44 @@ import java.util.logging.Level;
 public class WEManager {
 
 
-	private WorldEditPlugin WPL = (WorldEditPlugin) Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
-
-	public WEManager WEManager() {
-
-		return this;
-
-	}
+    private WorldEditPlugin WPL = (WorldEditPlugin) Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
 
 
-	/**
-	 * @return WorldEditPlugin
-	 * @exception ClassCastException
-	 */
-	@SuppressWarnings("ConstantConditions")
-	public WorldEditPlugin getWEP() {
+    public WEManager WEManager() {
 
-		return (WorldEditPlugin) WPL;
-	}
+        return this;
+
+    }
 
 
-	/**
-	 * Gets a new instance of CuboidRegionSelector This can't be static as it is unique to the Arena
-	 *
-	 * @return CuboidRegionSelector
-	 */
+    /**
+     * @return WorldEditPlugin
+     * @throws ClassCastException
+     */
+    @SuppressWarnings("ConstantConditions")
+    public WorldEditPlugin getWEP() {
 
-	public CuboidSelection getSelector(Player pt) {
-		CuboidSelection rs;
-		rs = null;
-		try {
-			rs = (CuboidSelection) getWEP().getSelection(pt);
-			rs.getRegionSelector();
-		} catch (ClassCastException e) {
-			WPL.getLogger().log(Level.SEVERE, e.getStackTrace().toString());
-		}
-		return rs;
-	}
+        return (WorldEditPlugin) WPL;
+    }
+
+
+    /**
+     * Gets a new instance of CuboidRegionSelector This can't be static as it is unique to the Arena
+     *
+     * @return CuboidRegionSelector
+     */
+
+    public CuboidSelection getSelector(Player pt) {
+        CuboidSelection rs;
+        rs = null;
+        try {
+            rs = (CuboidSelection) getWEP().getSelection(pt);
+            rs.getRegionSelector();
+        }
+        catch ( ClassCastException e ) {
+            WPL.getLogger().log(Level.SEVERE, e.getStackTrace().toString());
+        }
+        return rs;
+    }
 
 }

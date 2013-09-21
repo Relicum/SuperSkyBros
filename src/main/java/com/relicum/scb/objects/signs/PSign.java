@@ -4,8 +4,7 @@ import com.relicum.scb.SmashPlayer;
 import org.bukkit.block.Sign;
 
 /**
- * SuperSkyBros
- * First Created 11/09/13
+ * SuperSkyBros First Created 11/09/13
  *
  * @author Relicum
  * @version 0.1

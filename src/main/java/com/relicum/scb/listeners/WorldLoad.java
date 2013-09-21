@@ -11,8 +11,8 @@ import org.bukkit.event.world.WorldLoadEvent;
  */
 public class WorldLoad implements Listener {
 
-	public void onWorldLoad(WorldLoadEvent e) {
+    public void onWorldLoad(WorldLoadEvent e) {
 
 
-	}
+    }
 }

@@ -8,7 +8,7 @@ package com.relicum.scb.configs;
  */
 public class LobbyConfig extends IConfig {
 
-	public LobbyConfig(String filename) {
-		super(filename);
-	}
+    public LobbyConfig(String filename) {
+        super(filename);
+    }
 }

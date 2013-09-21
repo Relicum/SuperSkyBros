@@ -3,21 +3,21 @@ package com.relicum.scb.commands;
 import com.relicum.scb.ArenaManager;
 import com.relicum.scb.SCB;
 import com.relicum.scb.arena.Arena;
-import com.relicum.scb.arena.ArenaIO;
-import com.relicum.scb.events.ArenaDisableEvent;
+import com.relicum.scb.arena.ArenaStatus;
+import com.relicum.scb.events.ArenaStatusChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.util.Set;
 
 /**
- * SuperSkyBros
- * First Created 11/09/13
+ * SuperSkyBros First Created 11/09/13
  *
  * @author Relicum
  * @version 0.1
  */
 public class disable extends SubBase {
+
     @Override
     public boolean onCommand(Player player, String[] args) {
 
@@ -39,17 +39,20 @@ public class disable extends SubBase {
             player.sendMessage(tmp = SCB.getMessageManager().getErrorMessage("command.message.enableNoIdFound").replace("%ID%", args[0]));
             return true;
         }
+
         Arena arena = ar.getArenaById(Integer.parseInt(args[0]));
+        ArenaStatus pre = arena.getArenaStatus();
         arena.setEnable(false);
         arena.setStatus("DISABLED");
 
-        ArenaIO arenaIO = new ArenaIO();
+
         try {
-            arenaIO.saveArena(arena);
-            ArenaDisableEvent disablearena = new ArenaDisableEvent(arena);
+
+            ArenaStatusChangeEvent disablearena = new ArenaStatusChangeEvent(arena, pre);
             Bukkit.getServer().getPluginManager().callEvent(disablearena);
 
-        } catch (Exception e) {
+        }
+        catch ( Exception e ) {
             e.printStackTrace();
             player.sendMessage(tmp = SCB.getMessageManager().getErrorMessage("command.message.enableFailedToSave").replace("%ID%", args[0]));
             return true;
@@ -60,15 +63,18 @@ public class disable extends SubBase {
         return true;
     }
 
+
     @Override
     public void setmDescription() {
         mNode = "disable";
     }
 
+
     @Override
     public Integer setNumArgs() {
         return 1;
     }
+
 
     @Override
     public String setPermission() {
@@ -76,15 +82,18 @@ public class disable extends SubBase {
         return "ssba.admin.disable";
     }
 
+
     @Override
     public String setUsage() {
         return "/ssba disable [ArenaID]";
     }
 
+
     @Override
     public String setLabel() {
         return "ssba disable";
     }
+
 
     @Override
     public String setCmd() {

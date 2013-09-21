@@ -7,7 +7,8 @@ package com.relicum.scb.configs;
  * @version 0.1
  */
 public class SpawnConfig extends IConfig {
-	public SpawnConfig(String filename) {
-		super(filename);
-	}
+
+    public SpawnConfig(String filename) {
+        super(filename);
+    }
 }

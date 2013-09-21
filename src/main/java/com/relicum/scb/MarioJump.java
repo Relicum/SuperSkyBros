@@ -8,9 +8,9 @@ package com.relicum.scb;
  */
 public class MarioJump {
 
-	/**
-	 * Constructor
-	 */
-	public MarioJump() {
-	}
+    /**
+     * Constructor
+     */
+    public MarioJump() {
+    }
 }

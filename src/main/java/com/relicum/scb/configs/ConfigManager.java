@@ -17,7 +17,7 @@ public class ConfigManager {
 	public void newCreate() {*/
 
 /*
-		if (!SCB.getInstance().signFile.exists()) {
+        if (!SCB.getInstance().signFile.exists()) {
 			try {
 				if (SCB.getInstance().signFile.createNewFile()) {
 					SCB.getInstance().Signs = YamlConfiguration.loadConfiguration(SCB.getInstance().getResource("signs.yml"));
@@ -51,7 +51,7 @@ public class ConfigManager {
 */
 
 /*	public void loadgroupSpawnFile() {
-		try {
+        try {
 			SCB.getInstance().groupSpawn.load(SCB.getInstance().groupSpawnFile);
 		} catch (FileNotFoundException e) {
 			System.out.println("Error " + e.getStackTrace().toString());
@@ -63,7 +63,7 @@ public class ConfigManager {
 
 	}*/
 /*
-	public void saveFiles() {
+    public void saveFiles() {
 
 		this.saveSignFile();
 

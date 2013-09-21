@@ -11,5 +11,5 @@ import org.bukkit.inventory.ItemStack;
 public interface IColoredArmour {
 
 
-	public ItemStack getSetArmor(Integer i);
+    public ItemStack getSetArmor(Integer i);
 }

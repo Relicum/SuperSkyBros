@@ -7,4 +7,5 @@ package com.relicum.scb.we;
  * @version 0.1
  */
 public class WorldEditPlugin {
+
 }

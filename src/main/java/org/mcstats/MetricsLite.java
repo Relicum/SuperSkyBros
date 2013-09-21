@@ -101,6 +101,7 @@ public class MetricsLite {
      */
     private volatile BukkitTask task = null;
 
+
     public MetricsLite(Plugin plugin) throws IOException {
         if (plugin == null) {
             throw new IllegalArgumentException("Plugin cannot be null");
@@ -128,10 +129,11 @@ public class MetricsLite {
         debug = configuration.getBoolean("debug", false);
     }
 
+
     /**
-     * Start measuring statistics. This will immediately create an async repeating task as the plugin and send
-     * the initial data to the metrics backend, and then after that it will post in increments of
-     * PING_INTERVAL * 1200 ticks.
+     * Start measuring statistics. This will immediately create an async repeating task as the plugin and send the
+     * initial data to the metrics backend, and then after that it will post in increments of PING_INTERVAL * 1200
+     * ticks.
      *
      * @return True if statistics measuring is running, otherwise false.
      */
@@ -152,6 +154,7 @@ public class MetricsLite {
 
                 private boolean firstPost = true;
 
+
                 public void run() {
                     try {
                         // This has to be synchronized or it can collide with the disable method.
@@ -171,7 +174,8 @@ public class MetricsLite {
                         // After the first post we set firstPost to false
                         // Each post thereafter will be a ping
                         firstPost = false;
-                    } catch (IOException e) {
+                    }
+                    catch ( IOException e ) {
                         if (debug) {
                             Bukkit.getLogger().log(Level.INFO, "[Metrics] " + e.getMessage());
                         }
@@ -183,6 +187,7 @@ public class MetricsLite {
         }
     }
 
+
     /**
      * Has the server owner denied plugin metrics?
      *
@@ -193,12 +198,14 @@ public class MetricsLite {
             try {
                 // Reload the metrics file
                 configuration.load(getConfigFile());
-            } catch (IOException ex) {
+            }
+            catch ( IOException ex ) {
                 if (debug) {
                     Bukkit.getLogger().log(Level.INFO, "[Metrics] " + ex.getMessage());
                 }
                 return true;
-            } catch (InvalidConfigurationException ex) {
+            }
+            catch ( InvalidConfigurationException ex ) {
                 if (debug) {
                     Bukkit.getLogger().log(Level.INFO, "[Metrics] " + ex.getMessage());
                 }
@@ -207,6 +214,7 @@ public class MetricsLite {
             return configuration.getBoolean("opt-out", false);
         }
     }
+
 
     /**
      * Enables metrics for the server by setting "opt-out" to false in the config file and starting the metrics task.
@@ -228,6 +236,7 @@ public class MetricsLite {
             }
         }
     }
+
 
     /**
      * Disables metrics for the server by setting "opt-out" to true in the config file and canceling the metrics task.
@@ -251,6 +260,7 @@ public class MetricsLite {
         }
     }
 
+
     /**
      * Gets the File object of the config file that should be used to store data such as the GUID and opt-out status
      *
@@ -267,6 +277,7 @@ public class MetricsLite {
         // return => base/plugins/PluginMetrics/config.yml
         return new File(new File(pluginsFolder, "PluginMetrics"), "config.yml");
     }
+
 
     /**
      * Generic method that posts a plugin to the metrics website
@@ -375,6 +386,7 @@ public class MetricsLite {
         }
     }
 
+
     /**
      * GZip compress a string of bytes
      *
@@ -388,17 +400,21 @@ public class MetricsLite {
         try {
             gzos = new GZIPOutputStream(baos);
             gzos.write(input.getBytes("UTF-8"));
-        } catch (IOException e) {
+        }
+        catch ( IOException e ) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             if (gzos != null) try {
                 gzos.close();
-            } catch (IOException ignore) {
+            }
+            catch ( IOException ignore ) {
             }
         }
 
         return baos.toByteArray();
     }
+
 
     /**
      * Check if mineshafter is present. If it is, we need to bypass it to send POST requests
@@ -409,10 +425,12 @@ public class MetricsLite {
         try {
             Class.forName("mineshafter.MineServer");
             return true;
-        } catch (Exception e) {
+        }
+        catch ( Exception e ) {
             return false;
         }
     }
+
 
     /**
      * Appends a json encoded key/value pair to the given string builder.
@@ -430,7 +448,8 @@ public class MetricsLite {
                 Double.parseDouble(value);
                 isValueNumeric = true;
             }
-        } catch (NumberFormatException e) {
+        }
+        catch ( NumberFormatException e ) {
             isValueNumeric = false;
         }
 
@@ -448,6 +467,7 @@ public class MetricsLite {
         }
     }
 
+
     /**
      * Escape a string to create a valid JSON string
      *
@@ -458,7 +478,7 @@ public class MetricsLite {
         StringBuilder builder = new StringBuilder();
 
         builder.append('"');
-        for (int index = 0; index < text.length(); index++) {
+        for ( int index = 0; index < text.length(); index++ ) {
             char chr = text.charAt(index);
 
             switch (chr) {
@@ -493,6 +513,7 @@ public class MetricsLite {
 
         return builder.toString();
     }
+
 
     /**
      * Encode text as UTF-8

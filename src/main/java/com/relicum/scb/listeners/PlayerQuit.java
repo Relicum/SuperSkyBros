@@ -1,10 +1,13 @@
 package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.SettingsManager;
+import com.relicum.scb.SmashPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Bukkit-SCB
@@ -15,25 +18,29 @@ import org.bukkit.event.player.PlayerQuitEvent;
 @SuppressWarnings("deprecation")
 public class PlayerQuit implements Listener {
 
-	private SCB plugin;
-
-	public PlayerQuit(SCB pl) {
-
-		plugin = pl;
-	}
-
-	@EventHandler
-	public void playQuit(PlayerQuitEvent e) {
-
-		Player p = e.getPlayer();
-		System.out.println("Player quit event happened for " + e.getPlayer().getDisplayName());
-		plugin.LBS.removePlayer(p.getName());
-		p.getInventory().clear();
-		p.getInventory().setHelmet(null);
-		p.getInventory().setChestplate(null);
-		p.getInventory().setLeggings(null);
-		p.getInventory().setBoots(null);
+    private SCB plugin;
 
 
-	}
+    public PlayerQuit(SCB pl) {
+
+        plugin = pl;
+    }
+
+
+    @EventHandler
+    public void playQuit(PlayerQuitEvent e) {
+
+
+        if (plugin.LBS.isInLobby(e.getPlayer().getName())) {
+
+            System.out.println("Player quit event happened for " + e.getPlayer().getName());
+            SmashPlayer sm = SmashPlayer.warp(e.getPlayer().getName());
+            sm.removeArmour().clearInventory(sm);
+            sm.removeFire().resetHealth(20.00F);
+            sm.closeInventory().updateInventory();
+
+            // plugin.LBS.removePlayer(smashPlayer);
+        }
+
+    }
 }

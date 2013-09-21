@@ -19,52 +19,60 @@ import java.util.List;
 @SuppressWarnings({"UnusedDeclaration", "WeakerAccess"})
 public class SettingsManager {
 
-	/**
-	 * Hold the static p of the Settings Manager
-	 */
-	private static SettingsManager instance = new SettingsManager();
-	private static SCB p;
-	private MessageManager mess;
-	//private LobbyManager lobby;
-	private ArenaManager arena;
-	private File f;
-	private FileConfiguration fc;
-	//private Messages messCon;
-	private List<String> bWorlds = new ArrayList<>();
+    /**
+     * Hold the static p of the Settings Manager
+     */
+    private static SettingsManager instance = new SettingsManager();
 
-	/**
-	 * Default Constructor This should never be called Use getInstance method to create p
-	 */
-	SettingsManager() {
+    private static SCB p;
 
-	}
+    private MessageManager mess;
 
+    //private LobbyManager lobby;
+    private ArenaManager arena;
 
-	/**
-	 * Used to get an p of the Settings Manager IIt uses the Singleton Pattern so only a single p of this will ever be in
-	 * memory and can be shared with any class without having to create a new p every time
-	 *
-	 * @return SettingsManager
-	 */
-	public static SettingsManager getInstance() {
+    private File f;
 
-		return instance;
-	}
+    private FileConfiguration fc;
 
-	/**
-	 * Just at the start to setup all the configs And settings
-	 *
-	 * @param p SCB
-	 */
-	public void setup(SCB p) {
-
-		SettingsManager.p = p;
-		//setupMessageManager(p);
+    //private Messages messCon;
+    private List<String> bWorlds = new ArrayList<>();
 
 
-		//Load Config from config Yml
-		//p.getConfig().options().copyDefaults(true);
-		//p.saveDefaultConfig();
+    /**
+     * Default Constructor This should never be called Use getInstance method to create p
+     */
+    SettingsManager() {
+
+    }
+
+
+    /**
+     * Used to get an p of the Settings Manager IIt uses the Singleton Pattern so only a single p of this will ever be
+     * in memory and can be shared with any class without having to create a new p every time
+     *
+     * @return SettingsManager
+     */
+    public static SettingsManager getInstance() {
+
+        return instance;
+    }
+
+
+    /**
+     * Just at the start to setup all the configs And settings
+     *
+     * @param p SCB
+     */
+    public void setup(SCB p) {
+
+        SettingsManager.p = p;
+        //setupMessageManager(p);
+
+
+        //Load Config from config Yml
+        //p.getConfig().options().copyDefaults(true);
+        //p.saveDefaultConfig();
 
 
    /*     fileExists("arena.yml");
@@ -85,23 +93,25 @@ public class SettingsManager {
 		messCon.saveDefaultConfig();
 		p.getLogger().info("Messages Config Successfully Loaded");*/
 
-		bWorlds = getConfig().getStringList("ignoreWorlds");
-		//setupLobbyManager(p);
-		//setupArenaManager(p);
+        bWorlds = p.getConfig().getStringList("ignoreWorlds");
+        //setupLobbyManager(p);
+        //setupArenaManager(p);
 
 
-	}
+    }
 
-	private void setupArenaManager(SCB p) {
 
-		arena = new ArenaManager(p);
-	}
+    private void setupArenaManager(SCB p) {
 
-	private void setupMessageManager(SCB p) {
+        arena = new ArenaManager(p);
+    }
 
-		mess = new MessageManager(p);
 
-	}
+    private void setupMessageManager(SCB p) {
+
+        mess = new MessageManager(p);
+
+    }
 
 /*	public MessageManager getMessageManager2() {
 
@@ -124,96 +134,101 @@ public class SettingsManager {
 	}
 
 	*//**
-	 * Chain this with getInstance to access all Arena settings
-	 *
-	 * @return Arena
-	 *//*
-	public Arena getArena() {
+     * Chain this with getInstance to access all Arena settings
+     *
+     * @return Arena
+     *//*
+    public Arena getArena() {
 
 		return arenaCon;
 	}*/
 
-	/**
-	 Chain this with getInstance to access Message Settings
+    /**
+     Chain this with getInstance to access Message Settings
 
-	 @return Messages
-	 */
+     @return Messages
+     */
 /*	public Messages getMessages() {
 
 		return messCon;
 	}*/
 
-	/**
-	 * Chain this with getInstance to access Spawns Settings
-	 *
-	 * @return Spawns
-	 */
+    /**
+     * Chain this with getInstance to access Spawns Settings
+     *
+     * @return Spawns
+     */
 /*    public Spawns getSpawns() {
 
         return spawnCon;
     }*/
 
-	/**
-	 * Chain this with getInstance to access default configs
-	 *
-	 * @return FileConfiguration
-	 */
-	public FileConfiguration getConfig() {
 
-		return p.getConfig();
-	}
+    /**
+     * Chain this with getInstance to access default configs
+     *
+     * @return FileConfiguration
+     */
+    public FileConfiguration getConfig() {
+
+        return p.getConfig();
+    }
 
 
-	/**
-	 * Checks To see if a file exists If not it creates it
-	 *
-	 * @param fi String
-	 */
+    /**
+     * Checks To see if a file exists If not it creates it
+     *
+     * @param fi String
+     */
 
-	void fileExists(String fi) {
+    void fileExists(String fi) {
 
-		File file = new File(p.getDataFolder(), fi);
-		FileConfiguration fCon;
-		try {
-			if (!file.exists()) {
-				boolean newFile = file.createNewFile();
-				fCon = YamlConfiguration.loadConfiguration(p.getResource(fi));
-				fCon.save(file);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        File file = new File(p.getDataFolder(), fi);
+        FileConfiguration fCon;
+        try {
+            if (!file.exists()) {
+                boolean newFile = file.createNewFile();
+                fCon = YamlConfiguration.loadConfiguration(p.getResource(fi));
+                fCon.save(file);
+            }
+        }
+        catch ( Exception e ) {
+            e.printStackTrace();
+        }
 
-	}
+    }
 
-	/**
-	 * Returns an array list of worlds specified not to be have SCB running in
-	 *
-	 * @return ArrayList<String>
-	 */
-	public List<String> notWorlds() {
 
-		return bWorlds;
-	}
+    /**
+     * Returns an array list of worlds specified not to be have SCB running in
+     *
+     * @return ArrayList<String>
+     */
+    public List<String> notWorlds() {
 
-	/**
-	 * Check if a world is on the black list of Worlds Not to run SCB commands on. True if the world is in the list false
-	 * if not.
-	 *
-	 * @param w String
-	 * @return boolean
-	 */
-	public boolean isWorldBlackListed(String w) {
+        return bWorlds;
+    }
 
-		return notWorlds().contains(w);
-	}
 
-	public Integer setTotalArenas() {
+    /**
+     * Check if a world is on the black list of Worlds Not to run SCB commands on. True if the world is in the list
+     * false if not.
+     *
+     * @param w String
+     * @return boolean
+     */
+    public boolean isWorldBlackListed(String w) {
 
-		Integer to = p.ARC.getConfig().getInt("arena.total");
+        return notWorlds().contains(w);
+    }
 
-		return to;
 
-	}
+    public Integer setTotalArenas() {
+
+        Integer to = p.ARC.getConfig().getInt("arena.total");
+
+        return to;
+
+    }
 
 }

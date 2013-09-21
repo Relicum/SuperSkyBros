@@ -13,10 +13,7 @@ import org.bukkit.plugin.PluginManager;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Custom Command Handler This deals with all events connect to Commands, including command help
@@ -30,12 +27,16 @@ public class CommandManager implements CommandExecutor {
      * Stores an instance of the main plugin class
      */
     public Plugin plugin;
+
     /**
      * Stores a HashMap of commands
      */
     public Map<String, SubBase> clist = new HashMap<String, SubBase>();
 
     public static MessageManager mm = SCB.getMessageManager();
+
+    public List<String> notWorlds = SettingsManager.getInstance().notWorlds();
+
 
     /**
      * Class that handles all the clist and redirects Them to the correct class
@@ -47,7 +48,7 @@ public class CommandManager implements CommandExecutor {
         plugin = p;
         loadCommands();
 
-        for (Map.Entry<String, SubBase> entry : clist.entrySet()) {
+        for ( Map.Entry<String, SubBase> entry : clist.entrySet() ) {
 
             registerCommand(entry.getKey(), entry.getValue());
 
@@ -76,6 +77,7 @@ public class CommandManager implements CommandExecutor {
         clist.put("disable", new disable());
     }
 
+
     /**
      * Custom Command Executor
      *
@@ -96,8 +98,12 @@ public class CommandManager implements CommandExecutor {
 
         Player player = (Player) cs;
 
-        if (SettingsManager.getInstance().isWorldBlackListed(player.getWorld().toString())) {
-            player.sendMessage(mm.getAdminMessage("command.message.worldOnBlackList"));
+
+        String my = player.getWorld().getName();
+
+        if (this.notWorlds.contains(player.getWorld().getName())) {
+            player.sendMessage(mm.getErrorMessage("command.message.worldOnBlackList"));
+            plugin.getLogger().info("You can not run commands in world " + player.getWorld().getName() + " as the world is on the world blacklist remove it from config.yml");
             return true;
         }
 
@@ -136,7 +142,8 @@ public class CommandManager implements CommandExecutor {
 
         try {
             clist.get(sub).onCommand(player, strings);
-        } catch (Exception e) {
+        }
+        catch ( Exception e ) {
             e.printStackTrace();
             player.sendMessage(mm.getErrorMessage("system.internal.defaultError"));
             player.sendMessage(ChatColor.AQUA + "./ " + sub + "" + Arrays.toString(strings));
@@ -144,6 +151,7 @@ public class CommandManager implements CommandExecutor {
         return true;
 
     }
+
 
     /**
      * Send Message to player Have still to add in my own custom messaging system
@@ -155,6 +163,7 @@ public class CommandManager implements CommandExecutor {
 
         p.sendMessage(ChatColor.DARK_GREEN + "[" + ChatColor.DARK_PURPLE + "SSB" + ChatColor.DARK_GREEN + "]" + ChatColor.DARK_PURPLE + s);
     }
+
 
     /**
      * This function will register all the clist With Bukkit as well as setting the Description, Useage Permission and
@@ -187,6 +196,7 @@ public class CommandManager implements CommandExecutor {
 
     }
 
+
     /**
      * Returns an instance of Command object setup For the command name you give it.
      *
@@ -202,7 +212,8 @@ public class CommandManager implements CommandExecutor {
             c.setAccessible(true);
 
             command = (PluginCommand) c.newInstance(new Object[]{name, plugin});
-        } catch (SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
+        }
+        catch ( SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e ) {
             e.printStackTrace();
         }
 
@@ -210,25 +221,9 @@ public class CommandManager implements CommandExecutor {
     }
 
 
-/*    public CommandMap getCommandMap() {
-        CommandMap commandMap = null;
-
-        try {
-            if ((SimplePluginManager) plugin.getServer().getPluginManager() instanceof SimplePluginManager) {
-                Field f = SimplePluginManager.class.getDeclaredField("commandMap");
-                f.setAccessible(true);
-
-                commandMap = (CommandMap) f.get(plugin.getServer().getPluginManager());
-            }
-        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        return commandMap;
-    }*/
-
     /**
-     * Returns an instance of CommandMap which Can then be used to correctly register the command and details with Bukkit
+     * Returns an instance of CommandMap which Can then be used to correctly register the command and details with
+     * Bukkit
      *
      * @return CommandMap
      */
@@ -242,7 +237,8 @@ public class CommandManager implements CommandExecutor {
 
                 commandMap = (CommandMap) f.get(pm);
             }
-        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+        }
+        catch ( NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e ) {
             e.printStackTrace();
         }
 

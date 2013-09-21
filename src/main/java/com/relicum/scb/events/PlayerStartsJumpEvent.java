@@ -12,8 +12,8 @@ import org.bukkit.event.HandlerList;
 public class PlayerStartsJumpEvent extends Event {
 
 
-	@Override
-	public HandlerList getHandlers() {
-		return null;  //To change body of implemented methods use File | Settings | File Templates.
-	}
+    @Override
+    public HandlerList getHandlers() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

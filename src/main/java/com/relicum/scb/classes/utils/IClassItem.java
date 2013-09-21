@@ -12,9 +12,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 public abstract interface IClassItem {
 
 
-	public Material getMaterials(Integer id);
+    public Material getMaterials(Integer id);
 
-	public ItemMeta getItemsMeta(Material mat);
+    public ItemMeta getItemsMeta(Material mat);
 
-	public ItemEnum getType();
+    public ItemEnum getType();
 }

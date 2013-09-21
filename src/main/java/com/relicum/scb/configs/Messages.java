@@ -11,24 +11,25 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class Messages extends ConfigAccessor {
 
-	/**
-	 * Convenient and easy way to deal with other yml files using the same methods as the default
-	 *
-	 * @param jp JavaPlugin
-	 * @param fn String
-	 */
-	public Messages(JavaPlugin jp, String fn) {
-		super(jp, fn);
-	}
+    /**
+     * Convenient and easy way to deal with other yml files using the same methods as the default
+     *
+     * @param jp JavaPlugin
+     * @param fn String
+     */
+    public Messages(JavaPlugin jp, String fn) {
+        super(jp, fn);
+    }
 
-	/**
-	 * Checks to see if the String path exists in the message file Will return True if it does False if not
-	 *
-	 * @param s String
-	 * @return boolean
-	 */
-	public boolean stringExists(String s) {
 
-		return getConfig().contains(s);
-	}
+    /**
+     * Checks to see if the String path exists in the message file Will return True if it does False if not
+     *
+     * @param s String
+     * @return boolean
+     */
+    public boolean stringExists(String s) {
+
+        return getConfig().contains(s);
+    }
 }

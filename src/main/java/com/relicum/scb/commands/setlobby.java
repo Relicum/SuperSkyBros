@@ -16,130 +16,139 @@ import org.bukkit.util.Vector;
  * @version 0.1
  */
 public class setlobby extends SubBase {
-	/**
-	 * @param player Player
-	 * @param args   String[]
-	 * @return boolean
-	 */
-	@Override
-	public boolean onCommand(Player player, String[] args) {
-		String perm = "ssb.player.join";
-		WorldEditPlugin wm = new WEManager().getWEP();
-		Selection cr = wm.getSelection(player);
-		Vector rmin;
-		try {
-			rmin = new Vector(cr.getMinimumPoint().getBlockX(), cr.getMinimumPoint().getBlockY(), cr.getMinimumPoint().getBlockZ());
 
-		} catch (Exception e) {
-			player.sendMessage(SCB.MM.getErrorMessage("command.message.setlobbyNoSel"));
-			SCB.getInstance().getLogger().severe("Error setting lobby WorldEdit selection not set correctly");
-			e.printStackTrace();
-			return true;
-		}
+    /**
+     * @param player Player
+     * @param args   String[]
+     * @return boolean
+     */
+    @Override
+    public boolean onCommand(Player player, String[] args) {
+        String perm = "ssb.player.join";
+        WorldEditPlugin wm = new WEManager().getWEP();
+        Selection cr = wm.getSelection(player);
+        Vector rmin;
+        try {
+            rmin = new Vector(cr.getMinimumPoint().getBlockX(), cr.getMinimumPoint().getBlockY(), cr.getMinimumPoint().getBlockZ());
 
-
-		Vector rmax;
-
-		rmax = new Vector(cr.getMaximumPoint().getBlockX(), cr.getMaximumPoint().getBlockY(), cr.getMaximumPoint().getBlockZ());
-
-		Vector lobbySpawn = new Vector(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
-		Float dir = SCB.getInstance().LBS.getDirection(player.getLocation().getYaw());
-
-		LobbyRegion region = new LobbyRegion(rmin, rmax, lobbySpawn, player.getWorld().getName(), perm, player.getLocation().getYaw());
-
-		LobbyConfig LC = SCB.getInstance().LBS.getLobbySaveObject();
+        }
+        catch ( Exception e ) {
+            player.sendMessage(SCB.MM.getErrorMessage("command.message.setlobbyNoSel"));
+            SCB.getInstance().getLogger().severe("Error setting lobby WorldEdit selection not set correctly");
+            e.printStackTrace();
+            return true;
+        }
 
 
-		try {
-			if (!LC.getConfig().contains("LOBBY")) {
-				LC.getConfig().createSection("LOBBY");
-			}
-			LC.getConfig().set("LOBBY.REGION.MIN", region.getMinVector());
-			LC.getConfig().set("LOBBY.REGION.MAX", region.getMaxVector());
-			LC.getConfig().set("LOBBY.REGION.SPAWN", region.getLobbySpawnVector());
-			LC.getConfig().set("LOBBY.REGION.YAW", region.getYaw());
-			LC.getConfig().set("LOBBY.REGION.WORLD", region.getWorld().getName());
-			LC.getConfig().set("LOBBY.REGION.PERM", "ssb.player.join");
-			if (!LC.getConfig().contains("LOBBYSET")) {
-				LC.getConfig().createSection("LOBBYSET");
-			}
-			LC.getConfig().set("LOBBYSET", true);
-			LC.saveConfig();
-			LC.reloadConfig();
-		} catch (Exception e) {
+        Vector rmax;
 
-			SCB.getInstance().getLogger().severe("Error: saving Lobby Region");
-			System.out.println(e.getStackTrace().toString());
-			player.sendMessage(SCB.MM.getErrorMessage("command.message.setlobbyFail"));
+        rmax = new Vector(cr.getMaximumPoint().getBlockX(), cr.getMaximumPoint().getBlockY(), cr.getMaximumPoint().getBlockZ());
 
-		}
+        Vector lobbySpawn = new Vector(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
+        Float dir = SCB.getInstance().LBS.getDirection(player.getLocation().getYaw());
 
-		SCB.getInstance().LBS.setLobbyRegion(region);
+        LobbyRegion region = new LobbyRegion(rmin, rmax, lobbySpawn, player.getWorld().getName(), perm, player.getLocation().getYaw());
+
+        LobbyConfig LC = SCB.getInstance().LBS.getLobbySaveObject();
 
 
-		player.sendMessage(SCB.MM.getAdminMessage("command.message.setlobbySuccess"));
+        try {
+            if (!LC.getConfig().contains("LOBBY")) {
+                LC.getConfig().createSection("LOBBY");
+            }
+            LC.getConfig().set("LOBBY.REGION.MIN", region.getMinVector());
+            LC.getConfig().set("LOBBY.REGION.MAX", region.getMaxVector());
+            LC.getConfig().set("LOBBY.REGION.SPAWN", region.getLobbySpawnVector());
+            LC.getConfig().set("LOBBY.REGION.YAW", region.getYaw());
+            LC.getConfig().set("LOBBY.REGION.WORLD", region.getWorld().getName());
+            LC.getConfig().set("LOBBY.REGION.PERM", "ssb.player.join");
+            if (!LC.getConfig().contains("LOBBYSET")) {
+                LC.getConfig().createSection("LOBBYSET");
+            }
+            LC.getConfig().set("LOBBYSET", true);
+            LC.saveConfig();
+            LC.reloadConfig();
+        }
+        catch ( Exception e ) {
+
+            SCB.getInstance().getLogger().severe("Error: saving Lobby Region");
+            System.out.println(e.getStackTrace().toString());
+            player.sendMessage(SCB.MM.getErrorMessage("command.message.setlobbyFail"));
+
+        }
+
+        SCB.getInstance().LBS.setLobbyRegion(region);
+
+
+        player.sendMessage(SCB.MM.getAdminMessage("command.message.setlobbySuccess"));
         SCB.getInstance().getLogger().info("Lobby Region and Spawn Point have Been Successfully Set");
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Simplify set this function to set the field mNode with the commands description will come from in the messages.yml
-	 * file You do not need to enter the full node as it will be prefixed for you. Eg is the full node is
-	 * command.description.createarena you only need to set this to createarena
-	 */
-	@Override
-	public void setmDescription() {
-		mNode = "setlobby";
-	}
 
-	/**
-	 * Simply set this to return the the number of arguments The command should receive
-	 *
-	 * @return Integer
-	 */
-	@Override
-	public Integer setNumArgs() {
-		return 0;
-	}
+    /**
+     * Simplify set this function to set the field mNode with the commands description will come from in the
+     * messages.yml file You do not need to enter the full node as it will be prefixed for you. Eg is the full node is
+     * command.description.createarena you only need to set this to createarena
+     */
+    @Override
+    public void setmDescription() {
+        mNode = "setlobby";
+    }
 
-	/**
-	 * Simply set this to return the clist permission
-	 *
-	 * @return String
-	 */
-	@Override
-	public String setPermission() {
-		return "ssba.admin.setlobby";
-	}
 
-	/**
-	 * Simply set this to return the clist Usage
-	 *
-	 * @return String
-	 */
-	@Override
-	public String setUsage() {
-		return "/ssba setlobby";
-	}
+    /**
+     * Simply set this to return the the number of arguments The command should receive
+     *
+     * @return Integer
+     */
+    @Override
+    public Integer setNumArgs() {
+        return 0;
+    }
 
-	/**
-	 * Set this to the label of the command
-	 *
-	 * @return String
-	 */
-	@Override
-	public String setLabel() {
-		return "ssba setlobby";
-	}
 
-	/**
-	 * Set com
-	 *
-	 * @return String
-	 */
-	@Override
-	public String setCmd() {
-		return "ssba setlobby";
-	}
+    /**
+     * Simply set this to return the clist permission
+     *
+     * @return String
+     */
+    @Override
+    public String setPermission() {
+        return "ssba.admin.setlobby";
+    }
+
+
+    /**
+     * Simply set this to return the clist Usage
+     *
+     * @return String
+     */
+    @Override
+    public String setUsage() {
+        return "/ssba setlobby";
+    }
+
+
+    /**
+     * Set this to the label of the command
+     *
+     * @return String
+     */
+    @Override
+    public String setLabel() {
+        return "ssba setlobby";
+    }
+
+
+    /**
+     * Set com
+     *
+     * @return String
+     */
+    @Override
+    public String setCmd() {
+        return "ssba setlobby";
+    }
 }

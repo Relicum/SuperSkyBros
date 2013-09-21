@@ -14,119 +14,134 @@ import java.io.Serializable;
  */
 public abstract class SpawnInst implements ISpawnable, ISpawnableInstance, Serializable {
 
-	static int classCount = 0;
+    static int classCount = 0;
 
-	final Integer spawnId = classCount++;
-	protected transient Vector vec;
-	protected String world;
-	private int x;
-	private int y;
-	private int z;
+    final Integer spawnId = classCount++;
 
+    protected transient Vector vec;
 
-	protected SpawnInst() {
-	}
+    protected String world;
 
-	/**
-	 * Construct is passed a Location
-	 *
-	 * @param location
-	 */
-	public SpawnInst(Vector v) {
-		this.vec = v;
-		this.setX(v.getBlockX());
-		this.setY(v.getBlockY());
-		this.setZ(v.getBlockZ());
-	}
+    private int x;
 
-	/**
-	 * Get the World the location is in
-	 *
-	 * @return World
-	 */
-	public World getWorld() {
-		return BukkitInterface.getWorld(this.getWorldString());
-	}
+    private int y;
+
+    private int z;
 
 
-	/**
-	 * Set vector.
-	 *
-	 * @param Vector
-	 */
-	public void setVector(Vector v) {
-		this.vec = v;
-	}
+    protected SpawnInst() {
+    }
 
-	/**
-	 * Get world string.
-	 *
-	 * @return String
-	 */
-	public String getWorldString() {
-		return this.world;
-	}
 
-	/**
-	 * Returns the Location Object
-	 *
-	 * @return Location
-	 */
-	public Vector getVector() {
-		return this.vec;
-	}
+    /**
+     * Construct is passed a Location
+     *
+     * @param location
+     */
+    public SpawnInst(Vector v) {
+        this.vec = v;
+        this.setX(v.getBlockX());
+        this.setY(v.getBlockY());
+        this.setZ(v.getBlockZ());
+    }
 
-	/**
-	 * Gets x.
-	 *
-	 * @return int
-	 */
-	public int getX() {
-		return x;
-	}
 
-	/**
-	 * Sets x.
-	 *
-	 * @param int
-	 */
-	public void setX(int x) {
-		this.x = x;
-	}
+    /**
+     * Get the World the location is in
+     *
+     * @return World
+     */
+    public World getWorld() {
+        return BukkitInterface.getWorld(this.getWorldString());
+    }
 
-	/**
-	 * Gets z.
-	 *
-	 * @return int
-	 */
-	public int getZ() {
-		return z;
-	}
 
-	/**
-	 * Sets z.
-	 *
-	 * @param int
-	 */
-	public void setZ(int z) {
-		this.z = z;
-	}
+    /**
+     * Set vector.
+     *
+     * @param Vector
+     */
+    public void setVector(Vector v) {
+        this.vec = v;
+    }
 
-	/**
-	 * Gets y.
-	 *
-	 * @return int
-	 */
-	public int getY() {
-		return y;
-	}
 
-	/**
-	 * Sets y.
-	 *
-	 * @param int
-	 */
-	public void setY(int y) {
-		this.y = y;
-	}
+    /**
+     * Get world string.
+     *
+     * @return String
+     */
+    public String getWorldString() {
+        return this.world;
+    }
+
+
+    /**
+     * Returns the Location Object
+     *
+     * @return Location
+     */
+    public Vector getVector() {
+        return this.vec;
+    }
+
+
+    /**
+     * Gets x.
+     *
+     * @return int
+     */
+    public int getX() {
+        return x;
+    }
+
+
+    /**
+     * Sets x.
+     *
+     * @param int
+     */
+    public void setX(int x) {
+        this.x = x;
+    }
+
+
+    /**
+     * Gets z.
+     *
+     * @return int
+     */
+    public int getZ() {
+        return z;
+    }
+
+
+    /**
+     * Sets z.
+     *
+     * @param int
+     */
+    public void setZ(int z) {
+        this.z = z;
+    }
+
+
+    /**
+     * Gets y.
+     *
+     * @return int
+     */
+    public int getY() {
+        return y;
+    }
+
+
+    /**
+     * Sets y.
+     *
+     * @param int
+     */
+    public void setY(int y) {
+        this.y = y;
+    }
 }
