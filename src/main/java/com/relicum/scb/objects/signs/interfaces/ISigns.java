@@ -1,4 +1,4 @@
-package com.relicum.scb.objects.signs;
+package com.relicum.scb.objects.signs.interfaces;
 
 import org.bukkit.event.block.SignChangeEvent;
 
@@ -18,13 +18,6 @@ public interface ISigns {
      * @return Integer
      */
     Integer getID();
-
-    /**
-     * Returns the Type of Sign
-     *
-     * @return ESign
-     */
-    ESign getType();
 
     /**
      * @return ArrayList<String>

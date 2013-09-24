@@ -3,10 +3,7 @@ package com.relicum.scb;
 import com.relicum.scb.classes.Creeper;
 import com.relicum.scb.commands.CommandManager;
 import com.relicum.scb.commands.DebugManager;
-import com.relicum.scb.configs.ArenaConfig;
-import com.relicum.scb.configs.LobbyConfig;
-import com.relicum.scb.configs.SignConfig;
-import com.relicum.scb.configs.SpawnConfig;
+import com.relicum.scb.configs.*;
 import com.relicum.scb.listeners.*;
 import com.relicum.scb.utils.Helper;
 import com.relicum.scb.utils.MessageManager;
@@ -87,6 +84,11 @@ public class SCB extends JavaPlugin {
      * The SignManager
      */
     public SignManager SNM;
+
+    /**
+     * The Sign Formatter Config.
+     */
+    public SignFormat SFM;
 
     /**
      * The Creeper.
@@ -207,6 +209,7 @@ public class SCB extends JavaPlugin {
             ARC.saveConfig();
             SPC.saveConfig();
             SNC.saveConfig();
+            SFM.saveConfig();
             this.saveConfig();
         }
         catch ( Exception e ) {
@@ -295,6 +298,9 @@ public class SCB extends JavaPlugin {
             p.ARC.saveConfig();
             p.ARM = new ArenaManager(p);
 
+            p.SFM = new SignFormat("signsText.yml");
+            p.SFM.getConfig().options().copyDefaults(true);
+            p.SFM.saveConfig();
 
             SettingsManager.getInstance().setup(p);
             MM = new MessageManager(p);

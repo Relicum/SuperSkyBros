@@ -1,4 +1,4 @@
-package com.relicum.scb.objects.signs;
+package com.relicum.scb.objects.signs.interfaces;
 
 import com.relicum.scb.SmashPlayer;
 import org.bukkit.block.Sign;
