@@ -6,11 +6,13 @@ import com.relicum.scb.SettingsManager;
 import com.relicum.scb.SmashPlayer;
 import com.relicum.scb.utils.playerStatus;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -31,6 +33,21 @@ public class PlayerJoin implements Listener {
 
     public PlayerJoin(SCB plugin) {
         this.plugin = plugin;
+
+    }
+
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void signChange(SignChangeEvent e) {
+
+        String[] lines = e.getLines();
+        if (lines[0].equalsIgnoreCase("ssb")) {
+            e.setLine(0, "§e<---§1SSB--->|");
+            e.setLine(1, "JOIN THE LOBBY");
+            e.setLine(2, "§aSUPERSKYBROS");
+        }
+
+        System.out.println("A sign has been place by " + e.getPlayer().getName());
 
     }
 

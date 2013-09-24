@@ -11,7 +11,7 @@ import com.relicum.scb.configs.SignConfig;
 public class SignManager {
 
     /**
-     * Stores Sign Config Object
+     * Stores BaseSign Config Object
      */
     private SignConfig config;
 
@@ -28,6 +28,6 @@ public class SignManager {
     private void setup() {
 
         config = SCB.getInstance().SNC;
-        SCB.getInstance().getLogger().info("New Sign Manager has been created");
+        SCB.getInstance().getLogger().info("New BaseSign Manager has been created");
     }
 }

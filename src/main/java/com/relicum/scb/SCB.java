@@ -76,7 +76,7 @@ public class SCB extends JavaPlugin {
     public SpawnConfig SPC;
 
     /**
-     * Sign Config Manager
+     * BaseSign Config Manager
      */
     public SignConfig SNC;
 
@@ -86,7 +86,7 @@ public class SCB extends JavaPlugin {
     public SignManager SNM;
 
     /**
-     * The Sign Formatter Config.
+     * The BaseSign Formatter Config.
      */
     public SignFormat SFM;
 
@@ -300,7 +300,7 @@ public class SCB extends JavaPlugin {
 
             p.SFM = new SignFormat("signsText.yml");
             p.SFM.getConfig().options().copyDefaults(true);
-            p.SFM.saveConfig();
+            p.SFM.saveDefaultConfig();
 
             SettingsManager.getInstance().setup(p);
             MM = new MessageManager(p);

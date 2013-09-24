@@ -1,7 +1,7 @@
 package com.relicum.scb.objects.signs.utils;
 
 /**
- * SuperSkyBros First Created 23/09/13 Simple collection of static methods useful in Sign Management
+ * SuperSkyBros First Created 23/09/13 Simple collection of static methods useful in BaseSign Management
  *
  * @author Relicum
  * @version 0.1

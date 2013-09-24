@@ -1,7 +1,7 @@
 package com.relicum.scb.objects.signs;
 
 /**
- * SuperSkyBros First Created 11/09/13 Various Types of Sign that can be made using this Sign API
+ * SuperSkyBros First Created 11/09/13 Various Types of BaseSign that can be made using this BaseSign API
  *
  * @author Relicum
  * @version 0.1

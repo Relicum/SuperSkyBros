@@ -1,11 +1,13 @@
 package com.relicum.scb.objects.signs.interfaces;
 
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 
 import java.util.ArrayList;
 
 /**
- * SuperSkyBros Sign Class Interface First Created 11/09/13
+ * SuperSkyBros BaseSign Class Interface First Created 11/09/13
  *
  * @author Relicum
  * @version 0.1
@@ -42,9 +44,17 @@ public interface ISigns {
     /**
      * Function to create the sign
      *
-     * @param SignChangeEvent
-     * @return boolean
+     * @param SignChangeEvent the event
      */
-    boolean createSign(SignChangeEvent e);
+    @EventHandler
+    void createSign(SignChangeEvent e);
+
+    /**
+     * Function to create destroy sign
+     *
+     * @param BlockBreakEvent the event
+     */
+    @EventHandler
+    void destroySign(BlockBreakEvent e);
 
 }

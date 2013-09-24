@@ -1,7 +1,7 @@
 package com.relicum.scb.objects.signs.interfaces;
 
 /**
- * SuperSkyBros First Created 23/09/13 Is the Sign SaveAble if so How is it save and How is it ReLoaded
+ * SuperSkyBros First Created 23/09/13 Is the BaseSign SaveAble if so How is it save and How is it ReLoaded
  *
  * @author Relicum
  * @version 0.1

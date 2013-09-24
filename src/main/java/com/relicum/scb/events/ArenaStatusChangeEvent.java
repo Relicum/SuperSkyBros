@@ -30,7 +30,7 @@ public class ArenaStatusChangeEvent extends Event {
     /**
      * The default constructor is defined for cleaner code. This constructor assumes the event is synchronous.
      */
-    public ArenaStatusChangeEvent(Arena ar, ArenaStatus previous) {
+    public ArenaStatusChangeEvent(ArenaStatus previous, Arena ar) {
         this.arena = ar;
         this.status = ar.getArenaStatus();
         this.pre = previous;
@@ -82,7 +82,7 @@ public class ArenaStatusChangeEvent extends Event {
 
 
     /**
-     * Does the event include the Game Distance
+     * Does the event come from a game
      *
      * @return boolean
      */

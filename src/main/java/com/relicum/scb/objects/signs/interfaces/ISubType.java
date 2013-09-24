@@ -15,6 +15,6 @@ public interface ISubType {
      *
      * @return ESign the sub type of sign
      */
-    ESign getType();
+    ESign getSubType();
 }
 
