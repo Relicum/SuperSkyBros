@@ -39,6 +39,11 @@ public class BukkitInterface {
     }
 
 
+    /**
+     * Gets server.
+     *
+     * @return the server
+     */
     public static Server getServer() {
 
         return server;

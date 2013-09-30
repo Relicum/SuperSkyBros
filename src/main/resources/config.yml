@@ -1,13 +1,13 @@
+# DO NOT CHANGE THE FIRST 2 SETTINGS
 firstRun: true
+firstRunDone: false
 debugCommands: true
 enable: true
 enableLobbyProtection: false
 ignoreWorlds:
-  - test
   - world_the_end
   - world_nether
-## Set this to true if server only running SSB on this instance of Minecraft Server
-dedicatedSSB: SET TO true or false
+dedicatedSSB: false
 jumpPower: 1
 jumpInLobby: true
 classesEnabled:

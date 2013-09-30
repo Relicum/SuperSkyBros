@@ -3,10 +3,7 @@ package com.relicum.scb;
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaIO;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Manages Arenas
@@ -131,6 +128,7 @@ public class ArenaManager {
      * @return the boolean
      */
     public boolean addNewArena(Arena ar) {
+
 
         if (this.total < 1) {
             setup();

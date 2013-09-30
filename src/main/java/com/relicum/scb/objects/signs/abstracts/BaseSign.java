@@ -1,7 +1,9 @@
 package com.relicum.scb.objects.signs.abstracts;
 
+import com.relicum.scb.objects.signs.ESign;
 import com.relicum.scb.objects.signs.TSign;
 import com.relicum.scb.objects.signs.interfaces.ISigns;
+import com.relicum.scb.objects.signs.interfaces.ISubType;
 import com.relicum.scb.objects.signs.interfaces.ISuperType;
 import org.bukkit.event.Listener;
 
@@ -11,19 +13,32 @@ import org.bukkit.event.Listener;
  * @author Relicum
  * @version 0.1
  */
-public abstract class BaseSign implements ISigns, ISuperType, Listener {
+public abstract class BaseSign implements ISigns, ISuperType, ISubType, Listener {
 
+    protected ESign subType;
 
     protected TSign type;
 
 
-    BaseSign() {
-
-
+    BaseSign(TSign t, ESign e) {
+        this.setSuperType(t);
+        this.setSubType(e);
     }
 
 
-    protected abstract void setSuperType();
+    public BaseSign() {
+        //To change body of created methods use File | Settings | File Templates.
+    }
+
+
+    protected void setSuperType(TSign t) {
+        this.type = t;
+    }
+
+
+    protected void setSubType(ESign e) {
+        this.subType = e;
+    }
 
 
     /**
@@ -37,4 +52,19 @@ public abstract class BaseSign implements ISigns, ISuperType, Listener {
         return this.type;
     }
 
+
+    /**
+     * Gets Sub type. From the enum ESign
+     *
+     * @return ESign the sub type of sign
+     */
+    @Override
+    public ESign getSubType() {
+        return this.subType;
+    }
+
+
+    protected void setSuperType() {
+        this.type = TSign.ACTION;
+    }
 }

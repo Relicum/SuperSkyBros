@@ -2,25 +2,33 @@ package com.relicum.scb;
 
 import com.relicum.scb.classes.Creeper;
 import com.relicum.scb.commands.CommandManager;
+import com.relicum.scb.commands.CommandManagerFirstJoin;
 import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.*;
 import com.relicum.scb.listeners.*;
 import com.relicum.scb.utils.Helper;
 import com.relicum.scb.utils.MessageManager;
 import com.relicum.scb.we.WorldEditPlugin;
+import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.RegisteredListener;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.logging.Logger;
 
 
 /**
@@ -31,6 +39,7 @@ import java.util.ArrayList;
  */
 public class SCB extends JavaPlugin {
 
+    private static final Logger log = Logger.getLogger("Minecraft");
 
     /**
      * The constant MM.
@@ -95,6 +104,8 @@ public class SCB extends JavaPlugin {
      */
     public Creeper co;
 
+    public boolean saveOnDisable = true;
+
     protected ArrayList<Permission> plist = new ArrayList<>();
 
     protected PluginManager pm = Bukkit.getServer().getPluginManager();
@@ -135,6 +146,13 @@ public class SCB extends JavaPlugin {
     }
 
 
+    public static Economy econ = null;
+
+    public static Permission perms = null;
+
+    public static Chat chat = null;
+
+
     /**
      * On load. Registers any ConfigurationSerializable files at onLoad Before other things have started to load
      */
@@ -152,6 +170,7 @@ public class SCB extends JavaPlugin {
 
         p = this;
 
+
 		/*try {
             @SuppressWarnings("LocalVariableOfConcreteClass")
             MetricsLite metrics = new MetricsLite(p);
@@ -164,25 +183,30 @@ public class SCB extends JavaPlugin {
 
         BukkitInterface.setServer(this.getServer());
 
-
-        this.getConfig().options().copyDefaults(true);
         this.saveDefaultConfig();
-        if (!p.getConfig().isBoolean("dedicatedSSB")) {
+        this.getConfig().options().copyDefaults(true);
+        this.reloadConfig();
 
-            getLogger().severe("****************************************************");
-            getLogger().severe("You MUST set in config.yml if this Minecraft Server");
-            getLogger().severe("is dedicated to SuperSkyBros or it has other games");
-            getLogger().severe("types running along side it.");
-            getLogger().severe("Please open the config.yml for SSB,");
-            getLogger().severe("If this Minecraft server is dedicated to SSB ");
-            getLogger().severe("set 'dedicatedSSB:' true in config.yml or ");
-            getLogger().severe("If not set 'dedicatedSSB:' false in config.yml");
-            getLogger().severe("The plugin will not run until you have done this");
-            getLogger().severe("*****************************************************");
-            getLogger().severe("SSB has been disabled due to 'dedicatedSSB' not being set in the config");
-            p.pm.disablePlugin(p);
-        } else
-            getServer().getScheduler().scheduleSyncDelayedTask(p, new Startup(), 15);
+
+        setupPermissions();
+        setupChat();
+        setupEconomy();
+
+        if (SCB.getInstance().getConfig().getBoolean("firstRun")) {
+
+            CommandExecutor cm = new CommandManagerFirstJoin(p);
+
+            p.getCommand("ssba").setExecutor(cm);
+            p.getCommand("ssba").setPermissionMessage("You do not have permission to run this command");
+            p.pm.registerEvents(new FirstRun(this), this);
+
+
+        } else {
+
+            getServer().getScheduler().scheduleSyncDelayedTask(SCB.getInstance(), new Startup(), 15L);
+        }
+
+
     }
 
 
@@ -190,39 +214,31 @@ public class SCB extends JavaPlugin {
      * On disable.
      */
     @Override
-    public void onDisable() {
+    public void onDisable() throws NullPointerException {
 
-        if (!p.getConfig().isBoolean("dedicatedSSB")) {
+        if (((!this.getConfig().getBoolean("firstRun")) && (this.getConfig().getBoolean("firstRunDone"))) || (!this.saveOnDisable)) {
+            this.getConfig().set("firstRun", false);
+            this.getConfig().set("firstRunDone", true);
             this.saveConfig();
-            return;
-        }
 
-        if (SCB.getInstance().getConfig().getBoolean("firstRun")) {
+        } else {
 
-            SCB.getInstance().getConfig().set("firstRun", false);
-            this.saveConfig();
-        }
 
-        LBS.removeAllPlayers();
-        try {
-            LBC.saveConfig();
-            ARC.saveConfig();
-            SPC.saveConfig();
-            SNC.saveConfig();
-            SFM.saveConfig();
-            this.saveConfig();
-        }
-        catch ( Exception e ) {
-            return;
+            try {
+                LBC.saveConfig();
+                ARC.saveConfig();
+                SPC.saveConfig();
+                SNC.saveConfig();
+                SFM.saveConfig();
+                this.saveConfig();
+            }
+            catch ( Exception e ) {
+                e.printStackTrace();
+            }
+
         }
 
 
-    }
-
-
-    public void addPerm(String pe) {
-
-        this.plist.add(new Permission(pe));
     }
 
 
@@ -232,6 +248,7 @@ public class SCB extends JavaPlugin {
             System.out.println("Loading Lobby Events in SSB");
             p.pm.registerEvents(new LobbyBlockBreak(p), p);
             p.pm.registerEvents(new LobbyBlockPlace(p), p);
+            //p.pm.registerEvents(new PlayerBlockDamage(),p);
 
         }
 
@@ -244,7 +261,8 @@ public class SCB extends JavaPlugin {
         LobbyBlockPlace bp = new LobbyBlockPlace(this);
 
         BlockBreakEvent.getHandlerList().unregister(bl);
-        BlockPlaceEvent.getHandlerList().unregister(bp);
+
+        //BlockPlaceEvent.getHandlerList().bake();
 
         System.out.println("UnLoading Lobby Events in SSB");
     }
@@ -252,12 +270,7 @@ public class SCB extends JavaPlugin {
 
     protected class Startup implements Runnable {
 
-        SCB p;
-
-
-        public Startup() {
-            this.p = SCB.getInstance();
-        }
+        SCB p = SCB.getInstance();
 
 
         /**
@@ -270,8 +283,6 @@ public class SCB extends JavaPlugin {
          */
         @Override
         public void run() {
-
-            PluginManager pm = Bukkit.getServer().getPluginManager();
 
 
             if (!p.getConfig().getBoolean("firstRun")) {
@@ -341,27 +352,75 @@ public class SCB extends JavaPlugin {
                 p.getCommand("vList").setExecutor(new DebugManager(p));
                 p.getCommand("vList").setPermissionMessage("Only runs from console");
 
+
                 System.out.println("Debug Commands installed");
             }
+
+            Set<org.bukkit.permissions.Permission> ap = p.pm.getPermissions();
+            for ( org.bukkit.permissions.Permission pme : ap ) {
+                System.out.println(pme.getName());
+            }
+
+        }
+
+
+        private void fileExists(String fi) {
+
+            File file = new File(getDataFolder(), fi);
+            FileConfiguration fCon;
+
+
+            try {
+                if (!file.exists()) {
+                    file.createNewFile();
+                    fCon = YamlConfiguration.loadConfiguration(SCB.getInstance().getResource(fi));
+                    fCon.save(file);
+                }
+            }
+            catch ( Exception e ) {
+                e.printStackTrace();
+            }
+
         }
     }
 
 
-    private void fileExists(String fi) {
+    private void setupEconomy() {
 
-        File file = new File(getDataFolder(), fi);
-        FileConfiguration fCon;
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
 
-
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-                fCon = YamlConfiguration.loadConfiguration(SCB.getInstance().getResource(fi));
-                fCon.save(file);
-            }
+        if (rsp != null) {
+            econ = rsp.getProvider();
+            log.info("Successfully Hooked into Economy Plugin");
+        } else {
+            log.warning("Vault could not hook into Economy Plugin");
         }
-        catch ( Exception e ) {
-            e.printStackTrace();
+
+    }
+
+
+    private void setupChat() {
+        RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
+        if (rsp != null) {
+            chat = rsp.getProvider();
+            log.info("Successfully Hooked into Chat Plugin");
+        } else {
+            log.warning("Vault could not hook into Chat Plugin");
+        }
+
+
+    }
+
+
+    private void setupPermissions() {
+        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+
+
+        if (rsp != null) {
+            perms = rsp.getProvider();
+            log.info("Successfully Hooked into Permissions Plugin");
+        } else {
+            log.warning("Vault could not hook into Permissions Plugin");
         }
 
     }

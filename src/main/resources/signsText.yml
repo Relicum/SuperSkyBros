@@ -1,4 +1,4 @@
-##Used to hold the formatting and text for the signs
+# Used to hold the formatting and text for the signs
 LOBBYJOIN:
   lines:
     - 'SUPERSKYBROS'

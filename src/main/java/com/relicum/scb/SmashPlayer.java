@@ -18,6 +18,8 @@ public class SmashPlayer extends BukkitPlayer {
 
     public playerStatus pStatus;
 
+    private String playerLocation;
+
     /**
      * The G iD.
      */
@@ -33,7 +35,7 @@ public class SmashPlayer extends BukkitPlayer {
      */
     public SmashPlayer(Player p) {
         super(p);
-        this.pStatus = playerStatus.OFFLINE;
+
     }
 
 
@@ -87,6 +89,24 @@ public class SmashPlayer extends BukkitPlayer {
     public void setpStatus(playerStatus pls) {
 
         this.pStatus = pls;
+    }
+
+
+    /**
+     * Set my current location as a string
+     *
+     * @param String
+     */
+    public void setMyLocation(String l) {
+        playerLocation = l;
+    }
+
+
+    /**
+     * @return the Location I currently am as a Sting
+     */
+    public String whereAmI() {
+        return playerLocation;
     }
 
 
@@ -190,4 +210,6 @@ public class SmashPlayer extends BukkitPlayer {
     public UUID getUUID() {
         return getPlayer().getUniqueId();
     }
+
+
 }

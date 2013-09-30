@@ -107,7 +107,7 @@ public class CommandManager implements CommandExecutor {
             return true;
         }
 
-        if (strings == null || strings.length < 1) {
+        if (strings == null || strings.length < 1L) {
 
             player.sendMessage(ChatColor.DARK_RED + "No arguments passed need to handle help display");
             return true;
@@ -128,7 +128,7 @@ public class CommandManager implements CommandExecutor {
         // Pre Execute command checks
         SubBase subCom = clist.get(sub);
         // Has the user the permission
-        if (!(player.isOp()) || !(player.hasPermission(subCom.getPerm()))) {
+        if ((!player.isOp()) && (!SCB.perms.has(player, subCom.getPerm()))) {
             player.sendMessage(mm.getNoPerm());
             return true;
         }
@@ -141,7 +141,11 @@ public class CommandManager implements CommandExecutor {
         }
 
         try {
+
+
             clist.get(sub).onCommand(player, strings);
+
+
         }
         catch ( Exception e ) {
             e.printStackTrace();

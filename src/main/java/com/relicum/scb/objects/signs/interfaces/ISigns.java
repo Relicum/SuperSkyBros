@@ -5,6 +5,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * SuperSkyBros BaseSign Class Interface First Created 11/09/13
@@ -17,9 +18,9 @@ public interface ISigns {
     /**
      * Gets the signs ID
      *
-     * @return Integer
+     * @return UUID of the sign
      */
-    Integer getID();
+    UUID getID();
 
     /**
      * @return ArrayList<String>
@@ -41,13 +42,6 @@ public interface ISigns {
      */
     String getCreatePermissionMessage();
 
-    /**
-     * Function to create the sign
-     *
-     * @param SignChangeEvent the event
-     */
-    @EventHandler
-    void createSign(SignChangeEvent e);
 
     /**
      * Function to create destroy sign

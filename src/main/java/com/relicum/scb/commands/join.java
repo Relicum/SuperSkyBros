@@ -26,6 +26,7 @@ public class join extends SubBase {
             SmashPlayer splayer = SmashPlayer.wrap(player);
 
             SCB.getInstance().LBS.addPlayer(splayer);
+
             Location tpto = null;
             Chunk ch = null;
             if (!SCB.getInstance().LBC.getConfig().contains("LOBBY.REGION")) {

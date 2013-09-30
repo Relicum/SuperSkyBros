@@ -17,19 +17,13 @@ public abstract class ActionSign extends BaseSign implements ISubType, PSign {
     protected ESign subType;
 
 
-    ActionSign() {
-        super();
+    ActionSign(TSign action, ESign joinlobby) {
+        super(action, joinlobby);
         this.setSuperType();
     }
 
 
-    @Override
-    protected void setSuperType() {
-        this.type = TSign.ACTION;
-    }
-
-
-    protected abstract void setSubType();
+    protected abstract void setSubType(ESign e);
 
 
     /**

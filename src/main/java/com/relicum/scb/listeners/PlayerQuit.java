@@ -34,7 +34,7 @@ public class PlayerQuit implements Listener {
     public void playQuit(PlayerQuitEvent e) {
 
         if (Result.KICK_OTHER.equals(Result.KICK_OTHER)) {
-            e.setQuitMessage(null);
+            e.setQuitMessage("");
         }
         if (plugin.LBS.isInLobby(e.getPlayer().getName())) {
 
@@ -44,7 +44,7 @@ public class PlayerQuit implements Listener {
             sm.removeFire().resetHealth(20.00F);
             sm.closeInventory().updateInventory();
 
-            // plugin.LBS.removePlayer(smashPlayer);
+            //plugin.LBS.removePlayer(smashPlayer);
         }
 
     }

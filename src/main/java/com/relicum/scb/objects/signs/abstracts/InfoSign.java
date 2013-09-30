@@ -2,9 +2,7 @@ package com.relicum.scb.objects.signs.abstracts;
 
 import com.relicum.scb.objects.signs.ESign;
 import com.relicum.scb.objects.signs.TSign;
-import com.relicum.scb.objects.signs.abstracts.BaseSign;
 import com.relicum.scb.objects.signs.interfaces.ISubType;
-import org.bukkit.event.Listener;
 
 /**
  * SuperSkyBros First Created 24/09/13
@@ -28,7 +26,7 @@ public abstract class InfoSign extends BaseSign implements ISubType {
     }
 
 
-    protected abstract void setSubType();
+    protected abstract void setSubType(ESign e);
 
 
     /**

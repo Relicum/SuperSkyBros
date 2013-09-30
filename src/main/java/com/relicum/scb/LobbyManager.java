@@ -35,8 +35,9 @@ public class LobbyManager implements Listener {
     /**
      * Stores List of players in the Lobby
      */
-    private ArrayList<SmashPlayer> players = new ArrayList<>();
+    private Map<String, SmashPlayer> players = new HashMap<>();
 
+    private ArrayList<UUID> players2 = new ArrayList<>();
 
     private LobbyRegion lobbyRegion;
 
@@ -122,8 +123,9 @@ public class LobbyManager implements Listener {
 
         if (!isInLobby(player)) {
             System.out.println(player.getName());
-            players.add(player);
+            players.put(player.getName(), player);
             pname.add(player.getName());
+            players2.add(player.getUUID());
             System.out.println("Player " + player.getName() + " added to lobby list from line 124 of player lobby");
         }
 
@@ -138,7 +140,7 @@ public class LobbyManager implements Listener {
     public void removePlayer(SmashPlayer play) {
 
         if (isInLobby(play.getName())) {
-            players.remove(play);
+            players.remove(play.getName());
             System.out.println("Player " + play + " removed from lobby list");
         }
     }
@@ -152,7 +154,7 @@ public class LobbyManager implements Listener {
     public void removePlayer(Player player) {
 
         if (isInLobby(player.getName())) {
-            players.remove(SmashPlayer.warp(player.getName()));
+            players.remove(player.getName());
             System.out.println("Player " + player.getName() + " removed from lobby list");
         }
     }
@@ -197,9 +199,10 @@ public class LobbyManager implements Listener {
      * Removes all Players from LobbyManager List
      */
     public void removeAllPlayers() {
-        int psize = players.size();
-        int pnsize = pname.size();
-        if (players.size() > 0) {
+
+        if (!players.isEmpty() || !pname.isEmpty()) {
+            int psize = players.size();
+            int pnsize = pname.size();
             pname.clear();
             players.clear();
             System.out.println("The list is empty " + psize + " players removed and " + pnsize + " names removed");
@@ -242,9 +245,9 @@ public class LobbyManager implements Listener {
      *
      * @return the list
      */
-    public List<SmashPlayer> getPlayersInLobby() {
+    public Collection<SmashPlayer> getPlayersInLobby() {
 
-        return players;
+        return players.values();
     }
 
 
@@ -389,5 +392,14 @@ public class LobbyManager implements Listener {
         }, 10L);
 
         return true;
+    }
+
+
+    public boolean isSmashPlayer(String name) {
+        if (pname != null && pname.size() > 0)
+            if (pname.contains(name)) {
+                return true;
+            }
+        return false;
     }
 }

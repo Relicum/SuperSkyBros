@@ -8,10 +8,10 @@ package com.relicum.scb.objects.signs.interfaces;
  */
 public interface ISignLocation {
 
-    int getX();
+    double getX();
 
-    int getY();
+    double getY();
 
-    int getZ();
+    double getZ();
 
 }

@@ -58,6 +58,7 @@ public class BukkitPlayer {
      * Methods from CraftPlayer
      */
     public boolean isPlayer() {
+
         return !Bukkit.getPlayerExact(p).equals(null);
     }
 

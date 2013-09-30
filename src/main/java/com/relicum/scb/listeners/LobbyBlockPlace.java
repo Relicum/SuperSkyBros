@@ -22,17 +22,11 @@ public class LobbyBlockPlace implements Listener, Cancellable {
 
     public SCB plugin;
 
-    public Vector min;
-
-    public Vector max;
-
     public String world;
 
 
     public LobbyBlockPlace(JavaPlugin pl) {
         this.plugin = (SCB) pl;
-        this.min = plugin.LBS.getLobbyRegion().getMinVector();
-        this.max = plugin.LBS.getLobbyRegion().getMaxVector();
         this.world = plugin.LBS.getLobbyRegion().getWorld().getName();
     }
 

@@ -4,6 +4,7 @@ import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaStatus;
 import com.relicum.scb.utils.MessageManager;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -23,12 +24,19 @@ public class GameManager {
 
     private ConcurrentHashMap<String, String> players = new ConcurrentHashMap<>();
 
+    private List<String> notWorlds;
+
 
     public GameManager(SCB pl) {
 
         p = pl;
         GameManager.gm = this;
 
+    }
+
+
+    public static GameManager getInstance() {
+        return gm;
     }
 
 
@@ -85,5 +93,17 @@ public class GameManager {
     public ArenaStatus getArenaStatus(Integer i) {
 
         return getArenaManager().getArenaById(i).getArenaStatus();
+    }
+
+
+    /**
+     * In black listed world.
+     *
+     * @param world the world
+     * @return the boolean false if they are in a blacklisted world
+     */
+    public boolean inBlackListedWorld(String world) {
+        return (notWorlds.isEmpty()) && (notWorlds.contains(world));
+
     }
 }

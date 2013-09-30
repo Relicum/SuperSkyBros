@@ -111,6 +111,7 @@ public class ILocationImpl implements ILocation {
         sb.append(", ");
         sb.append("Z-" + Loc.getBlockZ());
         sb.append("]");
+
         return sb.toString();
     }
 
