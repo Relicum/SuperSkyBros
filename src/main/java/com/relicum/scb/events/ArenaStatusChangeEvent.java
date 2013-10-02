@@ -3,8 +3,12 @@ package com.relicum.scb.events;
 import com.relicum.scb.Game;
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaStatus;
+import com.relicum.scb.objects.signs.TSign;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.block.SignChangeEvent;
+
+import java.util.UUID;
 
 /**
  * SuperSkyBros First Created 11/09/13
@@ -30,11 +34,13 @@ public class ArenaStatusChangeEvent extends Event {
     /**
      * The default constructor is defined for cleaner code. This constructor assumes the event is synchronous.
      */
-    public ArenaStatusChangeEvent(ArenaStatus previous, Arena ar) {
+    ArenaStatusChangeEvent(ArenaStatus previous, Arena ar) {
+
         this.arena = ar;
         this.status = ar.getArenaStatus();
         this.pre = previous;
         this.withGame = false;
+
     }
 
 
@@ -42,6 +48,8 @@ public class ArenaStatusChangeEvent extends Event {
      * Alternative Constructor which also passes the Game Instance to
      */
     public ArenaStatusChangeEvent(ArenaStatus previous, Game game) {
+        //game.setSuperType(t);
+        //this.setSubType(e);
         this.game = game;
         this.status = game.getArena().getArenaStatus();
         this.pre = previous;
@@ -101,11 +109,6 @@ public class ArenaStatusChangeEvent extends Event {
         return game;
 
 
-    }
-
-
-    public String GetName() {
-        return "";
     }
 
 

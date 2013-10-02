@@ -9,6 +9,7 @@ import com.relicum.scb.listeners.*;
 import com.relicum.scb.utils.Helper;
 import com.relicum.scb.utils.MessageManager;
 import com.relicum.scb.we.WorldEditPlugin;
+import com.thoughtworks.xstream.XStream;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -186,7 +187,7 @@ public class SCB extends JavaPlugin {
         this.saveDefaultConfig();
         this.getConfig().options().copyDefaults(true);
         this.reloadConfig();
-
+        XStream xStream = new XStream();
 
         setupPermissions();
         setupChat();

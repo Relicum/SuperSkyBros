@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author Relicum
  * @version 0.1
  */
-public class JoinLobbySign extends JoinSign {
+public abstract class JoinLobbySign extends JoinSign {
 
 
     JoinLobbySign() {
@@ -37,7 +37,6 @@ public class JoinLobbySign extends JoinSign {
      *
      * @param SignChangeEvent the event
      */
-    @Override
     @EventHandler
     public void createSign(SignChangeEvent e) {
         //To change body of implemented methods use File | Settings | File Templates.

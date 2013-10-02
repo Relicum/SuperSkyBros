@@ -5,6 +5,7 @@ import com.relicum.scb.objects.signs.TSign;
 import com.relicum.scb.objects.signs.interfaces.ISubType;
 import com.relicum.scb.objects.signs.interfaces.PSign;
 import com.relicum.scb.objects.signs.interfaces.SaveAble;
+import org.bukkit.event.block.SignChangeEvent;
 
 import java.util.UUID;
 
@@ -17,11 +18,6 @@ import java.util.UUID;
  */
 public abstract class JoinSign extends BaseSign implements SaveAble, PSign {
 
-    protected String permPrefix;
-
-    protected String createPerm;
-
-    protected String createPermMessage;
 
     protected String usePrefix;
 
@@ -99,25 +95,5 @@ public abstract class JoinSign extends BaseSign implements SaveAble, PSign {
         return this.usePrefix;
     }
 
-
-    /**
-     * Gets the signs ID in a UUID format
-     *
-     * @return UUID of the sign
-     */
-    @Override
-    public UUID getID() {
-        return this.signID;
-    }
-
-
-    /**
-     * Set sign iD. as UUID
-     *
-     * @param id the id
-     */
-    public void setSignID(UUID id) {
-        this.signID = id;
-    }
 
 }

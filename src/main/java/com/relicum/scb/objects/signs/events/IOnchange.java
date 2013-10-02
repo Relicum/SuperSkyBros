@@ -1,6 +1,8 @@
 package com.relicum.scb.objects.signs.events;
 
 import com.google.common.base.Strings;
+import com.relicum.scb.objects.signs.TSign;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.SignChangeEvent;
 
@@ -9,16 +11,8 @@ import java.util.ArrayList;
 /**
  * The interface IOnchange.
  */
-public abstract interface IOnchange {
+public interface IOnchange {
 
-
-    /**
-     * Function to create the sign
-     *
-     * @param SignChangeEvent the event
-     */
-    @EventHandler
-    void createSign(SignChangeEvent e);
 
     /**
      * @return ArrayList<String>

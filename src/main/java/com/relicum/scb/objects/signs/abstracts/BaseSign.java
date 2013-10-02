@@ -20,13 +20,12 @@ public abstract class BaseSign implements ISigns, ISuperType, ISubType, Listener
     protected TSign type;
 
 
-    BaseSign(TSign t, ESign e) {
-        this.setSuperType(t);
-        this.setSubType(e);
+    public BaseSign() {
+        //To change body of created methods use File | Settings | File Templates.
     }
 
 
-    public BaseSign() {
+    public BaseSign(TSign action, ESign joinlobby) {
         //To change body of created methods use File | Settings | File Templates.
     }
 
