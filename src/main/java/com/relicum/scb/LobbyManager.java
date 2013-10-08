@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.permissions.Permission;
 
 import java.util.*;
 
@@ -141,6 +142,8 @@ public class LobbyManager implements Listener {
 
         if (isInLobby(play.getName())) {
             players.remove(play.getName());
+            players2.remove(play.getUUID());
+            pname.remove(play.getName());
             System.out.println("Player " + play + " removed from lobby list");
         }
     }
@@ -155,6 +158,8 @@ public class LobbyManager implements Listener {
 
         if (isInLobby(player.getName())) {
             players.remove(player.getName());
+            players2.remove(player.getUniqueId());
+            pname.remove(player.getName());
             System.out.println("Player " + player.getName() + " removed from lobby list");
         }
     }
@@ -200,11 +205,13 @@ public class LobbyManager implements Listener {
      */
     public void removeAllPlayers() {
 
-        if (!players.isEmpty() || !pname.isEmpty()) {
+        if (!players.isEmpty() || !pname.isEmpty() || !players2.isEmpty()) {
             int psize = players.size();
             int pnsize = pname.size();
+            int p2size = players2.size();
             pname.clear();
             players.clear();
+            players2.clear();
             System.out.println("The list is empty " + psize + " players removed and " + pnsize + " names removed");
         }
     }
@@ -254,6 +261,12 @@ public class LobbyManager implements Listener {
     public List<String> getPlayerNamesInLobby() {
 
         return pname;
+    }
+
+
+    public List<UUID> getPlayersInUUIDList() {
+
+        return players2;
     }
 
 
@@ -389,7 +402,7 @@ public class LobbyManager implements Listener {
                     System.out.println("Error teleporting player to lobby");
                 }
             }
-        }, 10L);
+        }, 5L);
 
         return true;
     }
@@ -401,5 +414,15 @@ public class LobbyManager implements Listener {
                 return true;
             }
         return false;
+    }
+
+
+    public SmashPlayer getSmashPlayer(String name) {
+        return players.get(name);
+    }
+
+
+    public static Permission getLobbyBroadCastPerm() {
+        return BroadcastManager.getLobby();
     }
 }

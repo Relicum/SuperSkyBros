@@ -24,7 +24,6 @@ public class PlayersInventory implements IInventory, IArmour {
 
         setPlayerInventory(player);
 
-
     }
 
 
@@ -49,6 +48,7 @@ public class PlayersInventory implements IInventory, IArmour {
     private void setPlayerInventory(Player player) {
 
         this.inventory = player.getInventory();
+        player.closeInventory();
 
     }
 

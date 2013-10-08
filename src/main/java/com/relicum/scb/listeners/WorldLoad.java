@@ -1,7 +1,10 @@
 package com.relicum.scb.listeners;
 
+import com.relicum.scb.SCB;
+import com.relicum.scb.events.ToggleFlyEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.world.WorldLoadEvent;
 
 /**
  * SuperSkyBros
@@ -11,8 +14,16 @@ import org.bukkit.event.world.WorldLoadEvent;
  */
 public class WorldLoad implements Listener {
 
-    public void onWorldLoad(WorldLoadEvent e) {
+    private SCB plugin;
 
+
+    public WorldLoad(SCB pl) {
+        this.plugin = pl;
+    }
+
+
+    public void pJump(ToggleFlyEvent e) {
 
     }
+
 }

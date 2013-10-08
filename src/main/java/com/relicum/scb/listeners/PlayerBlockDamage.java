@@ -3,12 +3,16 @@ package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
 import org.bukkit.entity.Player;
-
+import org.bukkit.event.Event;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockDamageEvent;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerAnimationEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 /**
  * SuperSkyBros First Created 29/09/13
@@ -18,24 +22,35 @@ import org.bukkit.event.block.BlockDamageEvent;
  */
 public class PlayerBlockDamage implements Listener {
 
-    public String world;
-
 
     public PlayerBlockDamage() {
-        this.world = SCB.getInstance().LBS.getLobbyRegion().getWorld().getName();
+
     }
 
 
     @EventHandler(priority = EventPriority.LOWEST)
-    public void blockDamage(BlockDamageEvent e) {
+    public void blockDamage(PlayerInteractEvent e) {
+
 
         Player player = e.getPlayer();
-        String wo = player.getWorld().getName();
-
-        if (!SCB.perms.has(player, "ssba.admin.breakblocks") && !player.isOp() && this.world.equals(wo)) {
-            if (SCB.getInstance().LBS.getLobbyRegion().isAABB(e.getBlock().getLocation().toVector())) {
-                Result DENY;
+        if (SCB.getInstance().LBS.isInLobby(player) && !SCB.perms.has(player, "ssba.admin.breakblocks")) {
+            if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
                 e.setCancelled(true);
+                e.setUseInteractedBlock(Result.DENY);
+                player.sendMessage(SCB.MM.getErrorMessage("listeners.blockbreak.lobbyBreak"));
+            }
+        }
+    }
+
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void MblockDamage(PlayerInteractEvent e) {
+
+        Player player = e.getPlayer();
+        if (SCB.getInstance().LBS.isInLobby(player) && !SCB.perms.has(player, "ssba.admin.breakblocks")) {
+            if (e.getAction() == Action.LEFT_CLICK_BLOCK) {
+                e.setCancelled(true);
+                e.setUseInteractedBlock(Result.DENY);
                 player.sendMessage(SCB.MM.getErrorMessage("listeners.blockbreak.lobbyBreak"));
             }
         }

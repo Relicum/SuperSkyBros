@@ -1,18 +1,16 @@
 package com.relicum.scb.commands;
 
-import com.relicum.scb.ArenaManager;
-import com.relicum.scb.SCB;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
+import java.io.IOException;
 
 /**
- * Bukkit-SCB
+ * SuperSkyBros First Created 08/10/13
  *
  * @author Relicum
  * @version 0.1
  */
-public class listarenas extends SubBase {
+public class blacklist extends SubBase {
 
     /**
      * @param player Player
@@ -20,17 +18,8 @@ public class listarenas extends SubBase {
      * @return boolean
      */
     @Override
-    public boolean onCommand(Player player, String[] args) {
-
-        ArenaManager aman = SCB.getInstance().ARM;
-        ArrayList<String> arl = aman.getListMessages();
-        if (arl.isEmpty())
-            return true;
-        for ( String m : arl ) {
-            player.sendMessage(m);
-        }
-
-        return true;
+    public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 
@@ -41,7 +30,7 @@ public class listarenas extends SubBase {
      */
     @Override
     public void setmDescription() {
-        mNode = "listarenas";
+        mNode = "blacklist";
     }
 
 
@@ -52,7 +41,7 @@ public class listarenas extends SubBase {
      */
     @Override
     public Integer setNumArgs() {
-        return 0;
+        return 2;
     }
 
 
@@ -63,7 +52,8 @@ public class listarenas extends SubBase {
      */
     @Override
     public String setPermission() {
-        return "ssba.admin.listarenas";
+
+        return "ssba.admin.blacklist";
     }
 
 
@@ -74,7 +64,8 @@ public class listarenas extends SubBase {
      */
     @Override
     public String setUsage() {
-        return "/ssba listarenas";
+
+        return "/ssba blacklist [add|remove]";
     }
 
 
@@ -85,7 +76,7 @@ public class listarenas extends SubBase {
      */
     @Override
     public String setLabel() {
-        return "ssba listarenas";
+        return "ssba blacklist";
     }
 
 
@@ -96,6 +87,6 @@ public class listarenas extends SubBase {
      */
     @Override
     public String setCmd() {
-        return "ssba listarenas";
+        return "ssba blacklist";
     }
 }

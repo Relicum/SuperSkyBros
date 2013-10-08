@@ -11,6 +11,7 @@ system:
   autoJoinFirstTime: "Player %player% has joined Super Sky Bros for the first time say Hi !"
   kickJoinNoPerm: "You do not have permission to join the SSB Lobby"
   kickJoinWorldBlacklisted: "You were kicked as the world you are trying to login to is on the SSB world ignore SSB events blacklist"
+  lobbyJoinWelcome: "&5Welcome %name% to &9Super &eSky &9Bros &5 enjoy your stay.&r"
   internal:
     badMessageFormat: "There was a problem with the format of the message you sent"
     noConsoleCommand: "You can not run that command from the console. In game only"
@@ -33,12 +34,13 @@ command:
     leave: "&bLeave the game and return to the Lobby or if in the Lobby leave the lobby"
     enable: "&bEnable an Arena by ID. Pass the relevent arena id you wish to enable"
     disable: "&bDisable an Arena by ID. Pass the relevent arena id you wish to disable"
+    blacklist: "&bUsed to add and remove worlds from the black list. Any world on this list will be ignored by SSA. Usage &6/ssba blacklist add worldname &b to add a world or &6/ssba remove worldname &b to remove a world. You need to swap worldname for the name of the actual world."
   message:
     worldOnBlackList: "Sorry this world is on the world blacklist. Remove it and restart the server and try again."
     joinNoLocation: "You can not use this as the Lobby Location has not been set yet"
     failedToSetLobby: "There has been a unknown error setting the Lobby spawn. Please let the DEVS know"
     setLobbySucceeded: "You have successfully set the lobby spawn"
-    teleportToLobby: "You have been teleported to the SSB Lobby"
+    teleportToLobby: "Please wait you are being teleported to the SSB Lobby..."
     teleportFail: "Their was an error teleporting you to the SSB Lobby"
     notARegion: "You have not passed an instance of WorldEdit IRegion to RegionManager Constructor"
     worldsMisMatch: "Error: The world the region you have setlected is not in the say world as you"
@@ -70,6 +72,10 @@ command:
     enableFailedToSave: "Error: Failed to save arena &7%ID%"
     enableMisMatch: "Error: The Arena ID &7%ID%&5 is not the same as the modify id &7%MID%&5 you set"
     disabledSuccess: "Arena &7%ID%&a has successfully been disabled"
+    leaveNoWhereToGo: "Sorry you can't leave the lobby where else would you go ??"
+    leaveSuccess: "Removed from lobby and Teleported to World Spawn in Lobby World"
+    blacklistInvalidArg: "The first argument must either be 'add' or 'remove'"
+    blacklistInvalidWorld: "The world you have tried to blacklist does not exist. World names ARE case sensitive."
 listeners:
   playerJoin:
     noLobbySet: "There is currently no lobby spawn set for SSB please set one"

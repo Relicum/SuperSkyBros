@@ -28,6 +28,22 @@ public abstract class JoinSign extends BaseSign implements SaveAble, PSign {
     protected UUID signID;
 
 
+    /**
+     * Get iD.
+     *
+     * @return the UUID of the sign
+     */
+    @Override
+    public UUID getID() {
+        return this.signID;
+    }
+
+
+    public void setID(UUID id) {
+        this.signID = id;
+    }
+
+
     public JoinSign(TSign action, ESign joinlobby) {
         super(action, joinlobby);
 

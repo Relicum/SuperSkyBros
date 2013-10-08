@@ -31,6 +31,8 @@ public class LobbyBlockBreak implements Listener, Cancellable {
 
     public String world;
 
+    private boolean cancel = false;
+
 
     /**
      * Instantiates a new Lobby block break.
@@ -51,7 +53,7 @@ public class LobbyBlockBreak implements Listener, Cancellable {
      *
      * @param BlockBreakEvent the event
      */
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void lobbyBreak(BlockBreakEvent e) {
 
 
@@ -65,15 +67,6 @@ public class LobbyBlockBreak implements Listener, Cancellable {
             }
         }
 
-		/*String ha = this.generateHash(e.getBlock());
-        if (SCB.getInstance().LBS.getHashList().contains(ha)) {
-			if (!player.hasPermission("ssba.admin.breakblocks") && !player.isOp()) {
-				e.setCancelled(true);
-				player.sendMessage(SCB.MM.getErrorMessage("listeners.blockbreak.lobbyBreak"));
-			}
-		}*/
-
-
     }
 
 
@@ -84,7 +77,7 @@ public class LobbyBlockBreak implements Listener, Cancellable {
      */
     @Override
     public boolean isCancelled() {
-        return false;
+        return cancel;
     }
 
 
@@ -95,22 +88,7 @@ public class LobbyBlockBreak implements Listener, Cancellable {
      */
     @Override
     public void setCancelled(boolean b) {
-
+        cancel = b;
     }
 
-
-    /**
-     * Generate hash.
-     *
-     * @param block the block
-     * @return the string
-     */
-    public String generateHash(Block block) {
-
-        Integer mi = block.getChunk().getX();
-        Integer ma = block.getChunk().getZ();
-        Integer th = mi * ma;
-
-        return Base64Coder.encodeString(th.toString() + block.getWorld().getName());
-    }
 }

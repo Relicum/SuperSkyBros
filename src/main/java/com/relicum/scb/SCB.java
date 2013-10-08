@@ -6,10 +6,10 @@ import com.relicum.scb.commands.CommandManagerFirstJoin;
 import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.*;
 import com.relicum.scb.listeners.*;
+import com.relicum.scb.objects.inventory.InventoryManager;
 import com.relicum.scb.utils.Helper;
 import com.relicum.scb.utils.MessageManager;
 import com.relicum.scb.we.WorldEditPlugin;
-import com.thoughtworks.xstream.XStream;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -18,16 +18,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -105,7 +103,11 @@ public class SCB extends JavaPlugin {
      */
     public Creeper co;
 
+    private List<String> bWorlds = new ArrayList<>();
+
     public boolean saveOnDisable = true;
+
+    public InventoryManager INV;
 
     protected ArrayList<Permission> plist = new ArrayList<>();
 
@@ -184,27 +186,53 @@ public class SCB extends JavaPlugin {
 
         BukkitInterface.setServer(this.getServer());
 
-        this.saveDefaultConfig();
+        this.saveConfig();
         this.getConfig().options().copyDefaults(true);
         this.reloadConfig();
-        XStream xStream = new XStream();
+
 
         setupPermissions();
         setupChat();
         setupEconomy();
 
-        if (SCB.getInstance().getConfig().getBoolean("firstRun")) {
 
+        if (SCB.getInstance().getConfig().getBoolean("firstRun")) {
+            this.saveOnDisable = false;
             CommandExecutor cm = new CommandManagerFirstJoin(p);
 
             p.getCommand("ssba").setExecutor(cm);
             p.getCommand("ssba").setPermissionMessage("You do not have permission to run this command");
             p.pm.registerEvents(new FirstRun(this), this);
+            boolean f = new File(getDataFolder() + "/players").exists();
+            if (!f) {
+                boolean fi = new File(getDataFolder() + "/players").mkdirs();
 
-
+                if (fi)
+                    System.out.println("New Directory created at " + getDataFolder() + "/players");
+                else
+                    System.out.println("Error: Failed to create players directory at " + getDataFolder() + "/players");
+            }
         } else {
 
+            MM = new MessageManager(p);
+            CommandExecutor cm = new CommandManager(p);
+            p.getCommand("ssb").setExecutor(cm);
+            p.getCommand("ssba").setExecutor(cm);
+            p.getCommand("ssb").setPermissionMessage(MM.getNoPerm());
+            p.getCommand("ssba").setPermissionMessage(MM.getNoPerm());
+            //Debug Commands
+            if (p.getConfig().getBoolean("debugCommands")) {
+
+                p.getCommand("vList").setExecutor(new DebugManager(p));
+                p.getCommand("vList").setPermissionMessage("Only runs from console");
+
+
+                System.out.println("Debug Commands installed");
+            }
+
             getServer().getScheduler().scheduleSyncDelayedTask(SCB.getInstance(), new Startup(), 15L);
+
+
         }
 
 
@@ -217,9 +245,11 @@ public class SCB extends JavaPlugin {
     @Override
     public void onDisable() throws NullPointerException {
 
-        if (((!this.getConfig().getBoolean("firstRun")) && (this.getConfig().getBoolean("firstRunDone"))) || (!this.saveOnDisable)) {
-            this.getConfig().set("firstRun", false);
-            this.getConfig().set("firstRunDone", true);
+        if (((this.getConfig().getBoolean("firstRun")) && (!this.getConfig().getBoolean("firstRunDone")))) {
+            if (this.saveOnDisable) {
+                this.getConfig().set("firstRun", false);
+                this.getConfig().set("firstRunDone", true);
+            }
             this.saveConfig();
 
         } else {
@@ -247,9 +277,10 @@ public class SCB extends JavaPlugin {
 
         if (this.getConfig().getBoolean("enableLobbyProtection")) {
             System.out.println("Loading Lobby Events in SSB");
-            p.pm.registerEvents(new LobbyBlockBreak(p), p);
             p.pm.registerEvents(new LobbyBlockPlace(p), p);
-            //p.pm.registerEvents(new PlayerBlockDamage(),p);
+            p.pm.registerEvents(new LobbyBlockBreak(p), p);
+
+            // p.pm.registerEvents(new PlayerBlockDamage(), p);
 
         }
 
@@ -286,11 +317,11 @@ public class SCB extends JavaPlugin {
         public void run() {
 
 
-            if (!p.getConfig().getBoolean("firstRun")) {
-                //p.groupSpawn = new YamlConfiguration();
-
+            p.bWorlds = p.getConfig().getStringList("ignoreWorlds");
+            for ( String w : p.bWorlds ) {
+                System.out.println("World " + w + " is in the blacklist");
             }
-
+            p.INV = new InventoryManager();
 
             p.LBC = new LobbyConfig("lobby.yml");
             p.LBC.getConfig().options().copyDefaults(true);
@@ -315,7 +346,7 @@ public class SCB extends JavaPlugin {
             p.SFM.saveDefaultConfig();
 
             SettingsManager.getInstance().setup(p);
-            MM = new MessageManager(p);
+            //MM = new MessageManager(p);
             if (!p.getConfig().getBoolean("enable")) {
                 getLogger().info("SCB is being disabled due to it enable being false in config.yml");
                 p.pm.disablePlugin(p);
@@ -328,39 +359,23 @@ public class SCB extends JavaPlugin {
             p.pm.registerEvents(new PlayerJoin(p), p);
             p.pm.registerEvents(new PlayerQuit(p), p);
             p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
-
+            //p.pm.registerEvents(new WorldInventoryClick(p),p);
+            p.pm.registerEvents(new PlayerJoinLobby(), p);
+            p.pm.registerEvents(new WorldLoad(p), p);
             //p.pm.registerEvents(new ArenaChangeStatus(p), p);
+            // List<String> wol = new ArrayList<>();
+            //wol.add("world_the_end");
+            //p.pm.registerEvents(new PlayerToggleFly(p,wol),p);
 
             p.loadLobbyEvents();
-
+            BroadcastManager.setup();
 
             p.SNM = new SignManager();
-
-            //noinspection LocalVariableOfConcreteClass
-            CommandExecutor cm = new CommandManager(p);
-            p.getCommand("ssb").setExecutor(cm);
-            p.getCommand("ssba").setExecutor(cm);
-            p.getCommand("ssb").setPermissionMessage(MM.getNoPerm());
-            p.getCommand("ssba").setPermissionMessage(MM.getNoPerm());
 
 
             //TODO Must refactor out this Helper Class
             Helper.getInstance().setup(p);
 
-            //Debug Commands
-            if (p.getConfig().getBoolean("debugCommands")) {
-
-                p.getCommand("vList").setExecutor(new DebugManager(p));
-                p.getCommand("vList").setPermissionMessage("Only runs from console");
-
-
-                System.out.println("Debug Commands installed");
-            }
-
-            Set<org.bukkit.permissions.Permission> ap = p.pm.getPermissions();
-            for ( org.bukkit.permissions.Permission pme : ap ) {
-                System.out.println(pme.getName());
-            }
 
         }
 
@@ -425,4 +440,6 @@ public class SCB extends JavaPlugin {
         }
 
     }
+
+
 }

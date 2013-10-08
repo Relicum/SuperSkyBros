@@ -26,8 +26,8 @@ public abstract class AbstractLobbySettings implements IISettings {
 
 
     @Override
-    public Integer getTotalExperience() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public int getTotalExperience() {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 
@@ -38,19 +38,9 @@ public abstract class AbstractLobbySettings implements IISettings {
 
 
     @Override
-    public boolean getSetFlying() {
+    public boolean getIsFlying() {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 
-    @Override
-    public boolean clearInventory() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-
-    @Override
-    public boolean removeFireTicks() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
 }

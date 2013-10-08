@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * @author Relicum
  * @version 0.1
  */
-public abstract class JoinLobbySign extends JoinSign {
+public class JoinLobbySign extends JoinSign {
 
 
     JoinLobbySign() {

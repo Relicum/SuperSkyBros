@@ -29,21 +29,6 @@ public interface ISigns {
 
 
     /**
-     * Return Create Permission
-     *
-     * @return String
-     */
-    String getCreatePermission();
-
-    /**
-     * Return Create Permission Message
-     *
-     * @return String
-     */
-    String getCreatePermissionMessage();
-
-
-    /**
      * Function to create destroy sign
      *
      * @param BlockBreakEvent the event

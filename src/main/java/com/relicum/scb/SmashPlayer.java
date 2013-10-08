@@ -8,6 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.permissions.PermissionAttachment;
 
 import java.util.UUID;
 
@@ -19,6 +20,8 @@ public class SmashPlayer extends BukkitPlayer {
     public playerStatus pStatus;
 
     private String playerLocation;
+
+    private PermissionAttachment permissionAttachment;
 
     /**
      * The G iD.
@@ -137,6 +140,16 @@ public class SmashPlayer extends BukkitPlayer {
         pl.getInventory().clear();
         return this;
 
+    }
+
+
+    public PermissionAttachment getPermissionAttachment() {
+        return permissionAttachment;
+    }
+
+
+    public void setPermissionAttachment(PermissionAttachment pt) {
+        this.permissionAttachment = pt;
     }
 
 

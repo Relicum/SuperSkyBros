@@ -15,14 +15,14 @@ public interface IISettings {
 
     public double getPlayerDamage();
 
-    public Integer getTotalExperience();
+    public int getTotalExperience();
 
     public boolean getAllowedFlight();
 
-    public boolean getSetFlying();
+    public boolean getIsFlying();
 
-    public boolean clearInventory();
+    public float getXp();
 
-    public boolean removeFireTicks();
+    public String getName();
 
 }

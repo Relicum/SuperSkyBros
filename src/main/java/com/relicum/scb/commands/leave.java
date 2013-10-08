@@ -2,7 +2,11 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.SmashPlayer;
+import com.relicum.scb.objects.inventory.ClearInventory;
+import com.relicum.scb.objects.inventory.RestoreInventory;
+import com.relicum.scb.objects.inventory.StorePlayerSettings;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * SuperSkyBros
@@ -20,20 +24,25 @@ public class leave extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) {
 
-        if (!(player instanceof SmashPlayer)) {
-            SmashPlayer splayer = SmashPlayer.wrap(player);
-            if (SCB.getInstance().LBS.isInLobby(splayer)) {
+
+        if (SCB.getInstance().LBS.isInLobby(player)) {
+            if (!(player instanceof SmashPlayer)) {
+                SmashPlayer splayer = SCB.getInstance().LBS.getSmashPlayer(player.getName());
                 if (SCB.getInstance().getConfig().getBoolean("dedicatedSSB")) {
-                    player.sendMessage("Can not remove you from lobby no where to go");
+                    String tmp;
+                    player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.leaveNoWhereToGo"));
                     return true;
                 }
+                player.removeAttachment(splayer.getPermissionAttachment());
+                RestoreInventory.restore(player);
+                SCB.getInstance().INV.removePlayerFromStore(player.getName());
                 SCB.getInstance().LBS.removePlayer(splayer);
 
                 player.teleport(SCB.getInstance().LBS.getLobbyRegion().getWorld().getSpawnLocation());
-                splayer.sendMessage("Removed from lobby and Teleported to World Spawn in Lobby World");
+                splayer.sendMessage(SCB.getMessageManager().getMessage("command.message.leaveSuccess"));
             } else {
 
-                splayer.sendMessage("Can not leave, you are not in SSB game or Lobby to start with");
+                player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.leaveNoWhereToGo"));
             }
         }
         return true;

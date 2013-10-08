@@ -2,9 +2,15 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.SmashPlayer;
+import com.relicum.scb.events.PlayerJoinLobbyEvent;
+import com.relicum.scb.objects.inventory.ClearInventory;
+import com.relicum.scb.utils.playerStatus;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * Bukkit-SCB
@@ -22,10 +28,18 @@ public class join extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) {
 
-        if (!(player instanceof SmashPlayer)) {
-            SmashPlayer splayer = SmashPlayer.wrap(player);
 
-            SCB.getInstance().LBS.addPlayer(splayer);
+        SmashPlayer splayer = SmashPlayer.wrap(player);
+
+        splayer.pStatus = playerStatus.UNKNOWN;
+        PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "COMMAND", SCB.getInstance().getConfig().getBoolean("dedicatedSSB"));
+        Bukkit.getServer().getPluginManager().callEvent(event);
+
+
+        System.out.println("Getting stuck here");
+            /*SCB.getInstance().LBS.addPlayer(splayer);
+
+
 
             Location tpto = null;
             Chunk ch = null;
@@ -36,6 +50,9 @@ public class join extends SubBase {
             }
 
             try {
+                SCB.getInstance().INV.storeOldInventory(splayer.getPlayer());
+
+                ClearInventory.applyLobbyInv(splayer.getPlayer());
                 tpto = SCB.getInstance().LBS.getLobbyRegion().getLobbySpawn();
                 ch = tpto.getChunk();
                 splayer.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.arenatpLoading"));
@@ -54,7 +71,7 @@ public class join extends SubBase {
             }
 
             splayer.sendMessage(SCB.MM.getErrorMessage("command.message.teleportFail"));
-        }
+        }*/
         return true;
 
     }

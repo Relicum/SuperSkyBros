@@ -91,7 +91,7 @@ public class CommandManagerFirstJoin implements CommandExecutor {
         player.sendMessage(ChatColor.GREEN + "You have successfully set the server mode to " + mode);
         player.sendMessage(ChatColor.AQUA + "Now stop the server and restart it to continue");
 
-        plugin.saveOnDisable = false;
+        plugin.saveOnDisable = true;
         return true;
     }
 

@@ -6,9 +6,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * SuperSkyBros First Created 20/09/13 Used to Execute Debug Commands from Console only
@@ -82,6 +82,46 @@ public class DebugManager implements CommandExecutor {
             }
 
         }
+
+        if (list.equalsIgnoreCase("uuid")) {
+            if (SCB.getInstance().LBS.getPlayersInUUIDList().size() == 0) {
+                System.out.println("There are no player names in UUID name list");
+                return;
+            }
+            for ( UUID s : SCB.getInstance().LBS.getPlayersInUUIDList() ) {
+                System.out.println("Player name " + s.toString() + " is in the Lobby name List");
+            }
+
+        }
+
+        if (list.equalsIgnoreCase("perms")) {
+
+            Set<Permission> per = plugin.getServer().getPluginManager().getPermissions();
+            for ( Permission k : per ) {
+                if (k.getName().startsWith("ssb")) {
+                    if (k.getName().equalsIgnoreCase("ssba.admin")) {
+                        System.out.println("Parent Node: ssba.admin");
+                        System.out.println("Has the Child Perms");
+                        Permission ad = plugin.getServer().getPluginManager().getPermission("ssba.admin");
+                        Map<String, Boolean> adc = ad.getChildren();
+                        for ( String ak : adc.keySet() ) {
+                            System.out.println(ak);
+                        }
+                    }
+                    if (k.getName().equalsIgnoreCase("ssb.player")) {
+                        System.out.println("Parent Node: ssb.player");
+                        System.out.println("Has the Child Perms");
+                        Permission ad = plugin.getServer().getPluginManager().getPermission("ssb.player");
+                        Map<String, Boolean> adc = ad.getChildren();
+                        for ( String ak : adc.keySet() ) {
+                            System.out.println(ak);
+                        }
+                    }
+                }
+            }
+
+        }
+
 
     }
 

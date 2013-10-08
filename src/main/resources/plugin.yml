@@ -1,6 +1,6 @@
 name: SuperSkyBros
 main: com.relicum.scb.SCB
-version: 0.2.11
+version: ${project.version}
 authors: [Relicum, slideroller, ThePengwin]
 depends: [WorldEdit,Vault]
 prefix: SSB
@@ -8,36 +8,16 @@ prefix: SSB
 commands:
   ssb:
     description: Main Sub Command for SuperSkyBros.
-    permission: ssb.players
     aliases: sb
+    permission: ssb.player
     usage: /ssb [command] [args]
   ssba:
     description: Admin Sub Command for SuperSkyBros.
-    permission: ssba.admins
     aliases: ssa
+    permission: ssb.admin
     usage: /ssba [command] [args]
   vList:
     description: Debug Tools Command for SuperSkyBros.
     aliases: dsb
-    permission: ssba.admin
+    permission: ssb.admin
     usage: vList [args]
-
-permissions:
-  ssba.admin.*:
-    description: "Base Adim command"
-    children:
-      ssba.admins: true
-      ssba.admins.setmode: true
-  ssba.admins:
-    description: "admin sub"
-    default: op
-  ssba.admins.setmode:
-    description: "Permission ned on first run"
-    default: op
-  ssb.player.*:
-    description: "Provides a user all player commands"
-    children:
-      ssb.players: true
-  ssb.players:
-    description: "Player sub command perm"
-    default: op

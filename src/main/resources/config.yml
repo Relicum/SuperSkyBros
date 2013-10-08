@@ -5,11 +5,42 @@ debugCommands: true
 enable: true
 enableLobbyProtection: false
 ignoreWorlds:
-  - world_the_end
-  - world_nether
+  - 'world_the_end'
+  - 'world_nether'
 dedicatedSSB: false
 jumpPower: 1
 jumpInLobby: true
 classesEnabled:
   - Creeper
-
+gemshop:
+  - ecoPlugin: false
+  - itemOpen:
+    - open: true
+    - item: 'Material_Emerald'
+    - meta:
+      - displayName: 'Super Sky Bros Shop'
+      - lore:
+        - 'Sorry the shop is closed'
+        - 'Still in Development'
+    - slot: 8
+  - joinBook:
+    - enable: true
+    - slot: 0
+    - displayName: '&aSuper Sky Bros Guide'
+    - lore:
+      - '&5Get Help on Playing'
+      - '&5Donor Ranks'
+    - pageOneTitle: '&8Super Sky Bros'
+    - author: '&aRelicum and Co'
+    - pages:
+      - page:
+        - number: 1
+        - lines:
+          - '&aWelcome to the SSB Guide'
+          - '&5Here you will find a basic guide'
+          - '&5to get you started.'
+        - page:
+          - number: 2
+          - lines:
+            - '&5This is displaing on page 2'
+            - '&5The good can have 250 pages'

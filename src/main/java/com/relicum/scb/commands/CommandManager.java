@@ -7,6 +7,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
@@ -46,7 +48,19 @@ public class CommandManager implements CommandExecutor {
     public CommandManager(Plugin p) {
 
         plugin = p;
+        Permission ssbp = new Permission("ssb.player");
+        ssbp.setDefault(PermissionDefault.TRUE);
+        ssbp.setDescription("Default Player Node");
+
+        Permission ssbap = new Permission("ssba.admin");
+        ssbap.setDefault(PermissionDefault.OP);
+        ssbap.setDescription("Default Admin Node");
+
+
+        p.getServer().getPluginManager().addPermission(ssbp);
+        p.getServer().getPluginManager().addPermission(ssbap);
         loadCommands();
+
 
         for ( Map.Entry<String, SubBase> entry : clist.entrySet() ) {
 
@@ -178,11 +192,23 @@ public class CommandManager implements CommandExecutor {
      */
     public boolean registerCommand(String name, SubBase sb) {
 
-        CommandMap cmp = getCommandMap();
-        PluginCommand cd = getCommand(name.toLowerCase());
+        String[] ps = sb.getPerm().split("\\.");
+        String ubPerm = ps[0] + "." + ps[1];
+
 
         String des = mm.getStringConfig(sb.getDescription());
         des = ChatColor.translateAlternateColorCodes('&', des);
+
+        Permission per = new Permission(ubPerm + "." + name);
+        per.setDefault(PermissionDefault.OP);
+        per.addParent(ubPerm, true);
+        per.setDescription(des);
+        plugin.getServer().getPluginManager().addPermission(per);
+
+        CommandMap cmp = getCommandMap();
+        PluginCommand cd = getCommand(name.toLowerCase());
+
+
         cd.setDescription(des);
         cd.setUsage(sb.getUseage());
         cd.setExecutor(this);
