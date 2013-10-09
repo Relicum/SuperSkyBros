@@ -35,28 +35,17 @@ public class PlayerJoin implements Listener {
 
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void signChange(SignChangeEvent e) throws InterruptedException {
-
-        String[] lines = e.getLines();
-        if (lines[0].equalsIgnoreCase("ssb")) {
-            e.setLine(0, "§e<---§1SSB--->|");
-            e.setLine(1, "JOIN THE LOBBY");
-            e.setLine(2, "§aSUPERSKYBROS");
-        }
-
-        System.out.println("A sign has been place by " + e.getPlayer().getName());
-
-
-    }
-
-
-    @EventHandler(priority = EventPriority.HIGHEST)
     public void playJoin(PlayerJoinEvent e) {
 
 
         if (SCB.getInstance().getConfig().getBoolean("dedicatedSSB")) {
             SmashPlayer pl = new SmashPlayer(e.getPlayer());
+            if (SCB.perms.has(pl.getPlayer(), "ssba.admin") || pl.getPlayer().isOp()) {
+                ChatColor b = ChatColor.BOLD;
+                String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
+                pl.sendMessage(pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros Beta " + SCB.getInstance().getDescription().getVersion() + " this should not be run on a live server be warned");
 
+            }
             if (!SCB.getInstance().LBC.getConfig().contains("LOBBY.REGION")) {
                 if (pl.isOp()) {
                     e.setJoinMessage(SCB.getMessageManager().getErrorMessage("system.opAutoJoinOverRide"));
@@ -75,12 +64,7 @@ public class PlayerJoin implements Listener {
 
             if (SCB.perms.has(pl.getPlayer(), "ssb.player.join") || pl.isOp()) {
                 e.setJoinMessage("");
-                if (SCB.perms.has(pl.getPlayer(), "ssba.admin") || pl.getPlayer().isOp()) {
-                    ChatColor b = ChatColor.BOLD;
-                    String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
-                    pl.sendMessage(pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros Beta " + SCB.getInstance().getDescription().getVersion() + " this should not be run on a live server be warned");
 
-                }
                 pl.setpStatus(playerStatus.JOINEDSERVER);
                 pl.setMyLocation("JOINEDSERVER");
                 PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(pl, "JOINEDSERVER", SCB.getInstance().getConfig().getBoolean("dedicatedSSB"));
@@ -93,6 +77,8 @@ public class PlayerJoin implements Listener {
                 pl.kickPlayer(SCB.getMessageManager().getErrorMessage("system.noJoinPerm"));
                 return;
             }
+
+
         }
 
 

@@ -28,7 +28,7 @@ public class CommandManager implements CommandExecutor {
     /**
      * Stores an instance of the main plugin class
      */
-    public Plugin plugin;
+    public SCB plugin;
 
     /**
      * Stores a HashMap of commands
@@ -37,21 +37,19 @@ public class CommandManager implements CommandExecutor {
 
     public static MessageManager mm = SCB.getMessageManager();
 
-    public List<String> notWorlds = SettingsManager.getInstance().notWorlds();
-
 
     /**
      * Class that handles all the clist and redirects Them to the correct class
      *
      * @param p SCB
      */
-    public CommandManager(Plugin p) {
+    public CommandManager(SCB p) {
 
         plugin = p;
+
         Permission ssbp = new Permission("ssb.player");
         ssbp.setDefault(PermissionDefault.TRUE);
         ssbp.setDescription("Default Player Node");
-
         Permission ssbap = new Permission("ssba.admin");
         ssbap.setDefault(PermissionDefault.OP);
         ssbap.setDescription("Default Admin Node");
@@ -89,6 +87,7 @@ public class CommandManager implements CommandExecutor {
         clist.put("leave", new leave());
         clist.put("enable", new enable());
         clist.put("disable", new disable());
+        clist.put("blacklist", new blacklist());
     }
 
 
@@ -113,9 +112,7 @@ public class CommandManager implements CommandExecutor {
         Player player = (Player) cs;
 
 
-        String my = player.getWorld().getName();
-
-        if (this.notWorlds.contains(player.getWorld().getName())) {
+        if (plugin.getBlackList().contains(player.getWorld().getName())) {
             player.sendMessage(mm.getErrorMessage("command.message.worldOnBlackList"));
             plugin.getLogger().info("You can not run commands in world " + player.getWorld().getName() + " as the world is on the world blacklist remove it from config.yml");
             return true;
@@ -274,5 +271,6 @@ public class CommandManager implements CommandExecutor {
 
         return commandMap;
     }
+
 
 }

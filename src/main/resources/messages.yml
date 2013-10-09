@@ -79,7 +79,11 @@ command:
 listeners:
   playerJoin:
     noLobbySet: "There is currently no lobby spawn set for SSB please set one"
+    alreadyInLobby: "You can not join the lobby as you are already in the SSB Lobby"
   blockbreak:
     lobbyBreak: "You do not have permission to break blocks in the Lobby"
   blockplace:
     lobbyPlace: "You do not have permission to place blocks in the Lobby"
+  signchange:
+    noPerms: "You do not have permission to create SSB Join signs"
+    success: "You have successfully created a new Lobby Join Sign"

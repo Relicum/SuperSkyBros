@@ -1,5 +1,8 @@
 package com.relicum.scb.commands;
 
+import com.relicum.scb.BukkitInterface;
+import com.relicum.scb.SCB;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -19,7 +22,43 @@ public class blacklist extends SubBase {
      */
     @Override
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+
+        if ((!args[0].equalsIgnoreCase("add")) && (!args[0].equalsIgnoreCase("delete"))) {
+            player.sendMessage("Error: Invalid argument " + ChatColor.DARK_RED + args[0] + ChatColor.RESET + " either 'add' or 'delete' are valid");
+            return true;
+        }
+
+        if (args[0].equalsIgnoreCase("add")) {
+
+            if (BukkitInterface.getWorld(args[1]) != null) {
+                if (SCB.getInstance().getBlackList().contains(args[1])) {
+                    player.sendMessage("World is already on the blacklist");
+                    return true;
+                }
+                SCB.getInstance().getBlackList().add(args[1]);
+                SCB.getInstance().getConfig().set("ignoreWorlds", SCB.getInstance().getBlackList());
+                SCB.getInstance().saveConfig();
+                SCB.getInstance().reloadConfig();
+                player.sendMessage("Successfully added " + args[1] + " to ignore list");
+                return true;
+            } else {
+                player.sendMessage("World not valid");
+            }
+        }
+        if (args[0].equalsIgnoreCase("delete")) {
+            if (SCB.getInstance().getBlackList().contains(args[1])) {
+                SCB.getInstance().getBlackList().remove(args[1]);
+                SCB.getInstance().getConfig().set("ignoreWorlds", SCB.getInstance().getBlackList());
+                SCB.getInstance().saveConfig();
+                SCB.getInstance().reloadConfig();
+                player.sendMessage("Successfully removed " + args[1] + " from ignore list");
+                return true;
+            } else {
+                player.sendMessage("World " + args[1] + " was not on the ignore list");
+            }
+        }
+
+        return true;
     }
 
 
@@ -65,7 +104,7 @@ public class blacklist extends SubBase {
     @Override
     public String setUsage() {
 
-        return "/ssba blacklist [add|remove]";
+        return "/ssba blacklist [add|remove] <worldname>";
     }
 
 

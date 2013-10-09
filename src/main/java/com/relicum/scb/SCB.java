@@ -15,9 +15,11 @@ import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -26,6 +28,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -114,6 +117,11 @@ public class SCB extends JavaPlugin {
     protected PluginManager pm = Bukkit.getServer().getPluginManager();
 
 
+    public List<String> getBlackList() {
+        return bWorlds;
+    }
+
+
     /**
      * Gets p.
      *
@@ -186,8 +194,9 @@ public class SCB extends JavaPlugin {
 
         BukkitInterface.setServer(this.getServer());
 
-        this.saveConfig();
+
         this.getConfig().options().copyDefaults(true);
+        this.saveDefaultConfig();
         this.reloadConfig();
 
 
@@ -319,6 +328,7 @@ public class SCB extends JavaPlugin {
 
             p.bWorlds = p.getConfig().getStringList("ignoreWorlds");
             for ( String w : p.bWorlds ) {
+
                 System.out.println("World " + w + " is in the blacklist");
             }
             p.INV = new InventoryManager();
@@ -345,6 +355,7 @@ public class SCB extends JavaPlugin {
             p.SFM.getConfig().options().copyDefaults(true);
             p.SFM.saveDefaultConfig();
 
+
             SettingsManager.getInstance().setup(p);
             //MM = new MessageManager(p);
             if (!p.getConfig().getBoolean("enable")) {
@@ -362,6 +373,7 @@ public class SCB extends JavaPlugin {
             //p.pm.registerEvents(new WorldInventoryClick(p),p);
             p.pm.registerEvents(new PlayerJoinLobby(), p);
             p.pm.registerEvents(new WorldLoad(p), p);
+            p.pm.registerEvents(new SignChange(p), p);
             //p.pm.registerEvents(new ArenaChangeStatus(p), p);
             // List<String> wol = new ArrayList<>();
             //wol.add("world_the_end");
@@ -376,6 +388,8 @@ public class SCB extends JavaPlugin {
             //TODO Must refactor out this Helper Class
             Helper.getInstance().setup(p);
 
+            registerNewPerm("ssba.admin.createsign", "Allows  user to create SSB signs", "ssba.admin");
+            registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player");
 
         }
 
@@ -396,6 +410,21 @@ public class SCB extends JavaPlugin {
             catch ( Exception e ) {
                 e.printStackTrace();
             }
+
+        }
+
+
+        private void registerNewPerm(String name, String des, String parent) {
+            org.bukkit.permissions.Permission per = new org.bukkit.permissions.Permission(name);
+            per.setDescription(des);
+            per.addParent(parent, true);
+            if (name.startsWith("ssba")) {
+                per.setDefault(PermissionDefault.OP);
+            } else
+                per.setDefault(PermissionDefault.TRUE);
+
+            p.pm.addPermission(per);
+
 
         }
     }

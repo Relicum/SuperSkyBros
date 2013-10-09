@@ -28,7 +28,10 @@ public class join extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) {
 
-
+        if (SCB.getInstance().LBS.isInLobby(player)) {
+            player.sendMessage(SCB.getMessageManager().getErrorMessage("listeners.playerJoin.alreadyInLobby"));
+            return true;
+        }
         SmashPlayer splayer = SmashPlayer.wrap(player);
 
         splayer.pStatus = playerStatus.UNKNOWN;
