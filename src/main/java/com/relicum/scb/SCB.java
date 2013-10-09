@@ -7,6 +7,7 @@ import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.*;
 import com.relicum.scb.listeners.*;
 import com.relicum.scb.objects.inventory.InventoryManager;
+import com.relicum.scb.utils.GemShop;
 import com.relicum.scb.utils.Helper;
 import com.relicum.scb.utils.MessageManager;
 import com.relicum.scb.we.WorldEditPlugin;
@@ -284,7 +285,7 @@ public class SCB extends JavaPlugin {
 
     public void loadLobbyEvents() {
 
-        if (this.getConfig().getBoolean("enableLobbyProtection")) {
+        if (!this.getConfig().getBoolean("dedicatedSSB")) {
             System.out.println("Loading Lobby Events in SSB");
             p.pm.registerEvents(new LobbyBlockPlace(p), p);
             p.pm.registerEvents(new LobbyBlockBreak(p), p);
@@ -297,15 +298,12 @@ public class SCB extends JavaPlugin {
 
 
     public void unloadLobbyEvents() {
+        if (!this.getConfig().getBoolean("dedicatedSSB")) {
+            LobbyBlockBreak bl = new LobbyBlockBreak(this);
+            LobbyBlockPlace bp = new LobbyBlockPlace(this);
 
-        LobbyBlockBreak bl = new LobbyBlockBreak(this);
-        LobbyBlockPlace bp = new LobbyBlockPlace(this);
-
-        BlockBreakEvent.getHandlerList().unregister(bl);
-
-        //BlockPlaceEvent.getHandlerList().bake();
-
-        System.out.println("UnLoading Lobby Events in SSB");
+            System.out.println("UnLoading Lobby Events in SSB");
+        }
     }
 
 
@@ -367,6 +365,12 @@ public class SCB extends JavaPlugin {
 
 
             p.LBS = new LobbyManager();
+            if (p.getConfig().getBoolean("dedicatedSSB")) {
+                p.pm.registerEvents(new DBlockBreakPlace(p), p);
+            } else {
+                p.loadLobbyEvents();
+            }
+
             p.pm.registerEvents(new onBlockClick(p), p);
             p.pm.registerEvents(new PlayerJoin(p), p);
             p.pm.registerEvents(new PlayerQuit(p), p);
@@ -375,15 +379,16 @@ public class SCB extends JavaPlugin {
             p.pm.registerEvents(new PlayerJoinLobby(), p);
             p.pm.registerEvents(new WorldLoad(p), p);
             p.pm.registerEvents(new SignChange(p), p);
+            p.pm.registerEvents(new PlayerInteract(p), p);
 
             //p.pm.registerEvents(new ArenaChangeStatus(p), p);
             // List<String> wol = new ArrayList<>();
             //wol.add("world_the_end");
             //p.pm.registerEvents(new PlayerToggleFly(p,wol),p);
 
-            p.loadLobbyEvents();
-            BroadcastManager.setup();
 
+            BroadcastManager.setup();
+            GemShop gemShop = new GemShop(p);
             p.SNM = new SignManager();
 
 

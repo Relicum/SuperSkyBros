@@ -74,7 +74,7 @@ command:
     disabledSuccess: "Arena &7%ID%&a has successfully been disabled"
     leaveNoWhereToGo: "Sorry you can't leave the lobby where else would you go ??"
     leaveSuccess: "Removed from lobby and Teleported to World Spawn in Lobby World"
-    blacklistInvalidArg: "The first argument must either be 'add' or 'remove'"
+    blacklistInvalidArg: "The first argument must either be 'add' or 'delete'"
     blacklistInvalidWorld: "The world you have tried to blacklist does not exist. World names ARE case sensitive."
 listeners:
   playerJoin:

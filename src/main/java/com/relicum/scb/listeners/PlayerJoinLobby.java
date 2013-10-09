@@ -29,7 +29,7 @@ public class PlayerJoinLobby implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void playerJoin(PlayerJoinLobbyEvent e) {
         if (e.joinFrom().equalsIgnoreCase("JOINEDSERVER") || e.joinFrom().equalsIgnoreCase("sign") || e.joinFrom().equalsIgnoreCase("command")) {
-            System.out.println("PlayerJoinLobbyEvent  Started");
+
             e.getPlayer().setPermissionAttachment(e.getPlayer().getPlayer().addAttachment(SCB.getInstance(), "bukkit.broadcast.ssblobby", true));
 
             SCB.getInstance().INV.storeOldInventory(e.getPlayer().getPlayer());
