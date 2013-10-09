@@ -43,7 +43,7 @@ public class PlayerJoinLobby implements Listener {
             System.out.println(e.getPlayer().getName() + " Has been transported to the lobby");
 
             Bukkit.broadcast(ChatColor.translateAlternateColorCodes('&', SCB.MM.getRawMessage("system.lobbyJoinWelcome").replace("%name%", e.getPlayer().getName())), "bukkit.broadcast.ssblobby");
-            //e.getPlayer().getPlayer().playSound(e.getPlayer().getLocation(), Sound.PIG_DEATH, 1.0f, 1.0f);
+
         } else {
 
             SCB.getInstance().getLogger().warning("Error " + e.getPlayer().getName() + " was not able to join the lobby");

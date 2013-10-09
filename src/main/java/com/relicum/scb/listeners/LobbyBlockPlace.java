@@ -53,7 +53,7 @@ public class LobbyBlockPlace implements Listener, Cancellable {
      *
      * @param BlockBreakEvent the event
      */
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW)
     public void lobbyBreak(BlockPlaceEvent e) {
 
 

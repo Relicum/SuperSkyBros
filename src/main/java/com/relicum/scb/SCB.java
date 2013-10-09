@@ -367,6 +367,7 @@ public class SCB extends JavaPlugin {
 
 
             p.LBS = new LobbyManager();
+            p.pm.registerEvents(new onBlockClick(p), p);
             p.pm.registerEvents(new PlayerJoin(p), p);
             p.pm.registerEvents(new PlayerQuit(p), p);
             p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
@@ -374,6 +375,7 @@ public class SCB extends JavaPlugin {
             p.pm.registerEvents(new PlayerJoinLobby(), p);
             p.pm.registerEvents(new WorldLoad(p), p);
             p.pm.registerEvents(new SignChange(p), p);
+
             //p.pm.registerEvents(new ArenaChangeStatus(p), p);
             // List<String> wol = new ArrayList<>();
             //wol.add("world_the_end");

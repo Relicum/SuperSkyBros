@@ -34,19 +34,40 @@ public class SignChange implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void signChange(SignChangeEvent e) throws InterruptedException {
-
-        if (this.blacklist.contains(e.getPlayer().getWorld().getName()))
-            return;
-
         String[] lines = e.getLines();
-        if (lines[0].equalsIgnoreCase("ssb") && lines[1].equalsIgnoreCase("join")) {
+        if ((!lines[0].equalsIgnoreCase("[JOIN LOBBY]")) && (!lines[1].equalsIgnoreCase("join"))) {
+            if (this.blacklist.contains(e.getPlayer().getWorld().getName()))
+                return;
+        }
+
+        if (lines[0].equalsIgnoreCase("[JOIN LOBBY]") && lines[1].equalsIgnoreCase("join")) {
 
             if (SCB.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
-                e.setLine(0, "§4[SSB JOIN]");
-                e.setLine(1, "RIGHT CLICK TO");
-                e.setLine(2, "JOIN SSB LOBBY");
+                e.setLine(0, Col.Dark_Red() + "[JOIN LOBBY]");
+                e.setLine(1, "RIGHT CLICK");
+                e.setLine(2, "TO JOIN LOBBY");
+                e.setLine(3, Col.Dark_Blue() + "SUPERSKYBROS");
                 e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("listeners.signchange.success"));
-                System.out.println("A sign has been place by " + e.getPlayer().getName());
+                System.out.println("A Join sign has been place by " + e.getPlayer().getName());
+            } else {
+                e.setCancelled(true);
+                e.getBlock().breakNaturally();
+                e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.signchange.noPerms"));
+                System.out.println("A Join sign was canceled due to no perms by " + e.getPlayer().getName());
+            }
+
+
+        }
+
+        if (lines[0].equalsIgnoreCase("[LEAVE]") && lines[1].equalsIgnoreCase("leave")) {
+
+            if (SCB.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
+                e.setLine(0, Col.Dark_Red() + "[LEAVE]");
+                e.setLine(1, "CLICK TO");
+                e.setLine(2, "LEAVE LOBBY");
+                e.setLine(3, Col.Dark_Blue() + "SUPERSKYBROS");
+                e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("listeners.signchange.success"));
+                System.out.println("A Leave sign has been place by " + e.getPlayer().getName());
             } else {
                 e.setCancelled(true);
                 e.getBlock().breakNaturally();

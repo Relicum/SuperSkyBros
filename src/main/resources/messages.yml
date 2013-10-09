@@ -11,7 +11,7 @@ system:
   autoJoinFirstTime: "Player %player% has joined Super Sky Bros for the first time say Hi !"
   kickJoinNoPerm: "You do not have permission to join the SSB Lobby"
   kickJoinWorldBlacklisted: "You were kicked as the world you are trying to login to is on the SSB world ignore SSB events blacklist"
-  lobbyJoinWelcome: "&5Welcome %name% to &9Super &eSky &9Bros &5 enjoy your stay.&r"
+  lobbyJoinWelcome: "&5%name% has joined &9Super &eSky &9Bros &5 lobby.&r"
   internal:
     badMessageFormat: "There was a problem with the format of the message you sent"
     noConsoleCommand: "You can not run that command from the console. In game only"
