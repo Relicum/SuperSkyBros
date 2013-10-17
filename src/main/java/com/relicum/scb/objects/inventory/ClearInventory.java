@@ -82,8 +82,23 @@ public class ClearInventory {
         player.setExp(0.0F);
         player.getInventory().setItem(0, bo);
         player.getInventory().setItem(8, em);
-        if (player.getName().equalsIgnoreCase("Relicum"))
-            player.setDisplayName(Col.Green() + "Relicum");
+        if (player.getName().equalsIgnoreCase("Relicum")) {
+            player.setDisplayName(Col.Dark_Purple() + "Relicum" + Col.Reset());
+            player.setPlayerListName(Col.Dark_Purple() + "Relicum" + Col.Reset());
+        } else {
+
+            String pn = player.getName();
+            int l = pn.length();
+            String spn;
+            if (l > 14) {
+                spn = pn.substring(0, 13);
+
+            } else {
+                spn = pn;
+            }
+            player.setPlayerListName(Col.Grey() + spn + Col.Reset());
+            player.setDisplayName(Col.Grey() + spn + Col.Reset());
+        }
         UpdateInv(player);
 
         return player;

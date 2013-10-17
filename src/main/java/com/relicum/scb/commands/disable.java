@@ -29,7 +29,7 @@ public class disable extends SubBase {
         }
 
         if (ar.getCurrent() == 0) {
-            player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.setspawnNoArenaSet"));
+            player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.NoArenaSet"));
             return true;
         }
 

@@ -35,6 +35,7 @@ command:
     enable: "&bEnable an Arena by ID. Pass the relevent arena id you wish to enable"
     disable: "&bDisable an Arena by ID. Pass the relevent arena id you wish to disable"
     blacklist: "&bUsed to add and remove worlds from the black list. Any world on this list will be ignored by SSA. Usage &6/ssba blacklist add worldname &b to add a world or &6/ssba remove worldname &b to remove a world. You need to swap worldname for the name of the actual world."
+    player: $bSet the min and max number of players for arena. Eg &6/ssba player min 2 &b sets the minimum number of players to 2. Max players you can set is 8.
   message:
     worldOnBlackList: "Sorry this world is on the world blacklist. Remove it and restart the server and try again."
     joinNoLocation: "You can not use this as the Lobby Location has not been set yet"
@@ -64,7 +65,7 @@ command:
     modifyException: "Error: Could not set the Arena ID &7%ID%&5 are you sure it is valid ?"
     modifySuccess: "You have sucsessfully set Arena ID &7%ID%&a to modify mode when finished set ID to 0"
     setSpawnSuccess: "New arena spawn point created, number &7%ID%"
-    setspawnNoArenaSet: "You need to use the modify command and set the arena id you want to modify"
+    NoArenaSet: "You need to use the modify command and set the arena id you want to modify"
     setspawnNotInArena: "Error: you have tried to set a spawn point that is not in an arena"
     setspawnFail: "Unknown error saving spawn point, see logs for more details"
     enableNoIdFound: "Could not enable the arena. Could not find Arena &7%ID%&r"
@@ -74,8 +75,18 @@ command:
     disabledSuccess: "Arena &7%ID%&a has successfully been disabled"
     leaveNoWhereToGo: "Sorry you can't leave the lobby where else would you go ??"
     leaveSuccess: "Removed from lobby and Teleported to World Spawn in Lobby World"
-    blacklistInvalidArg: "The first argument must either be 'add' or 'delete'"
+    blacklistInvalidArg: "The first argument must either be 'add' or 'remove'"
     blacklistInvalidWorld: "The world you have tried to blacklist does not exist. World names ARE case sensitive."
+    blacklistAlreadyAdded: "Error the world &7%WORLD%&5 is already on the blacklist"
+    blacklistNotFound: "Error the world &7%WORLD%&5 was not found on the blacklist"
+    blacklistSuccess: "You have successfully &7%ARG%&a the world &7%WORLD%&r"
+    playerInvalidArg: "The first argument must either be 'min' or 'max'"
+    playerOutMinRange: "Error the min mumber of players must be between 2 and 8"
+    playerOutMaxRange: "Error the max mumber of players must be between 4 and 8"
+    playerMinGrtMax: "Error the min players can not be greater than max players"
+    playerMaxLessMin: "Error the max players can not be less than min players"
+    playerMinSuccess: "You have successfully set the minimum number of players to &7%MIN%&r"
+    playerMaxSuccess: "You have successfully set the maximum number of players to &7%MAX%&r"
 listeners:
   playerJoin:
     noLobbySet: "There is currently no lobby spawn set for SSB please set one"
@@ -85,5 +96,6 @@ listeners:
   blockplace:
     lobbyPlace: "You do not have permission to place blocks in the Lobby"
   signchange:
-    noPerms: "You do not have permission to create SSB Join signs"
-    success: "You have successfully created a new Lobby Join Sign"
+    noPerms: "You do not have permission to create SSB Lobby signs"
+    joinSuccess: "You have successfully created a new Lobby &7Join&a Sign"
+    leaveSuccess: "You have successfully created a new Lobby &7Leave&a Sign"

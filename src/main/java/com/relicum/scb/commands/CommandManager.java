@@ -88,6 +88,7 @@ public class CommandManager implements CommandExecutor {
         clist.put("enable", new enable());
         clist.put("disable", new disable());
         clist.put("blacklist", new blacklist());
+        clist.put("player", new player());
     }
 
 

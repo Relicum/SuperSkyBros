@@ -38,43 +38,6 @@ public class join extends SubBase {
         PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "COMMAND", SCB.getInstance().getConfig().getBoolean("dedicatedSSB"));
         Bukkit.getServer().getPluginManager().callEvent(event);
 
-
-        System.out.println("Getting stuck here");
-            /*SCB.getInstance().LBS.addPlayer(splayer);
-
-
-
-            Location tpto = null;
-            Chunk ch = null;
-            if (!SCB.getInstance().LBC.getConfig().contains("LOBBY.REGION")) {
-                player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.joinNoLocation"));
-
-                return false;
-            }
-
-            try {
-                SCB.getInstance().INV.storeOldInventory(splayer.getPlayer());
-
-                ClearInventory.applyLobbyInv(splayer.getPlayer());
-                tpto = SCB.getInstance().LBS.getLobbyRegion().getLobbySpawn();
-                ch = tpto.getChunk();
-                splayer.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.arenatpLoading"));
-                if (!ch.load()) {
-                    splayer.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.arenatpLoadingFail"));
-                    return false;
-                } else {
-                    teleportToLobby(splayer.getPlayer(), tpto);
-
-                    return true;
-                }
-
-            }
-            catch ( Exception e ) {
-                e.printStackTrace();
-            }
-
-            splayer.sendMessage(SCB.MM.getErrorMessage("command.message.teleportFail"));
-        }*/
         return true;
 
     }

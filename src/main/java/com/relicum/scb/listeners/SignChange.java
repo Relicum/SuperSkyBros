@@ -47,7 +47,7 @@ public class SignChange implements Listener {
                 e.setLine(1, "RIGHT CLICK");
                 e.setLine(2, "TO JOIN LOBBY");
                 e.setLine(3, Col.Dark_Blue() + "SUPERSKYBROS");
-                e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("listeners.signchange.success"));
+                e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("listeners.signchange.joinSuccess"));
                 System.out.println("A Join sign has been place by " + e.getPlayer().getName());
             } else {
                 e.setCancelled(true);
@@ -66,13 +66,13 @@ public class SignChange implements Listener {
                 e.setLine(1, "CLICK TO");
                 e.setLine(2, "LEAVE LOBBY");
                 e.setLine(3, Col.Dark_Blue() + "SUPERSKYBROS");
-                e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("listeners.signchange.success"));
+                e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("listeners.signchange.leaveSuccess"));
                 System.out.println("A Leave sign has been place by " + e.getPlayer().getName());
             } else {
                 e.setCancelled(true);
                 e.getBlock().breakNaturally();
                 e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.signchange.noPerms"));
-                System.out.println("A Join sign was canceled due to no perms by " + e.getPlayer().getName());
+                System.out.println("A leave sign was canceled due to no perms by " + e.getPlayer().getName());
             }
 
 

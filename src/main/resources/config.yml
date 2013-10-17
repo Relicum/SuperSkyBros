@@ -8,20 +8,19 @@ ignoreWorlds:
   - 'world_the_end'
   - 'world_nether'
 dedicatedSSB: false
-jumpPower: 1
-jumpInLobby: true
+ppw: false
 classesEnabled:
   - Creeper
 gemshop:
-  - ecoPlugin: false
-  - itemOpen:
+  ecoPlugin: false
+  itemOpen:
     - open: true
     - item: 'Material_Emerald'
-    - meta:
-      - displayName: 'Super Sky Bros Shop'
-      - lore:
-        - 'Sorry the shop is closed'
-        - 'Still in Development'
+  meta:
+    - displayName: 'Super Sky Bros Shop'
+    - lore:
+       - 'Sorry the shop is closed'
+       - 'Still in Development'
     - slot: 8
 joinBook:
   enable: true
