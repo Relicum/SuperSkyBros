@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.relicum</groupId>
     <artifactId>SuperSkyBros</artifactId>
-    <version>0.2.34</version>
+    <version>0.2.35</version>
     <name>SuperSkyBros</name>
     <description>Super Sky Bros Brawl Mini-Game based off SethBlings project. This is a Bukkit Plugin Version designed
         to run in Minecraft
@@ -15,7 +15,13 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>LATEST</version>
+            <version>1.6.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>1.6.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
