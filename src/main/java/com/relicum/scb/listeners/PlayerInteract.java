@@ -31,7 +31,7 @@ public class PlayerInteract implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void itemDrop(PlayerDropItemEvent e) {
-        if (!(SCB.getInstance().LBS.isInLobby(e.getPlayer()))) return;
+        if (SCB.getInstance().LBS.isInLobby(e.getPlayer())) return;
         e.setCancelled(true);
     }
 

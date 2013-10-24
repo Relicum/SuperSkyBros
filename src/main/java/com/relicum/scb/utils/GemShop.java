@@ -1,11 +1,17 @@
 package com.relicum.scb.utils;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.utils.IconMenu.OptionClickEvent;
+import com.relicum.scb.objects.inventory.StorePlayerSettings;
+import com.relicum.scb.utils.IconMenu;
 import com.relicum.scb.utils.IconMenu.OptionClickEventHandler;
+import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.naming.StaticNameCoder;
+import net.minecraft.server.v1_6_R3.NBTTagCompound;
+import net.minecraft.server.v1_6_R3.NBTTagList;
+import net.minecraft.server.v1_6_R3.NBTTagString;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -76,11 +82,13 @@ public class GemShop {
                 .setOption(1, new ItemStack(Material.SPIDER_EYE, 1), "Spider", spiderDescription.toArray(new String[spiderDescription.size()]));
 
         iconMenu.open(player);
+
     }
 
 
     public static void setClass(Player player, String name) {
         player.sendMessage(ChatColor.GREEN + "Name of the class selected is " + ChatColor.GOLD + name);
+
 
     }
 

@@ -1,7 +1,9 @@
 package com.relicum.scb.classes.utils;
 
 import org.bukkit.Color;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * Bukkit-SCB
@@ -9,33 +11,35 @@ import org.bukkit.inventory.ItemStack;
  * @author Relicum
  * @version 0.1
  */
-public abstract class IClassArmour implements IColoredArmour {
+public interface IClassArmour {
 
-    private ItemEnum itemType = ItemEnum.ARMOR;
+    ItemEnum itemType = ItemEnum.ARMOR;
 
 
     /**
      * @return ItemEnum
      */
-    public ItemEnum getItemType() {
-
-        return itemType;
-    }
+    public ItemEnum getItemType();
 
 
-    public abstract void setArmourColor(Color co);
+    public void setArmourColor(Color co);
 
-    public abstract void setArmourMaterial(ArmourEnum m);
+    public Color getArmourColor();
 
-    public abstract ItemStack[] getAllArmour(ArmourEnum em);
+    public void setArmourMaterial(Material mat);
 
-    public abstract ItemStack getHelmet(ArmourEnum em);
+    public ArmourMaterial getArmourMaterial();
 
-    public abstract ItemStack getChestPlate(ArmourEnum em);
+    public ItemStack[] getAllArmour(ArmourMaterial em);
 
-    public abstract ItemStack getLeggings(ArmourEnum em);
+    public ItemStack getHelmet(ArmourMaterial em);
 
-    public abstract ItemStack getBoots(ArmourEnum em);
+    public ItemStack getChestPlate(ArmourMaterial em);
 
+    public ItemStack getLeggings(ArmourMaterial em);
+
+    public ItemStack getBoots(ArmourMaterial em);
+
+    public ItemMeta getArmourMeta(Material mat);
 
 }

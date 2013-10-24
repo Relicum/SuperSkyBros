@@ -6,7 +6,11 @@ package com.relicum.scb.classes.utils;
  * @author Relicum
  * @version 0.1
  */
-public enum ArmourEnum {
-    LEATHER, IRON, GOLD, CHAINMAIL, DIAMOND
-
+enum ArmourMaterial {
+    LEATHER,
+    IRON,
+    GOLD,
+    CHAINMAIL,
+    DIAMOND,
+    STONE
 }

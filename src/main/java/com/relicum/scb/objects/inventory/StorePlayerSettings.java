@@ -1,6 +1,7 @@
 package com.relicum.scb.objects.inventory;
 
 import com.relicum.scb.objects.inventory.interfaces.IISettings;
+import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.bukkit.GameMode;
 import org.bukkit.inventory.ItemStack;
 
@@ -11,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
  * @author Relicum
  * @version 0.1
  */
+
 public class StorePlayerSettings implements IISettings {
 
     private double playerHealth;
@@ -45,6 +47,8 @@ public class StorePlayerSettings implements IISettings {
 
 
     public float getWalkSpeed() {
+
+
         return walkSpeed;
     }
 

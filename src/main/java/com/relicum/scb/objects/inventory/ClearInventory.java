@@ -8,9 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -24,11 +22,11 @@ import java.util.List;
  */
 public class ClearInventory {
 
-
     public static Player Clear(Player player) {
 
         player.setFlying(false);
         player.setAllowFlight(false);
+        player.setMaximumNoDamageTicks(0);
         player.setHealth(20.0D);
         player.setFoodLevel(20);
         player.setGameMode(GameMode.SURVIVAL);
@@ -53,6 +51,7 @@ public class ClearInventory {
 
     public static Player applyLobbyInv(Player player) {
 
+
         ClearInventory.Clear(player);
         ItemStack bo = new ItemStack(Material.WRITTEN_BOOK);
 
@@ -76,6 +75,7 @@ public class ClearInventory {
         lo.add(Col.Light_Purple() + "Hope to be open soon");
         iem.setLore(lo);
         em.setItemMeta(iem);
+        player.setMaximumNoDamageTicks(12000);
         player.setHealth(20.0D);
         player.setFoodLevel(20);
         player.setLevel(0);

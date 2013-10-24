@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.relicum</groupId>
     <artifactId>SuperSkyBros</artifactId>
-    <version>0.2.35</version>
+    <version>0.2.40</version>
     <name>SuperSkyBros</name>
     <description>Super Sky Bros Brawl Mini-Game based off SethBlings project. This is a Bukkit Plugin Version designed
         to run in Minecraft
@@ -22,6 +22,18 @@
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
             <version>1.6.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.comphenix.protocol</groupId>
+            <artifactId>ProtocolLib</artifactId>
+            <version>LATEST</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>LibsDisguises</groupId>
+            <artifactId>LibsDisguises</artifactId>
+            <version>7.6.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -59,8 +71,17 @@
             <url>http://maven.sk89q.com/repo/</url>
         </repository>
         <repository>
+            <id>comphenix-rep</id>
+            <name>Comphenix Repository</name>
+            <url>http://repo.comphenix.net/content/groups/public/</url>
+        </repository>
+        <repository>
             <id>vault-repo</id>
-            <url>http://ci.herocraftonline.com/plugin/repository/everything</url>
+            <url>http://ci.herocraftonline.com/plugin/repository/everything/</url>
+        </repository>
+        <repository>
+            <id>libs-disguises-repo</id>
+            <url>http://repo.md-5.net/content/groups/public/</url>
         </repository>
     </repositories>
     <build>
@@ -94,7 +115,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>2.3.2</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>
@@ -109,7 +130,7 @@
                     <outputDirectory>${project.basedir}/target</outputDirectory>
                     <testClassesDirectory>${project.basedir}target/test-classes</testClassesDirectory>
                     <archive>
-                        <addMavenDescriptor>true</addMavenDescriptor>
+                        <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>
                     <finalName>SuperSkyBros.Beta.${project.version}</finalName>
                 </configuration>

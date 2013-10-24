@@ -6,9 +6,7 @@ package com.relicum.scb.classes.utils;
  * @author Relicum
  * @version 0.1
  */
-enum ArmourType {
-    HELMET,
-    CHESTPLATE,
-    LEGGINGS,
-    BOOTS
+enum ArmourMeta {
+    ItemMeta,
+    LeatherArmorMeta
 }

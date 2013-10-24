@@ -1,0 +1,30 @@
+package com.relicum.scb.classes.utils;
+
+/**
+ * SuperSkyBros First Created 20/10/13
+ *
+ * @author Relicum
+ * @version 0.1
+ */
+enum ArmourItem {
+    GOLD_BOOTS,
+    GOLD_LEGGINGS,
+    GOLD_CHESTPLATE,
+    GOLD_HELMET,
+    IRON_BOOTS,
+    IRON_LEGGINGS,
+    IRON_CHESTPLATE,
+    IRON_HELMET,
+    DIAMOND_BOOTS,
+    DIAMOND_LEGGINGS,
+    DIAMOND_CHESTPLATE,
+    DIAMOND_HELMET,
+    CHAINMAIL_BOOTS,
+    CHAINMAIL_LEGGINGS,
+    CHAINMAIL_CHESTPLATE,
+    CHAINMAIL_HELMET,
+    LEATHER_BOOTS,
+    LEATHER_LEGGINGS,
+    LEATHER_CHESTPLATE,
+    LEATHER_HELMET
+}

@@ -1,6 +1,6 @@
 package com.relicum.scb;
 
-import com.relicum.scb.classes.Creeper;
+
 import com.relicum.scb.commands.CommandManager;
 import com.relicum.scb.commands.CommandManagerFirstJoin;
 import com.relicum.scb.commands.DebugManager;
@@ -104,11 +104,6 @@ public class SCB extends JavaPlugin {
      */
     public SignFormat SFM;
 
-    /**
-     * The Creeper.
-     */
-    public Creeper co;
-
     private List<String> bWorlds = new ArrayList<>();
 
     public boolean saveOnDisable = true;
@@ -118,6 +113,8 @@ public class SCB extends JavaPlugin {
     protected ArrayList<Permission> plist = new ArrayList<>();
 
     protected PluginManager pm = Bukkit.getServer().getPluginManager();
+
+    public ScheduledManager poolManager;
 
 
     public List<String> getBlackList() {
@@ -207,6 +204,8 @@ public class SCB extends JavaPlugin {
         this.getConfig().options().copyDefaults(true);
         this.saveDefaultConfig();
         this.reloadConfig();
+
+
         /**
          * This function worldEventRestrict was written and designed by MylesC and is part of the PerWorldsPlugin
          * Which can be found at http://dev.bukkit.org/bukkit-mods/perworldplugins/
@@ -258,7 +257,7 @@ public class SCB extends JavaPlugin {
 
                 System.out.println("Debug Commands installed");
             }
-
+            poolManager = new ScheduledManager(2);
             getServer().getScheduler().scheduleSyncDelayedTask(SCB.getInstance(), new Startup(), 15L);
 
 
@@ -291,6 +290,7 @@ public class SCB extends JavaPlugin {
                 SNC.saveConfig();
                 SFM.saveConfig();
                 this.saveConfig();
+                ScheduledManager.getScheduler().shutdown();
             }
             catch ( Exception e ) {
                 e.printStackTrace();
@@ -388,6 +388,7 @@ public class SCB extends JavaPlugin {
                 if (p.getConfig().getBoolean("dedicatedSSB")) {
                     p.pm.registerEvents(new DBlockBreakPlace(p), p);
                 } else {
+
                     p.loadLobbyEvents();
                 }
             }
@@ -418,6 +419,7 @@ public class SCB extends JavaPlugin {
 
             registerNewPerm("ssba.admin.createsign", "Allows  user to create SSB signs", "ssba.admin");
             registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player");
+
 
         }
 
@@ -499,7 +501,9 @@ public class SCB extends JavaPlugin {
     }
 
 
+    @SuppressWarnings("all")
     public void worldEventRestrict() {
+
 
         boolean isInjected = false;
         $("Enabled, Attempting to Inject PluginManager");

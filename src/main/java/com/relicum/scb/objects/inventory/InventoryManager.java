@@ -1,9 +1,8 @@
 package com.relicum.scb.objects.inventory;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.configs.XStreamReader;
-import com.relicum.scb.configs.XStreamWriter;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.Xpp3DomDriver;
 import com.thoughtworks.xstream.persistence.FilePersistenceStrategy;
 import com.thoughtworks.xstream.persistence.PersistenceStrategy;
 import com.thoughtworks.xstream.persistence.XmlMap;
@@ -38,10 +37,17 @@ public class InventoryManager {
 
     public InventoryManager() {
 
-        path = SCB.getInstance().getDataFolder() + "/players/players.xml";
-        this.reader = XStreamReader.getFi(path);
-        this.writer = XStreamWriter.getFos(path);
-        this.strategy = new FilePersistenceStrategy(new File(SCB.getInstance().getDataFolder() + "/players/"));
+        //path = SCB.getInstance().getDataFolder() + "/players/players.xml";
+        // this.reader = XStreamReader.getFi(path);
+        //this.writer = XStreamWriter.getFos(path);
+
+        XStream xstream = new XStream(new Xpp3DomDriver());
+
+        xstream.alias("Storage", StorePlayerSettings.class);
+        xstream.alias("Storage", StorePlayerSettings.class);
+
+
+        this.strategy = new FilePersistenceStrategy(new File(SCB.getInstance().getDataFolder() + "/players/"), xstream);
         this.xmap = new XmlMap(this.strategy);
 
     }

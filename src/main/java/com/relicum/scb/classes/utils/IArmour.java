@@ -1,94 +1,175 @@
 package com.relicum.scb.classes.utils;
 
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
+import java.util.UUID;
 
 /**
- * Interface for all Armours Items to implement
- *
- * @author Relicum
- * @version 0.1
+ * The interface IArmour.
  */
-public abstract class IArmour {
+public interface IArmour {
+
 
     /**
-     * Stores the Material of the Armours
+     * Gets id.
+     *
+     * @return the id
      */
-    public ArmourEnum em;
+    UUID getId();
 
     /**
-     * The ItemMeta
+     * Gets armour.
+     *
+     * @return the armour
      */
-    public ItemMeta itm;
+    public Armour getArmour();
 
     /**
-     * ItemStack
+     * Gets armour.
+     *
+     * @return the armour
      */
-    public ItemStack it;
-
+    public Armour getArmour(ArmourMaterial a);
 
     /**
-     * Instantiates a new I armour impl.
+     * Old stack.
+     *
+     * @return the item stack
      */
-    public void IArmour(Integer i) {
-
-
-    }
-
+    public ItemStack armourStack();
 
     /**
-     * Gets armour as ItemStack
+     * Gets armour type.
+     *
+     * @return the armour type
+     */
+    public ArmourType getArmourType();
+
+    /**
+     * Gets armour material.
+     *
+     * @return the armour material
+     */
+    public ArmourMaterial getArmourMaterial();
+
+    /**
+     * Gets armour meta.
+     *
+     * @return the armour meta
+     */
+    public ArmourMeta getArmourMeta();
+
+    /**
+     * Ge armour item.
      *
      * @return the ItemStack
      */
-
-    public ItemStack getArmour() {
-        return it;
-    }
-
+    public ItemStack getArmourItem(ArmourItem armourItem);
 
     /**
-     * Sets armour by Material
+     * Gets class name.
      *
-     * @param mat Material
+     * @return the class name
      */
-    public void setArmour(Material mat) {
-        this.it = new ItemStack(mat);
-
-    }
-
+    public String getClassName();
 
     /**
-     * Gets colored armour item meta.
+     * Gets permission.
      *
-     * @param i Integer
-     * @return ItemMeta armour item meta
+     * @return the permission
      */
-    public ItemMeta getArmourItemMeta(Integer i) {
-        itm = it.getItemMeta();
-        return itm;
-    }
-
+    public String getPermission();
 
     /**
-     * Save item meta.
-     */
-    public void saveItemMeta() {
-
-        it.setItemMeta(itm);
-
-    }
-
-
-    /**
-     * Sets armour material.
+     * Is vIP.
      *
-     * @param emm ArmourEnum
+     * @return the boolean
      */
-    public void setArmourMaterial(ArmourEnum emm) {
+    public boolean isVIP();
 
-        this.em = ArmourEnum.valueOf(emm.toString().toUpperCase());
-    }
+    /**
+     * Is premium.
+     *
+     * @return the boolean
+     */
+    public boolean isPremium();
 
+    /**
+     * Has permission.
+     *
+     * @return the boolean
+     */
+    public boolean hasPermission();
+
+    /**
+     * Is oP.
+     *
+     * @return the boolean
+     */
+    public boolean isOP();
+
+    /**
+     * Gets lore.
+     *
+     * @return the lore
+     */
+    public List<String> getLore();
+
+    /**
+     * Gets lore list.
+     *
+     * @param lines the lines
+     * @return the lore list
+     */
+    public boolean getLoreList(List<String> lines);
+
+    /**
+     * Sets line ro lore.
+     *
+     * @param line the line
+     * @return the line ro lore
+     */
+    public boolean setLineOfLore(String line);
+
+    /**
+     * Gets item stack.
+     *
+     * @return the item stack
+     */
+    public double getItemStack();
+
+    /**
+     * Can remove armour.
+     *
+     * @return the boolean
+     */
+    public boolean canRemoveArmour();
+
+    /**
+     * Unsave enchants allowed.
+     *
+     * @return the boolean
+     */
+    public boolean unsaveEnchantsAllowed();
+
+    /**
+     * @return an items durability
+     */
+    public double getItemDurability();
+
+    /**
+     * All 4 Old items have the same settings. Makes it very fast to create classes very quickly
+     */
+    public void setAllSettingTheSame();
+
+    public ItemStack getHelmet();
+
+    public ItemStack getChestPlate();
+
+    public ItemStack getLeggings();
+
+    public ItemStack getBoots();
+
+    public ItemStack[] getAllArmour();
 }

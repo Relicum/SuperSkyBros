@@ -130,7 +130,7 @@ public class SmashPlayer extends BukkitPlayer {
 
     public SmashPlayer removeArmour() {
         getPlayer().getInventory().setArmorContents(new ItemStack[4]);
-        System.out.println("Armour removed");
+        System.out.println("Old removed");
         return this;
     }
 

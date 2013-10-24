@@ -9,7 +9,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  * @author Relicum
  * @version 0.1
  */
-public abstract interface IClassItem {
+public interface IClassItem {
 
 
     public Material getMaterials(Material material);
