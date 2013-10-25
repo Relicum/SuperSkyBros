@@ -97,6 +97,25 @@ public class SignChange implements Listener {
 
         }
 
+        if (lines[0].equalsIgnoreCase("[ARENA]") && lines[1].equalsIgnoreCase("join") && Integer.parseInt(lines[2]) > 0) {
+
+            if (SCB.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
+                e.setLine(0, Col.Dark_Red() + "[JOIN LOBBY]");
+                e.setLine(1, "RIGHT CLICK");
+                e.setLine(2, "TO JOIN LOBBY");
+                e.setLine(3, Col.Dark_Blue() + "SUPERSKYBROS");
+                e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("listeners.signchange.joinSuccess"));
+                System.out.println("A Join sign has been place by " + e.getPlayer().getName());
+            } else {
+                e.setCancelled(true);
+                e.getBlock().breakNaturally();
+                e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.signchange.noPerms"));
+                System.out.println("A Join sign was canceled due to no perms by " + e.getPlayer().getName());
+            }
+
+
+        }
+
 
     }
 
