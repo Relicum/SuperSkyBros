@@ -14,10 +14,19 @@ commands:
   ssba:
     description: Admin Sub Command for SuperSkyBros.
     aliases: ssa
-    permission: ssb.admin
+    permission: ssba.admin
     usage: /ssba [command] [args]
   vList:
     description: Debug Tools Command for SuperSkyBros.
     aliases: dsb
     permission: ssb.admin
     usage: vList [args]
+
+permissions:
+    ssba.admin.*:
+        description: Gives access to all doorman commands
+        children:
+            ssba.admin: true
+    ssb.admin:
+        description: default admin prefix
+        default: op

@@ -35,7 +35,9 @@ command:
     enable: "&bEnable an Arena by ID. Pass the relevent arena id you wish to enable"
     disable: "&bDisable an Arena by ID. Pass the relevent arena id you wish to disable"
     blacklist: "&bUsed to add and remove worlds from the black list. Any world on this list will be ignored by SSA. Usage &6/ssba blacklist add worldname &b to add a world or &6/ssba remove worldname &b to remove a world. You need to swap worldname for the name of the actual world."
-    player: $bSet the min and max number of players for arena. Eg &6/ssba player min 2 &b sets the minimum number of players to 2. Max players you can set is 8.
+    player: "&bSet the min and max number of players for arena. Eg &6/ssba player min 2 &b sets the minimum number of players to 2. Max players you can set is 8."
+    lobbytp: "&bAdmin command to tp them back to the main lobby from anywhere"
+    setarenalobby: "&bEach arena needs to have a pre game lobby use world edit to make the selection then stand on the block players will spawn to"
   message:
     worldOnBlackList: "Sorry this world is on the world blacklist. Remove it and restart the server and try again."
     joinNoLocation: "You can not use this as the Lobby Location has not been set yet"
@@ -63,7 +65,7 @@ command:
     arenatpLoading: "Loading spawn chunk ............."
     arenatpLoadingFail: "Error: The spawn chunk would not load aborting TP"
     modifyException: "Error: Could not set the Arena ID &7%ID%&5 are you sure it is valid ?"
-    modifySuccess: "You have sucsessfully set Arena ID &7%ID%&a to modify mode when finished set ID to 0"
+    modifySuccess: "You have successfully set Arena ID &7%ID%&a to modify mode when finished set ID to 0"
     setSpawnSuccess: "New arena spawn point created, number &7%ID%"
     NoArenaSet: "You need to use the modify command and set the arena id you want to modify"
     setspawnNotInArena: "Error: you have tried to set a spawn point that is not in an arena"
@@ -87,6 +89,8 @@ command:
     playerMaxLessMin: "Error the max players can not be less than min players"
     playerMinSuccess: "You have successfully set the minimum number of players to &7%MIN%&r"
     playerMaxSuccess: "You have successfully set the maximum number of players to &7%MAX%&r"
+    lobbytpSuccess: "You have successfully returned to the main lobby"
+    setarenalobbySuccess: "Arena Lobby has sucessfully been created for arena &6%ID%"
 listeners:
   playerJoin:
     noLobbySet: "There is currently no lobby spawn set for SSB please set one"
@@ -99,3 +103,6 @@ listeners:
     noPerms: "You do not have permission to create SSB Lobby signs"
     joinSuccess: "You have successfully created a new Lobby &7Join&a Sign"
     leaveSuccess: "You have successfully created a new Lobby &7Leave&a Sign"
+    leaveGame: "You have successfully created a new Return to &7Lobby&a Sign"
+  onblockclick:
+    returnToLobby: "You have successfully returned to the lobby"

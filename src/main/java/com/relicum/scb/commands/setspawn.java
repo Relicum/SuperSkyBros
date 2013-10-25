@@ -39,7 +39,7 @@ public class setspawn extends SubBase {
 
                 System.out.println("The Arena Group is null means this is first spawn and need to create and Save new SpawnGroup First and then add it to the arena object");
 
-                Vector vt = new Vector(Math.round(player.getLocation().getX()), player.getLocation().getY(), Math.round(player.getLocation().getZ()));
+                Vector vt = new Vector(Math.round(player.getLocation().getX()) + 0.5, player.getLocation().getY() + 0.5, Math.round(player.getLocation().getZ()) + 0.5);
                 ArenaSpawn as = new ArenaSpawn(vt, ar.getCurrent(), player.getWorld().getName());
 
 

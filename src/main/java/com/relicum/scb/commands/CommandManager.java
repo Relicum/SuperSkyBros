@@ -50,13 +50,9 @@ public class CommandManager implements CommandExecutor {
         Permission ssbp = new Permission("ssb.player");
         ssbp.setDefault(PermissionDefault.TRUE);
         ssbp.setDescription("Default Player Node");
-        Permission ssbap = new Permission("ssba.admin");
-        ssbap.setDefault(PermissionDefault.OP);
-        ssbap.setDescription("Default Admin Node");
 
 
         p.getServer().getPluginManager().addPermission(ssbp);
-        p.getServer().getPluginManager().addPermission(ssbap);
         loadCommands();
 
 
@@ -74,7 +70,6 @@ public class CommandManager implements CommandExecutor {
      */
     private void loadCommands() {
 
-        //clist.put("setlobbyspawn", new setlobbyspawn());
         clist.put("createarena", new createarena());
         clist.put("setspawn", new setspawn());
         clist.put("join", new join());
@@ -89,6 +84,8 @@ public class CommandManager implements CommandExecutor {
         clist.put("disable", new disable());
         clist.put("blacklist", new blacklist());
         clist.put("player", new player());
+        clist.put("lobbytp", new lobbytp());
+        clist.put("setarenalobby", new setarenalobby());
     }
 
 
@@ -198,7 +195,7 @@ public class CommandManager implements CommandExecutor {
         des = ChatColor.translateAlternateColorCodes('&', des);
 
         Permission per = new Permission(ubPerm + "." + name);
-        per.setDefault(PermissionDefault.OP);
+        per.setDefault(PermissionDefault.TRUE);
         per.addParent(ubPerm, true);
         per.setDescription(des);
         plugin.getServer().getPluginManager().addPermission(per);

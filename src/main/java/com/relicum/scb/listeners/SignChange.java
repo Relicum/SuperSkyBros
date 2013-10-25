@@ -78,6 +78,25 @@ public class SignChange implements Listener {
 
         }
 
+        if (lines[0].equalsIgnoreCase("[RETURN]") && lines[1].equalsIgnoreCase("lobby")) {
+
+            if (SCB.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
+                e.setLine(0, Col.Dark_Red() + "[RETURN]");
+                e.setLine(1, "CLICK TO RETURN");
+                e.setLine(2, "TO LOBBY");
+                e.setLine(3, Col.Dark_Blue() + "SUPERSKYBROS");
+                e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("listeners.signchange.leaveGame"));
+                System.out.println("A Leave Game has been place by " + e.getPlayer().getName());
+            } else {
+                e.setCancelled(true);
+                e.getBlock().breakNaturally();
+                e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.signchange.noPerms"));
+                System.out.println("A leave sign was canceled due to no perms by " + e.getPlayer().getName());
+            }
+
+
+        }
+
 
     }
 

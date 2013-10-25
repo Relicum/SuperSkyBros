@@ -1,6 +1,7 @@
 package com.relicum.scb.arena;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.objects.ArenaLobby;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
 import com.relicum.scb.objects.spawns.ArenaSpawn;
 import org.bukkit.Bukkit;
@@ -34,6 +35,8 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
      * The Max players.
      */
     private int maxPlayers;
+
+    private boolean doubleJump;
 
     /**
      * The Perm.
@@ -78,6 +81,8 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
     private List<Vector> chunk;
 
     private ArenaRegion areg;
+
+    private ArenaLobby arenaLobby;
 
 
     public Arena(Integer id) {
@@ -125,6 +130,16 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
             return this.aname;
 
         return "";
+    }
+
+
+    public ArenaLobby getArenaLobby() {
+        return arenaLobby;
+    }
+
+
+    public void setArenaLobby(ArenaLobby arenaLobby) {
+        this.arenaLobby = arenaLobby;
     }
 
 
@@ -351,6 +366,16 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     public void setAdminSpawn(Vector v) {
         this.adminSpawn = v;
+    }
+
+
+    public boolean getDoubleJump() {
+        return doubleJump;
+    }
+
+
+    public void setDoubleJump(boolean doubleJump) {
+        this.doubleJump = doubleJump;
     }
 
 

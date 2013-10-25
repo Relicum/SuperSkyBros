@@ -67,7 +67,7 @@ public class createarena extends SubBase {
         org.bukkit.util.Vector rmin = new org.bukkit.util.Vector(S.getMinimumPoint().getBlockX(), S.getMinimumPoint().getBlockY(), S.getMinimumPoint().getBlockZ());
         org.bukkit.util.Vector radmin = null;
 
-        radmin = new org.bukkit.util.Vector(cen.getBlockX(), S.getMaximumPoint().getBlockY() + 2, cen.getBlockZ());
+        radmin = new org.bukkit.util.Vector(cen.getBlockX() + 0.5, S.getMaximumPoint().getBlockY() + 2, cen.getBlockZ() + 0.5);
 
         List<org.bukkit.util.Vector> chunks = new ArrayList<>();
         chunks.add(S.getMaximumPoint().toVector());

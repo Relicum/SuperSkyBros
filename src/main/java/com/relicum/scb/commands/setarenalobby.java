@@ -1,21 +1,26 @@
 package com.relicum.scb.commands;
 
+import com.relicum.scb.ArenaManager;
 import com.relicum.scb.SCB;
-import com.relicum.scb.configs.LobbyConfig;
-import com.relicum.scb.objects.LobbyRegion;
+import com.relicum.scb.arena.ALobbyIO;
+import com.relicum.scb.arena.SpawnIO;
+import com.relicum.scb.objects.ArenaLobby;
 import com.relicum.scb.we.WEManager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.Selection;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import java.io.IOException;
+
 /**
- * Bukkit-SCB
+ * SuperSkyBros First Created 24/10/13
  *
  * @author Relicum
  * @version 0.1
  */
-public class setlobby extends SubBase {
+public class setarenalobby extends SubBase {
 
     /**
      * @param player Player
@@ -23,8 +28,14 @@ public class setlobby extends SubBase {
      * @return boolean
      */
     @Override
-    public boolean onCommand(Player player, String[] args) {
-        String perm = "ssb.player.join";
+    public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
+        ArenaManager ar = SCB.getInstance().ARM;
+
+        if (ar.getCurrent() == 0) {
+            player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.NoArenaSet"));
+            return true;
+        }
+
         WorldEditPlugin wm = new WEManager().getWEP();
         Selection cr = wm.getSelection(player);
         Vector rmin;
@@ -45,47 +56,23 @@ public class setlobby extends SubBase {
         rmax = new Vector(cr.getMaximumPoint().getBlockX(), cr.getMaximumPoint().getBlockY(), cr.getMaximumPoint().getBlockZ());
 
         Vector lobbySpawn = new Vector(player.getLocation().getBlockX() + 0.5, player.getLocation().getBlockY() + 0.5, player.getLocation().getBlockZ() + 0.5);
-        Float dir = SCB.getInstance().LBS.getDirection(player.getLocation().getYaw());
+        ArenaLobby al = new ArenaLobby(rmax, rmin, player.getWorld().getName(), lobbySpawn, ar.getCurrent());
 
-        LobbyRegion region = new LobbyRegion(rmin, rmax, lobbySpawn, player.getWorld().getName(), perm, player.getLocation().getYaw());
-
-        LobbyConfig LC = SCB.getInstance().LBS.getLobbySaveObject();
-
+        ALobbyIO lobbyIO = new ALobbyIO(al);
 
         try {
-            if (!LC.getConfig().contains("LOBBY")) {
-                LC.getConfig().createSection("LOBBY");
-            }
-            LC.getConfig().set("LOBBY.REGION.MIN", region.getMinVector());
-            LC.getConfig().set("LOBBY.REGION.MAX", region.getMaxVector());
-            LC.getConfig().set("LOBBY.REGION.SPAWN", region.getLobbySpawnVector());
-            LC.getConfig().set("LOBBY.REGION.YAW", region.getYaw());
-            LC.getConfig().set("LOBBY.REGION.WORLD", region.getWorld().getName());
-            LC.getConfig().set("LOBBY.REGION.PERM", "ssb.player.join");
-            if (!LC.getConfig().contains("LOBBYSET")) {
-                LC.getConfig().createSection("LOBBYSET");
-            }
-            LC.getConfig().set("LOBBYSET", true);
-            LC.saveConfig();
-            LC.reloadConfig();
+            lobbyIO.saveLobby();
         }
         catch ( Exception e ) {
-
-            SCB.getInstance().getLogger().severe("Error: saving Lobby Region");
-            System.out.println(e.getStackTrace().toString());
-            player.sendMessage(SCB.MM.getErrorMessage("command.message.setlobbyFail"));
-
+            e.printStackTrace();
+            player.sendMessage(ChatColor.RED + "Error occurred while trying to save lobby check the logs");
+            return true;
         }
-
-        SCB.getInstance().LBS.setLobbyRegion(region);
-
-        SCB.getInstance().getConfig().set("enableLobbyProtection", true);
-        SCB.getInstance().saveConfig();
-        SCB.getInstance().reloadConfig();
-        SCB.getInstance().loadLobbyEvents();
-        player.sendMessage(SCB.MM.getAdminMessage("command.message.setlobbySuccess"));
-        SCB.getInstance().getLogger().info("Lobby Region and Spawn Point have Been Successfully Set");
-
+        SCB.getInstance().getLogger().info("Arena Lobby for arena " + ar.getCurrent() + " has been saved successfully");
+        player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.setarenalobbySuccess").replace("%ID%", ar.getCurrent().toString()));
+        wm.getWorldEdit().clearSessions();
+        wm = null;
+        cr = null;
         return true;
     }
 
@@ -97,7 +84,7 @@ public class setlobby extends SubBase {
      */
     @Override
     public void setmDescription() {
-        mNode = "setlobby";
+        mNode = "setarenalobby";
     }
 
 
@@ -119,7 +106,7 @@ public class setlobby extends SubBase {
      */
     @Override
     public String setPermission() {
-        return "ssba.admin.setlobby";
+        return "ssba.admin.setarenalobby";
     }
 
 
@@ -130,7 +117,7 @@ public class setlobby extends SubBase {
      */
     @Override
     public String setUsage() {
-        return "/ssba setlobby";
+        return "/ssba setarenalobby";
     }
 
 
@@ -141,7 +128,7 @@ public class setlobby extends SubBase {
      */
     @Override
     public String setLabel() {
-        return "ssba setlobby";
+        return "ssba setarenalobby";
     }
 
 
@@ -152,6 +139,6 @@ public class setlobby extends SubBase {
      */
     @Override
     public String setCmd() {
-        return "ssba setlobby";
+        return "ssba setarenalobby";
     }
 }

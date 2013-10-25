@@ -33,7 +33,7 @@ public class arenatp extends SubBase {
             Integer s = SCB.getInstance().ARM.total;
             id = Integer.parseInt(args[0]);
             tpto = SCB.getInstance().ARM.getArenaById(id).getAreg().getadminSpawn();
-            tpto.add(0.5D, 1.0D, 0.5D);
+            tpto.add(0.0D, 1.0D, 0.0D);
             below = new Location(tpto.getWorld(), tpto.getX(), tpto.getY(), tpto.getZ());
             below.subtract(0.00D, 1.00D, 0.00D);
             b = below.getBlock();

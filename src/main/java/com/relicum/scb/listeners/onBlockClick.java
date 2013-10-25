@@ -3,6 +3,7 @@ package com.relicum.scb.listeners;
 import com.relicum.scb.SCB;
 import com.relicum.scb.SmashPlayer;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
+import com.relicum.scb.objects.inventory.ClearInventory;
 import com.relicum.scb.objects.signs.utils.Col;
 import com.relicum.scb.utils.playerStatus;
 import org.bukkit.Bukkit;
@@ -13,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.util.List;
@@ -77,6 +79,13 @@ public class onBlockClick implements Listener {
             if ((SCB.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[LEAVE]"))) {
 
                 e.getPlayer().performCommand("ssb leave");
+
+            }
+
+            if ((SCB.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[RETURN]"))) {
+                ClearInventory.applyLobbyInv(e.getPlayer());
+                e.getPlayer().sendMessage(SCB.getMessageManager().getMessage("listeners.onblockclick.returnToLobby"));
+                SCB.getInstance().LBS.teleportToLobby(e.getPlayer(), SCB.getInstance().LBS.getLobbyRegion().getWorld().getSpawnLocation());
 
             }
         }

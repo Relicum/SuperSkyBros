@@ -2,6 +2,7 @@ package com.relicum.scb.arena;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.configs.ArenaConfig;
+import com.relicum.scb.objects.ArenaLobby;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.util.Vector;
@@ -9,10 +10,7 @@ import org.bukkit.util.Vector;
 import java.util.*;
 
 /**
- * Bukkit-SCB
- *
- * @author Relicum
- * @version 0.1
+ * The type ArenaIO.
  */
 public class ArenaIO {
 
@@ -34,6 +32,7 @@ public class ArenaIO {
 
     private String arenaPath;
 
+    private boolean doubleJump;
 
     private ArenaGroupSpawn AGP;
 
@@ -41,6 +40,17 @@ public class ArenaIO {
 
     private ArenaStatus status;
 
+    private ArenaLobby arenaLobby;
+
+    private Vector lobbyMax;
+
+    private Vector lobbyMin;
+
+    private Vector lobbySpawn;
+
+    private Integer lobbyId;
+
+    private String lobbyWorld;
 
     /**
      * The Min players.
@@ -79,6 +89,7 @@ public class ArenaIO {
             this.defaults.set("maxPlayers", 8);
             this.defaults.set("isEnabled", false);
             this.defaults.set("maxTime", 480000);
+            this.defaults.set("doubleJump", true);
             this.defaults.set("arena.arenas", "arena.arenas");
             this.config.saveConfig();
             this.config.reloadConfig();
@@ -110,6 +121,7 @@ public class ArenaIO {
         setMinPlayers(this.defaults.getInt("minPlayers"));
         setMaxPlayers(this.defaults.getInt("maxPlayers"));
         setMaxTime(this.defaults.getLong("maxTime"));
+        setDoubleJump(this.defaults.getBoolean("doubleJump"));
         setStatus(ArenaStatus.DISABLED);
         setArenaId(last);
         setPerm("ssb.player.arena." + last.toString());
@@ -118,6 +130,11 @@ public class ArenaIO {
         setvTop(ar.getAdminSpawnVector());
         setUniqueMap(ar.getUmname());
         setChunks(ch);
+        setLobbyId(last);
+        setLobbyMax(new Vector(0, 0, 0));
+        setLobbyMin(new Vector(0, 0, 0));
+        setLobbySpawn(new Vector(0, 0, 0));
+        setLobbyWorld("world");
 
         String path = getArenaPath();
 
@@ -149,6 +166,11 @@ public class ArenaIO {
         arena.put("region.min", getvMin());
         arena.put("region.max", getvMax());
         arena.put("region.top", getvTop());
+        arena.put("lobby.min", getLobbyMin());
+        arena.put("lobby.max", getLobbyMax());
+        arena.put("lobby.spawn", getLobbySpawn());
+        arena.put("lobby.id", getLobbyId());
+        arena.put("lobby.world", getLobbyWorld());
         arena.put("world", getWorld());
         arena.put("enabled", isEnable());
         arena.put("map", getMap());
@@ -157,6 +179,7 @@ public class ArenaIO {
         arena.put("settings.minPlayers", getMinPlayers());
         arena.put("settings.maxPlayers", getMaxPlayers());
         arena.put("settings.maxTime", getMaxTime());
+        arena.put("settings.doubleJump", getDoubleJump());
         arena.put("status", getStatus().name());
         arena.put("chunks", getChunks());
 
@@ -515,6 +538,26 @@ public class ArenaIO {
     }
 
 
+    public boolean getDoubleJump() {
+        return doubleJump;
+    }
+
+
+    public void setDoubleJump(boolean doubleJump) {
+        this.doubleJump = doubleJump;
+    }
+
+
+    public ArenaLobby getArenaLobby() {
+        return arenaLobby;
+    }
+
+
+    public void setArenaLobby(ArenaLobby arenaLobby) {
+        this.arenaLobby = arenaLobby;
+    }
+
+
     /**
      * Get the ArenaStatus
      *
@@ -591,6 +634,7 @@ public class ArenaIO {
         arena.setMinPlayers(st.getInt("settings.minPlayers"));
         arena.setMaxPlayers(st.getInt("settings.maxPlayers"));
         arena.setMaxTime(st.getLong("settings.maxTime"));
+        arena.setDoubleJump(st.getBoolean("settings.doubleJump"));
         arena.setAdminSpawn(st.getVector("region.top"));
         arena.setPerm(st.getString("permission"));
         arena.setStatus(st.getString("status"));
@@ -599,10 +643,111 @@ public class ArenaIO {
         arena.setChunk((List<Vector>) st.get("chunks"));
         arena.setAreg(ag);
         arena.setWorldName(st.getString("world"));
-
+        ArenaLobby al = new ArenaLobby(st.getVector("lobby.max"), st.getVector("lobby.mix"), st.getString("lobby.world"), st.getVector("lobby.spawn"), id);
+        arena.setArenaLobby(al);
 
         return arena;
 
+    }
+
+
+    /**
+     * Gets lobby max.
+     *
+     * @return the lobby max
+     */
+    public Vector getLobbyMax() {
+        return lobbyMax;
+    }
+
+
+    /**
+     * Sets lobby max.
+     *
+     * @param lobbyMax the lobby max
+     */
+    public void setLobbyMax(Vector lobbyMax) {
+        this.lobbyMax = lobbyMax;
+    }
+
+
+    /**
+     * Gets lobby min.
+     *
+     * @return the lobby min
+     */
+    public Vector getLobbyMin() {
+        return lobbyMin;
+    }
+
+
+    /**
+     * Sets lobby min.
+     *
+     * @param lobbyMin the lobby min
+     */
+    public void setLobbyMin(Vector lobbyMin) {
+        this.lobbyMin = lobbyMin;
+    }
+
+
+    /**
+     * Gets lobby spawn.
+     *
+     * @return the lobby spawn
+     */
+    public Vector getLobbySpawn() {
+        return lobbySpawn;
+    }
+
+
+    /**
+     * Sets lobby spawn.
+     *
+     * @param lobbySpawn the lobby spawn
+     */
+    public void setLobbySpawn(Vector lobbySpawn) {
+        this.lobbySpawn = lobbySpawn;
+    }
+
+
+    /**
+     * Gets lobby id.
+     *
+     * @return the lobby id
+     */
+    public Integer getLobbyId() {
+        return lobbyId;
+    }
+
+
+    /**
+     * Sets lobby id.
+     *
+     * @param lobbyId the lobby id
+     */
+    public void setLobbyId(Integer lobbyId) {
+        this.lobbyId = lobbyId;
+    }
+
+
+    /**
+     * Gets lobby world.
+     *
+     * @return the lobby world
+     */
+    public String getLobbyWorld() {
+        return lobbyWorld;
+    }
+
+
+    /**
+     * Sets lobby world.
+     *
+     * @param lobbyWorld the lobby world
+     */
+    public void setLobbyWorld(String lobbyWorld) {
+        this.lobbyWorld = lobbyWorld;
     }
 
 
@@ -635,6 +780,7 @@ public class ArenaIO {
             cs.set("settings.maxTime", arena.getMaxGameTime());
             cs.set("settings.maxPlayers", arena.getMaxPlayers());
             cs.set("settings.minPlayers", arena.getMinPlayers());
+            cs.set("settings.doubleJump", arena.getDoubleJump());
             cs.set("status", arena.getArenaStatus().name());
             cs.set("umap", arena.getUniqueMap());
             cs.set("permission", arena.getPermmission());

@@ -3,6 +3,7 @@ ARENADEFAULTS:
  maxPlayers: 8
  isEnabled: false
  maxTime: 480000
+ doubleJump: true
  arenaPath: "arena.arenas"
 arena:
   total: 0

@@ -26,11 +26,13 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import sun.awt.windows.ThemeReader;
 
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -397,7 +399,7 @@ public class SCB extends JavaPlugin {
             p.pm.registerEvents(new PlayerJoin(p), p);
             p.pm.registerEvents(new PlayerQuit(p), p);
             p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
-            //p.pm.registerEvents(new WorldInventoryClick(p),p);
+            p.pm.registerEvents(new BlockDamage(p), p);
             p.pm.registerEvents(new PlayerJoinLobby(), p);
             p.pm.registerEvents(new WorldLoad(p), p);
             p.pm.registerEvents(new SignChange(p), p);
@@ -448,10 +450,7 @@ public class SCB extends JavaPlugin {
             org.bukkit.permissions.Permission per = new org.bukkit.permissions.Permission(name);
             per.setDescription(des);
             per.addParent(parent, true);
-            if (name.startsWith("ssba")) {
-                per.setDefault(PermissionDefault.OP);
-            } else
-                per.setDefault(PermissionDefault.TRUE);
+            per.setDefault(PermissionDefault.TRUE);
 
             p.pm.addPermission(per);
 
