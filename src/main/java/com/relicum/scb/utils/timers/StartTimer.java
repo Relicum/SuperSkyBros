@@ -1,6 +1,7 @@
 package com.relicum.scb.utils.timers;
 
 import com.relicum.scb.ScheduledManager;
+import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -15,7 +16,9 @@ import java.util.concurrent.TimeUnit;
  * @author Relicum
  * @version 0.1
  */
-public class StartTimer {
+public
+@Data
+class StartTimer {
 
     private static final boolean DONT_INTERRUPT_IF_RUNNING = false;
 

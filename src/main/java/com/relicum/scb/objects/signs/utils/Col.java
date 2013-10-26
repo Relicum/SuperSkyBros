@@ -230,4 +230,9 @@ public class Col {
         return pre + "r";
     }
 
+
+    public static String Circle() {
+        return pre + "95";
+    }
+
 }

@@ -2,6 +2,7 @@ package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.objects.signs.utils.Col;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -100,17 +101,35 @@ public class SignChange implements Listener {
         if (lines[0].equalsIgnoreCase("[ARENA]") && lines[1].equalsIgnoreCase("join") && Integer.parseInt(lines[2]) > 0) {
 
             if (SCB.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
-                e.setLine(0, Col.Dark_Red() + "[JOIN LOBBY]");
-                e.setLine(1, "RIGHT CLICK");
-                e.setLine(2, "TO JOIN LOBBY");
-                e.setLine(3, Col.Dark_Blue() + "SUPERSKYBROS");
-                e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("listeners.signchange.joinSuccess"));
-                System.out.println("A Join sign has been place by " + e.getPlayer().getName());
+
+                Integer arenaID = Integer.parseInt(lines[2]);
+                if (!SCB.getInstance().ARC.getConfig().contains("arena.arenas." + arenaID.toString())) {
+                    e.setCancelled(true);
+                    e.getBlock().breakNaturally();
+                    e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.signchange.arenaIdNotFound").replace("%ID%", arenaID.toString()));
+                    return;
+                }
+                ConfigurationSection config = SCB.getInstance().ARC.getConfig().getConfigurationSection("arena.arenas." + arenaID.toString());
+
+                if (!config.getBoolean("enabled")) {
+                    e.setCancelled(true);
+                    e.getBlock().breakNaturally();
+                    e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.signchange.arenasNotEnabled").replace("%ID%", arenaID.toString()));
+                    return;
+                }
+
+                e.setLine(0, Col.Dark_Red() + Col.Bold() + "[Arena-" + arenaID.toString().trim() + "]");
+                e.setLine(3, Col.Green() + Col.Bold() + config.getString("status").toUpperCase());
+                e.setLine(2, Col.Dark_Blue() + "0/" + config.getString("settings.maxPlayers") + Col.Reset());
+                e.setLine(1, config.getString("map").toUpperCase());
+                e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("listeners.signchange.arenaSignSuccess").replace("%MAP%", config.getString("map")));
+                SCB.getInstance().getLogger().info("An Arena Join Sign has been place by " + e.getPlayer().getName());
+                return;
             } else {
                 e.setCancelled(true);
                 e.getBlock().breakNaturally();
                 e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.signchange.noPerms"));
-                System.out.println("A Join sign was canceled due to no perms by " + e.getPlayer().getName());
+                SCB.getInstance().getLogger().info("A Arena Join sign was canceled due to no perms by " + e.getPlayer().getName());
             }
 
 

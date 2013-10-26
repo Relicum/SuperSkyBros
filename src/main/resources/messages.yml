@@ -104,5 +104,8 @@ listeners:
     joinSuccess: "You have successfully created a new Lobby &7Join&a Sign"
     leaveSuccess: "You have successfully created a new Lobby &7Leave&a Sign"
     leaveGame: "You have successfully created a new Return to &7Lobby&a Sign"
+    arenaIdNotFound: "Error: the arena ID &7%ID%&5 is not a valid arena ID"
+    arenasNotEnabled: "Error: the arena ID &7%ID%&5 is not enabled, please enable it before backing the sign"
+    arenaSignSuccess: "Tou have successully created a Arena join sign for &6%MAP%"
   onblockclick:
     returnToLobby: "You have successfully returned to the lobby"
