@@ -10,14 +10,14 @@ import com.relicum.scb.utils.GemShop;
 import com.relicum.scb.utils.Helper;
 import com.relicum.scb.utils.MessageManager;
 import com.relicum.scb.we.WorldEditPlugin;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.player.*;
@@ -28,11 +28,9 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -42,6 +40,7 @@ import java.util.logging.Logger;
  * @author Relicum
  * @version 0.9
  */
+
 public class SCB extends JavaPlugin {
 
     private static final Logger log = Logger.getLogger("Minecraft");
@@ -109,6 +108,7 @@ public class SCB extends JavaPlugin {
 
     public boolean saveOnDisable = true;
 
+    @Setter
     public InventoryManager INV;
 
     protected ArrayList<Permission> plist = new ArrayList<>();
@@ -173,12 +173,8 @@ public class SCB extends JavaPlugin {
 
     public String blockedMessage = "&c[Error]%player% command cannot be performed in %world% by %plugin%.";
 
+    @Getter
     public boolean isUpdatesEnabled = true;
-
-
-    public void $(String s) {
-        System.out.println("[PerWorldPlugins] " + s);
-    }
 
 
     public boolean isExemptEnabled() {
@@ -205,17 +201,6 @@ public class SCB extends JavaPlugin {
         this.getConfig().options().copyDefaults(true);
         this.saveDefaultConfig();
         this.reloadConfig();
-
-
-        /**
-         * This function worldEventRestrict was written and designed by MylesC and is part of the PerWorldsPlugin
-         * Which can be found at http://dev.bukkit.org/bukkit-mods/perworldplugins/
-         * Full Credits belong to him. He has granted usage of this code provided it is made
-         * aware he is the author as per https://github.com/MylesIsCool/PerWorldPlugins
-         * @author MylesC
-         */
-        if (getConfig().getBoolean("ppw"))
-            worldEventRestrict();
 
         BukkitInterface.setServer(this.getServer());
 
@@ -403,7 +388,7 @@ public class SCB extends JavaPlugin {
             p.pm.registerEvents(new WorldLoad(p), p);
             p.pm.registerEvents(new SignChange(p), p);
             p.pm.registerEvents(new PlayerInteract(p), p);
-
+            p.pm.registerEvents(new ShopManager(p), p);
             //p.pm.registerEvents(new ArenaChangeStatus(p), p);
             // List<String> wol = new ArrayList<>();
             //wol.add("world_the_end");
@@ -499,83 +484,6 @@ public class SCB extends JavaPlugin {
     }
 
 
-    @SuppressWarnings("all")
-    public void worldEventRestrict() {
-
-
-        boolean isInjected = false;
-        $("Enabled, Attempting to Inject PluginManager");
-        if (Bukkit.getPluginManager().getClass().getPackage().getName()
-                .contains("Myles")) {
-            Bukkit.getServer()
-                    .getLogger()
-                    .log(Level.SEVERE,
-                            "Looks like the FakePluginManager has already been injected, If this is a reload please ignore.");
-            isInjected = true;
-        }
-        try {
-            Field f = Bukkit.getServer().getClass()
-                    .getDeclaredField("pluginManager");
-            f.setAccessible(true);
-            PluginManager oldManager = (PluginManager) f
-                    .get(Bukkit.getServer());
-            if (isInjected) {
-                f.set(Bukkit.getServer(),
-                        new SSBPluginManager((PluginManager) oldManager
-                                .getClass().getDeclaredField("oldManager")
-                                .get(oldManager)));
-            } else {
-                f.set(Bukkit.getServer(), new SSBPluginManager(oldManager));
-            }
-
-        }
-        catch ( NoSuchFieldException | SecurityException e ) {
-            System.out
-                    .println("[Error] Failed to inject, please notify the author on bukkitdev. (Type: FieldNotFound, PluginManager)");
-        }
-        catch ( IllegalArgumentException e ) {
-            System.out
-                    .println("[Error] Failed to inject, please notify the author on bukkitdev. (Type: IllegalArgument, PluginManager)");
-        }
-        catch ( IllegalAccessException e ) {
-            System.out
-                    .println("[Error] Failed to inject, please notify the author on bukkitdev. (Type: AccessError, PluginManager)");
-        }
-        $("Enabled, Attempting to Inject CommandHandler");
-        try {
-            Field f = Bukkit.getServer().getClass()
-                    .getDeclaredField("commandMap");
-            if (f.getType().getClass().getPackage().getName().contains("Myles")) {
-                Bukkit.getServer()
-                        .getLogger()
-                        .log(Level.SEVERE,
-                                "Looks like the FakeSimpleCommandMap has already been injected, If this is a reload please ignore.");
-                return;
-            }
-            if (!isInjected) {
-                f.setAccessible(true);
-                SimpleCommandMap oldCommandMap = (SimpleCommandMap) f
-                        .get(Bukkit.getServer());
-                f.set(Bukkit.getServer(), new FakeSimpleCommandMap(
-                        oldCommandMap));
-            }
-        }
-        catch ( NoSuchFieldException | SecurityException e ) {
-            System.out
-                    .println("[Error] Failed to inject, please notify the author on bukkitdev. (Type: FieldNotFound, SimpleCommandMap)");
-        }
-        catch ( IllegalArgumentException e ) {
-            System.out
-                    .println("[Error] Failed to inject, please notify the author on bukkitdev. (Type: IllegalArgument, SimpleCommandMap)");
-        }
-        catch ( IllegalAccessException e ) {
-            System.out
-                    .println("[Error] Failed to inject, please notify the author on bukkitdev. (Type: AccessError, SimpleCommandMap)");
-        }
-
-    }
-
-
     public boolean checkWorld(org.bukkit.plugin.Plugin plugin, World w) {
 
         List<String> worlds = bWorlds;
@@ -593,5 +501,6 @@ public class SCB extends JavaPlugin {
                 return true;
         }
     }
+
 
 }

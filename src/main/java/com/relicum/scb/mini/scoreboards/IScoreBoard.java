@@ -1,4 +1,4 @@
-package com.relicum.scb.mini;
+package com.relicum.scb.mini.scoreboards;
 
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -136,7 +136,7 @@ public interface IScoreBoard {
     boolean loadAllScoreboards();
 
     /**
-     * Load a paticula instance of a scoreboard.
+     * Load a particular instance of a scoreboard.
      *
      * @return boolean true on success
      */

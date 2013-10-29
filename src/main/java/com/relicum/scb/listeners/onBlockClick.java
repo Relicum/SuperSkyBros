@@ -88,6 +88,8 @@ public class onBlockClick implements Listener {
                 SCB.getInstance().LBS.teleportToLobby(e.getPlayer(), SCB.getInstance().LBS.getLobbyRegion().getWorld().getSpawnLocation());
 
             }
+
+
         }
 
     }
