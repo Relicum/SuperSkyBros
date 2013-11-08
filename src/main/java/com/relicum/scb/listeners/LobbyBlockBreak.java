@@ -12,6 +12,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
+import java.util.List;
+
 /**
  * The type LobbyBlockBreak.
  *
@@ -31,6 +33,10 @@ public class LobbyBlockBreak implements Listener, Cancellable {
 
     public String world;
 
+    private boolean protectionSet;
+
+    public List<String> blacklist;
+
     private boolean cancel = false;
 
 
@@ -41,6 +47,8 @@ public class LobbyBlockBreak implements Listener, Cancellable {
      */
     public LobbyBlockBreak(JavaPlugin pl) {
         this.plugin = (SCB) pl;
+        this.protectionSet = this.plugin.getConfig().getBoolean("enableLobbyProtection");
+        this.blacklist = plugin.getBlackList();
         this.min = plugin.LBS.getLobbyRegion().getMinVector();
         this.max = plugin.LBS.getLobbyRegion().getMaxVector();
         this.world = plugin.LBS.getLobbyRegion().getWorld().getName();
@@ -55,12 +63,15 @@ public class LobbyBlockBreak implements Listener, Cancellable {
      */
     @EventHandler(priority = EventPriority.LOW)
     public void lobbyBreak(BlockBreakEvent e) {
-
+        if (this.blacklist.contains(e.getPlayer().getWorld().getName()))
+            return;
+        if (!this.protectionSet)
+            return;
 
         Player player = e.getPlayer();
         String wo = player.getWorld().getName();
 
-        if (!SCB.perms.has(player, "ssba.admin.breakblocks") && !player.isOp() && this.world.equals(wo)) {
+        if (!SCB.perms.has(player, "ssba.admin.breakblocks") && !player.isOp()) {
             if (SCB.getInstance().LBS.getLobbyRegion().isAABB(e.getBlock().getLocation().toVector())) {
                 e.setCancelled(true);
                 player.sendMessage(SCB.MM.getErrorMessage("listeners.blockbreak.lobbyBreak"));

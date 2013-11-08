@@ -89,7 +89,16 @@ public class onBlockClick implements Listener {
 
             }
 
+            if ((SCB.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).startsWith("[Arena"))) {
+                if (ChatColor.stripColor(lines[3]).equalsIgnoreCase("waiting")) {
+                    e.getPlayer().sendMessage("Sign Starts with [Arena and status is waiting");
+                    return;
+                }
+                e.getPlayer().sendMessage("Sorry sign status is not correct");
+                return;
 
+
+            }
         }
 
     }

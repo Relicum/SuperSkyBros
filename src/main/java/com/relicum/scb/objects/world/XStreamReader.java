@@ -1,9 +1,8 @@
-package com.relicum.scb.configs;
+package com.relicum.scb.objects.world;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import com.thoughtworks.xstream.XStream;
+
+import java.io.*;
 
 /**
  * SuperSkyBros First Created 03/10/13 Used to read from XStream serialized files
@@ -24,11 +23,34 @@ public class XStreamReader {
     }
 
 
+    public static worldSettings load(String filePath) {
+        XStream x = new XStream();
+        FileInputStream fileInputStream = XStreamReader.getFi(filePath);
+        worldSettings ws = null;
+        try {
+            ObjectInputStream in = x.createObjectInputStream(fileInputStream);
+            ws = (worldSettings) in.readObject();
+            in.close();
+            fileInputStream.close();
+            x = null;
+        }
+        catch ( IOException e ) {
+            e.printStackTrace();
+        }
+        catch ( ClassNotFoundException e ) {
+            e.printStackTrace();
+        }
+
+        return ws;
+    }
+
+
     private static boolean preChecks(String filePath) {
 
         File f = new File(filePath);
 
         if (!f.exists()) {
+            System.out.println("Reader is creating a new file with path " + filePath);
             try {
                 if (!f.createNewFile()) {
                     System.out.println("Error creating file " + filePath);
@@ -45,6 +67,7 @@ public class XStreamReader {
                 return false;
             }
         }
+
         return true;
     }
 
@@ -54,6 +77,7 @@ public class XStreamReader {
         FileInputStream fi = null;
         try {
             fi = new FileInputStream(filePath);
+
         }
         catch ( FileNotFoundException e ) {
             e.printStackTrace();

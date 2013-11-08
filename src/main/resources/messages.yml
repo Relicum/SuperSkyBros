@@ -1,3 +1,5 @@
+## DO NOT CHANGE VERSION NUMBER BE WARNED
+version: 1
 system:
   prefix: "&3[&eSSB&3] "
   color: "&9:&5:&a"
@@ -38,6 +40,7 @@ command:
     player: "&bSet the min and max number of players for arena. Eg &6/ssba player min 2 &b sets the minimum number of players to 2. Max players you can set is 8."
     lobbytp: "&bAdmin command to tp them back to the main lobby from anywhere"
     setarenalobby: "&bEach arena needs to have a pre game lobby use world edit to make the selection then stand on the block players will spawn to"
+    worldtp: "&bAllows admins to tp to any world by command"
   message:
     worldOnBlackList: "Sorry this world is on the world blacklist. Remove it and restart the server and try again."
     joinNoLocation: "You can not use this as the Lobby Location has not been set yet"
@@ -91,6 +94,8 @@ command:
     playerMaxSuccess: "You have successfully set the maximum number of players to &7%MAX%&r"
     lobbytpSuccess: "You have successfully returned to the main lobby"
     setarenalobbySuccess: "Arena Lobby has sucessfully been created for arena &6%ID%"
+    worldtpWorldNotFound: "World not found can not tp to &6%WORLD%"
+    worldtpSuccess: "World has been found teleporting to world %WORLD%"
 listeners:
   playerJoin:
     noLobbySet: "There is currently no lobby spawn set for SSB please set one"

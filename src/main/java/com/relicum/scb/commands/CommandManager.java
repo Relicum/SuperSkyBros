@@ -1,7 +1,6 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.SettingsManager;
 import com.relicum.scb.utils.MessageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -11,6 +10,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.util.StringUtil;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -22,7 +22,11 @@ import java.util.*;
  *
  * @version 0.1
  */
-public class CommandManager implements CommandExecutor {
+public class CommandManager implements TabExecutor {
+
+    protected List<String> PLAYER = new ArrayList<>();
+
+    protected List<String> ADMIN = new ArrayList<>();
 
 
     /**
@@ -46,20 +50,18 @@ public class CommandManager implements CommandExecutor {
     public CommandManager(SCB p) {
 
         plugin = p;
-
-        Permission ssbp = new Permission("ssb.player");
-        ssbp.setDefault(PermissionDefault.TRUE);
-        ssbp.setDescription("Default Player Node");
-
-
-        p.getServer().getPluginManager().addPermission(ssbp);
         loadCommands();
 
 
         for ( Map.Entry<String, SubBase> entry : clist.entrySet() ) {
 
             registerCommand(entry.getKey(), entry.getValue());
-
+            String[] sp = entry.getValue().getCmd().split(" ");
+            if (sp[0].equalsIgnoreCase("ssba")) {
+                ADMIN.add(sp[1]);
+            } else {
+                PLAYER.add(sp[1]);
+            }
         }
 
     }
@@ -86,6 +88,7 @@ public class CommandManager implements CommandExecutor {
         clist.put("player", new player());
         clist.put("lobbytp", new lobbytp());
         clist.put("setarenalobby", new setarenalobby());
+        clist.put("worldtp", new worldtp());
     }
 
 
@@ -195,14 +198,14 @@ public class CommandManager implements CommandExecutor {
         des = ChatColor.translateAlternateColorCodes('&', des);
 
         Permission per = new Permission(ubPerm + "." + name);
-        per.setDefault(PermissionDefault.TRUE);
+
+        per.setDefault(PermissionDefault.OP);
         per.addParent(ubPerm, true);
         per.setDescription(des);
         plugin.getServer().getPluginManager().addPermission(per);
 
         CommandMap cmp = getCommandMap();
         PluginCommand cd = getCommand(name.toLowerCase());
-
 
         cd.setDescription(des);
         cd.setUsage(sb.getUseage());
@@ -211,6 +214,8 @@ public class CommandManager implements CommandExecutor {
 
         if (cmp.register(sb.getLabel(), "mc", (Command) cd)) {
             plugin.getLogger().info("Command: /" + sb.getLabel() + " has successfully been registered");
+
+
             return true;
         }
 
@@ -270,5 +275,26 @@ public class CommandManager implements CommandExecutor {
         return commandMap;
     }
 
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String s, String[] strings) {
+
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            if (strings.length == 1) {
+                if (s.equalsIgnoreCase("ssb")) {
+
+                    return StringUtil.copyPartialMatches(strings[0], PLAYER, new ArrayList<String>(PLAYER.size()));
+                } else if (s.equalsIgnoreCase("ssba")) {
+
+                    return StringUtil.copyPartialMatches(strings[0], ADMIN, new ArrayList<String>(ADMIN.size()));
+                }
+            }
+
+        }
+
+        return Arrays.asList("");
+
+    }
 
 }

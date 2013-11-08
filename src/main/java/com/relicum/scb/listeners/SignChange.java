@@ -98,7 +98,7 @@ public class SignChange implements Listener {
 
         }
 
-        if (lines[0].equalsIgnoreCase("[ARENA]") && lines[1].equalsIgnoreCase("join") && Integer.parseInt(lines[2]) > 0) {
+        if (lines[0].equalsIgnoreCase("[SSBARENA]") && lines[1].equalsIgnoreCase("join") && Integer.parseInt(lines[2]) > 0) {
 
             if (SCB.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
 
