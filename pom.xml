@@ -74,7 +74,7 @@
         </repository>
         <repository>
             <id>sk89q-repo</id>
-            <url>https://github.com/sk89q/worldedit</url>
+            <url>http://maven.sk89q.com/repo/</url>
         </repository>
         <repository>
             <id>comphenix-rep</id>
