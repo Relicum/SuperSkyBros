@@ -1,6 +1,5 @@
 package com.relicum.scb;
 
-
 import com.relicum.scb.commands.CommandManager;
 import com.relicum.scb.commands.CommandManagerFirstJoin;
 import com.relicum.scb.commands.DebugManager;
@@ -11,30 +10,24 @@ import com.relicum.scb.utils.GemShop;
 import com.relicum.scb.utils.Helper;
 import com.relicum.scb.utils.MessageManager;
 import com.relicum.scb.we.WorldEditPlugin;
+import lombok.Getter;
+import lombok.Setter;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.event.player.*;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import sun.awt.windows.ThemeReader;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -44,9 +37,11 @@ import java.util.logging.Logger;
  * @author Relicum
  * @version 0.9
  */
+
 public class SCB extends JavaPlugin {
 
     private static final Logger log = Logger.getLogger("Minecraft");
+
 
     /**
      * The constant MM.
@@ -110,6 +105,7 @@ public class SCB extends JavaPlugin {
 
     public boolean saveOnDisable = true;
 
+    @Setter
     public InventoryManager INV;
 
     protected ArrayList<Permission> plist = new ArrayList<>();
@@ -117,6 +113,8 @@ public class SCB extends JavaPlugin {
     protected PluginManager pm = Bukkit.getServer().getPluginManager();
 
     public ScheduledManager poolManager;
+
+    public WorldManager worldManager;
 
 
     public List<String> getBlackList() {
@@ -165,26 +163,8 @@ public class SCB extends JavaPlugin {
 
     public static Chat chat = null;
 
-    public List<Class<?>> exemptEvents = Arrays.asList(new Class<?>[]{
-            AsyncPlayerPreLoginEvent.class, PlayerJoinEvent.class,
-            PlayerKickEvent.class, PlayerLoginEvent.class,
-            AsyncPlayerPreLoginEvent.class, PlayerQuitEvent.class});
-
-    private boolean isExemptEnabled = true;
-
-    public String blockedMessage = "&c[Error]%player% command cannot be performed in %world% by %plugin%.";
-
+    @Getter
     public boolean isUpdatesEnabled = true;
-
-
-    public void $(String s) {
-        System.out.println("[PerWorldPlugins] " + s);
-    }
-
-
-    public boolean isExemptEnabled() {
-        return this.isExemptEnabled;
-    }
 
 
     /**
@@ -203,21 +183,13 @@ public class SCB extends JavaPlugin {
     public void onEnable() {
 
         p = this;
-        this.getConfig().options().copyDefaults(true);
         this.saveDefaultConfig();
-        this.reloadConfig();
+        this.getConfig().options().copyDefaults(true);
 
 
-        /**
-         * This function worldEventRestrict was written and designed by MylesC and is part of the PerWorldsPlugin
-         * Which can be found at http://dev.bukkit.org/bukkit-mods/perworldplugins/
-         * Full Credits belong to him. He has granted usage of this code provided it is made
-         * aware he is the author as per https://github.com/MylesIsCool/PerWorldPlugins
-         * @author MylesC
-         */
-        if (getConfig().getBoolean("ppw"))
-            worldEventRestrict();
-
+        if (p.getConfig().getBoolean("worldGenerator")) {
+            p.worldManager = new WorldManager(this);
+        }
         BukkitInterface.setServer(this.getServer());
 
 
@@ -241,6 +213,15 @@ public class SCB extends JavaPlugin {
                     System.out.println("New Directory created at " + getDataFolder() + "/players");
                 else
                     System.out.println("Error: Failed to create players directory at " + getDataFolder() + "/players");
+            }
+            boolean f1 = new File(getDataFolder() + "/worlds").exists();
+            if (!f1) {
+                boolean fi1 = new File(getDataFolder() + "/worlds").mkdirs();
+
+                if (fi1)
+                    System.out.println("New Directory created at " + getDataFolder() + "/worlds");
+                else
+                    System.out.println("Error: Failed to create players directory at " + getDataFolder() + "/worlds");
             }
         } else {
 
@@ -344,7 +325,25 @@ public class SCB extends JavaPlugin {
         @Override
         public void run() {
 
+            /*WorldCreator wc = new WorldCreator("template");
 
+            wc.environment(Environment.NORMAL);
+            wc.type(WorldType.FLAT);
+            wc.generator("CleanroomGenerator:.");
+            wc.generateStructures(false);
+            System.out.println("About to start new world creation");
+            World world = wc.createWorld();
+            System.out.println("End of world creation");
+            Location below = new Location(world, 0, 64, 0);
+            Block b = below.getBlock();
+            b.setType(Material.GLASS);
+            world.save();
+            world.setAutoSave(true);
+            world.setSpawnLocation(0,65,0);
+            world.setKeepSpawnInMemory(true);
+            world.setDifficulty(Difficulty.EASY);
+            world.setSpawnFlags(false,false);
+            world.save();*/
             p.bWorlds = p.getConfig().getStringList("ignoreWorlds");
             for ( String w : p.bWorlds ) {
 
@@ -399,12 +398,12 @@ public class SCB extends JavaPlugin {
             p.pm.registerEvents(new PlayerJoin(p), p);
             p.pm.registerEvents(new PlayerQuit(p), p);
             p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
-            p.pm.registerEvents(new BlockDamage(p), p);
+            //p.pm.registerEvents(new BlockDamage(p), p);
             p.pm.registerEvents(new PlayerJoinLobby(), p);
             p.pm.registerEvents(new WorldLoad(p), p);
             p.pm.registerEvents(new SignChange(p), p);
             p.pm.registerEvents(new PlayerInteract(p), p);
-
+            p.pm.registerEvents(new ShopManager(p), p);
             //p.pm.registerEvents(new ArenaChangeStatus(p), p);
             // List<String> wol = new ArrayList<>();
             //wol.add("world_the_end");
@@ -419,43 +418,53 @@ public class SCB extends JavaPlugin {
             //TODO Must refactor out this Helper Class
             Helper.getInstance().setup(p);
 
-            registerNewPerm("ssba.admin.createsign", "Allows  user to create SSB signs", "ssba.admin");
-            registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player");
-
+            registerNewPerm("ssba.admin.breakblocks", "Allows  user to break blocks", "ssba.admin.*");
+            registerNewPerm("ssba.admin.placeblocks", "Allow user to place blocks", "ssba.admin.*");
+            registerNewPerm("ssba.admin.createsign", "Allows user to create signs", "ssba.admin.*");
+            registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player.*");
 
         }
 
+/*            Set<org.bukkit.permissions.Permission> per = p.pm.getPermissions();
+            Iterator<org.bukkit.permissions.Permission> it = per.iterator();
+            while(it.hasNext()){
+                String st = it.next().getName();
+                if(st.startsWith("ssb"))
+                 System.out.println(st);
+            }*/
 
-        private void fileExists(String fi) {
-
-            File file = new File(getDataFolder(), fi);
-            FileConfiguration fCon;
+    }
 
 
-            try {
-                if (!file.exists()) {
-                    file.createNewFile();
-                    fCon = YamlConfiguration.loadConfiguration(SCB.getInstance().getResource(fi));
-                    fCon.save(file);
-                }
+    private void fileExists(String fi) {
+
+        File file = new File(getDataFolder(), fi);
+        FileConfiguration fCon;
+
+
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+                fCon = YamlConfiguration.loadConfiguration(SCB.getInstance().getResource(fi));
+                fCon.save(file);
             }
-            catch ( Exception e ) {
-                e.printStackTrace();
-            }
-
+        }
+        catch ( Exception e ) {
+            e.printStackTrace();
         }
 
-
-        private void registerNewPerm(String name, String des, String parent) {
-            org.bukkit.permissions.Permission per = new org.bukkit.permissions.Permission(name);
-            per.setDescription(des);
-            per.addParent(parent, true);
-            per.setDefault(PermissionDefault.TRUE);
-
-            p.pm.addPermission(per);
+    }
 
 
-        }
+    private void registerNewPerm(String name, String des, String parent) {
+        org.bukkit.permissions.Permission per = new org.bukkit.permissions.Permission(name);
+        per.setDescription(des);
+        per.addParent(parent, true);
+        per.setDefault(PermissionDefault.OP);
+
+        p.pm.addPermission(per);
+
+
     }
 
 
@@ -499,100 +508,5 @@ public class SCB extends JavaPlugin {
 
     }
 
-
-    @SuppressWarnings("all")
-    public void worldEventRestrict() {
-
-
-        boolean isInjected = false;
-        $("Enabled, Attempting to Inject PluginManager");
-        if (Bukkit.getPluginManager().getClass().getPackage().getName()
-                .contains("Myles")) {
-            Bukkit.getServer()
-                    .getLogger()
-                    .log(Level.SEVERE,
-                            "Looks like the FakePluginManager has already been injected, If this is a reload please ignore.");
-            isInjected = true;
-        }
-        try {
-            Field f = Bukkit.getServer().getClass()
-                    .getDeclaredField("pluginManager");
-            f.setAccessible(true);
-            PluginManager oldManager = (PluginManager) f
-                    .get(Bukkit.getServer());
-            if (isInjected) {
-                f.set(Bukkit.getServer(),
-                        new SSBPluginManager((PluginManager) oldManager
-                                .getClass().getDeclaredField("oldManager")
-                                .get(oldManager)));
-            } else {
-                f.set(Bukkit.getServer(), new SSBPluginManager(oldManager));
-            }
-
-        }
-        catch ( NoSuchFieldException | SecurityException e ) {
-            System.out
-                    .println("[Error] Failed to inject, please notify the author on bukkitdev. (Type: FieldNotFound, PluginManager)");
-        }
-        catch ( IllegalArgumentException e ) {
-            System.out
-                    .println("[Error] Failed to inject, please notify the author on bukkitdev. (Type: IllegalArgument, PluginManager)");
-        }
-        catch ( IllegalAccessException e ) {
-            System.out
-                    .println("[Error] Failed to inject, please notify the author on bukkitdev. (Type: AccessError, PluginManager)");
-        }
-        $("Enabled, Attempting to Inject CommandHandler");
-        try {
-            Field f = Bukkit.getServer().getClass()
-                    .getDeclaredField("commandMap");
-            if (f.getType().getClass().getPackage().getName().contains("Myles")) {
-                Bukkit.getServer()
-                        .getLogger()
-                        .log(Level.SEVERE,
-                                "Looks like the FakeSimpleCommandMap has already been injected, If this is a reload please ignore.");
-                return;
-            }
-            if (!isInjected) {
-                f.setAccessible(true);
-                SimpleCommandMap oldCommandMap = (SimpleCommandMap) f
-                        .get(Bukkit.getServer());
-                f.set(Bukkit.getServer(), new FakeSimpleCommandMap(
-                        oldCommandMap));
-            }
-        }
-        catch ( NoSuchFieldException | SecurityException e ) {
-            System.out
-                    .println("[Error] Failed to inject, please notify the author on bukkitdev. (Type: FieldNotFound, SimpleCommandMap)");
-        }
-        catch ( IllegalArgumentException e ) {
-            System.out
-                    .println("[Error] Failed to inject, please notify the author on bukkitdev. (Type: IllegalArgument, SimpleCommandMap)");
-        }
-        catch ( IllegalAccessException e ) {
-            System.out
-                    .println("[Error] Failed to inject, please notify the author on bukkitdev. (Type: AccessError, SimpleCommandMap)");
-        }
-
-    }
-
-
-    public boolean checkWorld(org.bukkit.plugin.Plugin plugin, World w) {
-
-        List<String> worlds = bWorlds;
-
-        if (worlds.contains(w.getName())) {
-            if (plugin instanceof SCB)
-                return false;
-            else
-                return true;
-
-        } else {
-            if (!(plugin instanceof SCB))
-                return false;
-            else
-                return true;
-        }
-    }
 
 }

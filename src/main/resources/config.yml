@@ -4,11 +4,13 @@ firstRunDone: false
 debugCommands: true
 enable: true
 enableLobbyProtection: false
+saving: true
 ignoreWorlds:
   - 'world_the_end'
   - 'world_nether'
 dedicatedSSB: false
-ppw: false
+worldGenerator: false
+generateDefaultWorld: false
 classesEnabled:
   - Creeper
 gemshop:

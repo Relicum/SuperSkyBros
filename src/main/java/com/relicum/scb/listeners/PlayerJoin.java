@@ -5,12 +5,13 @@ import com.relicum.scb.SettingsManager;
 import com.relicum.scb.SmashPlayer;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.utils.playerStatus;
+import com.relicum.scb.utils.timers.StartTimer;
+import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 
@@ -21,7 +22,9 @@ import org.bukkit.event.player.PlayerJoinEvent;
  * @version 0.1
  */
 
-public class PlayerJoin implements Listener {
+public
+@Data
+class PlayerJoin implements Listener {
 
     private SCB plugin;
 
@@ -125,6 +128,13 @@ public class PlayerJoin implements Listener {
     }
 
 
+    protected int testTimer(int x, int y, int z) {
+
+        StartTimer.makeTimer(1, 1, 31);
+        return 1;
+    }
+
+
     public boolean displayBetaMessage(PlayerJoinEvent e) {
 
 
@@ -136,4 +146,6 @@ public class PlayerJoin implements Listener {
 
         return true;
     }
+
 }
+

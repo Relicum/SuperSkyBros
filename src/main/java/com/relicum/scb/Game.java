@@ -4,6 +4,7 @@ import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaRegion;
 import com.relicum.scb.arena.ArenaStatus;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.ArrayList;
 
@@ -81,6 +82,12 @@ public class Game {
      * The Players.
      */
     private ArrayList<String> players = new ArrayList<>();
+
+
+    /**
+     * The Scoreboard.
+     */
+    private Scoreboard scoreboard;
 
 
     /**
@@ -204,5 +211,25 @@ public class Game {
      */
     public String getPermission() {
         return permission;
+    }
+
+
+    /**
+     * Gets scoreboard.
+     *
+     * @return the scoreboard
+     */
+    public Scoreboard getScoreboard() {
+        return scoreboard;
+    }
+
+
+    /**
+     * Sets scoreboard.
+     *
+     * @param scoreboard the scoreboard
+     */
+    public void setScoreboard(Scoreboard scoreboard) {
+        this.scoreboard = scoreboard;
     }
 }

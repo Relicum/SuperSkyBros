@@ -3,6 +3,7 @@ package com.relicum.scb.objects.inventory;
 import com.relicum.scb.SCB;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.Xpp3DomDriver;
+import com.thoughtworks.xstream.io.xml.Xpp3Driver;
 import com.thoughtworks.xstream.persistence.FilePersistenceStrategy;
 import com.thoughtworks.xstream.persistence.PersistenceStrategy;
 import com.thoughtworks.xstream.persistence.XmlMap;
@@ -41,9 +42,8 @@ public class InventoryManager {
         // this.reader = XStreamReader.getFi(path);
         //this.writer = XStreamWriter.getFos(path);
 
-        XStream xstream = new XStream(new Xpp3DomDriver());
+        XStream xstream = new XStream(new Xpp3Driver());
 
-        xstream.alias("Storage", StorePlayerSettings.class);
         xstream.alias("Storage", StorePlayerSettings.class);
 
 

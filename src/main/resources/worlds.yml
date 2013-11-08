@@ -1,0 +1,16 @@
+## Do Not Delete
+firstTime: true
+default:
+  name: 'Template'
+  type: 'FLAT'
+  environment: 'NORMAL'
+  generator: 'CleanroomGenerator:.'
+  structures: 'false'
+worldSettings:
+  spawn: '0,65,0'
+  spawnBlock: 'GLASS'
+  blockLocation: '0,64,0'
+  inMemory: 'true'
+  monsters: 'false'
+  animals: 'false'
+  difficulty: 'NORMAL'

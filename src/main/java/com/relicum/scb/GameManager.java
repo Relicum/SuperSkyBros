@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class GameManager {
 
-    public static GameManager gm;
+    //public static GameManager gm;
 
     private SCB p;
 
@@ -30,13 +30,8 @@ public class GameManager {
     public GameManager(SCB pl) {
 
         p = pl;
-        GameManager.gm = this;
-
-    }
 
 
-    public static GameManager getInstance() {
-        return gm;
     }
 
 
@@ -68,6 +63,7 @@ public class GameManager {
      * @return LobbyManager
      */
     public LobbyManager getLobbyManager() {
+
 
         return this.p.LBS;
     }

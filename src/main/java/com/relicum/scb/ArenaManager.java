@@ -2,31 +2,54 @@ package com.relicum.scb;
 
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaIO;
+import lombok.Data;
 
 import java.util.*;
 
 /**
- * Manages Arenas
- *
- * @author Relicum
- * @version 0.1
+ * The type ArenaManager.
  */
-public class ArenaManager {
+public
+@Data
+class ArenaManager {
 
+    /**
+     * The Plugin.
+     */
     public SCB plugin;
 
+    /**
+     * The Total.
+     */
     public Integer total;
 
+    /**
+     * The Thearenas.
+     */
     private Map<Integer, Arena> thearenas;
 
+    /**
+     * The Name to id.
+     */
     private Map<String, Integer> nameToId = new HashMap<>();
 
+    /**
+     * The Arena ids.
+     */
     private Set<String> arenaIds;
 
 
+    /**
+     * The Current.
+     */
     private Integer current;
 
 
+    /**
+     * Instantiates a new Arena manager.
+     *
+     * @param p the p
+     */
     public ArenaManager(SCB p) {
 
         this.plugin = p;
@@ -35,6 +58,9 @@ public class ArenaManager {
     }
 
 
+    /**
+     * Sets .
+     */
     public void setup() {
 
 
@@ -57,6 +83,13 @@ public class ArenaManager {
     }
 
 
+    /**
+     * Remove arena.
+     *
+     * @param i the i
+     * @param n the n
+     * @return the boolean
+     */
     public boolean removeArena(Integer i, String n) {
 
         this.thearenas.remove(i);
@@ -66,10 +99,10 @@ public class ArenaManager {
 
 
     /**
-     * Get an arena by Id
+     * Gets arena by id.
      *
-     * @param i Integer
-     * @return Arena
+     * @param i the i
+     * @return the arena by id
      */
     public Arena getArenaById(Integer i) {
 
@@ -77,12 +110,23 @@ public class ArenaManager {
     }
 
 
+    /**
+     * Gets arena by name.
+     *
+     * @param s the s
+     * @return the arena by name
+     */
     public Arena getArenaByName(String s) {
 
         return thearenas.get(nameToId.get(s));
     }
 
 
+    /**
+     * Gets list messages.
+     *
+     * @return the list messages
+     */
     public ArrayList<String> getListMessages() {
         ArrayList<String> mess = new ArrayList<String>();
 
@@ -96,9 +140,9 @@ public class ArenaManager {
 
 
     /**
-     * Gets current Arena ID stored by modify command
+     * Gets current.
      *
-     * @return Integer
+     * @return the current
      */
     public Integer getCurrent() {
         return current;
@@ -106,15 +150,21 @@ public class ArenaManager {
 
 
     /**
-     * Sets Arena ID that you wish to modify
+     * Sets current.
      *
-     * @param current Integer
+     * @param current the current
      */
     public void setCurrent(Integer current) {
         this.current = current;
     }
 
 
+    /**
+     * Check block location.
+     *
+     * @param v the v
+     * @return the boolean
+     */
     public boolean checkBlockLocation(org.bukkit.util.Vector v) {
 
         return this.getArenaById(this.getCurrent()).getAreg().isAABB(v);
@@ -122,9 +172,9 @@ public class ArenaManager {
 
 
     /**
-     * Add new arena on the fly.
+     * Add new arena.
      *
-     * @param Arena the ar
+     * @param ar the ar
      * @return the boolean
      */
     public boolean addNewArena(Arena ar) {
@@ -144,9 +194,9 @@ public class ArenaManager {
 
 
     /**
-     * Returns Set of Arena Id's
+     * Gets arena ids.
      *
-     * @return Set<String>
+     * @return the arena ids
      */
     public Set<String> getArenaIds() {
         return this.arenaIds;
@@ -154,9 +204,9 @@ public class ArenaManager {
 
 
     /**
-     * Save an ArenaById
+     * Save arena by id.
      *
-     * @param Integer
+     * @param i the i
      */
     public void saveArenaById(Integer i) {
 
@@ -166,6 +216,11 @@ public class ArenaManager {
     }
 
 
+    /**
+     * Gets all arenas.
+     *
+     * @return the all arenas
+     */
     public Map<Integer, Arena> getAllArenas() {
 
         return thearenas;
