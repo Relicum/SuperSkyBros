@@ -4,6 +4,7 @@ import com.relicum.scb.BukkitInterface;
 import com.relicum.scb.SCB;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;
 
@@ -127,5 +128,11 @@ public class blacklist extends SubBase {
     @Override
     public String setCmd() {
         return "ssba blacklist";
+    }
+
+
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
     }
 }

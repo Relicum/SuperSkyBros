@@ -7,6 +7,7 @@ import com.relicum.scb.objects.inventory.RestoreInventory;
 import com.relicum.scb.objects.inventory.StorePlayerSettings;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.Plugin;
 
 /**
  * SuperSkyBros
@@ -112,5 +113,11 @@ public class leave extends SubBase {
     @Override
     public String setCmd() {
         return "ssb leave";
+    }
+
+
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
     }
 }

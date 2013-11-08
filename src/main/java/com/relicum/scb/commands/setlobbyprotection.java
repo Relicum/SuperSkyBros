@@ -2,6 +2,7 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 /**
  * Bukkit-SCB
@@ -129,5 +130,11 @@ public class setlobbyprotection extends SubBase {
     @Override
     public String setCmd() {
         return "ssba setlobbyprotection";
+    }
+
+
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
     }
 }

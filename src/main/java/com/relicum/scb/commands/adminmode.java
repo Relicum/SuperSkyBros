@@ -1,19 +1,24 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
-import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.util.StringUtil;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * SuperSkyBros First Created 24/10/13
+ * SuperSkyBros First Created 08/11/13
  *
  * @author Relicum
  * @version 0.1
  */
-public class lobbytp extends SubBase {
+public class adminmode extends SubBase {
 
     /**
      * @param player Player
@@ -23,15 +28,15 @@ public class lobbytp extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
 
-        Location loc = SCB.getInstance().LBS.getLobbyRegion().getLobbySpawn();
+        if (args[0].equalsIgnoreCase("on")) {
+            player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.adminmodeToggle").replace("%TOGGLE%", "ON"));
+            return true;
+        } else if (args[0].equalsIgnoreCase("off")) {
+            player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.adminmodeToggle").replace("%TOGGLE%", "OFF"));
+            return true;
+        }
 
-        SCB.getInstance().LBS.teleportToLobby(player, loc);
-
-        player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.lobbytpSuccess"));
-
-        return true;
-
-
+        return false;
     }
 
 
@@ -42,7 +47,7 @@ public class lobbytp extends SubBase {
      */
     @Override
     public void setmDescription() {
-        mNode = "lobbytp";
+        mNode = this.getClass().getSimpleName();
     }
 
 
@@ -53,7 +58,7 @@ public class lobbytp extends SubBase {
      */
     @Override
     public Integer setNumArgs() {
-        return 0;
+        return 1;
     }
 
 
@@ -64,7 +69,7 @@ public class lobbytp extends SubBase {
      */
     @Override
     public String setPermission() {
-        return "ssba.admin.lobbytp";
+        return "ssba.admin.adminmode";
     }
 
 
@@ -75,7 +80,8 @@ public class lobbytp extends SubBase {
      */
     @Override
     public String setUsage() {
-        return "/ssba lobbytp";
+
+        return "/<command> [on|off]";
     }
 
 
@@ -86,7 +92,7 @@ public class lobbytp extends SubBase {
      */
     @Override
     public String setLabel() {
-        return "ssba lobbytp";
+        return "ssba adminmode";
     }
 
 
@@ -97,7 +103,24 @@ public class lobbytp extends SubBase {
      */
     @Override
     public String setCmd() {
-        return "ssba lobbytp";
+        return "ssba adminmode";
+    }
+
+
+    public List<String> onTabComplete(CommandSender sender, String alias, String[] strings) {
+        System.out.println(strings.toString());
+        System.out.println(alias + " length is " + strings.length);
+        List<String> ops = Arrays.asList("on", "off");
+        if (sender instanceof Player) {
+
+            if (strings.length == 2) {
+                System.out.println("trying to tab");
+                return StringUtil.copyPartialMatches(strings[1], ops, new ArrayList<String>(ops.size()));
+            }
+
+        }
+
+        return Arrays.asList("help");
     }
 
 

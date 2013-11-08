@@ -7,6 +7,7 @@ import com.relicum.scb.arena.SpawnIO;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
 import com.relicum.scb.objects.spawns.ArenaSpawn;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 /**
@@ -147,5 +148,11 @@ public class setspawn extends SubBase {
 
     public String setCmd() {
         return "ssba setspawn";
+    }
+
+
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
     }
 }

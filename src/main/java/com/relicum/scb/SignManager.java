@@ -29,5 +29,6 @@ public class SignManager {
 
         config = SCB.getInstance().SNC;
         SCB.getInstance().getLogger().info("New BaseSign Manager has been created");
+        System.out.println(config.getConfig());
     }
 }

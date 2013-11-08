@@ -27,7 +27,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 
 
@@ -423,16 +425,17 @@ public class SCB extends JavaPlugin {
             registerNewPerm("ssba.admin.createsign", "Allows user to create signs", "ssba.admin.*");
             registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player.*");
 
-        }
+
 
 /*            Set<org.bukkit.permissions.Permission> per = p.pm.getPermissions();
             Iterator<org.bukkit.permissions.Permission> it = per.iterator();
             while(it.hasNext()){
-                String st = it.next().getName();
-                if(st.startsWith("ssb"))
-                 System.out.println(st);
+                org.bukkit.permissions.Permission st = it.next();
+                  if(st.getName().contains("bukkit")) {
+                 System.out.println(st.getName() + ": Default " + st.getDefault().toString() + " Description : " + st.getDescription());
+                System.out.println(""); }
             }*/
-
+        }
     }
 
 

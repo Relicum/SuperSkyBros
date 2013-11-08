@@ -5,6 +5,7 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaIO;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Set;
 
@@ -90,5 +91,11 @@ public class enable extends SubBase {
     @Override
     public String setCmd() {
         return "ssba enable";
+    }
+
+
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
     }
 }

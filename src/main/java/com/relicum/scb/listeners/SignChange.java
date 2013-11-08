@@ -2,6 +2,7 @@ package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.objects.signs.utils.Col;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -36,50 +37,49 @@ public class SignChange implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void signChange(SignChangeEvent e) throws InterruptedException {
         String[] lines = e.getLines();
-        if ((!lines[0].equalsIgnoreCase("[JOIN LOBBY]")) && (!lines[1].equalsIgnoreCase("join"))) {
-            if (this.blacklist.contains(e.getPlayer().getWorld().getName()))
-                return;
-        }
+        if (this.blacklist.contains(e.getPlayer().getWorld().getName()) && ((!(lines[1]).equalsIgnoreCase("join")) || (!(lines[0]).equalsIgnoreCase("[SSBLOBBY]"))))
+            return;
 
-        if (lines[0].equalsIgnoreCase("[JOIN LOBBY]") && lines[1].equalsIgnoreCase("join")) {
+        if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("join")) {
 
             if (SCB.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
                 e.setLine(0, Col.Dark_Red() + "[JOIN LOBBY]");
-                e.setLine(1, "RIGHT CLICK");
-                e.setLine(2, "TO JOIN LOBBY");
-                e.setLine(3, Col.Dark_Blue() + "SUPERSKYBROS");
+                e.setLine(1, "CLICK TO JOIN");
+                e.setLine(2, Col.Aqua() + Col.Italic() + "SUPER");
+                e.setLine(3, Col.Green() + Col.Italic() + "SKY" + Col.Yellow() + Col.Italic() + "BROS");
                 e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("listeners.signchange.joinSuccess"));
-                System.out.println("A Join sign has been place by " + e.getPlayer().getName());
+                plugin.getLogger().info("A Join sign has been place by " + e.getPlayer().getName());
+
             } else {
                 e.setCancelled(true);
                 e.getBlock().breakNaturally();
                 e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.signchange.noPerms"));
-                System.out.println("A Join sign was canceled due to no perms by " + e.getPlayer().getName());
+                plugin.getLogger().info("A Join sign was canceled due to no perms by " + e.getPlayer().getName());
             }
 
-
+            return;
         }
 
-        if (lines[0].equalsIgnoreCase("[LEAVE]") && lines[1].equalsIgnoreCase("leave")) {
+        if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("leave")) {
 
             if (SCB.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
-                e.setLine(0, Col.Dark_Red() + "[LEAVE]");
-                e.setLine(1, "CLICK TO");
-                e.setLine(2, "LEAVE LOBBY");
-                e.setLine(3, Col.Dark_Blue() + "SUPERSKYBROS");
+                e.setLine(0, Col.Dark_Red() + "[LEAVE LOBBY]");
+                e.setLine(1, "CLICK TO LEAVE");
+                e.setLine(2, Col.Aqua() + Col.Italic() + "SUPER");
+                e.setLine(3, Col.Green() + Col.Italic() + "SKY" + Col.Yellow() + Col.Italic() + "BROS");
                 e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("listeners.signchange.leaveSuccess"));
-                System.out.println("A Leave sign has been place by " + e.getPlayer().getName());
+                plugin.getLogger().info("A Leave sign has been place by " + e.getPlayer().getName());
             } else {
                 e.setCancelled(true);
                 e.getBlock().breakNaturally();
                 e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.signchange.noPerms"));
-                System.out.println("A leave sign was canceled due to no perms by " + e.getPlayer().getName());
+                plugin.getLogger().info("A leave sign was canceled due to no perms by " + e.getPlayer().getName());
             }
 
-
+            return;
         }
 
-        if (lines[0].equalsIgnoreCase("[RETURN]") && lines[1].equalsIgnoreCase("lobby")) {
+        if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("return")) {
 
             if (SCB.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
                 e.setLine(0, Col.Dark_Red() + "[RETURN]");
@@ -87,15 +87,15 @@ public class SignChange implements Listener {
                 e.setLine(2, "TO LOBBY");
                 e.setLine(3, Col.Dark_Blue() + "SUPERSKYBROS");
                 e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("listeners.signchange.leaveGame"));
-                System.out.println("A Leave Game has been place by " + e.getPlayer().getName());
+                plugin.getLogger().info("A Leave Game has been place by " + e.getPlayer().getName());
             } else {
                 e.setCancelled(true);
                 e.getBlock().breakNaturally();
                 e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.signchange.noPerms"));
-                System.out.println("A leave sign was canceled due to no perms by " + e.getPlayer().getName());
+                plugin.getLogger().info("A leave sign was canceled due to no perms by " + e.getPlayer().getName());
             }
 
-
+            return;
         }
 
         if (lines[0].equalsIgnoreCase("[SSBARENA]") && lines[1].equalsIgnoreCase("join") && Integer.parseInt(lines[2]) > 0) {
@@ -103,13 +103,13 @@ public class SignChange implements Listener {
             if (SCB.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
 
                 Integer arenaID = Integer.parseInt(lines[2]);
-                if (!SCB.getInstance().ARC.getConfig().contains("arena.arenas." + arenaID.toString())) {
+                if (!plugin.ARC.getConfig().contains("arena.arenas." + arenaID.toString())) {
                     e.setCancelled(true);
                     e.getBlock().breakNaturally();
                     e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.signchange.arenaIdNotFound").replace("%ID%", arenaID.toString()));
                     return;
                 }
-                ConfigurationSection config = SCB.getInstance().ARC.getConfig().getConfigurationSection("arena.arenas." + arenaID.toString());
+                ConfigurationSection config = plugin.ARC.getConfig().getConfigurationSection("arena.arenas." + arenaID.toString());
 
                 if (!config.getBoolean("enabled")) {
                     e.setCancelled(true);
@@ -129,7 +129,7 @@ public class SignChange implements Listener {
                 e.setCancelled(true);
                 e.getBlock().breakNaturally();
                 e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.signchange.noPerms"));
-                SCB.getInstance().getLogger().info("A Arena Join sign was canceled due to no perms by " + e.getPlayer().getName());
+                plugin.getLogger().info("A Arena Join sign was canceled due to no perms by " + e.getPlayer().getName());
             }
 
 

@@ -1,5 +1,6 @@
 package com.relicum.scb.commands;
 
+import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.io.IOException;
  * @author Relicum
  * @version 0.1
  */
-public abstract class SubBase {
+public abstract class SubBase implements PluginIdentifiableCommand {
 
     public String descriptionModePrefix;
 

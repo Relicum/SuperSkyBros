@@ -10,6 +10,7 @@ import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -162,4 +163,8 @@ public class createarena extends SubBase {
     }
 
 
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
+    }
 }

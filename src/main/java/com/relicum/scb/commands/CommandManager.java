@@ -89,6 +89,8 @@ public class CommandManager implements TabExecutor {
         clist.put("lobbytp", new lobbytp());
         clist.put("setarenalobby", new setarenalobby());
         clist.put("worldtp", new worldtp());
+        clist.put("blacklisted", new blacklisted());
+        clist.put("adminmode", new adminmode());
     }
 
 
@@ -121,8 +123,8 @@ public class CommandManager implements TabExecutor {
 
         if (strings == null || strings.length < 1L) {
 
-            player.sendMessage(ChatColor.DARK_RED + "No arguments passed need to handle help display");
-            return true;
+            player.sendMessage(ChatColor.DARK_RED + "No arguments passed");
+            return false;
         }
 
         String sub = strings[0];
@@ -212,6 +214,7 @@ public class CommandManager implements TabExecutor {
         cd.setExecutor(this);
         cd.setPermission(sb.getPerm());
 
+
         if (cmp.register(sb.getLabel(), "mc", (Command) cd)) {
             plugin.getLogger().info("Command: /" + sb.getLabel() + " has successfully been registered");
 
@@ -278,7 +281,8 @@ public class CommandManager implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String s, String[] strings) {
-
+        System.out.println(strings[0]);
+        System.out.println("Strings length" + strings.length);
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (strings.length == 1) {
@@ -290,6 +294,17 @@ public class CommandManager implements TabExecutor {
                     return StringUtil.copyPartialMatches(strings[0], ADMIN, new ArrayList<String>(ADMIN.size()));
                 }
             }
+            if (strings.length == 2 && s.equalsIgnoreCase("ssba")) {
+
+                if (strings[0].equalsIgnoreCase("adminmode")) {
+                    return Arrays.asList("On", "Off");
+                }
+
+                if (strings[0].equalsIgnoreCase("setdedicated")) {
+                    return Arrays.asList("true", "false");
+                }
+            }
+
 
         }
 

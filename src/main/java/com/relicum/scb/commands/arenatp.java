@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;
 
@@ -30,6 +31,7 @@ public class arenatp extends SubBase {
         Chunk ch = null;
         Block b = null;
         try {
+
             Integer s = SCB.getInstance().ARM.total;
             id = Integer.parseInt(args[0]);
             tpto = SCB.getInstance().ARM.getArenaById(id).getAreg().getadminSpawn();
@@ -152,5 +154,11 @@ public class arenatp extends SubBase {
     @Override
     public String setCmd() {
         return "ssba arenatp";
+    }
+
+
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
     }
 }

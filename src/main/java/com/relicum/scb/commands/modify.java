@@ -2,6 +2,7 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 /**
  * Set which arena to modify
@@ -99,5 +100,11 @@ public class modify extends SubBase {
     @Override
     public String setCmd() {
         return "ssba modify";
+    }
+
+
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
     }
 }

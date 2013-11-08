@@ -4,6 +4,7 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.objects.LobbySpawn;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,4 +113,9 @@ public class setlobbyspawn extends SubBase {
         return "ssba setlobbyspawn";
     }
 
+
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
+    }
 }

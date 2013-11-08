@@ -99,7 +99,7 @@ class PlayerJoin implements Listener {
 
 
         if (SCB.perms.has(e.getPlayer(), "ssba.admin") || e.getPlayer().isOp()) {
-            e.setJoinMessage("");
+
             ChatColor b = ChatColor.BOLD;
             String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
             e.getPlayer().sendMessage(pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros Beta " + SCB.getInstance().getDescription().getVersion() + " this should not be run on a live server be warned");

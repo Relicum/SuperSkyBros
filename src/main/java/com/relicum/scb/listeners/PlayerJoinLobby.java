@@ -1,17 +1,10 @@
 package com.relicum.scb.listeners;
 
-import com.relicum.scb.BroadcastManager;
 import com.relicum.scb.SCB;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.objects.inventory.ClearInventory;
-import com.relicum.scb.utils.disguise.DISTYPE;
-import com.relicum.scb.utils.disguise.DisguiseFactory;
 import com.relicum.scb.utils.playerStatus;
 import com.relicum.scb.utils.timers.StartTimer;
-import me.libraryaddict.disguise.DisguiseAPI;
-import me.libraryaddict.disguise.disguisetypes.DisguiseType;
-import me.libraryaddict.disguise.disguisetypes.MobDisguise;
-import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -20,7 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.permissions.PermissionAttachment;
 
 
 /**
@@ -57,7 +49,7 @@ public class PlayerJoinLobby implements Listener {
             System.out.println(e.getPlayer().getName() + " Has been transported to the lobby");
 
             Bukkit.broadcast(ChatColor.translateAlternateColorCodes('&', SCB.MM.getRawMessage("system.lobbyJoinWelcome").replace("%name%", e.getPlayer().getName())), "bukkit.broadcast.ssblobby");
-
+            //StartTimer.makeTimer(1, 1, 31);
 
         } else {
 
@@ -87,7 +79,7 @@ public class PlayerJoinLobby implements Listener {
                 if (!p.teleport(l)) {
                     System.out.println("Error teleporting player to lobby");
                 }
-                p.playSound(l, Sound.PIG_DEATH, 1.0f, 1.0f);
+                p.playSound(l, Sound.LEVEL_UP, 1.0f, 1.0f);
             }
         }, 5L);
 

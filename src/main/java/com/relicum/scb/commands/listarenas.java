@@ -3,6 +3,7 @@ package com.relicum.scb.commands;
 import com.relicum.scb.ArenaManager;
 import com.relicum.scb.SCB;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 
@@ -97,5 +98,11 @@ public class listarenas extends SubBase {
     @Override
     public String setCmd() {
         return "ssba listarenas";
+    }
+
+
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
     }
 }

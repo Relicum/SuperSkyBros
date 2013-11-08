@@ -38,7 +38,7 @@ public class DebugManager implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] strings) {
         if (strings == null || strings.length < 1) {
-            System.out.println("vList must pass type of list options are: Lobby, Lobbyname");
+            System.out.println("vList must pass type of list options are: Lobby, Lobbyname,Perms");
             return true;
         }
 
