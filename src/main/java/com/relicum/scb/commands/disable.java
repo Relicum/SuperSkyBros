@@ -7,6 +7,7 @@ import com.relicum.scb.arena.ArenaStatus;
 import com.relicum.scb.events.ArenaStatusChangeEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Set;
 
@@ -98,5 +99,11 @@ public class disable extends SubBase {
     @Override
     public String setCmd() {
         return "ssba disable";
+    }
+
+
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
     }
 }

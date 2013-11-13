@@ -6,6 +6,7 @@ import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.*;
 import com.relicum.scb.listeners.*;
 import com.relicum.scb.objects.inventory.InventoryManager;
+import com.relicum.scb.objects.world.Generator;
 import com.relicum.scb.utils.GemShop;
 import com.relicum.scb.utils.Helper;
 import com.relicum.scb.utils.MessageManager;
@@ -19,6 +20,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -114,6 +116,8 @@ public class SCB extends JavaPlugin {
 
     public ScheduledManager poolManager;
 
+    public WorldConfig WCF;
+
     public WorldManager worldManager;
 
 
@@ -188,7 +192,10 @@ public class SCB extends JavaPlugin {
 
 
         if (p.getConfig().getBoolean("worldGenerator")) {
-            p.worldManager = new WorldManager(this);
+            p.WCF = new WorldConfig("worlds.yml");
+            p.WCF.getConfig().options().copyDefaults(true);
+            p.WCF.saveConfig();
+            p.worldManager = new WorldManager(this, this.WCF);
         }
         BukkitInterface.setServer(this.getServer());
 
@@ -261,6 +268,7 @@ public class SCB extends JavaPlugin {
                 this.getConfig().set("firstRun", false);
                 this.getConfig().set("firstRunDone", true);
             }
+
             this.saveConfig();
 
         } else {
@@ -281,6 +289,10 @@ public class SCB extends JavaPlugin {
 
         }
 
+        if (p.getConfig().getBoolean("worldGenerator")) {
+            p.WCF.saveConfig();
+            p.getLogger().info("World Settings have been saved");
+        }
 
     }
 
@@ -351,6 +363,7 @@ public class SCB extends JavaPlugin {
             }
             p.INV = new InventoryManager();
 
+
             p.LBC = new LobbyConfig("lobby.yml");
             p.LBC.getConfig().options().copyDefaults(true);
             p.LBC.saveConfig();
@@ -407,8 +420,8 @@ public class SCB extends JavaPlugin {
             //p.pm.registerEvents(new ArenaChangeStatus(p), p);
             // List<String> wol = new ArrayList<>();
             //wol.add("world_the_end");
-            //p.pm.registerEvents(new PlayerToggleFly(p,wol),p);
-
+            // p.pm.registerEvents(new PlayerToggleFly(p),p);
+            // p.pm.registerEvents(new Generator(),p);
 
             BroadcastManager.setup();
             GemShop gemShop = new GemShop(p);
@@ -423,16 +436,17 @@ public class SCB extends JavaPlugin {
             registerNewPerm("ssba.admin.createsign", "Allows user to create signs", "ssba.admin.*");
             registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player.*");
 
-        }
+
 
 /*            Set<org.bukkit.permissions.Permission> per = p.pm.getPermissions();
             Iterator<org.bukkit.permissions.Permission> it = per.iterator();
             while(it.hasNext()){
-                String st = it.next().getName();
-                if(st.startsWith("ssb"))
-                 System.out.println(st);
+                org.bukkit.permissions.Permission st = it.next();
+                  if(st.getName().contains("bukkit")) {
+                 System.out.println(st.getName() + ": Default " + st.getDefault().toString() + " Description : " + st.getDescription());
+                System.out.println(""); }
             }*/
-
+        }
     }
 
 
@@ -506,6 +520,11 @@ public class SCB extends JavaPlugin {
             log.warning("Vault could not hook into Permissions Plugin");
         }
 
+    }
+
+
+    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
+        return new Generator();
     }
 
 

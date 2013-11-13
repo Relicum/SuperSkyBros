@@ -3,16 +3,14 @@ package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.events.ToggleFlyEvent;
-import com.relicum.scb.events.WorldInventoryClickEvent;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
-import org.bukkit.potion.PotionBrewer;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,6 +39,11 @@ public class PlayerToggleFly extends Event implements Listener {
     private HashMap<String, Boolean> jumping = new HashMap<>();
 
     private List<String> blackWorlds;
+
+
+    public PlayerToggleFly(SCB plugin) {
+        this.plugin = plugin;
+    }
 
 
     @EventHandler(priority = EventPriority.HIGH)

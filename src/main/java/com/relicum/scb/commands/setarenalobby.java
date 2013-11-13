@@ -10,6 +10,7 @@ import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.Selection;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import java.io.IOException;
@@ -55,7 +56,7 @@ public class setarenalobby extends SubBase {
 
         rmax = new Vector(cr.getMaximumPoint().getBlockX(), cr.getMaximumPoint().getBlockY(), cr.getMaximumPoint().getBlockZ());
 
-        Vector lobbySpawn = new Vector(player.getLocation().getBlockX() + 0.5, player.getLocation().getBlockY() + 0.5, player.getLocation().getBlockZ() + 0.5);
+        Vector lobbySpawn = new Vector(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
         ArenaLobby al = new ArenaLobby(rmax, rmin, player.getWorld().getName(), lobbySpawn, ar.getCurrent());
 
         ALobbyIO lobbyIO = new ALobbyIO(al);
@@ -140,5 +141,11 @@ public class setarenalobby extends SubBase {
     @Override
     public String setCmd() {
         return "ssba setarenalobby";
+    }
+
+
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
     }
 }

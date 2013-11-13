@@ -44,63 +44,64 @@ public class onBlockClick implements Listener {
         if (e.getAction() != Action.RIGHT_CLICK_BLOCK)
 
             return;
-
-        if (this.blacklist.contains(e.getPlayer().getWorld().getName()))
+        Block clicked = e.getClickedBlock();
+        if (!clicked.getType().toString().contains("SIGN"))
             return;
 
-        Block clicked = e.getClickedBlock();
+        org.bukkit.block.Sign sign = (org.bukkit.block.Sign) clicked.getState();
+
+        String[] lines = sign.getLines();
+
+        if (this.blacklist.contains(e.getPlayer().getWorld().getName()) && (!ChatColor.stripColor(lines[0]).equalsIgnoreCase("[JOIN LOBBY]")))
+            return;
 
 
-        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && (clicked.getType() == Material.SIGN || clicked.getType() == Material.SIGN_POST || clicked.getType() == Material.WALL_SIGN)) {
+        // if ((clicked.getType() == Material.SIGN || clicked.getType() == Material.SIGN_POST || clicked.getType() == Material.WALL_SIGN)) {
+        System.out.println(clicked.getType().toString());
 
 
-            org.bukkit.block.Sign sign = (org.bukkit.block.Sign) clicked.getState();
+        if ((SCB.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[JOIN LOBBY]"))) {
 
-            String[] lines = sign.getLines();
-
-
-            if ((SCB.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[JOIN LOBBY]"))) {
-
-                if (SCB.getInstance().LBS.isInLobby(e.getPlayer())) {
-                    e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.playerJoin.alreadyInLobby"));
-                    return;
-                }
-
-                SmashPlayer splayer = SmashPlayer.wrap(e.getPlayer());
-
-                splayer.pStatus = playerStatus.UNKNOWN;
-                PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "SIGN", SCB.getInstance().getConfig().getBoolean("dedicatedSSB"));
-                Bukkit.getServer().getPluginManager().callEvent(event);
-
-
+            if (SCB.getInstance().LBS.isInLobby(e.getPlayer())) {
+                e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.playerJoin.alreadyInLobby"));
                 return;
             }
 
-            if ((SCB.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[LEAVE]"))) {
+            SmashPlayer splayer = SmashPlayer.wrap(e.getPlayer());
 
-                e.getPlayer().performCommand("ssb leave");
-
-            }
-
-            if ((SCB.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[RETURN]"))) {
-                ClearInventory.applyLobbyInv(e.getPlayer());
-                e.getPlayer().sendMessage(SCB.getMessageManager().getMessage("listeners.onblockclick.returnToLobby"));
-                SCB.getInstance().LBS.teleportToLobby(e.getPlayer(), SCB.getInstance().LBS.getLobbyRegion().getWorld().getSpawnLocation());
-
-            }
-
-            if ((SCB.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).startsWith("[Arena"))) {
-                if (ChatColor.stripColor(lines[3]).equalsIgnoreCase("waiting")) {
-                    e.getPlayer().sendMessage("Sign Starts with [Arena and status is waiting");
-                    return;
-                }
-                e.getPlayer().sendMessage("Sorry sign status is not correct");
-                return;
+            splayer.pStatus = playerStatus.UNKNOWN;
+            PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "SIGN", SCB.getInstance().getConfig().getBoolean("dedicatedSSB"));
+            Bukkit.getServer().getPluginManager().callEvent(event);
 
 
-            }
+            return;
         }
 
+        if ((SCB.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[LEAVE LOBBY]"))) {
+
+            e.getPlayer().performCommand("ssb leave");
+
+        }
+
+        if ((SCB.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[RETURN]"))) {
+            ClearInventory.applyLobbyInv(e.getPlayer());
+            e.getPlayer().sendMessage(SCB.getMessageManager().getMessage("listeners.onblockclick.returnToLobby"));
+            SCB.getInstance().LBS.teleportToLobby(e.getPlayer(), SCB.getInstance().LBS.getLobbyRegion().getWorld().getSpawnLocation());
+
+        }
+
+        if ((SCB.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).startsWith("[Arena"))) {
+            if (ChatColor.stripColor(lines[3]).equalsIgnoreCase("waiting")) {
+                e.getPlayer().sendMessage("Sign Starts with [Arena and status is waiting");
+                return;
+            }
+            e.getPlayer().sendMessage("Sorry sign status is not correct");
+            return;
+
+
+        }
+
+        return;
     }
 
 

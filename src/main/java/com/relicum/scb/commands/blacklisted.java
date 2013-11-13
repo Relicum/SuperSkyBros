@@ -4,13 +4,16 @@ import com.relicum.scb.SCB;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
+import java.util.List;
+
 /**
- * Bukkit-SCB
+ * SuperSkyBros First Created 08/11/13
  *
  * @author Relicum
  * @version 0.1
  */
-public class listlobbyspawn extends SubBase {
+public class blacklisted extends SubBase {
 
     /**
      * @param player Player
@@ -18,19 +21,24 @@ public class listlobbyspawn extends SubBase {
      * @return boolean
      */
     @Override
-    public boolean onCommand(Player player, String[] args) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
+
+        List<String> blacklist = SCB.getInstance().getBlackList();
+        for ( String s : blacklist ) {
+            player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.blacklistedWorlds").replace("%WORLD%", s));
+        }
+        return true;
     }
 
 
     /**
-     * Simplify set this function to set the field descNode with the commands description will come from in the
+     * Simplify set this function to set the field mNode with the commands description will come from in the
      * messages.yml file You do not need to enter the full node as it will be prefixed for you. Eg is the full node is
      * command.description.createarena you only need to set this to createarena
      */
     @Override
     public void setmDescription() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        mNode = this.getClass().getSimpleName();
     }
 
 
@@ -41,7 +49,7 @@ public class listlobbyspawn extends SubBase {
      */
     @Override
     public Integer setNumArgs() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return 0;
     }
 
 
@@ -52,7 +60,7 @@ public class listlobbyspawn extends SubBase {
      */
     @Override
     public String setPermission() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return "ssba.admin.blacklisted";
     }
 
 
@@ -63,7 +71,7 @@ public class listlobbyspawn extends SubBase {
      */
     @Override
     public String setUsage() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return "/ssba blacklisted";
     }
 
 
@@ -74,7 +82,7 @@ public class listlobbyspawn extends SubBase {
      */
     @Override
     public String setLabel() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return "ssba blacklisted";
     }
 
 
@@ -85,7 +93,7 @@ public class listlobbyspawn extends SubBase {
      */
     @Override
     public String setCmd() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return "ssba blacklisted";
     }
 
 

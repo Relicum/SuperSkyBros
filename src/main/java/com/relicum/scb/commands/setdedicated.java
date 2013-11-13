@@ -2,6 +2,7 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 /**
  * Bukkit-SCB
@@ -107,5 +108,11 @@ public class setdedicated extends SubBase {
     @Override
     public String setCmd() {
         return "ssba setdedicated";
+    }
+
+
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
     }
 }

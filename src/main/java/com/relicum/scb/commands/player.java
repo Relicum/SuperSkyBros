@@ -5,6 +5,7 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.SpawnIO;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;
 
@@ -143,5 +144,11 @@ public class player extends SubBase {
     @Override
     public String setCmd() {
         return "ssba player";
+    }
+
+
+    @Override
+    public Plugin getPlugin() {
+        return SCB.getInstance();
     }
 }

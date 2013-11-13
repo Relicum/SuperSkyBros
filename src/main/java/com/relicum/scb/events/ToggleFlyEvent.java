@@ -24,15 +24,25 @@ import java.lang.annotation.Target;
  * @author Relicum
  * @version 0.1
  */
-public class ToggleFlyEvent extends PlayerToggleFlightEvent {
+public class ToggleFlyEvent extends Event {
 
-    public ToggleFlyEvent(Player player, boolean isFlying) {
-        super(player, isFlying);
+    private static final HandlerList handlers = new HandlerList();
+
+    public PlayerToggleFlightEvent event;
+
+
+    public ToggleFlyEvent(PlayerToggleFlightEvent e) {
+        this.event = e;
     }
 
 
     @Override
     public HandlerList getHandlers() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return handlers;
+    }
+
+
+    public static HandlerList getHandlerList() {
+        return handlers;
     }
 }

@@ -41,6 +41,8 @@ command:
     lobbytp: "&bAdmin command to tp them back to the main lobby from anywhere"
     setarenalobby: "&bEach arena needs to have a pre game lobby use world edit to make the selection then stand on the block players will spawn to"
     worldtp: "&bAllows admins to tp to any world by command"
+    blacklisted: "&bDisplays a list of Worlds that are currently blacklisted"
+    adminmode: "&bToogle admin mode allows admin not to be restricted by other settings"
   message:
     worldOnBlackList: "Sorry this world is on the world blacklist. Remove it and restart the server and try again."
     joinNoLocation: "You can not use this as the Lobby Location has not been set yet"
@@ -96,6 +98,8 @@ command:
     setarenalobbySuccess: "Arena Lobby has sucessfully been created for arena &6%ID%"
     worldtpWorldNotFound: "World not found can not tp to &6%WORLD%"
     worldtpSuccess: "World has been found teleporting to world %WORLD%"
+    blacklistedWorlds: "World &6%WORLD%&a is on the blacklist"
+    adminmodeToggle: "Admin mode has been toggled &6%TOGGLE%"
 listeners:
   playerJoin:
     noLobbySet: "There is currently no lobby spawn set for SSB please set one"

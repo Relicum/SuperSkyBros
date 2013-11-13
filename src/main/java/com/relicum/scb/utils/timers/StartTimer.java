@@ -103,23 +103,29 @@ class StartTimer {
 
             --timeleft;
 
-            Bukkit.broadcastMessage(ChatColor.GREEN + "Time till game is " + timeleft);
+            // Bukkit.broadcastMessage(ChatColor.GREEN + "Time till game is " + timeleft);
             //MCBouncer.sendMessage("Relicum");
             if (this.timeleft.equals(30)) {
+                Bukkit.broadcast(ChatColor.GOLD + "The game is about to start in " + this.timeleft + " Seconds", "bukkit.broadcast.ssblobby");
                 System.out.println("The game is about to start in " + this.timeleft + " Seconds");
             } else if (this.timeleft.equals(25)) {
+                Bukkit.broadcast(ChatColor.GOLD + "The game is about to start in " + this.timeleft + " Seconds", "bukkit.broadcast.ssblobby");
                 System.out.println("The game will start in " + this.timeleft + " seconds");
             } else if (this.timeleft.equals(20)) {
+                Bukkit.broadcast(ChatColor.GOLD + "The game is about to start in " + this.timeleft + " Seconds", "bukkit.broadcast.ssblobby");
                 System.out.println("The game will start in " + this.timeleft + " seconds");
             } else if (this.timeleft.equals(15)) {
+                Bukkit.broadcast(ChatColor.GOLD + "The game is about to start in " + this.timeleft + " Seconds", "bukkit.broadcast.ssblobby");
                 System.out.println("The game will start in " + this.timeleft + " seconds");
             } else if (this.timeleft.equals(10)) {
+                Bukkit.broadcast(ChatColor.GOLD + "The game is about to start in " + this.timeleft + " Seconds", "bukkit.broadcast.ssblobby");
                 System.out.println("The game will start in " + this.timeleft + " seconds");
             } else if (timeleft < 10 && timeleft > 0) {
+                Bukkit.broadcast(ChatColor.BLUE + "The game is about to start in " + this.timeleft + " Seconds", "bukkit.broadcast.ssblobby");
                 System.out.println("Get Ready " + this.timeleft);
             } else if (timeleft == 0) {
                 System.out.println("GO GO GO Game Started");
-                Bukkit.broadcastMessage(ChatColor.GREEN + "GO GO GO Game Started");
+                Bukkit.broadcast(ChatColor.GREEN + "GO GO GO Game Started", "bukkit.broadcast.ssblobby");
             }
 
 
