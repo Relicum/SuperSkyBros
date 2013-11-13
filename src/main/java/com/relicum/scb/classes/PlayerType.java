@@ -15,7 +15,6 @@ public enum PlayerType {
     PREMIUM,
     YOUTUBER,
     OWNER,
-    DEVELOPER,
-    UNKNOWN
+    DEVELOPER
 
 }

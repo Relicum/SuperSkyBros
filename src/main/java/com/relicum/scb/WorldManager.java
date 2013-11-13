@@ -3,12 +3,14 @@ package com.relicum.scb;
 import com.relicum.scb.configs.WorldConfig;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.metadata.MetadataStoreBase;
 import org.bukkit.metadata.MetadataValue;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * SuperSkyBros First Created 29/10/13
@@ -29,29 +31,27 @@ public class WorldManager {
     private Map<String, Object> worldSettings;
 
 
-    public WorldManager(SCB p) {
+    public WorldManager(SCB p, WorldConfig worldConfig) {
         this.plugin = p;
         defaultGenerate = p.getConfig().getBoolean("generateDefaultWorld");
-        this.config = new WorldConfig("worlds.yml");
-        this.config.getConfig().options().copyDefaults(true);
-        this.config.saveConfig();
+        this.config = worldConfig;
 
 
         this.worldSettings = this.config.getConfig().getConfigurationSection("worldSettings").getValues(true);
 
 
         plugin.getLogger().info("WorldGenerator Successfully Loaded");
-        this.setTemplateDefaults();
+       /* this.setTemplateDefaults();
         if (this.config.getConfig().getBoolean("firstTime")) {
             this.generateTemplate();
             plugin.getLogger().info("New Template World Successfully Created");
             this.config.getConfig().set("firstTime", false);
             this.config.saveConfig();
             this.config.reloadConfig();
-        }
+        }*/
 
-        this.generateTemplate();
-        System.out.println("Template world loading");
+        // this.generateTemplate();
+
 
     }
 
@@ -67,6 +67,19 @@ public class WorldManager {
         this.template.generateStructures(this.getConfig().getBoolean("default.structures"));
         this.template.generator(this.getConfig().getString("default.generator"));
 
+    }
+
+
+    private WorldCreator applyDefaultSettings(String name) {
+
+        WorldCreator worldCreator = new WorldCreator(name);
+        worldCreator.type(WorldType.FLAT);
+        worldCreator.environment(Environment.NORMAL);
+        worldCreator.generateStructures(false);
+        worldCreator.generator("CleanroomGenerator:.");
+        worldCreator.seed(this.randomSeed());
+
+        return worldCreator;
     }
 
 
@@ -133,31 +146,59 @@ public class WorldManager {
     }
 
 
-    public World createNewWorld(String name) {
+    private World createNewWorld(String name) {
 
-        WorldCreator worldCreator = new WorldCreator(name);
-        worldCreator.copy(this.template);
+        WorldCreator worldCreator = this.applyDefaultSettings("Template");
         World world;
         try {
             world = worldCreator.createWorld();
+
         }
         catch ( Exception e ) {
             e.printStackTrace();
             return null;
         }
-
-
-        world.setSpawnLocation(0, 65, 0);
-        world.setKeepSpawnInMemory(true);
-        world.setDifficulty(Difficulty.NORMAL);
-
-
+        System.out.println("New world called " + name + "has been created");
         return world;
+    }
+
+
+    public void applyWorldDefaultSettings(String name) {
+
+        World world = null;
+
+        try {
+            world = Bukkit.getServer().getWorld(name);
+        }
+        catch ( NullPointerException e ) {
+            e.printStackTrace();
+            return;
+        }
+        catch ( Exception ex ) {
+            ex.printStackTrace();
+            return;
+        }
+
+        world.setSpawnLocation(0, 64, 0);
+        world.setKeepSpawnInMemory(true);
+        world.setSpawnFlags(false, false);
+        Block block = world.getBlockAt(0, 65, 0);
+        block.getState().setType(Material.GOLD_BLOCK);
+        block.getState().update(true);
+        world.save();
+        System.out.println("Settings applied for  " + name + "has been successful");
     }
 
 
     private Location convertToLocation(String l) {
 
         return null;
+    }
+
+
+    private long randomSeed() {
+
+        Random random = new Random();
+        return random.nextLong();
     }
 }

@@ -2,7 +2,6 @@ package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.objects.signs.utils.Col;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -19,11 +18,11 @@ import java.util.List;
  */
 public class SignChange implements Listener {
 
-    private SCB plugin;
-
     public List<String> blacklist;
 
     public boolean isDedicated;
+
+    private SCB plugin;
 
 
     public SignChange(SCB p) {
