@@ -140,7 +140,7 @@
                     <outputDirectory>${project.basedir}/target</outputDirectory>
                     <testClassesDirectory>${project.basedir}target/test-classes</testClassesDirectory>
                     <archive>
-                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <addMavenDescriptor>true</addMavenDescriptor>
                     </archive>
                     <finalName>SuperSkyBros.Beta.${project.version}</finalName>
                 </configuration>

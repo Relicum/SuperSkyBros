@@ -8,4 +8,5 @@ package com.relicum.scb.mini;
  */
 public class SignManager {
 
+
 }

@@ -1,7 +1,6 @@
 package com.relicum.scb.events;
 
 import com.relicum.scb.SmashPlayer;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -53,6 +52,6 @@ public class PlayerJoinLobbyEvent extends Event {
 
     @Override
     public HandlerList getHandlers() {
-        return getHandlerList();
+        return handlers;
     }
 }
