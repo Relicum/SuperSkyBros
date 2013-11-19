@@ -6,7 +6,7 @@ import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.*;
 import com.relicum.scb.listeners.*;
 import com.relicum.scb.objects.inventory.InventoryManager;
-import com.relicum.scb.objects.world.Generator;
+import com.relicum.scb.utils.FileUtils;
 import com.relicum.scb.utils.GemShop;
 import com.relicum.scb.utils.Helper;
 import com.relicum.scb.utils.MessageManager;
@@ -20,7 +20,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -42,7 +41,7 @@ import java.util.logging.Logger;
 
 public class SCB extends JavaPlugin {
 
-    private static final Logger log = Logger.getLogger("Minecraft");
+    public static final Logger log = Logger.getLogger("Minecraft");
 
 
     /**
@@ -190,7 +189,6 @@ public class SCB extends JavaPlugin {
         this.saveDefaultConfig();
         this.getConfig().options().copyDefaults(true);
 
-
         if (p.getConfig().getBoolean("worldGenerator")) {
             p.WCF = new WorldConfig("worlds.yml");
             p.WCF.getConfig().options().copyDefaults(true);
@@ -212,24 +210,8 @@ public class SCB extends JavaPlugin {
             p.getCommand("ssba").setExecutor(cm);
             p.getCommand("ssba").setPermissionMessage("You do not have permission to run this command");
             p.pm.registerEvents(new FirstRun(this), this);
-            boolean f = new File(getDataFolder() + "/players").exists();
-            if (!f) {
-                boolean fi = new File(getDataFolder() + "/players").mkdirs();
-
-                if (fi)
-                    System.out.println("New Directory created at " + getDataFolder() + "/players");
-                else
-                    System.out.println("Error: Failed to create players directory at " + getDataFolder() + "/players");
-            }
-            boolean f1 = new File(getDataFolder() + "/worlds").exists();
-            if (!f1) {
-                boolean fi1 = new File(getDataFolder() + "/worlds").mkdirs();
-
-                if (fi1)
-                    System.out.println("New Directory created at " + getDataFolder() + "/worlds");
-                else
-                    System.out.println("Error: Failed to create players directory at " + getDataFolder() + "/worlds");
-            }
+            FileUtils.createDirectory(getDataFolder().toString(), "players");
+            FileUtils.createDirectory(getDataFolder().toString(), "worlds");
         } else {
 
             MM = new MessageManager(p);
@@ -396,7 +378,6 @@ public class SCB extends JavaPlugin {
 
             }
 
-
             p.LBS = new LobbyManager();
             if (p.LBC.getConfig().getBoolean("LOBBYSET")) {
                 if (p.getConfig().getBoolean("dedicatedSSB")) {
@@ -443,7 +424,8 @@ public class SCB extends JavaPlugin {
             while(it.hasNext()){
                 org.bukkit.permissions.Permission st = it.next();
                   if(st.getName().contains("bukkit")) {
-                 System.out.println(st.getName() + ": Default " + st.getDefault().toString() + " Description : " + st.getDescription());
+                 System.out.println(st.getName() + ": Default " + st.getDefault().toString() + " Description : " + st
+                 .getDescription());
                 System.out.println(""); }
             }*/
         }
@@ -484,7 +466,10 @@ public class SCB extends JavaPlugin {
 
     private void setupEconomy() {
 
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(net.milkbowl.vault
+                                                                                                          .economy
+                                                                                                          .Economy
+                                                                                                          .class);
 
         if (rsp != null) {
             econ = rsp.getProvider();
@@ -520,11 +505,6 @@ public class SCB extends JavaPlugin {
             log.warning("Vault could not hook into Permissions Plugin");
         }
 
-    }
-
-
-    public ChunkGenerator getDefaultWorldGenerator(String worldName, String id) {
-        return new Generator();
     }
 
 
