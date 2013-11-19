@@ -41,7 +41,8 @@ public class FirstRun implements Listener {
 
                 @Override
                 public void run() {
-                    System.out.println("Teleporting new player to X " + loc.getX() + " Y " + loc.getY() + " Z " + loc.getZ());
+                    System.out.println("Teleporting new player to X " + loc.getX() + " Y " + loc.getY() + " Z " + loc
+                                                                                                                          .getZ());
                     player.teleport(loc);
                     player.sendMessage(ChatColor.GREEN + "You have been spawned here as you are a first time player");
                 }
@@ -56,28 +57,21 @@ public class FirstRun implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void firstJoin(PlayerJoinEvent e) {
         if (!e.getPlayer().isOp()) {
-            e.getPlayer().kickPlayer("Sorry currently not allowed in allowed in server is being setup for SuperSkyBros");
+            e.getPlayer().kickPlayer("Sorry currently not allowed as server is being setup for SuperSkyBros");
         } else {
             e.setJoinMessage(null);
-            List<String> st = Arrays.asList("\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<", ChatColor.GOLD +
-                    e.getPlayer().getName() + "  welcome to the server");
+            List<String> st = Arrays.asList("    " +
+                                                    "\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<", ChatColor.GOLD +
+                                                                                                                                                                                                                                                    e.getPlayer().getName() + " welcome to the server");
             e.getPlayer().sendMessage((String[]) st.toArray());
             ChatColor b = ChatColor.BOLD;
             String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
-            e.getPlayer().sendMessage(pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros Beta " + SCB.getInstance().getDescription().getVersion() + " this should not be run on a live server be warned");
+            e.getPlayer().sendMessage(pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros " +
+                                              "Beta " + SCB.getInstance().getDescription().getVersion() + " this " +
+                                              "should not be run on a live server be warned");
 
             e.getPlayer().sendMessage("");
-            e.getPlayer().sendMessage(ChatColor.DARK_RED + "YOU MUST DO THE BELOW NOW OR SSB WILL NOT BE RUNNING");
-
-            e.getPlayer().sendMessage(ChatColor.GREEN + "Run the following command to set the SSB server mode");
-
-            e.getPlayer().sendMessage(ChatColor.AQUA + "If the server will only be running SSB ");
-            e.getPlayer().sendMessage(ChatColor.GREEN + "Run " + ChatColor.GOLD + "/ssba setmode dedicated");
-            e.getPlayer().sendMessage(ChatColor.AQUA + "Or if the server has other plugins eg factions or other game modes, then");
-            e.getPlayer().sendMessage(ChatColor.GREEN + "Run " + ChatColor.GOLD + "/ssba setmode mixed");
-            e.getPlayer().sendMessage(ChatColor.AQUA + "After you have done that stop the server and restart it.");
-
+            e.getPlayer().sendMessage(ChatColor.DARK_RED + "IMPORTANT RUN " + ChatColor.GOLD + "/ssba setmode " + ChatColor.DARK_RED + "TO START SUPERSKYBROS SETUP");
         }
     }
-
 }

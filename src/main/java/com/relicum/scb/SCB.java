@@ -6,6 +6,7 @@ import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.*;
 import com.relicum.scb.listeners.*;
 import com.relicum.scb.objects.inventory.InventoryManager;
+import com.relicum.scb.utils.FileUtils;
 import com.relicum.scb.utils.GemShop;
 import com.relicum.scb.utils.Helper;
 import com.relicum.scb.utils.MessageManager;
@@ -40,7 +41,7 @@ import java.util.logging.Logger;
 
 public class SCB extends JavaPlugin {
 
-    private static final Logger log = Logger.getLogger("Minecraft");
+    public static final Logger log = Logger.getLogger("Minecraft");
 
 
     /**
@@ -188,7 +189,6 @@ public class SCB extends JavaPlugin {
         this.saveDefaultConfig();
         this.getConfig().options().copyDefaults(true);
 
-
         if (p.getConfig().getBoolean("worldGenerator")) {
             p.WCF = new WorldConfig("worlds.yml");
             p.WCF.getConfig().options().copyDefaults(true);
@@ -210,24 +210,8 @@ public class SCB extends JavaPlugin {
             p.getCommand("ssba").setExecutor(cm);
             p.getCommand("ssba").setPermissionMessage("You do not have permission to run this command");
             p.pm.registerEvents(new FirstRun(this), this);
-            boolean f = new File(getDataFolder() + "/players").exists();
-            if (!f) {
-                boolean fi = new File(getDataFolder() + "/players").mkdirs();
-
-                if (fi)
-                    System.out.println("New Directory created at " + getDataFolder() + "/players");
-                else
-                    System.out.println("Error: Failed to create players directory at " + getDataFolder() + "/players");
-            }
-            boolean f1 = new File(getDataFolder() + "/worlds").exists();
-            if (!f1) {
-                boolean fi1 = new File(getDataFolder() + "/worlds").mkdirs();
-
-                if (fi1)
-                    System.out.println("New Directory created at " + getDataFolder() + "/worlds");
-                else
-                    System.out.println("Error: Failed to create players directory at " + getDataFolder() + "/worlds");
-            }
+            FileUtils.createDirectory(getDataFolder().toString(), "players");
+            FileUtils.createDirectory(getDataFolder().toString(), "worlds");
         } else {
 
             MM = new MessageManager(p);

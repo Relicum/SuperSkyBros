@@ -1,6 +1,7 @@
 # DO NOT CHANGE THE FIRST 2 SETTINGS
 firstRun: true
 firstRunDone: false
+modeSet: false
 debugCommands: true
 enable: true
 enableLobbyProtection: false

@@ -1,9 +1,14 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.conversations.DefaultConversationFactory;
+import com.relicum.scb.conversations.setmode.DisplayModesInput;
+import com.relicum.scb.objects.signs.utils.Col;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
+import org.bukkit.conversations.Conversable;
+import org.bukkit.conversations.ConversationFactory;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -11,6 +16,8 @@ import org.bukkit.plugin.PluginManager;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * SuperSkyBros First Created 28/09/13
@@ -22,16 +29,27 @@ public class CommandManagerFirstJoin implements CommandExecutor {
 
     private SCB plugin;
 
+    public static ConversationFactory factory;
+
+    private final String cHeader = "    \u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC" +
+                                           "[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC" +
+                                           "*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<\n";
+
 
     public CommandManagerFirstJoin(SCB pl) {
 
         this.plugin = pl;
         String message;
-        message = "&bYou need to run this command the to set the SSB server mode you wish to run. If server will only run SSB run &6/ssba setmode dedicated&r";
-        message = message + " Or if the server will have other game types like faction etc running as well as SSB the run &6/ssba setmode mixed&r";
-        message = message + "&4 Until this has been set you will not be able to use SuperSkyBros";
+
+        message = "&b This command will help you setup the server mode for SuperSkyBros";
         String des = ChatColor.translateAlternateColorCodes('&', message);
         registerCommand("setmode", des, "/ssba setmode", "ssba setmode");
+        //  message="&b This command will help you walk you through the setup using the Conversation API";
+        //  String des2 = ChatColor.translateAlternateColorCodes('&', message);
+        //   registerCommand("setmodes", des2, "/ssba setmodes", "ssba setmodes");
+
+        factory = DefaultConversationFactory.getDefaultConversation();
+        plugin.getLogger().info("The " + this.getClass().getSimpleName() + " loader has run");
     }
 
 
@@ -46,13 +64,45 @@ public class CommandManagerFirstJoin implements CommandExecutor {
      */
     @Override
     public boolean onCommand(CommandSender cs, Command command, String label, String[] args) {
+        if (cs instanceof Player) {
+            if (!SCB.perms.has(cs, "ssba.admin.setmode")) {
+                cs.sendMessage(Col.Dark_Red() + "You do not have permission to run setmode");
+                return true;
+            }
+        }
+        if (cs instanceof Conversable) {
+            String[] strings1 = new String[19];
+            for ( int i = 0; i < 19; i++ ) {
+                strings1[i] = "";
+            }
+            cs.sendMessage(strings1);
+            cs.sendMessage(this.cHeader);
+            cs.sendMessage(Col.Green() + "To begin setup you need to decided the server mode");
+            cs.sendMessage(Col.Green() + "There are 2 modes " + Col.Gold() + "MIXED " + Col.Green() + "or " + Col
+                                                                                                                      .Gold() + "DEDICATED");
+            cs.sendMessage("");
+            Map<Object, Object> data = new HashMap<>();
+            data.put("pre", 1);
+            factory.withInitialSessionData(data);
+            factory.withFirstPrompt(new DisplayModesInput("Yes", "No"));
+            factory.buildConversation((Conversable) cs).begin();
 
+            return true;
+        } else
+            return false;
 
-        if (!(cs instanceof Player)) {
+/*      if (!(cs instanceof Player)) {
             plugin.getLogger().severe("Error all SSB commands must be run in game not from console");
             return false;
         }
 
+        if(args != null && args[0].equalsIgnoreCase("setmodes")){
+            Player player = (Player) cs;
+
+            setmodes(player,args[1]);
+
+            return true;
+        }
 
         if (args == null || args.length < 2L) {
             return false;
@@ -67,14 +117,15 @@ public class CommandManagerFirstJoin implements CommandExecutor {
         setmode(player, args[1]);
 
         return true;
-    }
+    }  */
 
 
-    private boolean setmode(Player player, String mode) {
+/*    private boolean setmode(Player player, String mode) {
 
 
         if (!mode.equalsIgnoreCase("mixed") && !mode.equalsIgnoreCase("dedicated")) {
-            player.sendMessage(ChatColor.RED + "Error: the choice is " + ChatColor.GOLD + "mixed " + ChatColor.RED + "OR " + ChatColor.GOLD + "dedicated");
+            player.sendMessage(ChatColor.RED + "Error: the choice is " + ChatColor.GOLD + "mixed " + ChatColor.RED +
+            "OR " + ChatColor.GOLD + "dedicated");
             player.sendMessage(ChatColor.RED + "Please run again with a valid option");
             return true;
         }
@@ -93,6 +144,8 @@ public class CommandManagerFirstJoin implements CommandExecutor {
 
         plugin.saveOnDisable = true;
         return true;
+    }*/
+
     }
 
 
@@ -104,7 +157,7 @@ public class CommandManagerFirstJoin implements CommandExecutor {
         cd.setDescription(description);
         cd.setUsage(usage);
         cd.setExecutor(this);
-        cd.setPermission("ssba.admins.setmode");
+        cd.setPermission("ssba.admin.setmode");
         cd.setPermissionMessage(ChatColor.DARK_RED + "You do not have permission to run this command OP only");
 
         if (cmp.register(label, "mc", (Command) cd)) {
@@ -112,7 +165,8 @@ public class CommandManagerFirstJoin implements CommandExecutor {
             return true;
         }
 
-        plugin.getLogger().severe("Unknown error command: /" + label + " did not register at all. Investigation needed");
+        plugin.getLogger().severe("Unknown error command: /" + label + " did not register at all. Investigation " +
+                                          "needed");
 
         return true;
     }
@@ -134,7 +188,8 @@ public class CommandManagerFirstJoin implements CommandExecutor {
 
             command = (PluginCommand) c.newInstance(new Object[]{name, plugin});
         }
-        catch ( SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e ) {
+        catch ( SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException |
+                        InvocationTargetException | NoSuchMethodException e ) {
             e.printStackTrace();
         }
 
