@@ -10,5 +10,6 @@ public class SignConfig extends IConfig {
 
     public SignConfig(String filename) {
         super(filename);
+
     }
 }

@@ -30,6 +30,26 @@ public class WorldManager {
 
     private Map<String, Object> worldSettings;
 
+    //Set PVP to True
+    //Stop pvp in lobbies
+    //Difficulty Hard
+    //GameMode Adventure
+    //Set Default Gamemode
+    //Set player time  to midday (if mixed mode)
+    //Disable bed spawn
+    //Keep time at midday
+    //Set weather to clear 9999999
+    //Stop any rain or thunder
+    //nether to false
+    //end to false
+    //fly enabled
+    //npcs false
+    //view distance to 7
+    //player timeout to 5 mins
+    //firsttime players
+    //set world spawns
+    //restrict commands Lobby and Game
+
 
     public WorldManager(SCB p, WorldConfig worldConfig) {
         this.plugin = p;
@@ -179,10 +199,10 @@ public class WorldManager {
             return;
         }
 
-        world.setSpawnLocation(0, 64, 0);
+        world.setSpawnLocation(0, 65, 0);
         world.setKeepSpawnInMemory(true);
         world.setSpawnFlags(false, false);
-        Block block = world.getBlockAt(0, 65, 0);
+        Block block = world.getBlockAt(0, 64, 0);
         block.getState().setType(Material.GOLD_BLOCK);
         block.getState().update(true);
         world.save();

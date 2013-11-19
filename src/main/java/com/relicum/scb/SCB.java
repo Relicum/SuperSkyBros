@@ -5,6 +5,8 @@ import com.relicum.scb.commands.CommandManagerFirstJoin;
 import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.*;
 import com.relicum.scb.listeners.*;
+import com.relicum.scb.mini.SerializedLocation;
+import com.relicum.scb.mini.SignLocationStore;
 import com.relicum.scb.objects.inventory.InventoryManager;
 import com.relicum.scb.utils.FileUtils;
 import com.relicum.scb.utils.GemShop;
@@ -20,6 +22,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -214,7 +217,7 @@ public class SCB extends JavaPlugin {
             FileUtils.createDirectory(getDataFolder().toString(), "worlds");
         } else {
 
-            MM = new MessageManager(p);
+            MM = new MessageManager();
             CommandExecutor cm = new CommandManager(p);
             p.getCommand("ssb").setExecutor(cm);
             p.getCommand("ssba").setExecutor(cm);
@@ -318,7 +321,7 @@ public class SCB extends JavaPlugin {
          */
         @Override
         public void run() {
-
+            ConfigurationSerialization.registerClass(SerializedLocation.class);
             /*WorldCreator wc = new WorldCreator("template");
 
             wc.environment(Environment.NORMAL);
@@ -345,7 +348,6 @@ public class SCB extends JavaPlugin {
             }
             p.INV = new InventoryManager();
 
-
             p.LBC = new LobbyConfig("lobby.yml");
             p.LBC.getConfig().options().copyDefaults(true);
             p.LBC.saveConfig();
@@ -358,11 +360,12 @@ public class SCB extends JavaPlugin {
             p.SNC = new SignConfig("signs.yml");
             p.SNC.getConfig().options().copyDefaults(true);
             p.SNC.saveConfig();
+            new SignLocationStore(p);
 
             p.ARC = new ArenaConfig("arena.yml");
             p.ARC.getConfig().options().copyDefaults(true);
             p.ARC.saveConfig();
-            p.ARM = new ArenaManager(p);
+            p.ARM = new ArenaManager();
 
             p.SFM = new SignFormat("signsText.yml");
             p.SFM.getConfig().options().copyDefaults(true);

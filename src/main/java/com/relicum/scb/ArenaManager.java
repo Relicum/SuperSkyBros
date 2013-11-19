@@ -2,6 +2,7 @@ package com.relicum.scb;
 
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaIO;
+import com.relicum.scb.types.SkyBrosApi;
 import lombok.Data;
 
 import java.util.*;
@@ -50,9 +51,9 @@ class ArenaManager {
      *
      * @param p the p
      */
-    public ArenaManager(SCB p) {
+    public ArenaManager() {
 
-        this.plugin = p;
+        this.plugin = SkyBrosApi.getSCB();
         setup();
 
     }

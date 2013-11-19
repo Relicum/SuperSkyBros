@@ -2,10 +2,12 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.configs.LobbyConfig;
+import com.relicum.scb.mini.SerializedLocation;
 import com.relicum.scb.objects.LobbyRegion;
 import com.relicum.scb.we.WEManager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.Selection;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
@@ -30,7 +32,8 @@ public class setlobby extends SubBase {
         Selection cr = wm.getSelection(player);
         Vector rmin;
         try {
-            rmin = new Vector(cr.getMinimumPoint().getBlockX(), cr.getMinimumPoint().getBlockY(), cr.getMinimumPoint().getBlockZ());
+            rmin = new Vector(cr.getMinimumPoint().getBlockX(), cr.getMinimumPoint().getBlockY(),
+                                     cr.getMinimumPoint().getBlockZ());
 
         }
         catch ( Exception e ) {
@@ -43,15 +46,26 @@ public class setlobby extends SubBase {
 
         Vector rmax;
 
-        rmax = new Vector(cr.getMaximumPoint().getBlockX(), cr.getMaximumPoint().getBlockY(), cr.getMaximumPoint().getBlockZ());
+        rmax = new Vector(cr.getMaximumPoint().getBlockX(), cr.getMaximumPoint().getBlockY(),
+                                 cr.getMaximumPoint().getBlockZ());
 
-        Vector lobbySpawn = new Vector(player.getLocation().getBlockX() + 0.5, player.getLocation().getBlockY() + 0.5, player.getLocation().getBlockZ() + 0.5);
+        Vector lobbySpawn = new Vector(player.getLocation().getBlockX() + 0.5, player.getLocation().getBlockY() + 0
+        .5, player.getLocation().getBlockZ() + 0.5);
         Float dir = SCB.getInstance().LBS.getDirection(player.getLocation().getYaw());
 
-        LobbyRegion region = new LobbyRegion(rmin, rmax, lobbySpawn, player.getWorld().getName(), perm, player.getLocation().getYaw());
+        LobbyRegion region = new LobbyRegion(rmin, rmax, lobbySpawn, player.getWorld().getName(), perm,
+                                                    player.getLocation().getYaw());
 
         LobbyConfig LC = SCB.getInstance().LBS.getLobbySaveObject();
 
+
+        SerializedLocation minls = new SerializedLocation(cr.getMinimumPoint());
+        SerializedLocation maxls = new SerializedLocation(cr.getMaximumPoint());
+        SerializedLocation sspawn = new SerializedLocation(player.getLocation().getWorld().getName(),
+                                                                  player.getLocation().getBlockX(),
+                                                                  player.getLocation().getBlockY(),
+                                                                  player.getLocation().getBlockZ(), dir,
+                                                                  player.getLocation().getPitch());
 
         try {
             if (!LC.getConfig().contains("LOBBY")) {
@@ -63,6 +77,17 @@ public class setlobby extends SubBase {
             LC.getConfig().set("LOBBY.REGION.YAW", region.getYaw());
             LC.getConfig().set("LOBBY.REGION.WORLD", region.getWorld().getName());
             LC.getConfig().set("LOBBY.REGION.PERM", "ssb.player.join");
+
+            if (!LC.getConfig().contains("lobby.box")) {
+                LC.getConfig().createSection("lobby.box");
+            }
+            ConfigurationSection box = LC.getConfig().getConfigurationSection("lobby.box");
+            box.set("min", minls);
+            box.set("max", maxls);
+            box.set("spawn", sspawn);
+            box.set("world", player.getWorld().getName());
+            box.set("perm", "ssb.player.join");
+
             if (!LC.getConfig().contains("LOBBYSET")) {
                 LC.getConfig().createSection("LOBBYSET");
             }

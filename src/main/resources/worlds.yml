@@ -13,4 +13,4 @@ worldSettings:
   inMemory: 'true'
   monsters: 'false'
   animals: 'false'
-  difficulty: 'NORMAL'
+  difficulty: 'HARD'

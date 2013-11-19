@@ -66,6 +66,7 @@ public class SettingsManager {
      */
     public void setup(SCB p) {
 
+
         SettingsManager.p = p;
         //setupMessageManager(p);
 
@@ -103,13 +104,13 @@ public class SettingsManager {
 
     private void setupArenaManager(SCB p) {
 
-        arena = new ArenaManager(p);
+        arena = new ArenaManager();
     }
 
 
     private void setupMessageManager(SCB p) {
 
-        mess = new MessageManager(p);
+        mess = new MessageManager();
 
     }
 

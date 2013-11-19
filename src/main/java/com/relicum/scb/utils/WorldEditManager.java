@@ -32,7 +32,7 @@ public class WorldEditManager {
     /**
      * Default Constructor DO NOT USE
      */
-    private WorldEditManager() {
+    public WorldEditManager() {
 
 
     }
