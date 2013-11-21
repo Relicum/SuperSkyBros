@@ -51,13 +51,12 @@ public class SetModeResult extends MessagePrompt {
         SCB plugin = SCB.getInstance();
 
         try {
-            plugin.getConfig().set("dedicatedSSB", isDedicated);
+            plugin.getConfig().set(SCB.DEDICATED_SSB, isDedicated);
             plugin.getConfig().set("modeSet", true);
             plugin.saveConfig();
             plugin.reloadConfig();
             plugin.saveOnDisable = true;
-        }
-        catch ( Exception ex ) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return false;
         }

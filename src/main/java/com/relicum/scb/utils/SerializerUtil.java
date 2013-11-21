@@ -15,7 +15,7 @@ public class SerializerUtil {
     public static HashMap<String, String> createSaveableLocations(Map<Integer, Location> mlocs) {
         HashMap<String, String> locations = new HashMap<String, String>();
         if (mlocs != null) {
-            for ( Integer key : mlocs.keySet() ) {
+            for (Integer key : mlocs.keySet()) {
                 String s = SerializerUtil.getLocString(mlocs.get(key));
                 locations.put(key + "", s);
             }
@@ -25,11 +25,10 @@ public class SerializerUtil {
 
 
     public static void expandMapIntoConfig(ConfigurationSection conf, Map<String, Object> map) {
-        for ( Entry<String, Object> e : map.entrySet() ) {
+        for (Entry<String, Object> e : map.entrySet()) {
             if (e.getValue() instanceof Map<?, ?>) {
                 ConfigurationSection section = conf.createSection(e.getKey());
-                @SuppressWarnings("unchecked")
-                Map<String, Object> subMap = (Map<String, Object>) e.getValue();
+                @SuppressWarnings("unchecked") Map<String, Object> subMap = (Map<String, Object>) e.getValue();
                 expandMapIntoConfig(section, subMap);
             } else {
                 conf.set(e.getKey(), e.getValue());
@@ -40,8 +39,7 @@ public class SerializerUtil {
 
     public static Location getLocation(String locstr) throws IllegalArgumentException {
         //		String loc = node.getString(nodestr,null);
-        if (locstr == null)
-            throw new IllegalArgumentException("Error parsing location. Location string was null");
+        if (locstr == null) throw new IllegalArgumentException("Error parsing location. Location string was null");
         String split[] = locstr.split(",");
         String w = split[0];
         float x = Float.valueOf(split[1]);
@@ -78,11 +76,10 @@ public class SerializerUtil {
 
 
     public static Map<Integer, Location> parseLocations(ConfigurationSection cs) throws IllegalArgumentException {
-        if (cs == null)
-            return null;
+        if (cs == null) return null;
         HashMap<Integer, Location> locs = new HashMap<Integer, Location>();
         Set<String> indices = cs.getKeys(false);
-        for ( String locIndexStr : indices ) {
+        for (String locIndexStr : indices) {
             Location loc = null;
             loc = SerializerUtil.getLocation(cs.getString(locIndexStr));
             Integer i = Integer.valueOf(locIndexStr);

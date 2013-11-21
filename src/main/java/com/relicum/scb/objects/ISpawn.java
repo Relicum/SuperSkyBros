@@ -109,8 +109,7 @@ public abstract class ISpawn extends ILocationImpl {
         try {
             return (double) f.parse(fd);
 
-        }
-        catch ( ParseException e ) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return Loc.getX();
@@ -139,8 +138,7 @@ public abstract class ISpawn extends ILocationImpl {
         try {
             return (double) f.parse(fd);
 
-        }
-        catch ( ParseException e ) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return Loc.getZ();

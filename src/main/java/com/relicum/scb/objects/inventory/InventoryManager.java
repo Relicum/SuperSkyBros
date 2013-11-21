@@ -2,7 +2,6 @@ package com.relicum.scb.objects.inventory;
 
 import com.relicum.scb.SCB;
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.Xpp3DomDriver;
 import com.thoughtworks.xstream.io.xml.Xpp3Driver;
 import com.thoughtworks.xstream.persistence.FilePersistenceStrategy;
 import com.thoughtworks.xstream.persistence.PersistenceStrategy;
@@ -73,8 +72,7 @@ public class InventoryManager {
     public boolean storeOldInventory(Player player) {
 
 
-        if (this.playerStore.containsKey(player.getName()))
-            System.out.println("Player already stored but we will update it");
+        if (this.playerStore.containsKey(player.getName())) System.out.println("Player already stored but we will update it");
 
         StorePlayerSettings ps = PlayerStore.storePlayer(player);
 

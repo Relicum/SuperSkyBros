@@ -46,8 +46,7 @@ public abstract class Armour implements IArmour, IColoredArmourMeta {
 
 
     private final void IArmour() {
-        if (this.armourId == null)
-            this.armourId = UUID.randomUUID();
+        if (this.armourId == null) this.armourId = UUID.randomUUID();
     }
 
     //ABSTRACT METHODS START

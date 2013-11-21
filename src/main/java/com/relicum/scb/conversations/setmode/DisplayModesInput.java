@@ -39,7 +39,7 @@ public class DisplayModesInput extends AbstractCustomFixedInput {
     public String getPromptText(ConversationContext context) {
 
         return ChatColor.GREEN + "Would you like to see a description of each mode? " + Col.Reset() + "\n" +
-                       formatFixedSet();
+                formatFixedSet();
     }
 
 

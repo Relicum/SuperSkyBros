@@ -1,6 +1,7 @@
 package com.relicum.scb.utils;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyBrosApi;
 import com.sk89q.worldedit.Vector;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -34,8 +35,8 @@ public class Helper {
     }
 
 
-    public void setup(SCB p) {
-        Helper.pl = p;
+    public void setup() {
+        Helper.pl = SkyBrosApi.getSCB();
     }
 
 
@@ -47,8 +48,7 @@ public class Helper {
             if (!file.exists()) {
                 return false;
             }
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return true;
@@ -69,8 +69,7 @@ public class Helper {
                 return true;
             }
 
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
 
         }

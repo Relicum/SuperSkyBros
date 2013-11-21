@@ -25,8 +25,7 @@ public class modify extends SubBase {
             String s = SCB.getMessageManager().getAdminMessage("command.message.modifySuccess");
             String tmp = s.replace("%ID%", args[0]);
             player.sendMessage(tmp);
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             String s = SCB.getMessageManager().getErrorMessage("command.message.modifyException");
             String tmp = s.replace("%ID%", args[0]);
             player.sendMessage(tmp);

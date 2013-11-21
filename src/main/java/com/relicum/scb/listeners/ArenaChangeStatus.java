@@ -68,8 +68,7 @@ public class ArenaChangeStatus implements Listener {
 
         try {
             SCB.getInstance().ARM.removeArena(event.getArena().getArenaId(), event.getArena().getUniqueMap());
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             System.out.println("Error has occurred removing the arena");
             return false;
         }

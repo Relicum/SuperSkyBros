@@ -63,8 +63,6 @@ public interface ILore {
      * @param ignoreLevelRestriction this indicates the enchantment should be applied, ignoring the level limit
      * @return true if the item meta changed as a result of this call, false otherwise
      */
-    boolean addEnchant(Enchantment ench,
-                       int level,
-                       boolean ignoreLevelRestriction);
+    boolean addEnchant(Enchantment ench, int level, boolean ignoreLevelRestriction);
 
 }

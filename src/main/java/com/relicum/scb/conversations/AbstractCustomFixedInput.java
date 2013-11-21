@@ -31,12 +31,10 @@ public abstract class AbstractCustomFixedInput extends FixedSetPrompt {
 
 
     @Override
-    public boolean isInputValid(ConversationContext context,
-                                String input) {
+    public boolean isInputValid(ConversationContext context, String input) {
 
-        for ( String s : this.fixedSet ) {
-            if (s.equalsIgnoreCase(input))
-                return true;
+        for (String s : this.fixedSet) {
+            if (s.equalsIgnoreCase(input)) return true;
         }
         return false;
     }
@@ -62,7 +60,7 @@ public abstract class AbstractCustomFixedInput extends FixedSetPrompt {
 
     protected void setDefaultFormattedSet() {
         String f = ChatColor.GOLD + "[ ";
-        for ( String s : this.fixedSet ) {
+        for (String s : this.fixedSet) {
             f += ChatColor.RED + s + ChatColor.GOLD + " | ";
         }
         f += ChatColor.GOLD + "]";

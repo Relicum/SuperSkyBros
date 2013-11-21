@@ -37,12 +37,13 @@ public class FirstRun implements Listener {
             Location location = player.getWorld().getSpawnLocation();
             location.add(0.5, 0.5, 0.5);
             final Location loc = location;
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(SCB.getInstance(), new Runnable() {
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(
+                    SCB.getInstance(), new Runnable() {
 
                 @Override
                 public void run() {
-                    System.out.println("Teleporting new player to X " + loc.getX() + " Y " + loc.getY() + " Z " + loc
-                                                                                                                          .getZ());
+                    System.out.println(
+                            "Teleporting new player to X " + loc.getX() + " Y " + loc.getY() + " Z " + loc.getZ());
                     player.teleport(loc);
                     player.sendMessage(ChatColor.GREEN + "You have been spawned here as you are a first time player");
                 }
@@ -60,15 +61,17 @@ public class FirstRun implements Listener {
             e.getPlayer().kickPlayer("Sorry currently not allowed as server is being setup for SuperSkyBros");
         } else {
             e.setJoinMessage(null);
-            List<String> st = Arrays.asList("    " +
-                                                    "\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<", ChatColor.GOLD +
-                                                                                                                                                                                                                                                    e.getPlayer().getName() + " welcome to the server");
+            List<String> st = Arrays.asList(
+                    "    " + "\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<",
+                    ChatColor.GOLD +
+                            e.getPlayer().getName() + " welcome to the server");
             e.getPlayer().sendMessage((String[]) st.toArray());
             ChatColor b = ChatColor.BOLD;
             String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
-            e.getPlayer().sendMessage(pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros " +
-                                              "Beta " + SCB.getInstance().getDescription().getVersion() + " this " +
-                                              "should not be run on a live server be warned");
+            e.getPlayer().sendMessage(
+                    pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros " +
+                            "Beta " + SCB.getInstance().getDescription().getVersion() + " this " +
+                            "should not be run on a live server be warned");
 
             e.getPlayer().sendMessage("");
             e.getPlayer().sendMessage(ChatColor.DARK_RED + "IMPORTANT RUN " + ChatColor.GOLD + "/ssba setmode " + ChatColor.DARK_RED + "TO START SUPERSKYBROS SETUP");

@@ -5,7 +5,10 @@ import com.relicum.scb.commands.CommandManagerFirstJoin;
 import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.*;
 import com.relicum.scb.listeners.*;
+import com.relicum.scb.mini.SerializedLocation;
+import com.relicum.scb.mini.SignLocationStore;
 import com.relicum.scb.objects.inventory.InventoryManager;
+import com.relicum.scb.types.SkyBrosApi;
 import com.relicum.scb.utils.FileUtils;
 import com.relicum.scb.utils.GemShop;
 import com.relicum.scb.utils.Helper;
@@ -20,6 +23,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
@@ -41,89 +45,85 @@ import java.util.logging.Logger;
 
 public class SCB extends JavaPlugin {
 
-    public static final Logger log = Logger.getLogger("Minecraft");
-
-
+    private static final Logger log = Logger.getLogger("Minecraft");
+    private static final String FIRST_RUN_DONE = "firstRunDone";
+    public static final String DEDICATED_SSB = "dedicatedSSB";
+    public static final String WORLD_EDIT = "WorldEdit";
+    private static final String WORLD_GENERATOR = "worldGenerator";
+    private static final String FIRST_RUN = "firstRun";
+    public static final String SUCCESSFULLY_HOOKED_INTO_ECONOMY_PLUGIN = "Successfully Hooked into Economy Plugin";
+    public static final String VAULT_COULD_NOT_HOOK_INTO_ECONOMY_PLUGIN = "Vault could not hook into Economy Plugin";
+    public static final String SUCCESSFULLY_HOOKED_INTO_CHAT_PLUGIN = "Successfully Hooked into Chat Plugin";
+    public static final String VAULT_COULD_NOT_HOOK_INTO_CHAT_PLUGIN = "Vault could not hook into Chat Plugin";
+    public static final String SUCCESSFULLY_HOOKED_INTO_PERMISSIONS_PLUGIN = "Successfully Hooked into Permissions Plugin";
+    public static final String VAULT_COULD_NOT_HOOK_INTO_PERMISSIONS_PLUGIN = "Vault could not hook into Permissions Plugin";
+    public static final String LOBBYSET = "LOBBYSET";
+    public static final String SSBA_ADMIN = "ssba.admin.*";
+    public static final String SSBA_ADMIN_BREAKBLOCKS = "ssba.admin.breakblocks";
+    public static final String SSBA_ADMIN_PLACEBLOCKS = "ssba.admin.placeblocks";
+    public static final String SSBA_ADMIN_CREATESIGN = "ssba.admin.createsign";
+    public static final String IGNORE_WORLDS = "ignoreWorlds";
+    public static final String ENABLE = "enable";
     /**
      * The constant MM.
      */
     public static MessageManager MM;
-
     /**
      * Holds a static p of itself as a JavaPlugin object
      */
     @SuppressWarnings("StaticVariableOfConcreteClass")
-    public static SCB p;
-
+    private static SCB p;
+    private static Economy econ = null;
+    public static Permission perms = null;
+    private static Chat chat = null;
     /**
      * The Group spawn file.
      */
     public File groupSpawnFile = null;
-
     /**
      * The Group spawn.
      */
     public FileConfiguration groupSpawn = null;
-
     /**
      * The LBS.
      */
     public LobbyManager LBS;
-
     /**
      * Lobby Config Object
      */
     public LobbyConfig LBC;
-
     /**
      * Arena Config Object
      */
     public ArenaConfig ARC;
-
     public ArenaManager ARM;
-
     /**
      * Spawn Config Object
      */
     public SpawnConfig SPC;
-
     /**
      * BaseSign Config Manager
      */
     public SignConfig SNC;
-
     /**
      * The SignManager
      */
-    public SignManager SNM;
-
+    private SignManager SNM;
     /**
      * The BaseSign Formatter Config.
      */
-    public SignFormat SFM;
-
-    private List<String> bWorlds = new ArrayList<>();
-
+    private SignFormat SFM;
     public boolean saveOnDisable = true;
-
     @Setter
     public InventoryManager INV;
-
+    private ScheduledManager poolManager;
+    private WorldConfig WCF;
+    private WorldManager worldManager;
+    @Getter
+    public boolean isUpdatesEnabled = true;
     protected ArrayList<Permission> plist = new ArrayList<>();
-
-    protected PluginManager pm = Bukkit.getServer().getPluginManager();
-
-    public ScheduledManager poolManager;
-
-    public WorldConfig WCF;
-
-    public WorldManager worldManager;
-
-
-    public List<String> getBlackList() {
-        return bWorlds;
-    }
-
+    private final PluginManager pm = Bukkit.getServer().getPluginManager();
+    private List<String> bWorlds = new ArrayList<>();
 
     /**
      * Gets p.
@@ -133,7 +133,6 @@ public class SCB extends JavaPlugin {
     public static SCB getInstance() {
         return p;
     }
-
 
     /**
      * Get Instance of MessageManager
@@ -145,10 +144,9 @@ public class SCB extends JavaPlugin {
         return MM;
     }
 
-
     public static WorldEditPlugin getWorldEdit() {
 
-        Plugin WE = BukkitInterface.getServer().getPluginManager().getPlugin("WorldEdit");
+        Plugin WE = BukkitInterface.getServer().getPluginManager().getPlugin(WORLD_EDIT);
 
         if ((WE instanceof WorldEditPlugin)) {
             return (WorldEditPlugin) WE;
@@ -160,15 +158,9 @@ public class SCB extends JavaPlugin {
     }
 
 
-    public static Economy econ = null;
-
-    public static Permission perms = null;
-
-    public static Chat chat = null;
-
-    @Getter
-    public boolean isUpdatesEnabled = true;
-
+    public List<String> getBlackList() {
+        return bWorlds;
+    }
 
     /**
      * On load. Registers any ConfigurationSerializable files at onLoad Before other things have started to load
@@ -178,7 +170,6 @@ public class SCB extends JavaPlugin {
 
     }
 
-
     /**
      * On enable.
      */
@@ -186,14 +177,41 @@ public class SCB extends JavaPlugin {
     public void onEnable() {
 
         p = this;
+        ConfigurationSerialization.registerClass(SerializedLocation.class);
+        SkyBrosApi.init(this);
         this.saveDefaultConfig();
         this.getConfig().options().copyDefaults(true);
+        SkyBrosApi.getSettingsManager2();
 
-        if (p.getConfig().getBoolean("worldGenerator")) {
-            p.WCF = new WorldConfig("worlds.yml");
-            p.WCF.getConfig().options().copyDefaults(true);
-            p.WCF.saveConfig();
-            p.worldManager = new WorldManager(this, this.WCF);
+
+        File f = new File(SkyBrosApi.getSCB().getDataFolder().getAbsoluteFile().getParentFile().getParent().toString() + "/bukkit.yml");
+        if (!f.exists()) {
+            System.out.println("File doesn't exist");
+        } else {
+            if (f.isFile()) System.out.println("It is a file");
+
+            if (f.isDirectory()) System.out.println("It is a directory");
+
+            if (f.canRead()) System.out.println("File can be read");
+
+            if (!f.canWrite()) {
+                System.out.println("File not writable");
+                if (f.setWritable(true)) System.out.println("I have set the file to writable");
+
+                if (!f.canWrite()) System.out.println("File Still mot writable");
+
+            }
+        }
+
+        System.out.println(SkyBrosApi.getSCB().getDataFolder().getAbsoluteFile().getParentFile().getParent().toString() + "/bukkit.yml");
+
+
+        if (p.getConfig().getBoolean(WORLD_GENERATOR)) {
+            p.pm.registerEvents(new WorldLoad(), p);
+
+
+            p.worldManager = SkyBrosApi.getWorldManager();
+            worldManager.setMainProperties();
         }
         BukkitInterface.setServer(this.getServer());
 
@@ -202,8 +220,16 @@ public class SCB extends JavaPlugin {
         setupChat();
         setupEconomy();
 
+        if (p.getConfig().getBoolean("debugCommands")) {
 
-        if (SCB.getInstance().getConfig().getBoolean("firstRun")) {
+            p.getCommand(DebugManager.V_LIST).setExecutor(new DebugManager(p));
+            p.getCommand(DebugManager.V_LIST).setPermissionMessage("Only runs from console");
+
+
+            System.out.println("Debug Commands installed");
+        }
+
+        if (SCB.getInstance().getConfig().getBoolean(FIRST_RUN)) {
             this.saveOnDisable = false;
             CommandExecutor cm = new CommandManagerFirstJoin(p);
 
@@ -212,23 +238,17 @@ public class SCB extends JavaPlugin {
             p.pm.registerEvents(new FirstRun(this), this);
             FileUtils.createDirectory(getDataFolder().toString(), "players");
             FileUtils.createDirectory(getDataFolder().toString(), "worlds");
+
         } else {
 
-            MM = new MessageManager(p);
+            MM = new MessageManager();
             CommandExecutor cm = new CommandManager(p);
             p.getCommand("ssb").setExecutor(cm);
             p.getCommand("ssba").setExecutor(cm);
             p.getCommand("ssb").setPermissionMessage(MM.getNoPerm());
             p.getCommand("ssba").setPermissionMessage(MM.getNoPerm());
             //Debug Commands
-            if (p.getConfig().getBoolean("debugCommands")) {
 
-                p.getCommand("vList").setExecutor(new DebugManager(p));
-                p.getCommand("vList").setPermissionMessage("Only runs from console");
-
-
-                System.out.println("Debug Commands installed");
-            }
             poolManager = new ScheduledManager(2);
             getServer().getScheduler().scheduleSyncDelayedTask(SCB.getInstance(), new Startup(), 15L);
 
@@ -238,17 +258,16 @@ public class SCB extends JavaPlugin {
 
     }
 
-
     /**
      * On disable.
      */
-    @Override
-    public void onDisable() throws NullPointerException {
 
-        if (((this.getConfig().getBoolean("firstRun")) && (!this.getConfig().getBoolean("firstRunDone")))) {
+    public void onDisable() {
+
+        if (((this.getConfig().getBoolean(FIRST_RUN)) && (!this.getConfig().getBoolean(FIRST_RUN_DONE)))) {
             if (this.saveOnDisable) {
-                this.getConfig().set("firstRun", false);
-                this.getConfig().set("firstRunDone", true);
+                this.getConfig().set(FIRST_RUN, false);
+                this.getConfig().set(FIRST_RUN_DONE, true);
             }
 
             this.saveConfig();
@@ -257,21 +276,20 @@ public class SCB extends JavaPlugin {
 
 
             try {
-                LBC.saveConfig();
+                SkyBrosApi.getSettingsManager2().getLobbyConfig().saveConfig();
                 ARC.saveConfig();
                 SPC.saveConfig();
                 SNC.saveConfig();
                 SFM.saveConfig();
                 this.saveConfig();
                 ScheduledManager.getScheduler().shutdown();
-            }
-            catch ( Exception e ) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
 
-        if (p.getConfig().getBoolean("worldGenerator")) {
+        if (p.getConfig().getBoolean(WORLD_GENERATOR)) {
             p.WCF.saveConfig();
             p.getLogger().info("World Settings have been saved");
         }
@@ -281,7 +299,7 @@ public class SCB extends JavaPlugin {
 
     public void loadLobbyEvents() {
 
-        if (!this.getConfig().getBoolean("dedicatedSSB")) {
+        if (!this.getConfig().getBoolean(DEDICATED_SSB)) {
             System.out.println("Loading Lobby Events in SSB");
             p.pm.registerEvents(new LobbyBlockPlace(p), p);
             p.pm.registerEvents(new LobbyBlockBreak(p), p);
@@ -292,9 +310,8 @@ public class SCB extends JavaPlugin {
 
     }
 
-
     public void unloadLobbyEvents() {
-        if (!this.getConfig().getBoolean("dedicatedSSB")) {
+        if (!this.getConfig().getBoolean(DEDICATED_SSB)) {
             LobbyBlockBreak bl = new LobbyBlockBreak(this);
             LobbyBlockPlace bp = new LobbyBlockPlace(this);
 
@@ -302,11 +319,10 @@ public class SCB extends JavaPlugin {
         }
     }
 
+    class Startup implements Runnable {
 
-    protected class Startup implements Runnable {
 
-        SCB p = SCB.getInstance();
-
+        final SCB p = SCB.getInstance();
 
         /**
          * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread
@@ -338,17 +354,14 @@ public class SCB extends JavaPlugin {
             world.setDifficulty(Difficulty.EASY);
             world.setSpawnFlags(false,false);
             world.save();*/
-            p.bWorlds = p.getConfig().getStringList("ignoreWorlds");
-            for ( String w : p.bWorlds ) {
+            p.bWorlds = p.getConfig().getStringList(IGNORE_WORLDS);
+            for (String w : p.bWorlds) {
 
                 System.out.println("World " + w + " is in the blacklist");
             }
             p.INV = new InventoryManager();
 
-
-            p.LBC = new LobbyConfig("lobby.yml");
-            p.LBC.getConfig().options().copyDefaults(true);
-            p.LBC.saveConfig();
+            p.LBC = SkyBrosApi.getSettingsManager2().getLobbyConfig();
 
 
             p.SPC = new SpawnConfig("spawns.yml");
@@ -358,11 +371,12 @@ public class SCB extends JavaPlugin {
             p.SNC = new SignConfig("signs.yml");
             p.SNC.getConfig().options().copyDefaults(true);
             p.SNC.saveConfig();
+            new SignLocationStore(p);
 
             p.ARC = new ArenaConfig("arena.yml");
             p.ARC.getConfig().options().copyDefaults(true);
             p.ARC.saveConfig();
-            p.ARM = new ArenaManager(p);
+            p.ARM = new ArenaManager();
 
             p.SFM = new SignFormat("signsText.yml");
             p.SFM.getConfig().options().copyDefaults(true);
@@ -371,16 +385,16 @@ public class SCB extends JavaPlugin {
 
             SettingsManager.getInstance().setup(p);
             //MM = new MessageManager(p);
-            if (!p.getConfig().getBoolean("enable")) {
+            if (!p.getConfig().getBoolean(ENABLE)) {
                 getLogger().info("SCB is being disabled due to it enable being false in config.yml");
                 p.pm.disablePlugin(p);
                 return;
 
             }
 
-            p.LBS = new LobbyManager();
-            if (p.LBC.getConfig().getBoolean("LOBBYSET")) {
-                if (p.getConfig().getBoolean("dedicatedSSB")) {
+            p.LBS = SkyBrosApi.getLobbyManager();
+            if (p.LBC.getConfig().getBoolean(LOBBYSET)) {
+                if (p.getConfig().getBoolean(DEDICATED_SSB)) {
                     p.pm.registerEvents(new DBlockBreakPlace(p), p);
                 } else {
 
@@ -394,7 +408,7 @@ public class SCB extends JavaPlugin {
             p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
             //p.pm.registerEvents(new BlockDamage(p), p);
             p.pm.registerEvents(new PlayerJoinLobby(), p);
-            p.pm.registerEvents(new WorldLoad(p), p);
+
             p.pm.registerEvents(new SignChange(p), p);
             p.pm.registerEvents(new PlayerInteract(p), p);
             p.pm.registerEvents(new ShopManager(p), p);
@@ -410,11 +424,11 @@ public class SCB extends JavaPlugin {
 
 
             //TODO Must refactor out this Helper Class
-            Helper.getInstance().setup(p);
+            Helper.getInstance().setup();
 
-            registerNewPerm("ssba.admin.breakblocks", "Allows  user to break blocks", "ssba.admin.*");
-            registerNewPerm("ssba.admin.placeblocks", "Allow user to place blocks", "ssba.admin.*");
-            registerNewPerm("ssba.admin.createsign", "Allows user to create signs", "ssba.admin.*");
+            registerNewPerm(SSBA_ADMIN_BREAKBLOCKS, "Allows  user to break blocks", SSBA_ADMIN);
+            registerNewPerm(SSBA_ADMIN_PLACEBLOCKS, "Allow user to place blocks", SSBA_ADMIN);
+            registerNewPerm(SSBA_ADMIN_CREATESIGN, "Allows user to create signs", SSBA_ADMIN);
             registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player.*");
 
 
@@ -429,8 +443,8 @@ public class SCB extends JavaPlugin {
                 System.out.println(""); }
             }*/
         }
-    }
 
+    }
 
     private void fileExists(String fi) {
 
@@ -444,13 +458,11 @@ public class SCB extends JavaPlugin {
                 fCon = YamlConfiguration.loadConfiguration(SCB.getInstance().getResource(fi));
                 fCon.save(file);
             }
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-
 
     private void registerNewPerm(String name, String des, String parent) {
         org.bukkit.permissions.Permission per = new org.bukkit.permissions.Permission(name);
@@ -463,36 +475,32 @@ public class SCB extends JavaPlugin {
 
     }
 
-
     private void setupEconomy() {
 
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(net.milkbowl.vault
-                                                                                                          .economy
-                                                                                                          .Economy
-                                                                                                          .class);
+        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(
+                net.milkbowl.vault.economy.Economy
+                        .class);
 
         if (rsp != null) {
-            econ = rsp.getProvider();
-            log.info("Successfully Hooked into Economy Plugin");
+            // SkyBrosApi. = rsp.getProvider();
+            log.info(SUCCESSFULLY_HOOKED_INTO_ECONOMY_PLUGIN);
         } else {
-            log.warning("Vault could not hook into Economy Plugin");
+            log.warning(VAULT_COULD_NOT_HOOK_INTO_ECONOMY_PLUGIN);
         }
 
     }
-
 
     private void setupChat() {
         RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
         if (rsp != null) {
             chat = rsp.getProvider();
-            log.info("Successfully Hooked into Chat Plugin");
+            log.info(SUCCESSFULLY_HOOKED_INTO_CHAT_PLUGIN);
         } else {
-            log.warning("Vault could not hook into Chat Plugin");
+            log.warning(VAULT_COULD_NOT_HOOK_INTO_CHAT_PLUGIN);
         }
 
 
     }
-
 
     private void setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
@@ -500,9 +508,9 @@ public class SCB extends JavaPlugin {
 
         if (rsp != null) {
             perms = rsp.getProvider();
-            log.info("Successfully Hooked into Permissions Plugin");
+            log.info(SUCCESSFULLY_HOOKED_INTO_PERMISSIONS_PLUGIN);
         } else {
-            log.warning("Vault could not hook into Permissions Plugin");
+            log.warning(VAULT_COULD_NOT_HOOK_INTO_PERMISSIONS_PLUGIN);
         }
 
     }

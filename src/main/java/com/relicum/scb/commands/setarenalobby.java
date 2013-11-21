@@ -3,7 +3,6 @@ package com.relicum.scb.commands;
 import com.relicum.scb.ArenaManager;
 import com.relicum.scb.SCB;
 import com.relicum.scb.arena.ALobbyIO;
-import com.relicum.scb.arena.SpawnIO;
 import com.relicum.scb.objects.ArenaLobby;
 import com.relicum.scb.we.WEManager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
@@ -43,8 +42,7 @@ public class setarenalobby extends SubBase {
         try {
             rmin = new Vector(cr.getMinimumPoint().getBlockX(), cr.getMinimumPoint().getBlockY(), cr.getMinimumPoint().getBlockZ());
 
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             player.sendMessage(SCB.MM.getErrorMessage("command.message.setlobbyNoSel"));
             SCB.getInstance().getLogger().severe("Error setting lobby WorldEdit selection not set correctly");
             e.printStackTrace();
@@ -63,8 +61,7 @@ public class setarenalobby extends SubBase {
 
         try {
             lobbyIO.saveLobby();
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
             player.sendMessage(ChatColor.RED + "Error occurred while trying to save lobby check the logs");
             return true;

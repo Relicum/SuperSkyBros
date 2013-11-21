@@ -1,10 +1,6 @@
 package com.relicum.scb.objects.signs.events;
 
 import com.google.common.base.Strings;
-import com.relicum.scb.objects.signs.TSign;
-import org.bukkit.event.Event;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.SignChangeEvent;
 
 import java.util.ArrayList;
 

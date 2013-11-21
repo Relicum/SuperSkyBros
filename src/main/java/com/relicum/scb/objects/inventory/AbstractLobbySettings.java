@@ -1,7 +1,6 @@
 package com.relicum.scb.objects.inventory;
 
 import com.relicum.scb.objects.inventory.interfaces.IISettings;
-import com.thoughtworks.xstream.XStream;
 
 /**
  * SuperSkyBros First Created 02/10/13

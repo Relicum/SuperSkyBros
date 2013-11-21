@@ -2,7 +2,6 @@ package com.relicum.scb.objects.signs.interfaces;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.SignChangeEvent;
 
 import java.util.ArrayList;
 import java.util.UUID;

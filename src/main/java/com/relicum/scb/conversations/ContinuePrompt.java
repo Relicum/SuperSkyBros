@@ -25,12 +25,9 @@ public class ContinuePrompt extends FixedSetPrompt {
 
 
     @Override
-    public boolean isInputValid(ConversationContext context,
-                                String input) {
-        if (input.equalsIgnoreCase("NO") || input.equalsIgnoreCase("YES"))
-            return true;
-        else
-            return false;
+    public boolean isInputValid(ConversationContext context, String input) {
+        if (input.equalsIgnoreCase("NO") || input.equalsIgnoreCase("YES")) return true;
+        else return false;
 
     }
 
@@ -57,7 +54,7 @@ public class ContinuePrompt extends FixedSetPrompt {
     public String formatFixedSet() {
         List<String> theset = this.fixedSet;
         String f = ChatColor.GOLD + "[ | ";
-        for ( String s : theset ) {
+        for (String s : theset) {
             f += ChatColor.RED + s + ChatColor.GOLD + " | ";
         }
         f += ChatColor.GOLD + "]";

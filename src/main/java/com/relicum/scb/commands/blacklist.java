@@ -2,7 +2,6 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.BukkitInterface;
 import com.relicum.scb.SCB;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -37,7 +36,7 @@ public class blacklist extends SubBase {
                     return true;
                 }
                 SCB.getInstance().getBlackList().add(args[1]);
-                SCB.getInstance().getConfig().set("ignoreWorlds", SCB.getInstance().getBlackList());
+                SCB.getInstance().getConfig().set(SCB.IGNORE_WORLDS, SCB.getInstance().getBlackList());
                 SCB.getInstance().saveConfig();
                 SCB.getInstance().reloadConfig();
                 player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.blacklistSuccess").replace("%WORLD%", args[1]).replace("%ARG%", "ADDED"));
@@ -49,7 +48,7 @@ public class blacklist extends SubBase {
         if (args[0].equalsIgnoreCase("remove")) {
             if (SCB.getInstance().getBlackList().contains(args[1])) {
                 SCB.getInstance().getBlackList().remove(args[1]);
-                SCB.getInstance().getConfig().set("ignoreWorlds", SCB.getInstance().getBlackList());
+                SCB.getInstance().getConfig().set(SCB.IGNORE_WORLDS, SCB.getInstance().getBlackList());
                 SCB.getInstance().saveConfig();
                 SCB.getInstance().reloadConfig();
                 player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.blacklistSuccess").replace("%WORLD%", args[1]).replace("%ARG%", "REMOVED"));

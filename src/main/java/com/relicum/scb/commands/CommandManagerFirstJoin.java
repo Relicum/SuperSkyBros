@@ -32,8 +32,8 @@ public class CommandManagerFirstJoin implements CommandExecutor {
     public static ConversationFactory factory;
 
     private final String cHeader = "    \u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC" +
-                                           "[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC" +
-                                           "*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<\n";
+            "[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC" +
+            "*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<\n";
 
 
     public CommandManagerFirstJoin(SCB pl) {
@@ -72,14 +72,14 @@ public class CommandManagerFirstJoin implements CommandExecutor {
         }
         if (cs instanceof Conversable) {
             String[] strings1 = new String[19];
-            for ( int i = 0; i < 19; i++ ) {
+            for (int i = 0; i < 19; i++) {
                 strings1[i] = "";
             }
             cs.sendMessage(strings1);
             cs.sendMessage(this.cHeader);
             cs.sendMessage(Col.Green() + "To begin setup you need to decided the server mode");
-            cs.sendMessage(Col.Green() + "There are 2 modes " + Col.Gold() + "MIXED " + Col.Green() + "or " + Col
-                                                                                                                      .Gold() + "DEDICATED");
+            cs.sendMessage(
+                    Col.Green() + "There are 2 modes " + Col.Gold() + "MIXED " + Col.Green() + "or " + Col.Gold() + "DEDICATED");
             cs.sendMessage("");
             Map<Object, Object> data = new HashMap<>();
             data.put("pre", 1);
@@ -88,8 +88,7 @@ public class CommandManagerFirstJoin implements CommandExecutor {
             factory.buildConversation((Conversable) cs).begin();
 
             return true;
-        } else
-            return false;
+        } else return false;
 
 /*      if (!(cs instanceof Player)) {
             plugin.getLogger().severe("Error all SSB commands must be run in game not from console");
@@ -165,8 +164,9 @@ public class CommandManagerFirstJoin implements CommandExecutor {
             return true;
         }
 
-        plugin.getLogger().severe("Unknown error command: /" + label + " did not register at all. Investigation " +
-                                          "needed");
+        plugin.getLogger().severe(
+                "Unknown error command: /" + label + " did not register at all. Investigation " +
+                        "needed");
 
         return true;
     }
@@ -187,9 +187,8 @@ public class CommandManagerFirstJoin implements CommandExecutor {
             c.setAccessible(true);
 
             command = (PluginCommand) c.newInstance(new Object[]{name, plugin});
-        }
-        catch ( SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException |
-                        InvocationTargetException | NoSuchMethodException e ) {
+        } catch (SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException |
+                InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
 
@@ -213,8 +212,7 @@ public class CommandManagerFirstJoin implements CommandExecutor {
 
                 commandMap = (CommandMap) f.get(pm);
             }
-        }
-        catch ( NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e ) {
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
         }
 

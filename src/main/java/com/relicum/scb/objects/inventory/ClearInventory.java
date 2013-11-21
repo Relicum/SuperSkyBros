@@ -37,7 +37,7 @@ public class ClearInventory {
         player.setWalkSpeed(0.2f);
         player.setDisplayName(player.getName());
         Collection<PotionEffect> po = player.getActivePotionEffects();
-        for ( PotionEffect potionEffect : po ) {
+        for (PotionEffect potionEffect : po) {
             player.removePotionEffect(potionEffect.getType());
         }
         player.getInventory().clear();
@@ -108,7 +108,8 @@ public class ClearInventory {
 
     public static void UpdateInv(final Player p) {
 
-        SCB.getInstance().getServer().getScheduler().runTask(SCB.getInstance(), new Runnable() {
+        SCB.getInstance().getServer().getScheduler().runTask(
+                SCB.getInstance(), new Runnable() {
 
             @Override
             public void run() {

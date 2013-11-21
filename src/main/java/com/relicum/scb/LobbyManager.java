@@ -2,7 +2,7 @@ package com.relicum.scb;
 
 import com.relicum.scb.configs.LobbyConfig;
 import com.relicum.scb.objects.LobbyRegion;
-import org.bukkit.Bukkit;
+import com.relicum.scb.types.SkyBrosApi;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -58,7 +58,7 @@ public class LobbyManager implements Listener {
     public void setup() {
 
         //sp = SCB.getInstance().Spawns;
-        this.config = SCB.getInstance().LBC;
+        this.config = SkyBrosApi.getSettingsManager2().getLobbyConfig();
 
 
         loadLobbySpawn();
@@ -75,18 +75,20 @@ public class LobbyManager implements Listener {
 
 
         if (config.getConfig().contains("LOBBY.REGION")) {
-            Map<String, Object> lrc = SCB.getInstance().LBC.getConfig().getConfigurationSection("LOBBY.REGION").getValues(true);
+            Map<String, Object> lrc = config.getConfig().getConfigurationSection("LOBBY.REGION").getValues(true);
             Double ya = (Double) lrc.get("YAW");
 
             Double pit = (Double) lrc.get("PITCH");
-            this.lobbyRegion = new LobbyRegion((org.bukkit.util.Vector) lrc.get("MIN"), (org.bukkit.util.Vector) lrc.get("MAX"), (org.bukkit.util.Vector) lrc.get("SPAWN"), (String) lrc.get("WORLD"), (String) lrc.get("PERM"), (float) ya.floatValue());
+            this.lobbyRegion = new LobbyRegion(
+                    (org.bukkit.util.Vector) lrc.get("MIN"), (org.bukkit.util.Vector) lrc.get("MAX"), (org.bukkit.util.Vector) lrc.get("SPAWN"), (String) lrc.get("WORLD"),
+                    (String) lrc.get("PERM"), (float) ya.floatValue());
 
-            SCB.getInstance().getLogger().info("LobbySpawn has successfully been loaded");
+            SkyBrosApi.getSCB().getLogger().info("LobbySpawn has successfully been loaded");
 
             return true;
         }
 
-        SCB.getInstance().getLogger().info("No Lobby Spawn Point was been set yet");
+        SkyBrosApi.getSCB().getLogger().info("No Lobby Spawn Point was been set yet");
 
         return false;
     }
@@ -104,8 +106,7 @@ public class LobbyManager implements Listener {
             this.config.reloadConfig();
             setup();
 
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             System.out.println(e.getStackTrace().toString());
             return false;
         }
@@ -242,7 +243,7 @@ public class LobbyManager implements Listener {
      */
     public World getWorld(String wo) {
 
-        return SCB.getInstance().getServer().getWorld(wo);
+        return SkyBrosApi.getSCB().getServer().getWorld(wo);
 
     }
 
@@ -327,7 +328,7 @@ public class LobbyManager implements Listener {
      */
     public void createHashList() {
 
-        if (SCB.getInstance().getConfig().getBoolean("enableLobbyProtection")) {
+        if (SkyBrosApi.getSCB().getConfig().getBoolean("enableLobbyProtection")) {
 
             if (!checkExists("LOBBYHASH")) {
                 return;
@@ -394,7 +395,8 @@ public class LobbyManager implements Listener {
      */
     public boolean teleportToLobby(final Player p, final Location l) {
 
-        SCB.getInstance().getServer().getScheduler().runTaskLater(SCB.getInstance(), new Runnable() {
+        SCB.getInstance().getServer().getScheduler().runTaskLater(
+                SCB.getInstance(), new Runnable() {
 
             @Override
             public void run() {
@@ -409,10 +411,9 @@ public class LobbyManager implements Listener {
 
 
     public boolean isSmashPlayer(String name) {
-        if (pname != null && pname.size() > 0)
-            if (pname.contains(name)) {
-                return true;
-            }
+        if (pname != null && pname.size() > 0) if (pname.contains(name)) {
+            return true;
+        }
         return false;
     }
 

@@ -1,17 +1,9 @@
 package com.relicum.scb.utils;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.objects.inventory.StorePlayerSettings;
-import com.relicum.scb.utils.IconMenu;
 import com.relicum.scb.utils.IconMenu.OptionClickEventHandler;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.naming.StaticNameCoder;
-import net.minecraft.server.v1_6_R3.NBTTagCompound;
-import net.minecraft.server.v1_6_R3.NBTTagList;
-import net.minecraft.server.v1_6_R3.NBTTagString;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_6_R3.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -66,7 +58,8 @@ public class GemShop {
         spiderDescription.add("Invisibility");
         spiderDescription.add("VIP");
 
-        iconMenu = new IconMenu("Classes", 27, new OptionClickEventHandler() {
+        iconMenu = new IconMenu(
+                "Classes", 27, new OptionClickEventHandler() {
 
             @Override
             public void onOptionClick(final IconMenu.OptionClickEvent event) {
@@ -77,9 +70,9 @@ public class GemShop {
                 event.setWillDestroy(true);
 
             }
-        }, scb)
-                .setOption(0, new ItemStack(Material.CACTUS, 1), "Creeper", creeperDescription.toArray(new String[creeperDescription.size()]))
-                .setOption(1, new ItemStack(Material.SPIDER_EYE, 1), "Spider", spiderDescription.toArray(new String[spiderDescription.size()]));
+        }, scb).setOption(0, new ItemStack(Material.CACTUS, 1), "Creeper", creeperDescription.toArray(new String[creeperDescription.size()])).setOption(
+                1, new ItemStack(
+                Material.SPIDER_EYE, 1), "Spider", spiderDescription.toArray(new String[spiderDescription.size()]));
 
         iconMenu.open(player);
 

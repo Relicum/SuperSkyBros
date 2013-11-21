@@ -21,10 +21,19 @@ public class FileUtils {
         if (!f) {
             boolean fi = new File(path + "/" + name).mkdirs();
 
-            if (fi)
-                System.out.println("New Directory created at " + path + "/" + name);
-            else
-                System.out.println("Error: Failed to directory at " + path + "/" + name);
+            if (fi) System.out.println("New Directory created at " + path + "/" + name);
+            else System.out.println("Error: Failed to directory at " + path + "/" + name);
+        }
+    }
+
+    public static void clear(File file) {
+        if (!file.exists()) return;
+        if (file.isFile()) {
+            file.delete();
+        } else {
+            for (File f : file.listFiles())
+                clear(f);
+            file.delete();
         }
     }
 

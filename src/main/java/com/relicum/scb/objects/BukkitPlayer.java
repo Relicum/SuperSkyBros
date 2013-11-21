@@ -33,7 +33,7 @@ import java.util.Set;
  *
  * @author Ultimate-N00b
  */
-@SuppressWarnings({"InfiniteRecursion"})
+@SuppressWarnings({"InfiniteRecursion", "deprecation"})
 public class BukkitPlayer {
 
     public String p;
@@ -45,7 +45,7 @@ public class BukkitPlayer {
 
 
     public BukkitPlayer(CommandSender sender) {
-        this.p = ((Player) sender).getName();
+        this.p = sender.getName();
     }
 
 
@@ -69,7 +69,7 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer sendMessage(String[] msg) {
+    BukkitPlayer sendMessage(String[] msg) {
         getPlayer().sendMessage(msg);
         return this;
     }
@@ -82,7 +82,7 @@ public class BukkitPlayer {
 
 
     public BukkitPlayer sendColoredMessage(String[] msg, char c) {
-        for ( int i = 0; i <= msg.length; i++ )
+        for (int i = 0; i <= msg.length; i++)
             msg[i] = color(msg[i], c);
         sendMessage(msg);
         return this;
@@ -96,7 +96,7 @@ public class BukkitPlayer {
 
 
     public BukkitPlayer sendColoredMessage(String[] msg) {
-        for ( int i = 0; i <= msg.length; i++ )
+        for (int i = 0; i <= msg.length; i++)
             msg[i] = color(msg[i]);
         sendMessage(msg);
         return this;
@@ -144,8 +144,8 @@ public class BukkitPlayer {
     }
 
 
-    public double getEyeHeight(boolean ignoreSneaking) {
-        return getPlayer().getEyeHeight(ignoreSneaking);
+    double getEyeHeight(boolean ignoreSneaking) {
+        return getPlayer().getEyeHeight(false);
     }
 
 
@@ -160,7 +160,7 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer setDisplayName(String name) {
+    BukkitPlayer setDisplayName(String name) {
         getPlayer().setDisplayName(name);
         return this;
     }
@@ -176,7 +176,7 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer setPlayerListName(String name) {
+    BukkitPlayer setPlayerListName(String name) {
         getPlayer().setPlayerListName(name);
         return this;
     }
@@ -225,7 +225,7 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer setCompassTarget(Location loc) {
+    BukkitPlayer setCompassTarget(Location loc) {
         getPlayer().setCompassTarget(loc);
         return this;
     }
@@ -246,7 +246,7 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer chat(String msg) {
+    BukkitPlayer chat(String msg) {
         getPlayer().chat(msg);
         return this;
     }
@@ -268,31 +268,15 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer playNote(Location loc, byte instrument, byte note) {
-        getPlayer().playNote(loc, instrument, note);
+    private BukkitPlayer playNote(Location location, byte type, byte id, float volume, float pitch, String sound) {
+        playSound(location, String.valueOf(Sound.valueOf(sound)), volume, pitch);
         return this;
     }
 
 
-    public BukkitPlayer playNote(Location loc, Instrument instrument, Note note) {
-        return playNote(loc, instrument.getType(), note.getId());
-    }
+    BukkitPlayer playSound(Location loc, String sound, float volume, float pitch) {
 
-
-    public BukkitPlayer playNote(byte instrument, byte note) {
-        getPlayer().playNote(getLocation(), instrument, note);
-        return this;
-    }
-
-
-    public BukkitPlayer playNote(Instrument instrument, Note note) {
-        return playNote(getLocation(), instrument.getType(), note.getId());
-    }
-
-
-    public BukkitPlayer playSound(Location loc, String sound, float volume, float pitch) {
-        getPlayer().playSound(loc, Sound.valueOf(sound), volume, pitch);
-        return this;
+        return null;
     }
 
 
@@ -312,7 +296,7 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer playEffect(Location loc, Effect effect, int data) {
+    BukkitPlayer playEffect(Location loc, Effect effect, int data) {
         return playEffect(loc, effect, data);
     }
 
@@ -333,12 +317,13 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer sendBlockChange(Location loc, Material material, byte data) {
+    BukkitPlayer sendBlockChange(Location loc, Material material, byte data) {
         getPlayer().sendBlockChange(loc, material, data);
         return this;
     }
 
 
+    @SuppressWarnings("deprecation")
     public BukkitPlayer sendBlockChange(Location loc, int material, byte data) {
         return sendBlockChange(loc, Material.getMaterial(material), data);
     }
@@ -355,13 +340,13 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer teleport(Location loc, PlayerTeleportEvent.TeleportCause cause) {
+    BukkitPlayer teleport(Location loc, PlayerTeleportEvent.TeleportCause cause) {
         getPlayer().teleport(loc, cause);
         return this;
     }
 
 
-    public BukkitPlayer teleport(Location loc) {
+    BukkitPlayer teleport(Location loc) {
         return teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
     }
 
@@ -386,12 +371,12 @@ public class BukkitPlayer {
     }
 
 
-    public boolean isSneaking() {
+    boolean isSneaking() {
         return getPlayer().isSneaking();
     }
 
 
-    public BukkitPlayer setSneaking(boolean sneak) {
+    BukkitPlayer setSneaking(boolean sneak) {
         getPlayer().setSneaking(sneak);
         return this;
     }
@@ -412,12 +397,12 @@ public class BukkitPlayer {
     }
 
 
-    public boolean isSprinting() {
+    boolean isSprinting() {
         return getPlayer().isSprinting();
     }
 
 
-    public BukkitPlayer setSprinting(boolean sprint) {
+    BukkitPlayer setSprinting(boolean sprint) {
         getPlayer().setSprinting(sprint);
         return this;
     }
@@ -456,7 +441,7 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer setSleepingIgnored(boolean ignore) {
+    BukkitPlayer setSleepingIgnored(boolean ignore) {
         getPlayer().setSleepingIgnored(ignore);
         return this;
     }
@@ -489,13 +474,13 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer incrementStatistic(Statistic stat, Material mat, int amount) {
+    BukkitPlayer incrementStatistic(Statistic stat, Material mat, int amount) {
         getPlayer().incrementStatistic(stat, mat, amount);
         return this;
     }
 
 
-    public BukkitPlayer incrementStatistic(Statistic stat, Material mat) {
+    BukkitPlayer incrementStatistic(Statistic stat, Material mat) {
         return incrementStatistic(stat, mat, 1);
     }
 
@@ -515,7 +500,7 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer setPlayerTime(long time, boolean rel) {
+    BukkitPlayer setPlayerTime(long time, boolean rel) {
         getPlayer().setPlayerTime(time, rel);
         return this;
     }
@@ -546,7 +531,7 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer setPlayerWeather(WeatherType type) {
+    BukkitPlayer setPlayerWeather(WeatherType type) {
         getPlayer().setPlayerWeather(type);
         return this;
     }
@@ -563,12 +548,12 @@ public class BukkitPlayer {
     }
 
 
-    public boolean isBanned() {
+    boolean isBanned() {
         return getPlayer().isBanned();
     }
 
 
-    public BukkitPlayer setBanned(boolean ban) {
+    BukkitPlayer setBanned(boolean ban) {
         getPlayer().setBanned(ban);
         return this;
     }
@@ -589,7 +574,7 @@ public class BukkitPlayer {
     }
 
 
-    public boolean isWhitelisted() {
+    boolean isWhitelisted() {
         return getPlayer().isBanned();
     }
 
@@ -615,7 +600,7 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer setGameMode(GameMode mode) {
+    BukkitPlayer setGameMode(GameMode mode) {
         getPlayer().setGameMode(mode);
         return this;
     }
@@ -719,13 +704,13 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer setBedSpawnLocation(Location loc, boolean override) {
+    BukkitPlayer setBedSpawnLocation(Location loc, boolean override) {
         getPlayer().setBedSpawnLocation(loc, override);
         return this;
     }
 
 
-    public BukkitPlayer setBedSpawnLocation(Location loc) {
+    BukkitPlayer setBedSpawnLocation(Location loc) {
         return setBedSpawnLocation(loc, false);
     }
 
@@ -740,45 +725,41 @@ public class BukkitPlayer {
     }
 
 
-    public BukkitPlayer hidePlayer(BukkitPlayer p) {
+    BukkitPlayer hidePlayer(BukkitPlayer p) {
         getPlayer().hidePlayer(p.getPlayer());
         return this;
     }
 
 
-    public BukkitPlayer showPlayer(BukkitPlayer p) {
+    BukkitPlayer showPlayer(BukkitPlayer p) {
         getPlayer().showPlayer(p.getPlayer());
         return this;
     }
 
 
-    public boolean canSee(BukkitPlayer p) {
+    boolean canSee(BukkitPlayer p) {
         return getPlayer().canSee(p.getPlayer());
     }
 
 
     public BukkitPlayer toggleShowPlayer(BukkitPlayer p) {
-        if (canSee(p))
-            hidePlayer(p);
-        else
-            showPlayer(p);
+        if (canSee(p)) hidePlayer(p);
+        else showPlayer(p);
         return this;
     }
 
 
     public BukkitPlayer hideFromAll() {
-        for ( Player pl : Bukkit.getOnlinePlayers() ) {
-            if (new BukkitPlayer(pl).canSee(this))
-                new BukkitPlayer(pl).hidePlayer(this);
+        for (Player pl : Bukkit.getOnlinePlayers()) {
+            if (new BukkitPlayer(pl).canSee(this)) new BukkitPlayer(pl).hidePlayer(this);
         }
         return this;
     }
 
 
     public BukkitPlayer showToAll() {
-        for ( Player pl : Bukkit.getOnlinePlayers() ) {
-            if (!new BukkitPlayer(pl).canSee(this))
-                new BukkitPlayer(pl).showPlayer(this);
+        for (Player pl : Bukkit.getOnlinePlayers()) {
+            if (!new BukkitPlayer(pl).canSee(this)) new BukkitPlayer(pl).showPlayer(this);
         }
         return this;
     }
@@ -886,12 +867,12 @@ public class BukkitPlayer {
     }
 
 
-    public boolean isFlying() {
+    boolean isFlying() {
         return getPlayer().isFlying();
     }
 
 
-    public BukkitPlayer setFlying(boolean t) {
+    BukkitPlayer setFlying(boolean t) {
         getPlayer().setFlying(t);
         return this;
     }
@@ -912,12 +893,12 @@ public class BukkitPlayer {
     }
 
 
-    public boolean getAllowFlight() {
+    boolean getAllowFlight() {
         return getPlayer().getAllowFlight();
     }
 
 
-    public BukkitPlayer setAllowFlight(boolean t) {
+    BukkitPlayer setAllowFlight(boolean t) {
         getPlayer().setAllowFlight(t);
         return this;
     }
@@ -1141,13 +1122,13 @@ public class BukkitPlayer {
     */
 
 
-    public BukkitPlayer addPotionEffect(PotionEffect effect, boolean force) {
+    BukkitPlayer addPotionEffect(PotionEffect effect, boolean force) {
         getPlayer().addPotionEffect(effect, force);
         return this;
     }
 
 
-    public BukkitPlayer addPotionEffect(PotionEffect effect) {
+    BukkitPlayer addPotionEffect(PotionEffect effect) {
         return addPotionEffect(effect, false);
     }
 
@@ -1158,7 +1139,7 @@ public class BukkitPlayer {
 
 
     public BukkitPlayer addPotionEffects(Collection<PotionEffect> effects) {
-        for ( PotionEffect effect : effects ) {
+        for (PotionEffect effect : effects) {
             addPotionEffect(effect);
         }
         return this;
@@ -1181,7 +1162,7 @@ public class BukkitPlayer {
     }
 
 
-    public Location getLocation() {
+    Location getLocation() {
         return getPlayer().getLocation();
     }
 

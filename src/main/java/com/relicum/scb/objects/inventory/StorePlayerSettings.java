@@ -1,7 +1,6 @@
 package com.relicum.scb.objects.inventory;
 
 import com.relicum.scb.objects.inventory.interfaces.IISettings;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import org.bukkit.GameMode;
 import org.bukkit.inventory.ItemStack;
 

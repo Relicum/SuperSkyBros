@@ -1,7 +1,7 @@
 package com.relicum.scb.mini;
 
-import lombok.Getter;
-import lombok.ToString;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * SuperSkyBros First Created 13/11/13
@@ -9,18 +9,36 @@ import lombok.ToString;
  * @author Relicum
  * @version 0.1
  */
-@ToString(doNotUseGetters = true)
 public class SignArenaJoin {
 
-    @Getter
-    private SerializedLocation signLocation;
 
-    @Getter
-    private SerializedLocation spawnLocation;
+    private List<SerializedLocation> arenaJoinSigns = new ArrayList<>();
 
 
-    public SignArenaJoin(SerializedLocation signLocation, SerializedLocation spawnLocation) {
-        this.signLocation = signLocation;
-        this.spawnLocation = spawnLocation;
+    private SerializedLocation arenaLobby;
+
+
+    public SignArenaJoin() {
+
+    }
+
+
+    public void setArenaLobby(SerializedLocation arenaLobby) {
+        this.arenaLobby = arenaLobby;
+    }
+
+
+    public void addArenaJoinSignLocation(SerializedLocation location) {
+        this.arenaJoinSigns.add(location);
+    }
+
+
+    public SerializedLocation getArenaLobby() {
+        return arenaLobby;
+    }
+
+
+    public List<SerializedLocation> getArenaJoinSigns() {
+        return arenaJoinSigns;
     }
 }

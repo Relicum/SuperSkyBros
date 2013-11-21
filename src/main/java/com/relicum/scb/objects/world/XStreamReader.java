@@ -33,11 +33,9 @@ public class XStreamReader {
             in.close();
             fileInputStream.close();
             x = null;
-        }
-        catch ( IOException e ) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }
-        catch ( ClassNotFoundException e ) {
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -60,8 +58,7 @@ public class XStreamReader {
                     System.out.println("Error file is not writable" + filePath);
                     return false;
                 }
-            }
-            catch ( IOException e ) {
+            } catch (IOException e) {
 
                 e.printStackTrace();
                 return false;
@@ -78,8 +75,7 @@ public class XStreamReader {
         try {
             fi = new FileInputStream(filePath);
 
-        }
-        catch ( FileNotFoundException e ) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
 
         }

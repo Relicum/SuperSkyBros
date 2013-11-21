@@ -39,8 +39,7 @@ public class XStreamWriter {
                     System.out.println("Error file is not writable" + filePath);
                     return false;
                 }
-            }
-            catch ( IOException e ) {
+            } catch (IOException e) {
 
                 e.printStackTrace();
                 return false;
@@ -55,8 +54,7 @@ public class XStreamWriter {
         FileOutputStream fos = null;
         try {
             fos = new FileOutputStream(filePath);
-        }
-        catch ( FileNotFoundException e ) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
 
         }

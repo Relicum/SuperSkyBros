@@ -3,6 +3,7 @@ package com.relicum.scb.utils;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.configs.Messages;
+import com.relicum.scb.types.SkyBrosApi;
 import org.bukkit.ChatColor;
 
 import java.util.Arrays;
@@ -39,34 +40,33 @@ public class MessageManager {
      *
      * @param p SCB
      */
-    public MessageManager(SCB p) {
-
-        setup(p);
+    public MessageManager() {
+        pl = SkyBrosApi.getSCB();
+        setup();
 
     }
 
 
-    private void setup(SCB p) {
+    private void setup() {
 
-        pl = p;
+
         hp = Helper.getInstance();
-        hp.setup(p);
+        hp.setup();
         if (hp.fileExists("messages.yml")) {
             try {
                 hp.loadFile("messages.yml");
-            }
-            catch ( Exception e ) {
+            } catch (Exception e) {
                 System.out.println(Arrays.toString(e.getStackTrace()));
                 return;
             }
         }
-        messConfig = new Messages(p, "messages.yml");
+        messConfig = new Messages(pl, "messages.yml");
         messConfig.getConfig().options().copyDefaults(true);
         messConfig.saveDefaultConfig();
         setupMessageColors("system.color");
         setPrefix("system.prefix");
         noPerm = setNoPermMessage();
-        p.getLogger().info("Messages Config Successfully Loaded");
+        pl.getLogger().info("Messages Config Successfully Loaded");
 
     }
 
@@ -240,8 +240,7 @@ public class MessageManager {
                 tmp = sendBack(getErrorCol(), tmp);
                 return tmp;
             }
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             System.out.println(Arrays.toString(e.getStackTrace()));
             e.printStackTrace();
         }

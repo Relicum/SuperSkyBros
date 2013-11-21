@@ -2,15 +2,10 @@ package com.relicum.scb.events;
 
 import com.relicum.scb.Game;
 import com.relicum.scb.arena.Arena;
-import com.relicum.scb.arena.ArenaStatus;
-import com.relicum.scb.objects.signs.TSign;
 import com.relicum.scb.utils.playerStatus;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.block.SignChangeEvent;
-
-import java.util.UUID;
 
 /**
  * SuperSkyBros First Created 11/09/13

@@ -1,6 +1,7 @@
 package com.relicum.scb.we;
 
 
+import com.relicum.scb.SCB;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import org.bukkit.Bukkit;
@@ -17,7 +18,7 @@ import java.util.logging.Level;
 public class WEManager {
 
 
-    private WorldEditPlugin WPL = (WorldEditPlugin) Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
+    private WorldEditPlugin WPL = (WorldEditPlugin) Bukkit.getServer().getPluginManager().getPlugin(SCB.WORLD_EDIT);
 
 
     public WEManager WEManager() {
@@ -50,8 +51,7 @@ public class WEManager {
         try {
             rs = (CuboidSelection) getWEP().getSelection(pt);
             rs.getRegionSelector();
-        }
-        catch ( ClassCastException e ) {
+        } catch (ClassCastException e) {
             WPL.getLogger().log(Level.SEVERE, e.getStackTrace().toString());
         }
         return rs;

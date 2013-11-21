@@ -34,15 +34,12 @@ public class ConfigAccessor {
      */
     public ConfigAccessor(JavaPlugin plugin, String fileName) {
 
-        if (plugin == null)
-            throw new IllegalArgumentException("plugin cannot be null");
-        if (!plugin.isInitialized())
-            throw new IllegalArgumentException("plugin must be initiaized");
+        if (plugin == null) throw new IllegalArgumentException("plugin cannot be null");
+        if (!plugin.isInitialized()) throw new IllegalArgumentException("plugin must be initiaized");
         this.plugin = plugin;
         this.fileName = fileName;
         File dataFolder = plugin.getDataFolder();
-        if (dataFolder == null)
-            throw new IllegalStateException();
+        if (dataFolder == null) throw new IllegalStateException();
         this.configFile = new File(plugin.getDataFolder(), fileName);
     }
 
@@ -87,8 +84,7 @@ public class ConfigAccessor {
         } else {
             try {
                 getConfig().save(configFile);
-            }
-            catch ( IOException ex ) {
+            } catch (IOException ex) {
                 plugin.getLogger().log(Level.SEVERE, "Could not save config to " + configFile, ex);
             }
         }

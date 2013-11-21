@@ -3,7 +3,6 @@ package com.relicum.scb.objects.inventory;
 import com.relicum.scb.objects.inventory.interfaces.IArmour;
 import com.relicum.scb.objects.inventory.interfaces.IInventory;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 

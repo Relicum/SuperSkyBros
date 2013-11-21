@@ -29,10 +29,8 @@ public class NewWorld {
 
 
     public void save() {
-        if (XStreamWriter.save(this.filePath, this.ws))
-            System.out.println("Worldsettings file saved successfully");
-        else
-            System.out.println("There was an error saving worldsettings");
+        if (XStreamWriter.save(this.filePath, this.ws)) System.out.println("Worldsettings file saved successfully");
+        else System.out.println("There was an error saving worldsettings");
     }
 
 

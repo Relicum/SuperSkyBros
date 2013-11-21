@@ -1,18 +1,12 @@
 package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.SettingsManager;
-import com.relicum.scb.SmashPlayer;
 import com.relicum.scb.objects.inventory.RestoreInventory;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerLoginEvent.Result;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * Bukkit-SCB

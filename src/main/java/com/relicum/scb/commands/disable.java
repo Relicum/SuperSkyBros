@@ -4,8 +4,6 @@ import com.relicum.scb.ArenaManager;
 import com.relicum.scb.SCB;
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaStatus;
-import com.relicum.scb.events.ArenaStatusChangeEvent;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -25,7 +23,8 @@ public class disable extends SubBase {
         String tmp;
         ArenaManager ar = SCB.getInstance().ARM;
         if (ar.getCurrent() != Integer.parseInt(args[0])) {
-            player.sendMessage(tmp = SCB.getMessageManager().getErrorMessage("command.message.enableMisMatch").replace("%ID%", args[0]).replace("%MID%", ar.getCurrent().toString()));
+            player.sendMessage(
+                    tmp = SCB.getMessageManager().getErrorMessage("command.message.enableMisMatch").replace("%ID%", args[0]).replace("%MID%", ar.getCurrent().toString()));
             return true;
         }
 
@@ -52,8 +51,7 @@ public class disable extends SubBase {
             // ArenaStatusChangeEvent disablearena = new ArenaStatusChangeEvent(pre, arena);
             // Bukkit.getServer().getPluginManager().callEvent(disablearena);
 
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
             player.sendMessage(tmp = SCB.getMessageManager().getErrorMessage("command.message.enableFailedToSave").replace("%ID%", args[0]));
             return true;

@@ -29,11 +29,10 @@ public class setdedicated extends SubBase {
         }
 
         boolean setTo = false;
-        if (toSet.equalsIgnoreCase("true"))
-            setTo = true;
+        if (toSet.equalsIgnoreCase("true")) setTo = true;
 
 
-        SCB.getInstance().getConfig().set("dedicatedSSB", setTo);
+        SCB.getInstance().getConfig().set(SCB.DEDICATED_SSB, setTo);
         SCB.getInstance().saveConfig();
         SCB.getInstance().reloadConfig();
 

@@ -66,6 +66,7 @@ public class SettingsManager {
      */
     public void setup(SCB p) {
 
+
         SettingsManager.p = p;
         //setupMessageManager(p);
 
@@ -93,7 +94,7 @@ public class SettingsManager {
 		messCon.saveDefaultConfig();
 		p.getLogger().info("Messages Config Successfully Loaded");*/
 
-        bWorlds = p.getConfig().getStringList("ignoreWorlds");
+        bWorlds = p.getConfig().getStringList(SCB.IGNORE_WORLDS);
         //setupLobbyManager(p);
         //setupArenaManager(p);
 
@@ -103,13 +104,13 @@ public class SettingsManager {
 
     private void setupArenaManager(SCB p) {
 
-        arena = new ArenaManager(p);
+        arena = new ArenaManager();
     }
 
 
     private void setupMessageManager(SCB p) {
 
-        mess = new MessageManager(p);
+        mess = new MessageManager();
 
     }
 
@@ -191,8 +192,7 @@ public class SettingsManager {
                 fCon = YamlConfiguration.loadConfiguration(p.getResource(fi));
                 fCon.save(file);
             }
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
