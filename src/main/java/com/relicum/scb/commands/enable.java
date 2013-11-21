@@ -23,7 +23,8 @@ public class enable extends SubBase {
         String tmp;
         ArenaManager ar = SCB.getInstance().ARM;
         if (ar.getCurrent() != Integer.parseInt(args[0])) {
-            player.sendMessage(tmp = SCB.getMessageManager().getErrorMessage("command.message.enableMisMatch").replace("%ID%", args[0]).replace("%MID%", ar.getCurrent().toString()));
+            player.sendMessage(
+                    tmp = SCB.getMessageManager().getErrorMessage("command.message.enableMisMatch").replace("%ID%", args[0]).replace("%MID%", ar.getCurrent().toString()));
             return true;
         }
 
@@ -45,8 +46,7 @@ public class enable extends SubBase {
         ArenaIO arenaIO = new ArenaIO();
         try {
             arenaIO.saveArena(arena);
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
             player.sendMessage(tmp = SCB.getMessageManager().getErrorMessage("command.message.enableFailedToSave").replace("%ID%", args[0]));
             return true;
@@ -60,7 +60,7 @@ public class enable extends SubBase {
 
     @Override
     public void setmDescription() {
-        mNode = "enable";
+        mNode = SCB.ENABLE;
     }
 
 

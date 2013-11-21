@@ -58,7 +58,7 @@ public class WorldEditManager {
     public void setup(SCB p) {
 
         WorldEditManager.p = p;
-        org.bukkit.plugin.Plugin WE = WorldEditManager.p.getServer().getPluginManager().getPlugin("WorldEdit");
+        org.bukkit.plugin.Plugin WE = WorldEditManager.p.getServer().getPluginManager().getPlugin(SCB.WORLD_EDIT);
 
         if (WE instanceof WorldEditPlugin) {
 
@@ -85,8 +85,7 @@ public class WorldEditManager {
 
             r = rs.getRegion();
 
-        }
-        catch ( IncompleteRegionException e ) {
+        } catch (IncompleteRegionException e) {
 
             e.printStackTrace();
 

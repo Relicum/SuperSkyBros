@@ -3,7 +3,6 @@ package com.relicum.scb.commands;
 import com.relicum.scb.ArenaManager;
 import com.relicum.scb.SCB;
 import com.relicum.scb.arena.Arena;
-import com.relicum.scb.arena.SpawnIO;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 

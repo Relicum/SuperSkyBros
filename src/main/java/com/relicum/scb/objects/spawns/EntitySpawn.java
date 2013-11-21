@@ -55,13 +55,13 @@ public class EntitySpawn extends SpawnInstance {
      * @return Integer
      */
     public int spawn() {
-        for ( LivingEntity id : uids ) {
+        for (LivingEntity id : uids) {
             if (!id.isDead()) {
                 return spawnId;
             } /// The entities are already spawned
         }
         uids.clear();
-        for ( int i = 0; i < number; i++ ) {
+        for (int i = 0; i < number; i++) {
             LivingEntity le = (LivingEntity) loc.getWorld().spawnEntity(loc, et);
             uids.add(le);
         }
@@ -73,7 +73,7 @@ public class EntitySpawn extends SpawnInstance {
      * Despawns the Entity and removes it.
      */
     public void despawn() {
-        for ( LivingEntity id : uids ) {
+        for (LivingEntity id : uids) {
             if (!id.isDead()) {
                 id.remove();
             }
@@ -88,7 +88,7 @@ public class EntitySpawn extends SpawnInstance {
      * @param tamer AnimalTamer
      */
     public void setOwner(AnimalTamer tamer) {
-        for ( LivingEntity id : uids ) {
+        for (LivingEntity id : uids) {
             if (!id.isDead() && id instanceof Tameable) {
                 ((Tameable) id).setTamed(true);
                 ((Tameable) id).setOwner(tamer);

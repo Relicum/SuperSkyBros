@@ -38,7 +38,7 @@ public class GameManager {
     private void setup() {
         Map<Integer, Arena> are = getArenaManager().getAllArenas();
 
-        for ( Integer i : are.keySet() ) {
+        for (Integer i : are.keySet()) {
             Arena a = are.get(i);
 
         }

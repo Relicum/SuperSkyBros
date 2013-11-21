@@ -1,7 +1,6 @@
 package com.relicum.scb.objects.signs.events;
 
 import com.google.common.base.Strings;
-import com.relicum.scb.objects.signs.events.IOnchange;
 
 import java.util.ArrayList;
 

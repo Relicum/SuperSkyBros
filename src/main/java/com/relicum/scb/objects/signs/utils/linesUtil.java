@@ -35,7 +35,7 @@ public class linesUtil {
 
         ArrayList<String> stripped = new ArrayList<>(4);
 
-        for ( String line : lines ) {
+        for (String line : lines) {
             stripped.add(ChatColor.stripColor(line));
         }
 

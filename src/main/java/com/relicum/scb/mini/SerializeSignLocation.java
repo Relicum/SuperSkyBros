@@ -75,10 +75,7 @@ public class SerializeSignLocation implements ConfigurationSerializable {
                 yObject = map.get("ypos"),
                 zObject = map.get("zpos"),
                 worldObject = map.get("world");
-        if (xObject == null || yObject == null || zObject == null || worldObject == null
-                    || !(xObject instanceof Integer)
-                    || !(yObject instanceof Integer)
-                    || !(zObject instanceof Integer)) {
+        if (xObject == null || yObject == null || zObject == null || worldObject == null || !(xObject instanceof Integer) || !(yObject instanceof Integer) || !(zObject instanceof Integer)) {
             return null;
         }
         Integer x = (Integer) xObject, y = (Integer) yObject, z = (Integer) zObject;

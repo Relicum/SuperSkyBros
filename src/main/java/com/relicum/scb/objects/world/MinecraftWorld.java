@@ -4,7 +4,6 @@ import lombok.Data;
 import org.bukkit.Difficulty;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
 
 /**
  * SuperSkyBros First Created 29/10/13

@@ -2,7 +2,6 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.PluginIdentifiableCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.StringUtil;

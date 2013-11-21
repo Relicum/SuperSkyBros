@@ -1,8 +1,6 @@
 package com.relicum.scb.objects.inventory.interfaces;
 
 
-import java.util.HashMap;
-
 /**
  * SuperSkyBros First Created 02/10/13
  *

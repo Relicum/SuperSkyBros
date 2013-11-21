@@ -94,7 +94,7 @@ public class SettingsManager {
 		messCon.saveDefaultConfig();
 		p.getLogger().info("Messages Config Successfully Loaded");*/
 
-        bWorlds = p.getConfig().getStringList("ignoreWorlds");
+        bWorlds = p.getConfig().getStringList(SCB.IGNORE_WORLDS);
         //setupLobbyManager(p);
         //setupArenaManager(p);
 
@@ -192,8 +192,7 @@ public class SettingsManager {
                 fCon = YamlConfiguration.loadConfiguration(p.getResource(fi));
                 fCon.save(file);
             }
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

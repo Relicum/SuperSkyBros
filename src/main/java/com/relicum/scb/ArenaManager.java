@@ -5,7 +5,10 @@ import com.relicum.scb.arena.ArenaIO;
 import com.relicum.scb.types.SkyBrosApi;
 import lombok.Data;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The type ArenaManager.
@@ -71,7 +74,7 @@ class ArenaManager {
             ArenaIO Aio = new ArenaIO();
             thearenas = Aio.loadArenas();
             arenaIds = Aio.getArenaKeys();
-            for ( String k : arenaIds ) {
+            for (String k : arenaIds) {
                 String na = thearenas.get(Integer.parseInt(k)).getUniqueMap();
                 nameToId.put(na, Integer.parseInt(k));
             }
@@ -132,7 +135,7 @@ class ArenaManager {
         ArrayList<String> mess = new ArrayList<String>();
 
 
-        for ( String k : arenaIds ) {
+        for (String k : arenaIds) {
             Arena ad = this.getArenaById(Integer.parseInt(k));
             mess.add(ad.getArenaListMessage());
         }

@@ -10,7 +10,7 @@ ignoreWorlds:
   - 'world_the_end'
   - 'world_nether'
 dedicatedSSB: false
-worldGenerator: false
+worldGenerator: true
 generateDefaultWorld: false
 classesEnabled:
   - Creeper

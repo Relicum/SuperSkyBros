@@ -24,7 +24,7 @@ public class blacklisted extends SubBase {
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
 
         List<String> blacklist = SCB.getInstance().getBlackList();
-        for ( String s : blacklist ) {
+        for (String s : blacklist) {
             player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.blacklistedWorlds").replace("%WORLD%", s));
         }
         return true;

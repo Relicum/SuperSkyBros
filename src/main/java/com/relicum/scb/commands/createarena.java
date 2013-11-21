@@ -49,8 +49,7 @@ public class createarena extends SubBase {
         Vector cen = null;
         try {
             cen = new Vector(S.getRegionSelector().getRegion().getCenter());
-        }
-        catch ( IncompleteRegionException e ) {
+        } catch (IncompleteRegionException e) {
             player.sendMessage(SCB.MM.getErrorMessage("command.message.noSelection"));
             SCB.getInstance().getLogger().severe("Error setting Arena Region, WorldEdit selection not set correctly");
             e.printStackTrace();

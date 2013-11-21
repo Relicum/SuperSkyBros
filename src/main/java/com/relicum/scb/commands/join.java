@@ -3,14 +3,11 @@ package com.relicum.scb.commands;
 import com.relicum.scb.SCB;
 import com.relicum.scb.SmashPlayer;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
-import com.relicum.scb.objects.inventory.ClearInventory;
+import com.relicum.scb.types.SkyBrosApi;
 import com.relicum.scb.utils.playerStatus;
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -29,14 +26,14 @@ public class join extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) {
 
-        if (SCB.getInstance().LBS.isInLobby(player)) {
+        if (SkyBrosApi.getSCB().LBS.isInLobby(player)) {
             player.sendMessage(SCB.getMessageManager().getErrorMessage("listeners.playerJoin.alreadyInLobby"));
             return true;
         }
         SmashPlayer splayer = SmashPlayer.wrap(player);
 
         splayer.pStatus = playerStatus.UNKNOWN;
-        PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "COMMAND", SCB.getInstance().getConfig().getBoolean("dedicatedSSB"));
+        PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "COMMAND", SkyBrosApi.getSCB().getConfig().getBoolean(SCB.DEDICATED_SSB));
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         return true;
@@ -54,7 +51,8 @@ public class join extends SubBase {
      */
     public boolean teleportToLobby(final Player p, final Location l) {
 
-        SCB.getInstance().getServer().getScheduler().runTaskLater(SCB.getInstance(), new Runnable() {
+        SkyBrosApi.getSCB().getServer().getScheduler().runTaskLater(
+                SkyBrosApi.getSCB(), new Runnable() {
 
             @Override
             public void run() {
@@ -139,6 +137,6 @@ public class join extends SubBase {
 
     @Override
     public Plugin getPlugin() {
-        return SCB.getInstance();
+        return SkyBrosApi.getSCB();
     }
 }

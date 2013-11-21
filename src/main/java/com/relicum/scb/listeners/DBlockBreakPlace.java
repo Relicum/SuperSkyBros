@@ -1,7 +1,6 @@
 package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
-import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;

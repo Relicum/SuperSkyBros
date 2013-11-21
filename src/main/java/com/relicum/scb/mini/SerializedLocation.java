@@ -94,10 +94,7 @@ public class SerializedLocation implements ConfigurationSerializable {
                 worldObject = map.get("world"),
                 yawObject = map.get("yawpos"),
                 pitchObject = map.get("pitchpos");
-        if (xObject == null || yObject == null || zObject == null || worldObject == null
-                    || !(xObject instanceof Integer)
-                    || !(yObject instanceof Integer)
-                    || !(zObject instanceof Integer)) {
+        if (xObject == null || yObject == null || zObject == null || worldObject == null || !(xObject instanceof Integer) || !(yObject instanceof Integer) || !(zObject instanceof Integer)) {
             return null;
         }
         Integer x = (Integer) xObject, y = (Integer) yObject, z = (Integer) zObject;
@@ -214,7 +211,6 @@ public class SerializedLocation implements ConfigurationSerializable {
      */
     @Override
     public String toString() {
-        return "SerializedLocation:world=" + getWorld() + ":x=" + getX() + ":y=" + getY() + ":z=" + getZ() + ":yaw="
-                       + getYaw() + ":pitch=" + getPitch();
+        return "SerializedLocation:world=" + getWorld() + ":x=" + getX() + ":y=" + getY() + ":z=" + getZ() + ":yaw=" + getYaw() + ":pitch=" + getPitch();
     }
 }

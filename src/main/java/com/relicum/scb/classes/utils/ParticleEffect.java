@@ -81,7 +81,7 @@ public enum ParticleEffect {
 
 
     static {
-        for ( ParticleEffect effect : values() ) {
+        for (ParticleEffect effect : values()) {
             NAME_MAP.put(effect.name, effect);
             ID_MAP.put(effect.id, effect);
         }
@@ -92,7 +92,7 @@ public enum ParticleEffect {
         if (name == null) {
             return null;
         }
-        for ( Entry<String, ParticleEffect> e : NAME_MAP.entrySet() ) {
+        for (Entry<String, ParticleEffect> e : NAME_MAP.entrySet()) {
             if (e.getKey().equalsIgnoreCase(name)) {
                 return e.getValue();
             }
@@ -119,7 +119,7 @@ public enum ParticleEffect {
      */
     public void play(Location loc, float offsetX, float offsetY, float offsetZ, float speed, int amount) {
         Object packet = createNormalPacket(this, loc, offsetX, offsetY, offsetZ, speed, amount);
-        for ( Player p : loc.getWorld().getPlayers() ) {
+        for (Player p : loc.getWorld().getPlayers()) {
             sendPacket(p, packet);
         }
     }
@@ -130,7 +130,7 @@ public enum ParticleEffect {
      */
     public void play(Location loc, double range, float offsetX, float offsetY, float offsetZ, float speed, int amount) {
         Object packet = createNormalPacket(this, loc, offsetX, offsetY, offsetZ, speed, amount);
-        for ( Player p : loc.getWorld().getPlayers() ) {
+        for (Player p : loc.getWorld().getPlayers()) {
             if (p.getLocation().distance(loc) <= range) {
                 sendPacket(p, packet);
             }
@@ -151,7 +151,7 @@ public enum ParticleEffect {
      */
     public static void playTileCrack(Location loc, int id, byte data, float offsetX, float offsetY, float offsetZ, int amount) {
         Object packet = createTileCrackPacket(id, data, loc, offsetX, offsetY, offsetZ, amount);
-        for ( Player p : loc.getWorld().getPlayers() ) {
+        for (Player p : loc.getWorld().getPlayers()) {
             sendPacket(p, packet);
         }
     }
@@ -163,7 +163,7 @@ public enum ParticleEffect {
      */
     public static void playTileCrack(Location loc, double range, int id, byte data, float offsetX, float offsetY, float offsetZ, int amount) {
         Object packet = createTileCrackPacket(id, data, loc, offsetX, offsetY, offsetZ, amount);
-        for ( Player p : loc.getWorld().getPlayers() ) {
+        for (Player p : loc.getWorld().getPlayers()) {
             if (p.getLocation().distance(loc) <= range) {
                 sendPacket(p, packet);
             }
@@ -184,7 +184,7 @@ public enum ParticleEffect {
      */
     public static void playIconCrack(Location loc, int id, float offsetX, float offsetY, float offsetZ, int amount) {
         Object packet = createIconCrackPacket(id, loc, offsetX, offsetY, offsetZ, amount);
-        for ( Player p : loc.getWorld().getPlayers() ) {
+        for (Player p : loc.getWorld().getPlayers()) {
             sendPacket(p, packet);
         }
     }
@@ -196,7 +196,7 @@ public enum ParticleEffect {
      */
     public static void playIconCrack(Location loc, double range, int id, float offsetX, float offsetY, float offsetZ, int amount) {
         Object packet = createIconCrackPacket(id, loc, offsetX, offsetY, offsetZ, amount);
-        for ( Player p : loc.getWorld().getPlayers() ) {
+        for (Player p : loc.getWorld().getPlayers()) {
             if (p.getLocation().distance(loc) <= range) {
                 sendPacket(p, packet);
             }
@@ -235,8 +235,7 @@ public enum ParticleEffect {
             ReflectionUtil.setValue(packet, "h", speed);
             ReflectionUtil.setValue(packet, "i", amount);
             return packet;
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             Bukkit.getLogger().warning("[ParticleEffect] Failed to create a particle packet!");
             return null;
         }
@@ -251,8 +250,7 @@ public enum ParticleEffect {
             Object entityPlayer = ReflectionUtil.getMethod("getHandle", p.getClass(), 0).invoke(p);
             Object playerConnection = entityPlayer.getClass().getField("playerConnection").get(entityPlayer);
             ReflectionUtil.getMethod("sendPacket", playerConnection.getClass(), 1).invoke(playerConnection, packet);
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             Bukkit.getLogger().warning("[SuperSkyCraft] Failed to send a particle packet to " + p.getName() + "!");
         }
     }
@@ -266,7 +264,7 @@ public enum ParticleEffect {
             if (args != null) {
                 params = args.length;
             }
-            for ( Constructor<?> co : c.getConstructors() ) {
+            for (Constructor<?> co : c.getConstructors()) {
                 if (co.getParameterTypes().length == params) {
                     return co.newInstance(args);
                 }
@@ -276,7 +274,7 @@ public enum ParticleEffect {
 
 
         public static Method getMethod(String name, Class<?> c, int params) {
-            for ( Method m : c.getMethods() ) {
+            for (Method m : c.getMethods()) {
                 if (m.getName().equals(name) && m.getParameterTypes().length == params) {
                     return m;
                 }

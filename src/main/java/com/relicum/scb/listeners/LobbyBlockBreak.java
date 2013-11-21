@@ -1,7 +1,6 @@
 package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
@@ -10,7 +9,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
-import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import java.util.List;
 
@@ -63,15 +61,13 @@ public class LobbyBlockBreak implements Listener, Cancellable {
      */
     @EventHandler(priority = EventPriority.LOW)
     public void lobbyBreak(BlockBreakEvent e) {
-        if (this.blacklist.contains(e.getPlayer().getWorld().getName()))
-            return;
-        if (!this.protectionSet)
-            return;
+        if (this.blacklist.contains(e.getPlayer().getWorld().getName())) return;
+        if (!this.protectionSet) return;
 
         Player player = e.getPlayer();
         String wo = player.getWorld().getName();
 
-        if (!SCB.perms.has(player, "ssba.admin.breakblocks") && !player.isOp()) {
+        if (!SCB.perms.has(player, SCB.SSBA_ADMIN_BREAKBLOCKS) && !player.isOp()) {
             if (SCB.getInstance().LBS.getLobbyRegion().isAABB(e.getBlock().getLocation().toVector())) {
                 e.setCancelled(true);
                 player.sendMessage(SCB.MM.getErrorMessage("listeners.blockbreak.lobbyBreak"));

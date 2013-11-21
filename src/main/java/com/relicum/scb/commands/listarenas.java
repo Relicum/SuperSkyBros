@@ -25,9 +25,8 @@ public class listarenas extends SubBase {
 
         ArenaManager aman = SCB.getInstance().ARM;
         ArrayList<String> arl = aman.getListMessages();
-        if (arl.isEmpty())
-            return true;
-        for ( String m : arl ) {
+        if (arl.isEmpty()) return true;
+        for (String m : arl) {
             player.sendMessage(m);
         }
 

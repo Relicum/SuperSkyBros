@@ -1,4 +1,5 @@
 name: SuperSkyBros
+load: STARTUP
 main: com.relicum.scb.SCB
 version: ${project.version}
 authors: [Relicum, slideroller, ThePengwin]

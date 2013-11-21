@@ -2,13 +2,16 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.SmashPlayer;
+import com.relicum.scb.types.SkyBrosApi;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * SuperSkyBros First Created 20/09/13 Used to Execute Debug Commands from Console only
@@ -18,6 +21,7 @@ import java.util.*;
  */
 public class DebugManager implements CommandExecutor {
 
+    public static final String V_LIST = "vList";
     private SCB plugin;
 
 
@@ -38,7 +42,7 @@ public class DebugManager implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] strings) {
         if (strings == null || strings.length < 1) {
-            System.out.println("vList must pass type of list options are: Lobby, Lobbyname,Perms");
+            System.out.println("vList must pass type of list options are: Lobby, Lobbyname,Perms,wsettings");
             return true;
         }
 
@@ -49,7 +53,7 @@ public class DebugManager implements CommandExecutor {
 
         }
 
-        if (command.getName().equalsIgnoreCase("vList")) {
+        if (command.getName().equalsIgnoreCase(V_LIST)) {
 
 
             vList(strings[0]);
@@ -66,7 +70,7 @@ public class DebugManager implements CommandExecutor {
                 System.out.println("There are no players in Lobby List");
                 return;
             }
-            for ( SmashPlayer sm : SCB.getInstance().LBS.getPlayersInLobby() ) {
+            for (SmashPlayer sm : SCB.getInstance().LBS.getPlayersInLobby()) {
 
                 System.out.println("Player " + sm.getName() + " is in the Lobby List");
             }
@@ -77,7 +81,7 @@ public class DebugManager implements CommandExecutor {
                 System.out.println("There are no player names in Lobby name list");
                 return;
             }
-            for ( String s : SCB.getInstance().LBS.getPlayerNamesInLobby() ) {
+            for (String s : SCB.getInstance().LBS.getPlayerNamesInLobby()) {
                 System.out.println("Player name " + s + " is in the Lobby name List");
             }
 
@@ -88,7 +92,7 @@ public class DebugManager implements CommandExecutor {
                 System.out.println("There are no player names in UUID name list");
                 return;
             }
-            for ( UUID s : SCB.getInstance().LBS.getPlayersInUUIDList() ) {
+            for (UUID s : SCB.getInstance().LBS.getPlayersInUUIDList()) {
                 System.out.println("Player name " + s.toString() + " is in the Lobby name List");
             }
 
@@ -97,14 +101,14 @@ public class DebugManager implements CommandExecutor {
         if (list.equalsIgnoreCase("perms")) {
 
             Set<Permission> per = plugin.getServer().getPluginManager().getPermissions();
-            for ( Permission k : per ) {
+            for (Permission k : per) {
                 if (k.getName().startsWith("ssb")) {
                     if (k.getName().equalsIgnoreCase("ssba.admin")) {
                         System.out.println("Parent Node: ssba.admin");
                         System.out.println("Has the Child Perms");
                         Permission ad = plugin.getServer().getPluginManager().getPermission("ssba.admin");
                         Map<String, Boolean> adc = ad.getChildren();
-                        for ( String ak : adc.keySet() ) {
+                        for (String ak : adc.keySet()) {
                             System.out.println(ak);
                         }
                     }
@@ -113,7 +117,7 @@ public class DebugManager implements CommandExecutor {
                         System.out.println("Has the Child Perms");
                         Permission ad = plugin.getServer().getPluginManager().getPermission("ssb.player");
                         Map<String, Boolean> adc = ad.getChildren();
-                        for ( String ak : adc.keySet() ) {
+                        for (String ak : adc.keySet()) {
                             System.out.println(ak);
                         }
                     }
@@ -121,8 +125,14 @@ public class DebugManager implements CommandExecutor {
             }
 
         }
+        if (list.equalsIgnoreCase("wsettings")) {
 
+            SkyBrosApi.getWorldManager().applyWorldDefaultSettings("scb");
+            System.out.println("World Settings have tried to be applied");
 
+        }
+
+        return;
     }
 
 

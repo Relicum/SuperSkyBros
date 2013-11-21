@@ -126,8 +126,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
      */
     @Override
     public String getArenaName() {
-        if (this.aname != null)
-            return this.aname;
+        if (this.aname != null) return this.aname;
 
         return "";
     }
@@ -160,8 +159,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
      */
     @Override
     public Integer getArenaId() {
-        if (this.id != null)
-            return this.id;
+        if (this.id != null) return this.id;
 
         return 0;
     }
@@ -419,10 +417,8 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
     public String getArenaListMessage() {
         //String AL = SCB.getMessageManager().getAdminMessage("command.message.listArenasMessage");
         String en;
-        if (isEnabled())
-            en = "True";
-        else
-            en = "False";
+        if (isEnabled()) en = "True";
+        else en = "False";
 
         return ChatColor.GREEN + "Arena " + ChatColor.WHITE + getArenaId() + ChatColor.GREEN + " in world " + ChatColor.WHITE + getArenaWorld().getName() + ChatColor.GREEN + ". Enabled = " + ChatColor.WHITE + en + ChatColor.GREEN + " status = " + ChatColor.WHITE + getArenaStatus().name() + ChatColor.RESET;
     }

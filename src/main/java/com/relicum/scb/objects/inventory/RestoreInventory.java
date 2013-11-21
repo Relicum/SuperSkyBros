@@ -36,7 +36,8 @@ public class RestoreInventory {
 
     public static void UpdateInv(final Player p) {
 
-        SCB.getInstance().getServer().getScheduler().runTask(SCB.getInstance(), new Runnable() {
+        SCB.getInstance().getServer().getScheduler().runTask(
+                SCB.getInstance(), new Runnable() {
 
             @Override
             public void run() {

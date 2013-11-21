@@ -6,7 +6,6 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
@@ -63,15 +62,13 @@ public class LobbyBlockPlace implements Listener, Cancellable {
      */
     @EventHandler(priority = EventPriority.LOW)
     public void lobbyBreak(BlockPlaceEvent e) {
-        if (this.blacklist.contains(e.getPlayer().getWorld().getName()))
-            return;
-        if (!this.protectionSet)
-            return;
+        if (this.blacklist.contains(e.getPlayer().getWorld().getName())) return;
+        if (!this.protectionSet) return;
 
         Player player = e.getPlayer();
         String wo = player.getWorld().getName();
 
-        if (!SCB.perms.has(player, "ssba.admin.placeblocks") && !player.isOp()) {
+        if (!SCB.perms.has(player, SCB.SSBA_ADMIN_PLACEBLOCKS) && !player.isOp()) {
             if (SCB.getInstance().LBS.getLobbyRegion().isAABB(e.getBlock().getLocation().toVector())) {
                 e.setCancelled(true);
                 player.sendMessage(SCB.MM.getErrorMessage("listeners.blockplace.lobbyPlace"));

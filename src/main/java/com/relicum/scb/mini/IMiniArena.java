@@ -1,6 +1,5 @@
 package com.relicum.scb.mini;
 
-import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.util.Vector;
 
 import java.util.List;

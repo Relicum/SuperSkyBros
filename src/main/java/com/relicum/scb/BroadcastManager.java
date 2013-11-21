@@ -1,8 +1,6 @@
 package com.relicum.scb;
 
-import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.util.permissions.BroadcastPermissions;
 

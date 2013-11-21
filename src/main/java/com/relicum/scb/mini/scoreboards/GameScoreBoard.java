@@ -1,7 +1,6 @@
 package com.relicum.scb.mini.scoreboards;
 
 import lombok.Data;
-import lombok.Setter;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scoreboard.*;
 

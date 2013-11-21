@@ -144,8 +144,7 @@ public class ArenaIO {
             config.getConfig().set("arena.total", to);
             config.saveConfig();
             config.reloadConfig();
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -194,7 +193,7 @@ public class ArenaIO {
         Set<String> f = getArenaKeys();
         Map<Integer, Arena> ar = new HashMap<>(f.size());
         SpawnIO SIO = new SpawnIO();
-        for ( String k : f ) {
+        for (String k : f) {
             String path = "arena.arenas." + k;
             String spath = "group.groups." + k;
             ConfigurationSection spn = SCB.getInstance().SPC.getConfig().getConfigurationSection(spath);
@@ -590,7 +589,7 @@ public class ArenaIO {
 
         this.chunk = new ArrayList<>(chunks.size());
 
-        for ( Vector s : chunks ) this.chunk.add(s);
+        for (Vector s : chunks) this.chunk.add(s);
     }
 
 
@@ -788,8 +787,7 @@ public class ArenaIO {
             config.saveConfig();
 
             return true;
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }

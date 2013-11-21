@@ -17,6 +17,7 @@ public class PlayerLogin implements Listener {
         if (Bukkit.getPlayerExact(event.getName()) == null) {
             System.out.println(event.getName() + " has not played before");
         } else {
+
             System.out.println("Player found");
         }
 

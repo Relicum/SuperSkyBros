@@ -38,8 +38,7 @@ public class CubeSelect extends CuboidSelection {
 
         try {
             return (CuboidRegion) this.getRegionSelector().getRegion();
-        }
-        catch ( IncompleteRegionException e ) {
+        } catch (IncompleteRegionException e) {
             System.out.println(e.getStackTrace().toString());
         }
 
@@ -57,8 +56,7 @@ public class CubeSelect extends CuboidSelection {
         try {
             this.setRegion(cu);
             return true;
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             System.out.println(e.getStackTrace().toString());
             return false;
         }

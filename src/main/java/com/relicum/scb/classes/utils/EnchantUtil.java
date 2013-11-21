@@ -67,7 +67,7 @@ public class EnchantUtil {
      */
     public static List<String> getEnchantments() {
         List<String> list = new ArrayList<String>();
-        for ( String key : enchants.keySet() ) {
+        for (String key : enchants.keySet()) {
             list.add(key.toLowerCase().replace('_', '-'));
         }
         return list;

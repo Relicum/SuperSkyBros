@@ -3,8 +3,6 @@ package com.relicum.scb;
 import com.relicum.scb.objects.BukkitPlayer;
 import com.relicum.scb.utils.playerStatus;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -116,14 +114,14 @@ public class SmashPlayer extends BukkitPlayer {
     public void stripInventory() {
         System.out.println("Start strip");
         removeArmour();
-        SCB.getInstance().getServer().getScheduler().runTask(SCB.getInstance(), new Runnable() {
+        SCB.getInstance().getServer().getScheduler().runTask(
+                SCB.getInstance(), new Runnable() {
 
             public void run() {
 
                 updateInventory();
             }
-        }
-        );
+        });
 
     }
 
@@ -179,14 +177,14 @@ public class SmashPlayer extends BukkitPlayer {
 
 
     public void invUpdate(final SmashPlayer pl) {
-        SCB.getInstance().getServer().getScheduler().runTask(SCB.getInstance(), new Runnable() {
+        SCB.getInstance().getServer().getScheduler().runTask(
+                SCB.getInstance(), new Runnable() {
 
             public void run() {
                 System.out.println("Play is " + p);
                 pl.updateInventory();
             }
-        }
-        );
+        });
     }
 
 
@@ -198,7 +196,8 @@ public class SmashPlayer extends BukkitPlayer {
      */
     public boolean teleportToLobby() {
 
-        SCB.getInstance().getServer().getScheduler().runTaskLater(SCB.getInstance(), new Runnable() {
+        SCB.getInstance().getServer().getScheduler().runTaskLater(
+                SCB.getInstance(), new Runnable() {
 
             @Override
             public void run() {
@@ -206,8 +205,7 @@ public class SmashPlayer extends BukkitPlayer {
                 if (!getPlayer().teleport(SCB.getInstance().LBS.getLobbyRegion().getLobbySpawn())) {
                     System.out.println("Error teleporting player to lobby");
                 }
-                if (!SCB.getInstance().getConfig().getBoolean("dedicatedSSB"))
-                    getPlayer().sendMessage(SCB.MM.getMessage("command.message.teleportToLobby"));
+                if (!SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB)) getPlayer().sendMessage(SCB.MM.getMessage("command.message.teleportToLobby"));
             }
         }, 1L);
 

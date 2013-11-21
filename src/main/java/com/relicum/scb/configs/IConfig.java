@@ -73,8 +73,7 @@ public class IConfig {
         } else {
             try {
                 getConfig().save(configFile);
-            }
-            catch ( IOException ex ) {
+            } catch (IOException ex) {
                 SCB.getInstance().getLogger().log(Level.SEVERE, "Could not save config to " + configFile, ex);
             }
         }

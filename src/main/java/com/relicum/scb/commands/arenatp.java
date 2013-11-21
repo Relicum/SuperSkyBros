@@ -50,8 +50,7 @@ public class arenatp extends SubBase {
                 teleportToLobby(player, tpto, args[0]);
 
             }
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             String me = SCB.getMessageManager().getErrorMessage("command.message.arenatpDoesNotExist");
             String tmp = me.replace("%ID%", args[0]);
             player.sendMessage(tmp);
@@ -75,7 +74,8 @@ public class arenatp extends SubBase {
     public boolean teleportToLobby(final Player p, final Location l, final String a) {
         String mess = SCB.getMessageManager().getAdminMessage("command.message.arenatpSuccess");
         final String tmp = mess.replace("%ID%", a);
-        SCB.getInstance().getServer().getScheduler().runTaskLater(SCB.getInstance(), new Runnable() {
+        SCB.getInstance().getServer().getScheduler().runTaskLater(
+                SCB.getInstance(), new Runnable() {
 
             @Override
             public void run() {

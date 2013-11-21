@@ -53,7 +53,7 @@ public class CommandManager implements TabExecutor {
         loadCommands();
 
 
-        for ( Map.Entry<String, SubBase> entry : clist.entrySet() ) {
+        for (Map.Entry<String, SubBase> entry : clist.entrySet()) {
 
             registerCommand(entry.getKey(), entry.getValue());
             String[] sp = entry.getValue().getCmd().split(" ");
@@ -82,7 +82,7 @@ public class CommandManager implements TabExecutor {
         clist.put("listarenas", new listarenas());
         clist.put("arenatp", new arenatp());
         clist.put("leave", new leave());
-        clist.put("enable", new enable());
+        clist.put(SCB.ENABLE, new enable());
         clist.put("disable", new disable());
         clist.put("blacklist", new blacklist());
         clist.put("player", new player());
@@ -160,8 +160,7 @@ public class CommandManager implements TabExecutor {
             clist.get(sub).onCommand(player, strings);
 
 
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
             player.sendMessage(mm.getErrorMessage("system.internal.defaultError"));
             player.sendMessage(ChatColor.AQUA + "./ " + sub + "" + Arrays.toString(strings));
@@ -245,8 +244,7 @@ public class CommandManager implements TabExecutor {
             c.setAccessible(true);
 
             command = (PluginCommand) c.newInstance(new Object[]{name, plugin});
-        }
-        catch ( SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e ) {
+        } catch (SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
 
@@ -270,8 +268,7 @@ public class CommandManager implements TabExecutor {
 
                 commandMap = (CommandMap) f.get(pm);
             }
-        }
-        catch ( NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e ) {
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
         }
 

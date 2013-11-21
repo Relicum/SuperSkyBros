@@ -1,6 +1,7 @@
 package com.relicum.scb;
 
 import com.relicum.scb.configs.WorldConfig;
+import com.relicum.scb.types.SkyBrosApi;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
@@ -51,10 +52,10 @@ public class WorldManager {
     //restrict commands Lobby and Game
 
 
-    public WorldManager(SCB p, WorldConfig worldConfig) {
-        this.plugin = p;
-        defaultGenerate = p.getConfig().getBoolean("generateDefaultWorld");
-        this.config = worldConfig;
+    public WorldManager() {
+        this.plugin = SkyBrosApi.getSCB();
+        defaultGenerate = this.plugin.getConfig().getBoolean("generateDefaultWorld");
+        this.config = SkyBrosApi.getSettingsManager2().getWorldConfig();
 
 
         this.worldSettings = this.config.getConfig().getConfigurationSection("worldSettings").getValues(true);
@@ -146,8 +147,7 @@ public class WorldManager {
 
 
             this.plugin.getLogger().info("Finished creating template World");
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
@@ -169,12 +169,12 @@ public class WorldManager {
     private World createNewWorld(String name) {
 
         WorldCreator worldCreator = this.applyDefaultSettings("Template");
+
         World world;
         try {
             world = worldCreator.createWorld();
 
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
@@ -189,24 +189,30 @@ public class WorldManager {
 
         try {
             world = Bukkit.getServer().getWorld(name);
-        }
-        catch ( NullPointerException e ) {
+        } catch (NullPointerException e) {
             e.printStackTrace();
             return;
-        }
-        catch ( Exception ex ) {
+        } catch (Exception ex) {
             ex.printStackTrace();
             return;
         }
 
-        world.setSpawnLocation(0, 65, 0);
+        world.setSpawnLocation(25, 30, 1);
         world.setKeepSpawnInMemory(true);
-        world.setSpawnFlags(false, false);
+        world.getSpawnLocation().getWorld().getChunkAt(world.getSpawnLocation()).load();
         Block block = world.getBlockAt(0, 64, 0);
         block.getState().setType(Material.GOLD_BLOCK);
         block.getState().update(true);
+        world.setAutoSave(true);
+        world.setDifficulty(Difficulty.HARD);
+        world.setStorm(false);
+        world.setThundering(false);
+        world.setWeatherDuration(9999999);
+        world.setTime(6000);
+        plugin.getServer().setDefaultGameMode(GameMode.ADVENTURE);
+        world.setGameRuleValue("doDaylightCycle", "false");
         world.save();
-        System.out.println("Settings applied for  " + name + "has been successful");
+        System.out.println("Settings applied for  " + name + " has been successful");
     }
 
 
@@ -220,5 +226,10 @@ public class WorldManager {
 
         Random random = new Random();
         return random.nextLong();
+    }
+
+    public void setMainProperties() {
+        Map<String, Object> st = config.getConfig().getConfigurationSection("mainWorld").getValues(true);
+
     }
 }

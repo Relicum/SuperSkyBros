@@ -57,7 +57,7 @@ public class SpawnIO {
             Map<String, Object> map = ags.toMap();
 
             List<ArenaSpawn> sw = ags.getSpawns();
-            for ( ArenaSpawn a : sw ) {
+            for (ArenaSpawn a : sw) {
                 cs.set("groupspawn.spawns." + a.getHashStore().get("groupid"), a.getHashStore());
             }
             System.out.println("There is " + sw.size() + " arena spawns");
@@ -65,8 +65,7 @@ public class SpawnIO {
 
             config.saveConfig();
             config.reloadConfig();
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             System.out.println("Error saving spawn");
             e.printStackTrace();
             return false;
@@ -99,8 +98,7 @@ public class SpawnIO {
             config.saveConfig();
             config.reloadConfig();
 
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
 
             System.out.println("Error saving spawn");
             e.printStackTrace();
@@ -124,7 +122,7 @@ public class SpawnIO {
 
         ArenaGroupSpawn as = new ArenaGroupSpawn(id);
         Set<String> s = st.getConfigurationSection("groupspawn.spawns").getKeys(false);
-        for ( String k : s ) {
+        for (String k : s) {
 
             ConfigurationSection m = st.getConfigurationSection("groupspawn.spawns." + k);
 

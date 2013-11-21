@@ -4,7 +4,6 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.objects.inventory.ClearInventory;
 import com.relicum.scb.utils.playerStatus;
-import com.relicum.scb.utils.timers.StartTimer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -48,7 +47,9 @@ public class PlayerJoinLobby implements Listener {
             this.teleportToLobby(e.getPlayer().getPlayer(), SCB.getInstance().LBS.getLobbyRegion().getLobbySpawn());
             System.out.println(e.getPlayer().getName() + " Has been transported to the lobby");
 
-            Bukkit.broadcast(ChatColor.translateAlternateColorCodes('&', SCB.MM.getRawMessage("system.lobbyJoinWelcome").replace("%name%", e.getPlayer().getName())), "bukkit.broadcast.ssblobby");
+            Bukkit.broadcast(
+                    ChatColor.translateAlternateColorCodes('&', SCB.MM.getRawMessage("system.lobbyJoinWelcome").replace("%name%", e.getPlayer().getName())),
+                    "bukkit.broadcast.ssblobby");
             //StartTimer.makeTimer(1, 1, 31);
 
         } else {
@@ -72,7 +73,8 @@ public class PlayerJoinLobby implements Listener {
      */
     public boolean teleportToLobby(final Player p, final Location l) {
 
-        SCB.getInstance().getServer().getScheduler().runTaskLater(SCB.getInstance(), new Runnable() {
+        SCB.getInstance().getServer().getScheduler().runTaskLater(
+                SCB.getInstance(), new Runnable() {
 
             @Override
             public void run() {

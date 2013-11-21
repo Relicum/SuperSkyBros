@@ -103,9 +103,8 @@ public class ArenaGroupSpawn implements ISpawnable {
      * @return the boolean
      */
     public boolean addGroupSpawns(List<ArenaSpawn> gs) {
-        for ( ArenaSpawn g : gs ) {
-            if (g.getArenaid() != this.getArenaId())
-                return false;
+        for (ArenaSpawn g : gs) {
+            if (g.getArenaid() != this.getArenaId()) return false;
             else {
 
                 this.getSpawns().add(this.addGroupIdIfNeeded(g));
@@ -208,7 +207,7 @@ public class ArenaGroupSpawn implements ISpawnable {
      */
     public void setChunks(List<Vector> chunk) {
 
-        for ( Vector v : chunk ) {
+        for (Vector v : chunk) {
             this.chunks.add(v);
         }
     }

@@ -64,8 +64,7 @@ public class LocationIO {
 
         executor.shutdown();
         System.out.println("Locations thread pool is been set to shutdown after all tasks have completed");
-        if (executor.isShutdown())
-            System.out.println("Locations thread pool successfully shutdown");
+        if (executor.isShutdown()) System.out.println("Locations thread pool successfully shutdown");
         executor = null;
     }
 
@@ -96,14 +95,13 @@ public class LocationIO {
             try {
                 out = xStream.createObjectOutputStream(fs);
                 int tot = serializedLocation.size();
-                for ( int i = 0; i < tot; i++ ) {
+                for (int i = 0; i < tot; i++) {
                     out.writeObject(serializedLocation.get(i));
                     out.flush();
                     out.close();
                     fs.close();
                 }
-            }
-            catch ( IOException e ) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 

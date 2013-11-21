@@ -90,7 +90,7 @@ public class ConfigManager {
 	}*/
 
 /*	public void loadFile(String file) {
-		File t = new File(SCB.getInstance().getDataFolder(), file);
+        File t = new File(SCB.getInstance().getDataFolder(), file);
 		System.out.println("Writing new file: " + t.getAbsolutePath());
 		try {
 			t.createNewFile();

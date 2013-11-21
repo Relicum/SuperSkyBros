@@ -50,7 +50,8 @@ public class LobbySpawn extends ISpawn {
      */
     @Override
     public boolean teleportToLobby(final Player p, final Location l) {
-        SCB.getInstance().getServer().getScheduler().runTask(SCB.getInstance(), new Runnable() {
+        SCB.getInstance().getServer().getScheduler().runTask(
+                SCB.getInstance(), new Runnable() {
 
             @Override
             public void run() {

@@ -71,7 +71,7 @@ public class SpawnGroup extends SpawnInstance implements Spawnable {
      * Despawn each spawn and remove entities
      */
     public void despawn() {
-        for ( Spawnable spawn : spawns ) spawn.despawn();
+        for (Spawnable spawn : spawns) spawn.despawn();
     }
 
 
@@ -81,7 +81,7 @@ public class SpawnGroup extends SpawnInstance implements Spawnable {
      * @return int
      */
     public int spawn() {
-        for ( Spawnable spawn : spawns ) {
+        for (Spawnable spawn : spawns) {
             spawn.spawn();
         }
         return spawnId;
@@ -96,7 +96,7 @@ public class SpawnGroup extends SpawnInstance implements Spawnable {
     @Override
     public void setLocation(Location l) {
         this.loc = l;
-        for ( SpawnInstance spawn : spawns ) {
+        for (SpawnInstance spawn : spawns) {
             spawn.setLocation(l);
         }
     }
@@ -111,7 +111,7 @@ public class SpawnGroup extends SpawnInstance implements Spawnable {
     public String toString() {
         StringBuilder sb = new StringBuilder("[SpawnGroup " + name + " ");
         boolean first = true;
-        for ( Spawnable spawn : spawns ) {
+        for (Spawnable spawn : spawns) {
             if (!first) sb.append(", ");
             else first = false;
             sb.append(spawn.toString());

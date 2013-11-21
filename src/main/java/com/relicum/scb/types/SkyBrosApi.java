@@ -1,13 +1,13 @@
 package com.relicum.scb.types;
 
-import com.relicum.scb.ArenaManager;
-import com.relicum.scb.LobbyManager;
-import com.relicum.scb.SCB;
-import com.relicum.scb.SignManager;
+import com.relicum.scb.*;
 import com.relicum.scb.commands.CommandManager;
+import com.relicum.scb.hooks.ChatManager;
+import com.relicum.scb.hooks.PermsManager;
 import com.relicum.scb.mini.SettingsManager2;
 import com.relicum.scb.objects.inventory.InventoryManager;
 import com.relicum.scb.utils.MessageManager;
+import com.relicum.scb.utils.PropertiesManager;
 import com.relicum.scb.we.WEManager;
 
 /**
@@ -33,6 +33,13 @@ public class SkyBrosApi {
 
     private static InventoryManager inventoryManager;
 
+    private static WorldManager worldManager;
+
+    private static PermsManager permsManager;
+
+    private static ChatManager chatManager;
+
+    private static PropertiesManager propertiesManager;
 
     /**
      * Get command manager.
@@ -40,8 +47,7 @@ public class SkyBrosApi {
      * @return the command manager
      */
     public static CommandManager getCommandManager() {
-        if (commandManager == null)
-            commandManager = new CommandManager(SCB.getInstance());
+        if (commandManager == null) commandManager = new CommandManager(SCB.getInstance());
         return commandManager;
     }
 
@@ -52,8 +58,7 @@ public class SkyBrosApi {
      * @return the lobby manager
      */
     public static LobbyManager getLobbyManager() {
-        if (lobbyManager == null)
-            lobbyManager = new LobbyManager();
+        if (lobbyManager == null) lobbyManager = new LobbyManager();
         return lobbyManager;
     }
 
@@ -64,8 +69,7 @@ public class SkyBrosApi {
      * @return the settings manager
      */
     public static SettingsManager2 getSettingsManager2() {
-        if (settingsManager2 == null)
-            settingsManager2 = new SettingsManager2();
+        if (settingsManager2 == null) settingsManager2 = new SettingsManager2();
         return settingsManager2;
     }
 
@@ -76,8 +80,7 @@ public class SkyBrosApi {
      * @return the arena manager
      */
     public static ArenaManager getArenaManager() {
-        if (arenaManager == null)
-            arenaManager = new ArenaManager();
+        if (arenaManager == null) arenaManager = new ArenaManager();
         return arenaManager;
     }
 
@@ -88,8 +91,7 @@ public class SkyBrosApi {
      * @return the sign manager
      */
     public static SignManager getSignManager() {
-        if (signManager == null)
-            signManager = new SignManager();
+        if (signManager == null) signManager = new SignManager();
         return signManager;
     }
 
@@ -100,8 +102,7 @@ public class SkyBrosApi {
      * @return the world edit manager
      */
     public static WEManager getWorldEditManager() {
-        if (worldEditManager == null)
-            worldEditManager = new WEManager();
+        if (worldEditManager == null) worldEditManager = new WEManager();
         return worldEditManager;
     }
 
@@ -112,8 +113,7 @@ public class SkyBrosApi {
      * @return the message manager
      */
     public static MessageManager getMessageManager() {
-        if (messageManager == null)
-            messageManager = new MessageManager();
+        if (messageManager == null) messageManager = new MessageManager();
         return messageManager;
     }
 
@@ -124,9 +124,52 @@ public class SkyBrosApi {
      * @return the inventory manager
      */
     public static InventoryManager getInventoryManager() {
-        if (inventoryManager == null)
-            inventoryManager = new InventoryManager();
+        if (inventoryManager == null) inventoryManager = new InventoryManager();
         return inventoryManager;
+    }
+
+
+    /**
+     * Get world manager.
+     *
+     * @return the world manager
+     */
+    public static WorldManager getWorldManager() {
+        if (worldManager == null) worldManager = new WorldManager();
+        return worldManager;
+    }
+
+
+    /**
+     * Get perms manager.
+     *
+     * @return the perms manager
+     */
+    public static PermsManager getPermsManager() {
+        if (permsManager == null) permsManager = new PermsManager();
+        return permsManager;
+    }
+
+
+    /**
+     * Get chat manager.
+     *
+     * @return the chat manager
+     */
+    public static ChatManager getChatManager() {
+        if (chatManager == null) chatManager = new ChatManager();
+        return chatManager;
+    }
+
+
+    /**
+     * Gets properties manager.
+     *
+     * @return the properties manager
+     */
+    public static PropertiesManager getPropertiesManager() {
+        if (propertiesManager == null) propertiesManager = new PropertiesManager();
+        return propertiesManager;
     }
 
 
@@ -145,8 +188,8 @@ public class SkyBrosApi {
      *
      * @param scb the scb
      */
-    public static void init(SCB scb) {
-        scb = scb;
+    public static void init(SCB sCb) {
+        scb = sCb;
     }
 
 }

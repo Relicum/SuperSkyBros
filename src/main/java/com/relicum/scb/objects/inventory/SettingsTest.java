@@ -1,6 +1,5 @@
 package com.relicum.scb.objects.inventory;
 
-import com.thoughtworks.xstream.XStream;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 

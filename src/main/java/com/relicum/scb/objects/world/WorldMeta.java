@@ -30,8 +30,7 @@ public class WorldMeta implements Metadatable {
 
         try {
             this.setMetadata(s, metadataValue);
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         SCB.getInstance().getLogger().info("New MetaData for world set");
@@ -52,8 +51,7 @@ public class WorldMeta implements Metadatable {
         if (!this.hasMetadata(s)) {
             List<MetadataValue> l = this.getMetadata(s);
             return l;
-        } else
-            return null;
+        } else return null;
     }
 
 
@@ -80,12 +78,10 @@ public class WorldMeta implements Metadatable {
 
         try {
             this.removeMetadata(s, plugin);
-        }
-        catch ( Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (this.hasMetadata(s))
-            SCB.getInstance().getLogger().severe("Unable to remove the MetaData for plugin " + plugin.getName());
+        if (this.hasMetadata(s)) SCB.getInstance().getLogger().severe("Unable to remove the MetaData for plugin " + plugin.getName());
     }
 }

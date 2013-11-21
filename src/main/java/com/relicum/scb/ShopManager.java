@@ -4,7 +4,6 @@ import com.relicum.scb.mini.scoreboards.ScoreboardType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -107,7 +106,8 @@ public class ShopManager implements Listener {
         this.score.setScore(1);
 
 
-        Bukkit.getServer().getScheduler().runTaskLater(this.plugin, new Runnable() {
+        Bukkit.getServer().getScheduler().runTaskLater(
+                this.plugin, new Runnable() {
 
             @Override
             public void run() {
@@ -136,7 +136,8 @@ public class ShopManager implements Listener {
 
         final Score score1 = this.score;
 
-        this.task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+        this.task = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(
+                plugin, new Runnable() {
 
 
             int tt = 0;
