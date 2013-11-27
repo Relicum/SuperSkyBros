@@ -1,9 +1,11 @@
 package com.relicum.scb.arena;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.events.ArenaStatusChangeEvent;
 import com.relicum.scb.objects.ArenaLobby;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
 import com.relicum.scb.objects.spawns.ArenaSpawn;
+import com.relicum.scb.types.SkyBrosApi;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -171,12 +173,10 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
      * @param String
      */
     public void setStatus(String em) {
-/*        if(em.equalsIgnoreCase("DISABLED")){
-            this.enable = false;
-            status = ArenaStatus.valueOf(em);
-            this.saveArena();
-            return;
-        }*/
+
+        ArenaStatusChangeEvent event = new ArenaStatusChangeEvent(ArenaStatus.valueOf(em), getArenaStatus(), this);
+        SkyBrosApi.getSCB().getServer().getPluginManager().callEvent(event);
+
         status = ArenaStatus.valueOf(em);
     }
 

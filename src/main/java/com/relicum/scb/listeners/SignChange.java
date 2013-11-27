@@ -11,7 +11,7 @@ import org.bukkit.event.block.SignChangeEvent;
 import java.util.List;
 
 /**
- * SuperSkyBros First Created 08/10/13
+ * Manages the creation of Interactive Game Signs
  *
  * @author Relicum
  * @version 0.1
@@ -36,8 +36,10 @@ public class SignChange implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void signChange(SignChangeEvent e) throws InterruptedException {
         String[] lines = e.getLines();
-        if (this.blacklist.contains(e.getPlayer().getWorld().getName()) && ((!(lines[1]).equalsIgnoreCase("join")) || (!(lines[0]).equalsIgnoreCase("[SSBLOBBY]")))) return;
+        if (this.blacklist.contains(e.getPlayer().getWorld().getName()) && ((!(lines[1]).equalsIgnoreCase("join")) || (!(lines[0]).equalsIgnoreCase("[SSBLOBBY]"))))
+            return;
 
+        //Lobby Join Sign
         if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("join")) {
 
             if (SCB.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
@@ -57,7 +59,7 @@ public class SignChange implements Listener {
 
             return;
         }
-
+        //Lobby Leave Sign
         if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("leave")) {
 
             if (SCB.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
@@ -76,7 +78,7 @@ public class SignChange implements Listener {
 
             return;
         }
-
+        //Lobby Return Sign used in arena lobbies to take the player back to the main lobby
         if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("return")) {
 
             if (SCB.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
@@ -95,7 +97,7 @@ public class SignChange implements Listener {
 
             return;
         }
-
+        //Arena Join Sign updates to show game status, number of players etc
         if (lines[0].equalsIgnoreCase("[SSBARENA]") && lines[1].equalsIgnoreCase("join") && Integer.parseInt(lines[2]) > 0) {
 
             if (SCB.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {

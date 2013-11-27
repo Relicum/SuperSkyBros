@@ -1,5 +1,6 @@
 package com.relicum.scb.mini;
 
+import com.relicum.scb.arena.ArenaStatus;
 import org.bukkit.util.Vector;
 
 import java.util.List;

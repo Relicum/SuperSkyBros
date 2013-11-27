@@ -10,8 +10,11 @@ import com.relicum.scb.configs.IConfig;
  * @author Relicum
  * @version 0.1
  */
-public class BukkitModifier extends IConfig {
-    public BukkitModifier(String filename) {
+public class BukkitConfig extends IConfig {
+
+
+    public BukkitConfig(String filename) {
         super(filename);
     }
+
 }

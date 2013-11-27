@@ -1,6 +1,8 @@
 package com.relicum.scb.mini;
 
 import com.relicum.scb.configs.*;
+import com.relicum.scb.objects.world.BukkitConfig;
+import com.relicum.scb.types.SkyBrosApi;
 import org.bukkit.Location;
 
 /**
@@ -56,6 +58,11 @@ public class SettingsManager2 {
      */
     private WorldConfig economy;
 
+    private BukkitConfig bukkitConfig;
+
+
+    private boolean useWorldManagement;
+
     /**
      * Instantiates a new Settings manager 2.
      */
@@ -69,19 +76,22 @@ public class SettingsManager2 {
      */
     public void setup() {
 
-        worldConfig = new WorldConfig("worlds.yml");
-        worldConfig.getConfig().options().copyDefaults(true);
-        worldConfig.saveConfig();
+        setUseWorldManagement(SkyBrosApi.getSCB().getConfig().getBoolean("useWorldManager"));
 
+        if (isUseWorldManagement()) {
+            worldConfig = new WorldConfig("worlds.yml");
+            worldConfig.getConfig().options().copyDefaults(true);
+            worldConfig.saveConfig();
+        }
         lobbyConfig = new LobbyConfig("lobby.yml");
         lobbyConfig.getConfig().options().copyDefaults(true);
         lobbyConfig.saveConfig();
 
-/*        signConfig = new SignConfig("signs.yml");
+        signConfig = new SignConfig("signs.yml");
         signConfig.getConfig().options().copyDefaults(true);
         signConfig.reloadConfig();
 
-        signFormatConfig = new SignFormat("signsText.yml");
+/*        signFormatConfig = new SignFormat("signsText.yml");
         signFormatConfig.getConfig().options().copyDefaults(true);
         signFormatConfig.reloadConfig();
 
@@ -223,5 +233,23 @@ public class SettingsManager2 {
      */
     public void setWorldConfig(WorldConfig worldConfig) {
         this.worldConfig = worldConfig;
+    }
+
+    /**
+     * Should we use inbuilt world Management
+     *
+     * @return the boolean
+     */
+    public boolean isUseWorldManagement() {
+        return useWorldManagement;
+    }
+
+    /**
+     * Sets if we should use inbuilt world management
+     *
+     * @param useWorldManagement the use world management
+     */
+    public void setUseWorldManagement(boolean useWorldManagement) {
+        this.useWorldManagement = useWorldManagement;
     }
 }
