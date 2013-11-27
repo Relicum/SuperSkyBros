@@ -48,7 +48,7 @@ public class disable extends SubBase {
 
         try {
 
-            // ArenaStatusChangeEvent disablearena = new ArenaStatusChangeEvent(pre, arena);
+            // ArenaStatusChangeEvents disablearena = new ArenaStatusChangeEvents(pre, arena);
             // Bukkit.getServer().getPluginManager().callEvent(disablearena);
 
         } catch (Exception e) {

@@ -2,8 +2,8 @@ package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.arena.ArenaIO;
+import com.relicum.scb.events.ArenaStatusChangeEvents;
 import com.relicum.scb.arena.ArenaStatus;
-import com.relicum.scb.events.ArenaStatusChangeEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -18,7 +18,7 @@ public class ArenaChangeStatus implements Listener {
 
     private SCB p;
 
-    private ArenaStatusChangeEvent event;
+    private ArenaStatusChangeEvents event;
 
 
     public ArenaChangeStatus(SCB pl) {
@@ -27,7 +27,7 @@ public class ArenaChangeStatus implements Listener {
 
 
     @EventHandler
-    public void ArenaStatusListen(ArenaStatusChangeEvent e) {
+    public void ArenaStatusListen(ArenaStatusChangeEvents e) {
         if (!e.isWithGame()) {
             this.event = e;
             this.test();
@@ -46,7 +46,7 @@ public class ArenaChangeStatus implements Listener {
 
     public void isDisabled() {
         if ((event.getStatus().equals(event.getPrevious()))) {
-            p.getLogger().info("Nothing to do in ArenaStatusChangeEvent Previous and Current status both = DISABLED");
+            p.getLogger().info("Nothing to do in ArenaStatusChangeEvents Previous and Current status both = DISABLED");
             return;
         }
         if (event.getStatus().equals(ArenaStatus.DISABLED)) {

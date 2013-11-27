@@ -1,6 +1,7 @@
 package com.relicum.scb.configs;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyBrosApi;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -28,6 +29,14 @@ public class IConfig {
 
         this.fileName = filename;
         this.configFile = new File(SCB.getInstance().getDataFolder(), fileName);
+
+
+    }
+
+    public IConfig(File filename) {
+
+        this.fileName = filename.getName();
+        this.configFile = new File(SkyBrosApi.getSCB().getDataFolder().getAbsoluteFile().getParentFile().getParent() + File.separatorChar + filename);
 
 
     }

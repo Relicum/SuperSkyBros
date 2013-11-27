@@ -8,6 +8,7 @@ import com.relicum.scb.listeners.*;
 import com.relicum.scb.mini.SerializedLocation;
 import com.relicum.scb.mini.SignLocationStore;
 import com.relicum.scb.objects.inventory.InventoryManager;
+import com.relicum.scb.objects.world.WorldConfigurator;
 import com.relicum.scb.types.SkyBrosApi;
 import com.relicum.scb.utils.FileUtils;
 import com.relicum.scb.utils.GemShop;
@@ -182,27 +183,31 @@ public class SCB extends JavaPlugin {
         this.saveDefaultConfig();
         this.getConfig().options().copyDefaults(true);
         SkyBrosApi.getSettingsManager2();
+        if (SkyBrosApi.getSettingsManager2().isUseWorldManagement()) {
+            WorldConfigurator cs = new WorldConfigurator();
+            cs.bukkitConfig.getConfig().options().copyDefaults(true);
+            File f = new File(SkyBrosApi.getSCB().getDataFolder().getAbsoluteFile().getParentFile().getParent().toString() + "/bukkit.yml");
+            if (!f.exists()) {
+                System.out.println("File doesn't exist");
+            } else {
+                if (f.isFile()) System.out.println("It is a file");
 
+                if (f.isDirectory()) System.out.println("It is a directory");
 
-        File f = new File(SkyBrosApi.getSCB().getDataFolder().getAbsoluteFile().getParentFile().getParent().toString() + "/bukkit.yml");
-        if (!f.exists()) {
-            System.out.println("File doesn't exist");
-        } else {
-            if (f.isFile()) System.out.println("It is a file");
+                if (f.canRead()) System.out.println("File can be read");
 
-            if (f.isDirectory()) System.out.println("It is a directory");
+                if (!f.canWrite()) {
+                    System.out.println("File not writable");
+                    if (f.setWritable(true)) System.out.println("I have set the file to writable");
 
-            if (f.canRead()) System.out.println("File can be read");
+                    if (!f.canWrite()) System.out.println("File Still mot writable");
 
-            if (!f.canWrite()) {
-                System.out.println("File not writable");
-                if (f.setWritable(true)) System.out.println("I have set the file to writable");
-
-                if (!f.canWrite()) System.out.println("File Still mot writable");
+                }
 
             }
-        }
 
+            //File f1 = new File(SkyBrosApi.getSCB().getDataFolder().getAbsoluteFile().getParentFile().getParent().toString() + "/bukkit.yml");
+        /*
         System.out.println(SkyBrosApi.getSCB().getDataFolder().getAbsoluteFile().getParentFile().getParent().toString() + "/bukkit.yml");
 
 
@@ -212,7 +217,10 @@ public class SCB extends JavaPlugin {
 
             p.worldManager = SkyBrosApi.getWorldManager();
             worldManager.setMainProperties();
+        }*/
         }
+
+
         BukkitInterface.setServer(this.getServer());
 
 
@@ -252,7 +260,12 @@ public class SCB extends JavaPlugin {
             poolManager = new ScheduledManager(2);
             getServer().getScheduler().scheduleSyncDelayedTask(SCB.getInstance(), new Startup(), 15L);
 
-
+            SkyBrosApi.getSettingsManager2().getSignConfig().getConfig().options().copyDefaults(true);
+            SkyBrosApi.getSettingsManager2().getSignConfig().saveConfig();
+            new SignLocationStore(p);
+            //SkyBrosApi.getSettingsManager2().getWorldConfig().getConfig().options().copyDefaults(true);
+            //SkyBrosApi.getSettingsManager2().getWorldConfig().saveConfig();
+            //SkyBrosApi.getWorldManager();
         }
 
 
@@ -269,7 +282,9 @@ public class SCB extends JavaPlugin {
                 this.getConfig().set(FIRST_RUN, false);
                 this.getConfig().set(FIRST_RUN_DONE, true);
             }
-
+            SkyBrosApi.getSettingsManager2().getLobbyConfig().saveConfig();
+            //SkyBrosApi.getSettingsManager2().getWorldConfig().saveConfig();
+            SkyBrosApi.getSettingsManager2().getSignConfig().saveConfig();
             this.saveConfig();
 
         } else {
@@ -277,9 +292,10 @@ public class SCB extends JavaPlugin {
 
             try {
                 SkyBrosApi.getSettingsManager2().getLobbyConfig().saveConfig();
+                //SkyBrosApi.getSettingsManager2().getWorldConfig().saveConfig();
+                SkyBrosApi.getSettingsManager2().getSignConfig().saveConfig();
                 ARC.saveConfig();
                 SPC.saveConfig();
-                SNC.saveConfig();
                 SFM.saveConfig();
                 this.saveConfig();
                 ScheduledManager.getScheduler().shutdown();
@@ -287,11 +303,6 @@ public class SCB extends JavaPlugin {
                 e.printStackTrace();
             }
 
-        }
-
-        if (p.getConfig().getBoolean(WORLD_GENERATOR)) {
-            p.WCF.saveConfig();
-            p.getLogger().info("World Settings have been saved");
         }
 
     }
@@ -368,10 +379,10 @@ public class SCB extends JavaPlugin {
             p.SPC.getConfig().options().copyDefaults(true);
             p.SPC.saveConfig();
 
-            p.SNC = new SignConfig("signs.yml");
+/*            p.SNC = new SignConfig("signs.yml");
             p.SNC.getConfig().options().copyDefaults(true);
             p.SNC.saveConfig();
-            new SignLocationStore(p);
+            new SignLocationStore(p);*/
 
             p.ARC = new ArenaConfig("arena.yml");
             p.ARC.getConfig().options().copyDefaults(true);

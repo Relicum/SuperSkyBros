@@ -1,6 +1,7 @@
 package com.relicum.scb;
 
 import com.relicum.scb.configs.WorldConfig;
+import com.relicum.scb.objects.world.WorldConfigurator;
 import com.relicum.scb.types.SkyBrosApi;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
@@ -22,6 +23,8 @@ import java.util.Random;
 public class WorldManager {
 
     private boolean defaultGenerate;
+
+    private static WorldConfigurator bukkitConfig;
 
     private WorldConfig config;
 
@@ -60,6 +63,16 @@ public class WorldManager {
 
         this.worldSettings = this.config.getConfig().getConfigurationSection("worldSettings").getValues(true);
 
+      /*  try{
+            WorldConfigurator.setBukkitConfig("bukkit.yml");
+            if(!WorldConfigurator.setBukkit()){
+                System.out.println("Error occurred while writing to bukkit.yml");
+            }else{
+                System.out.println("The bukkit.yml has been modified successfully");
+            }
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }*/
 
         plugin.getLogger().info("WorldGenerator Successfully Loaded");
        /* this.setTemplateDefaults();

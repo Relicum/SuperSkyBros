@@ -11,6 +11,7 @@ import com.relicum.scb.types.SkyBrosApi;
  */
 public class SignManager {
 
+    private SignConfig config;
 
     public SignManager() {
 
@@ -26,8 +27,8 @@ public class SignManager {
         /*
       Stores BaseSign Config Object
      */
-        SignConfig config = SkyBrosApi.getSettingsManager2().getSignConfig();
+        config = SkyBrosApi.getSettingsManager2().getSignConfig();
         SCB.getInstance().getLogger().info("New BaseSign Manager has been created");
-        System.out.println(config.getConfig());
+
     }
 }
