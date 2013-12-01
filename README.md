@@ -1,6 +1,8 @@
 SuperSkyBros Updated To CraftBukkit 1.6.4_R2.1
 ==============
 
+**About to do a test compile for 1.7.2**
+
 
 SuperSkyBros Minecraft Minigame Github Repository
 
