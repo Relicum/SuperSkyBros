@@ -533,8 +533,14 @@ public class SCB extends JavaPlugin implements Listener {
 
         world.getSpawnLocation().getWorld().getChunkAt(world.getSpawnLocation()).load();
         Block block = world.getBlockAt(0, 31, 0);
+
+        block.getState().getBlock().setType(Material.AIR);
+
+        block.getState().update(true);
+
         block.getState().setType(Material.GOLD_BLOCK);
         block.getState().update(true);
+
         world.setAutoSave(true);
         world.setDifficulty(Difficulty.HARD);
         world.setStorm(false);

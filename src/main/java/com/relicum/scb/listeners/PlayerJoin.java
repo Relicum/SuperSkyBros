@@ -8,11 +8,8 @@ import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.utils.playerStatus;
 import com.relicum.scb.utils.timers.StartTimer;
 import lombok.Data;
-import net.minecraft.server.v1_6_R3.EntityPlayer;
-import net.minecraft.server.v1_6_R3.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_6_R3.entity.CraftPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -46,18 +43,18 @@ public class PlayerJoin implements Listener {
     public void playJoin(PlayerJoinEvent e) {
 
 
-        CraftPlayer player1 = (CraftPlayer) e.getPlayer();
-        EntityPlayer player = player1.getHandle();
+        //CraftPlayer player1 = (CraftPlayer) e.getPlayer();
+        // EntityPlayer player = player1.getHandle();
         //NBTTagCompound nbtTagCompound = new NBTTagCompound();
-        NBTTagCompound nbtTagCompound2 = new NBTTagCompound();
+        // NBTTagCompound nbtTagCompound2 = new NBTTagCompound();
         //playerAbilities.a(nbtTagCompound);
-        player.abilities.isInvulnerable = false;
-        player.abilities.mayBuild = false;
-        player.abilities.canFly = true;
-        player.abilities.canInstantlyBuild = false;
-        player.updateAbilities();
+        // player.abilities.isInvulnerable = false;
+        // player.abilities.mayBuild = false;
+        //  player.abilities.canFly = true;
+        // player.abilities.canInstantlyBuild = false;
+        // player.updateAbilities();
 
-        player.b(nbtTagCompound2);
+        //  player.b(nbtTagCompound2);
         List<String> st = Arrays.asList(
                 "    " + "\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<",
                 ChatColor.GOLD +
