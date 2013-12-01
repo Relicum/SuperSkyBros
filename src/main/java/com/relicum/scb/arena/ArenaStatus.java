@@ -12,5 +12,16 @@ public enum ArenaStatus {
     STARTING,
     INGAME,
     RESTARTING,
-    ERROR
-};
+    ERROR;
+
+    public static ArenaStatus find(String abbr) {
+        for (ArenaStatus v : values()) {
+            if (v.equals(abbr)) {
+                return v;
+            }
+        }
+        return null;
+    }
+
+
+}

@@ -8,32 +8,31 @@ import com.relicum.scb.listeners.*;
 import com.relicum.scb.mini.SerializedLocation;
 import com.relicum.scb.mini.SignLocationStore;
 import com.relicum.scb.objects.inventory.InventoryManager;
-import com.relicum.scb.objects.world.WorldConfigurator;
 import com.relicum.scb.types.SkyBrosApi;
-import com.relicum.scb.utils.FileUtils;
-import com.relicum.scb.utils.GemShop;
-import com.relicum.scb.utils.Helper;
-import com.relicum.scb.utils.MessageManager;
+import com.relicum.scb.utils.*;
 import com.relicum.scb.we.WorldEditPlugin;
 import lombok.Getter;
 import lombok.Setter;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-import org.bukkit.Bukkit;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
+import org.bukkit.event.Listener;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 
@@ -44,14 +43,10 @@ import java.util.logging.Logger;
  * @version 0.9
  */
 
-public class SCB extends JavaPlugin {
+public class SCB extends JavaPlugin implements Listener {
 
-    private static final Logger log = Logger.getLogger("Minecraft");
-    private static final String FIRST_RUN_DONE = "firstRunDone";
     public static final String DEDICATED_SSB = "dedicatedSSB";
     public static final String WORLD_EDIT = "WorldEdit";
-    private static final String WORLD_GENERATOR = "worldGenerator";
-    private static final String FIRST_RUN = "firstRun";
     public static final String SUCCESSFULLY_HOOKED_INTO_ECONOMY_PLUGIN = "Successfully Hooked into Economy Plugin";
     public static final String VAULT_COULD_NOT_HOOK_INTO_ECONOMY_PLUGIN = "Vault could not hook into Economy Plugin";
     public static final String SUCCESSFULLY_HOOKED_INTO_CHAT_PLUGIN = "Successfully Hooked into Chat Plugin";
@@ -65,6 +60,10 @@ public class SCB extends JavaPlugin {
     public static final String SSBA_ADMIN_CREATESIGN = "ssba.admin.createsign";
     public static final String IGNORE_WORLDS = "ignoreWorlds";
     public static final String ENABLE = "enable";
+    private static final Logger log = Logger.getLogger("Minecraft");
+    private static final String FIRST_RUN_DONE = "firstRunDone";
+    private static final String WORLD_GENERATOR = "worldGenerator";
+    private static final String FIRST_RUN = "firstRun";
     /**
      * The constant MM.
      */
@@ -75,7 +74,11 @@ public class SCB extends JavaPlugin {
     @SuppressWarnings("StaticVariableOfConcreteClass")
     private static SCB p;
     private static Economy econ = null;
-    public static Permission perms = null;
+
+
+    /**
+     * The Vault Chat Interface
+     */
     private static Chat chat = null;
     /**
      * The Group spawn file.
@@ -106,6 +109,12 @@ public class SCB extends JavaPlugin {
      * BaseSign Config Manager
      */
     public SignConfig SNC;
+    public boolean saveOnDisable = true;
+    @Setter
+    public InventoryManager INV;
+    @Getter
+    public boolean isUpdatesEnabled = true;
+    protected ArrayList<Permission> plist = new ArrayList<>();
     /**
      * The SignManager
      */
@@ -114,17 +123,16 @@ public class SCB extends JavaPlugin {
      * The BaseSign Formatter Config.
      */
     private SignFormat SFM;
-    public boolean saveOnDisable = true;
-    @Setter
-    public InventoryManager INV;
     private ScheduledManager poolManager;
     private WorldConfig WCF;
     private WorldManager worldManager;
-    @Getter
-    public boolean isUpdatesEnabled = true;
-    protected ArrayList<Permission> plist = new ArrayList<>();
-    private final PluginManager pm = Bukkit.getServer().getPluginManager();
+    private PluginManager pm = Bukkit.getServer().getPluginManager();
     private List<String> bWorlds = new ArrayList<>();
+    private final String NORMAL = "\033[m";
+    private final String BLUE_TEXT = "\033[36m";  //Blue
+    private final String RED_TEXT = "\033[31m";  //Red
+    private final String GREEN_TEXT = "\033[32m";  //Green
+
 
     /**
      * Gets p.
@@ -145,6 +153,11 @@ public class SCB extends JavaPlugin {
         return MM;
     }
 
+    /**
+     * Gets instance of WorldEdit to use
+     *
+     * @return the WorldEdit plugin api
+     */
     public static WorldEditPlugin getWorldEdit() {
 
         Plugin WE = BukkitInterface.getServer().getPluginManager().getPlugin(WORLD_EDIT);
@@ -153,11 +166,8 @@ public class SCB extends JavaPlugin {
             return (WorldEditPlugin) WE;
 
         }
-
         return null;
-
     }
-
 
     public List<String> getBlackList() {
         return bWorlds;
@@ -180,53 +190,14 @@ public class SCB extends JavaPlugin {
         p = this;
         ConfigurationSerialization.registerClass(SerializedLocation.class);
         SkyBrosApi.init(this);
-        this.saveDefaultConfig();
-        this.getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
+        getConfig().options().copyDefaults(true);
         SkyBrosApi.getSettingsManager2();
-        if (SkyBrosApi.getSettingsManager2().isUseWorldManagement()) {
-            WorldConfigurator cs = new WorldConfigurator();
-            cs.bukkitConfig.getConfig().options().copyDefaults(true);
-            File f = new File(SkyBrosApi.getSCB().getDataFolder().getAbsoluteFile().getParentFile().getParent().toString() + "/bukkit.yml");
-            if (!f.exists()) {
-                System.out.println("File doesn't exist");
-            } else {
-                if (f.isFile()) System.out.println("It is a file");
-
-                if (f.isDirectory()) System.out.println("It is a directory");
-
-                if (f.canRead()) System.out.println("File can be read");
-
-                if (!f.canWrite()) {
-                    System.out.println("File not writable");
-                    if (f.setWritable(true)) System.out.println("I have set the file to writable");
-
-                    if (!f.canWrite()) System.out.println("File Still mot writable");
-
-                }
-
-            }
-
-            //File f1 = new File(SkyBrosApi.getSCB().getDataFolder().getAbsoluteFile().getParentFile().getParent().toString() + "/bukkit.yml");
-        /*
-        System.out.println(SkyBrosApi.getSCB().getDataFolder().getAbsoluteFile().getParentFile().getParent().toString() + "/bukkit.yml");
-
-
-        if (p.getConfig().getBoolean(WORLD_GENERATOR)) {
-            p.pm.registerEvents(new WorldLoad(), p);
-
-
-            p.worldManager = SkyBrosApi.getWorldManager();
-            worldManager.setMainProperties();
-        }*/
-        }
 
 
         BukkitInterface.setServer(this.getServer());
 
-
-        setupPermissions();
-        setupChat();
-        setupEconomy();
+        SkyBrosApi.getVaultManager();
 
         if (p.getConfig().getBoolean("debugCommands")) {
 
@@ -246,6 +217,8 @@ public class SCB extends JavaPlugin {
             p.pm.registerEvents(new FirstRun(this), this);
             FileUtils.createDirectory(getDataFolder().toString(), "players");
             FileUtils.createDirectory(getDataFolder().toString(), "worlds");
+            StringBuilder pa = new StringBuilder();
+            pa.append(getBLUE_TEXT()).append("[<]").append("[1]").append(getRED_TEXT()).append("Yml world gen value is ").append(pa).append(getBLUE_TEXT()).append("[2]").append("[>]").append(getNORMAL());
 
         } else {
 
@@ -253,8 +226,10 @@ public class SCB extends JavaPlugin {
             CommandExecutor cm = new CommandManager(p);
             p.getCommand("ssb").setExecutor(cm);
             p.getCommand("ssba").setExecutor(cm);
+            p.getCommand("ssbw").setExecutor(cm);
             p.getCommand("ssb").setPermissionMessage(MM.getNoPerm());
             p.getCommand("ssba").setPermissionMessage(MM.getNoPerm());
+            p.getCommand("ssbw").setPermissionMessage(MM.getNoPerm());
             //Debug Commands
 
             poolManager = new ScheduledManager(2);
@@ -263,6 +238,9 @@ public class SCB extends JavaPlugin {
             SkyBrosApi.getSettingsManager2().getSignConfig().getConfig().options().copyDefaults(true);
             SkyBrosApi.getSettingsManager2().getSignConfig().saveConfig();
             new SignLocationStore(p);
+            StringBuilder pa = new StringBuilder();
+            String paa = StringUtils.replaceUtf8Characters(String.valueOf(pa.append(getBLUE_TEXT()).append("[<]").append("[1]").append(getRED_TEXT()).append("Yml world gen value is ").append(pa).append(getBLUE_TEXT()).append("[2]").append("[>]").append(getNORMAL())));
+            System.out.println(paa);
             //SkyBrosApi.getSettingsManager2().getWorldConfig().getConfig().options().copyDefaults(true);
             //SkyBrosApi.getSettingsManager2().getWorldConfig().saveConfig();
             //SkyBrosApi.getWorldManager();
@@ -274,25 +252,25 @@ public class SCB extends JavaPlugin {
     /**
      * On disable.
      */
-
+    @Override
     public void onDisable() {
 
-        if (((this.getConfig().getBoolean(FIRST_RUN)) && (!this.getConfig().getBoolean(FIRST_RUN_DONE)))) {
-            if (this.saveOnDisable) {
-                this.getConfig().set(FIRST_RUN, false);
-                this.getConfig().set(FIRST_RUN_DONE, true);
+        if (this.getConfig().getBoolean("modeSet") == false || this.getConfig().getBoolean(FIRST_RUN)) {
+            if (((this.getConfig().getBoolean(FIRST_RUN)) && (!this.getConfig().getBoolean(FIRST_RUN_DONE)))) {
+                if (this.saveOnDisable) {
+                    this.getConfig().set(FIRST_RUN, false);
+                    this.getConfig().set(FIRST_RUN_DONE, true);
+                }
+                SkyBrosApi.getSettingsManager2().getLobbyConfig().saveConfig();
+                SkyBrosApi.getSettingsManager2().getWorldConfig().saveConfig();
+                SkyBrosApi.getSettingsManager2().getSignConfig().saveConfig();
+                this.saveConfig();
             }
-            SkyBrosApi.getSettingsManager2().getLobbyConfig().saveConfig();
-            //SkyBrosApi.getSettingsManager2().getWorldConfig().saveConfig();
-            SkyBrosApi.getSettingsManager2().getSignConfig().saveConfig();
-            this.saveConfig();
-
+            return;
         } else {
-
-
             try {
                 SkyBrosApi.getSettingsManager2().getLobbyConfig().saveConfig();
-                //SkyBrosApi.getSettingsManager2().getWorldConfig().saveConfig();
+                SkyBrosApi.getSettingsManager2().getWorldConfig().saveConfig();
                 SkyBrosApi.getSettingsManager2().getSignConfig().saveConfig();
                 ARC.saveConfig();
                 SPC.saveConfig();
@@ -302,9 +280,7 @@ public class SCB extends JavaPlugin {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
-
     }
 
 
@@ -330,10 +306,39 @@ public class SCB extends JavaPlugin {
         }
     }
 
+    private void fileExists(String fi) {
+
+        File file = new File(getDataFolder(), fi);
+        FileConfiguration fCon;
+
+
+        try {
+            if (!file.exists()) {
+                file.createNewFile();
+                fCon = YamlConfiguration.loadConfiguration(SCB.getInstance().getResource(fi));
+                fCon.save(file);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void registerNewPerm(String name, String des, String parent) {
+        org.bukkit.permissions.Permission per = new org.bukkit.permissions.Permission(name);
+        per.setDescription(des);
+        per.addParent(parent, true);
+        per.setDefault(PermissionDefault.OP);
+
+        p.pm.addPermission(per);
+
+
+    }
+
     class Startup implements Runnable {
 
 
-        final SCB p = SCB.getInstance();
+        SCB p = SCB.getInstance();
 
         /**
          * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread
@@ -346,25 +351,6 @@ public class SCB extends JavaPlugin {
         @Override
         public void run() {
 
-            /*WorldCreator wc = new WorldCreator("template");
-
-            wc.environment(Environment.NORMAL);
-            wc.type(WorldType.FLAT);
-            wc.generator("CleanroomGenerator:.");
-            wc.generateStructures(false);
-            System.out.println("About to start new world creation");
-            World world = wc.createWorld();
-            System.out.println("End of world creation");
-            Location below = new Location(world, 0, 64, 0);
-            Block b = below.getBlock();
-            b.setType(Material.GLASS);
-            world.save();
-            world.setAutoSave(true);
-            world.setSpawnLocation(0,65,0);
-            world.setKeepSpawnInMemory(true);
-            world.setDifficulty(Difficulty.EASY);
-            world.setSpawnFlags(false,false);
-            world.save();*/
             p.bWorlds = p.getConfig().getStringList(IGNORE_WORLDS);
             for (String w : p.bWorlds) {
 
@@ -423,7 +409,7 @@ public class SCB extends JavaPlugin {
             p.pm.registerEvents(new SignChange(p), p);
             p.pm.registerEvents(new PlayerInteract(p), p);
             p.pm.registerEvents(new ShopManager(p), p);
-            //p.pm.registerEvents(new ArenaChangeStatus(p), p);
+            //p.pm.registerEvents(new ArenaChangeStatusOld(p), p);
             // List<String> wol = new ArrayList<>();
             //wol.add("world_the_end");
             // p.pm.registerEvents(new PlayerToggleFly(p),p);
@@ -442,88 +428,129 @@ public class SCB extends JavaPlugin {
             registerNewPerm(SSBA_ADMIN_CREATESIGN, "Allows user to create signs", SSBA_ADMIN);
             registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player.*");
 
+            applyWorldDefaultSettings("world");
 
-
-/*            Set<org.bukkit.permissions.Permission> per = p.pm.getPermissions();
-            Iterator<org.bukkit.permissions.Permission> it = per.iterator();
-            while(it.hasNext()){
-                org.bukkit.permissions.Permission st = it.next();
-                  if(st.getName().contains("bukkit")) {
-                 System.out.println(st.getName() + ": Default " + st.getDefault().toString() + " Description : " + st
-                 .getDescription());
-                System.out.println(""); }
-            }*/
         }
 
     }
 
-    private void fileExists(String fi) {
+    public String getGREEN_TEXT() {
+        return GREEN_TEXT;
+    }
 
-        File file = new File(getDataFolder(), fi);
-        FileConfiguration fCon;
+    public String getRED_TEXT() {
+        return RED_TEXT;
+    }
 
+    public String getBLUE_TEXT() {
+        return BLUE_TEXT;
+    }
+
+    public String getNORMAL() {
+        return NORMAL;
+    }
+
+
+    public void updateBukkitConfigs() {
+        YamlConfiguration config = YamlConfiguration.loadConfiguration(new File("bukkit.yml"));
+
+        config.set("worlds.world.generator", "CleanroomGenerator:.");
 
         try {
-            if (!file.exists()) {
-                file.createNewFile();
-                fCon = YamlConfiguration.loadConfiguration(SCB.getInstance().getResource(fi));
-                fCon.save(file);
-            }
-        } catch (Exception e) {
+            config.save(new File("bukkit.yml"));
+
+        } catch (IOException e) {
             e.printStackTrace();
         }
+        this.removeDefaultWorld("world");
+        config.set("settings.allow-end", false);
 
-    }
+        try {
+            config.save(new File("bukkit.yml"));
 
-    private void registerNewPerm(String name, String des, String parent) {
-        org.bukkit.permissions.Permission per = new org.bukkit.permissions.Permission(name);
-        per.setDescription(des);
-        per.addParent(parent, true);
-        per.setDefault(PermissionDefault.OP);
-
-        p.pm.addPermission(per);
-
-
-    }
-
-    private void setupEconomy() {
-
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(
-                net.milkbowl.vault.economy.Economy
-                        .class);
-
-        if (rsp != null) {
-            // SkyBrosApi. = rsp.getProvider();
-            log.info(SUCCESSFULLY_HOOKED_INTO_ECONOMY_PLUGIN);
-        } else {
-            log.warning(VAULT_COULD_NOT_HOOK_INTO_ECONOMY_PLUGIN);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        PropertiesManager prop = new PropertiesManager();
+        Map<String, Object> st = SkyBrosApi.getSettingsManager2().getWorldConfig().getConfig().getConfigurationSection("mainWorld").getValues(true);
+        for (Map.Entry e : st.entrySet()) {
+            prop.setPropertiesConfig((String) e.getKey(), e.getValue());
+        }
+        try {
+            prop.savePropertiesConfig();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
+        this.removeDefaultWorld("world" + "_the_end");
+        this.removeDefaultWorld("world" + "_nether");
+
+
+        SkyBrosApi.getSettingsManager2().getWorldConfig().getConfig().set("mainWorld.level-name", "SSB");
+
+
+        SkyBrosApi.getSettingsManager2().getWorldConfig().getConfig().set("mainWorld.level-name", SkyBrosApi.getSCB().getConfig().getString("world"));
+
+
+        System.out.println(RED_TEXT + "The end set to false" + NORMAL);
+
+
     }
 
-    private void setupChat() {
-        RegisteredServiceProvider<Chat> rsp = getServer().getServicesManager().getRegistration(Chat.class);
-        if (rsp != null) {
-            chat = rsp.getProvider();
-            log.info(SUCCESSFULLY_HOOKED_INTO_CHAT_PLUGIN);
-        } else {
-            log.warning(VAULT_COULD_NOT_HOOK_INTO_CHAT_PLUGIN);
+    public boolean removeDefaultWorld(String path) {
+
+
+        FileUtils.clear(new File(path));
+        try {
+            FileUtils.clear(new File(path));
+        } catch (Exception e) {
+            SkyBrosApi.getSCB().getLogger().severe(e.getMessage());
+            return false;
         }
 
+        SkyBrosApi.getSCB().getLogger().info("Successfully deleted " + path + " folder the server will now restart");
 
+        return true;
     }
 
-    private void setupPermissions() {
-        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
+    public World applyWorldDefaultSettings(String name) {
 
+        World world;
 
-        if (rsp != null) {
-            perms = rsp.getProvider();
-            log.info(SUCCESSFULLY_HOOKED_INTO_PERMISSIONS_PLUGIN);
-        } else {
-            log.warning(VAULT_COULD_NOT_HOOK_INTO_PERMISSIONS_PLUGIN);
+        try {
+            world = Bukkit.getServer().getWorld("world");
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
         }
 
+        world.loadChunk(0, 0, true);
+        world.setSpawnLocation(0, 32, 0);
+        world.setKeepSpawnInMemory(true);
+
+        world.getSpawnLocation().getWorld().getChunkAt(world.getSpawnLocation()).load();
+        Block block = world.getBlockAt(0, 31, 0);
+        block.getState().setType(Material.GOLD_BLOCK);
+        block.getState().update(true);
+        world.setAutoSave(true);
+        world.setDifficulty(Difficulty.HARD);
+        world.setStorm(false);
+        world.setThundering(false);
+        world.setWeatherDuration(9999999);
+        world.setTime(6000);
+        getServer().setDefaultGameMode(GameMode.ADVENTURE);
+        world.setGameRuleValue("doDaylightCycle", "false");
+        world.setGameRuleValue("doFireTick", "false");
+        world.setGameRuleValue("doMobSpawning", "false");
+        world.setGameRuleValue("mobGriefing", "false");
+        world.save();
+
+
+        System.out.println("Settings applied for  " + name + " has been successful");
+        return world;
     }
 
 

@@ -1,7 +1,6 @@
 package com.relicum.scb.mini;
 
 import com.relicum.scb.configs.*;
-import com.relicum.scb.objects.world.BukkitConfig;
 import com.relicum.scb.types.SkyBrosApi;
 import org.bukkit.Location;
 
@@ -43,25 +42,9 @@ public class SettingsManager2 {
      */
     private WorldConfig worldConfig;
 
-    /**
-     * ChtManager
-     */
-    private WorldConfig chat;
-
-    /**
-     *
-     */
-    private WorldConfig perms;
-
-    /**
-     *
-     */
-    private WorldConfig economy;
-
-    private BukkitConfig bukkitConfig;
-
 
     private boolean useWorldManagement;
+    private boolean generateDefaultWorld;
 
     /**
      * Instantiates a new Settings manager 2.
@@ -75,26 +58,29 @@ public class SettingsManager2 {
      * Sets .
      */
     public void setup() {
-
+        setgenerateDefaultWorld(SkyBrosApi.getSCB().getConfig().getBoolean("generateDefaultWorld"));
         setUseWorldManagement(SkyBrosApi.getSCB().getConfig().getBoolean("useWorldManager"));
+
 
         if (isUseWorldManagement()) {
             worldConfig = new WorldConfig("worlds.yml");
+            worldConfig.saveDefaultConfig();
             worldConfig.getConfig().options().copyDefaults(true);
-            worldConfig.saveConfig();
+
         }
         lobbyConfig = new LobbyConfig("lobby.yml");
+        lobbyConfig.saveDefaultConfig();
         lobbyConfig.getConfig().options().copyDefaults(true);
-        lobbyConfig.saveConfig();
 
         signConfig = new SignConfig("signs.yml");
+        signConfig.saveDefaultConfig();
         signConfig.getConfig().options().copyDefaults(true);
-        signConfig.reloadConfig();
 
-/*        signFormatConfig = new SignFormat("signsText.yml");
+
+        signFormatConfig = new SignFormat("signsText.yml");
         signFormatConfig.getConfig().options().copyDefaults(true);
         signFormatConfig.reloadConfig();
-
+/*
         spawnConfig = new SpawnConfig("spawns.yml");
         spawnConfig.getConfig().options().copyDefaults(true);
         spawnConfig.reloadConfig();
@@ -251,5 +237,23 @@ public class SettingsManager2 {
      */
     public void setUseWorldManagement(boolean useWorldManagement) {
         this.useWorldManagement = useWorldManagement;
+    }
+
+    /**
+     * Is generate default world. True or false
+     *
+     * @return the boolean if true we will be generating the default world
+     */
+    public boolean isGenerateDefaultWorld() {
+        return generateDefaultWorld;
+    }
+
+    /**
+     * Sets default world to be true or false. Eg True means we will set default world.
+     *
+     * @param boolean should we generate default world
+     */
+    public void setgenerateDefaultWorld(boolean generateDefaultWorld) {
+        this.generateDefaultWorld = generateDefaultWorld;
     }
 }

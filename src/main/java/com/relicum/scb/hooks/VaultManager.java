@@ -17,7 +17,7 @@ public class VaultManager {
 
     private static Economy econ = null;
 
-    private static Permission perms = null;
+    public static Permission perms = null;
 
     private static Chat chat = null;
 

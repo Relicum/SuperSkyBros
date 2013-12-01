@@ -1,6 +1,7 @@
 package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.signs.utils.Col;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
@@ -42,7 +43,7 @@ public class SignChange implements Listener {
         //Lobby Join Sign
         if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("join")) {
 
-            if (SCB.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
+            if (VaultManager.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
                 e.setLine(0, Col.Dark_Red() + "[JOIN LOBBY]");
                 e.setLine(1, "CLICK TO JOIN");
                 e.setLine(2, Col.Aqua() + Col.Italic() + "SUPER");
@@ -62,7 +63,7 @@ public class SignChange implements Listener {
         //Lobby Leave Sign
         if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("leave")) {
 
-            if (SCB.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
+            if (VaultManager.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
                 e.setLine(0, Col.Dark_Red() + "[LEAVE LOBBY]");
                 e.setLine(1, "CLICK TO LEAVE");
                 e.setLine(2, Col.Aqua() + Col.Italic() + "SUPER");
@@ -81,7 +82,7 @@ public class SignChange implements Listener {
         //Lobby Return Sign used in arena lobbies to take the player back to the main lobby
         if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("return")) {
 
-            if (SCB.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
+            if (VaultManager.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
                 e.setLine(0, Col.Dark_Red() + "[RETURN]");
                 e.setLine(1, "CLICK TO RETURN");
                 e.setLine(2, "TO LOBBY");
@@ -100,7 +101,7 @@ public class SignChange implements Listener {
         //Arena Join Sign updates to show game status, number of players etc
         if (lines[0].equalsIgnoreCase("[SSBARENA]") && lines[1].equalsIgnoreCase("join") && Integer.parseInt(lines[2]) > 0) {
 
-            if (SCB.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
+            if (VaultManager.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
 
                 Integer arenaID = Integer.parseInt(lines[2]);
                 if (!plugin.ARC.getConfig().contains("arena.arenas." + arenaID.toString())) {

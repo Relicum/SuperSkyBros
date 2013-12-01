@@ -2,6 +2,7 @@ package com.relicum.scb.conversations.setmode;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.objects.signs.utils.Col;
+import com.relicum.scb.utils.DelayedShutDown;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.MessagePrompt;
 import org.bukkit.conversations.Prompt;
@@ -32,13 +33,16 @@ public class SetModeResult extends MessagePrompt {
             if (!setupMode(false)) {
                 return Col.Dark_Red() + "Error occurred while setting mode to mixed please check logs";
             }
-            return Col.Gold() + "Mode successfully set to MIXED, to continue please stop and start the server";
+            DelayedShutDown.shutDown();
+            return Col.Gold() + "Mode successfully set to MIXED, the server requires a reboot. The server will shutdown now";
         }
         if (context.getSessionData("mode").toString().equalsIgnoreCase("dedicated")) {
             if (!setupMode(true)) {
                 return Col.Dark_Red() + "Error occurred while setting mode to DEDICATED please check logs";
             }
-            return Col.Gold() + "Mode successfully set to DEDICATED, to continue please stop and start the server";
+
+            DelayedShutDown.shutDown();
+            return Col.Gold() + "Mode successfully set to DEDICATED,  the server requires a reboot. The server will shutdown now";
         }
 
 
@@ -53,9 +57,10 @@ public class SetModeResult extends MessagePrompt {
         try {
             plugin.getConfig().set(SCB.DEDICATED_SSB, isDedicated);
             plugin.getConfig().set("modeSet", true);
+            plugin.saveOnDisable = true;
             plugin.saveConfig();
             plugin.reloadConfig();
-            plugin.saveOnDisable = true;
+
         } catch (Exception ex) {
             ex.printStackTrace();
             return false;

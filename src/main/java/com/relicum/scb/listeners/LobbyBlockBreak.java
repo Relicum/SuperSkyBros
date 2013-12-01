@@ -1,6 +1,7 @@
 package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.hooks.VaultManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
@@ -24,17 +25,11 @@ public class LobbyBlockBreak implements Listener, Cancellable {
      * The Plugin.
      */
     public SCB plugin;
-
     public Vector min;
-
     public Vector max;
-
     public String world;
-
-    private boolean protectionSet;
-
     public List<String> blacklist;
-
+    private boolean protectionSet;
     private boolean cancel = false;
 
 
@@ -53,7 +48,6 @@ public class LobbyBlockBreak implements Listener, Cancellable {
 
     }
 
-
     /**
      * Lobby break.
      *
@@ -67,7 +61,7 @@ public class LobbyBlockBreak implements Listener, Cancellable {
         Player player = e.getPlayer();
         String wo = player.getWorld().getName();
 
-        if (!SCB.perms.has(player, SCB.SSBA_ADMIN_BREAKBLOCKS) && !player.isOp()) {
+        if (!VaultManager.perms.has(player, SCB.SSBA_ADMIN_BREAKBLOCKS) && !player.isOp()) {
             if (SCB.getInstance().LBS.getLobbyRegion().isAABB(e.getBlock().getLocation().toVector())) {
                 e.setCancelled(true);
                 player.sendMessage(SCB.MM.getErrorMessage("listeners.blockbreak.lobbyBreak"));
@@ -75,7 +69,6 @@ public class LobbyBlockBreak implements Listener, Cancellable {
         }
 
     }
-
 
     /**
      * Is cancelled.
@@ -86,7 +79,6 @@ public class LobbyBlockBreak implements Listener, Cancellable {
     public boolean isCancelled() {
         return cancel;
     }
-
 
     /**
      * Sets cancelled.

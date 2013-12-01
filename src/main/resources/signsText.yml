@@ -1,7 +1,7 @@
 # Used to hold the formatting and text for the signs
 LOBBYJOIN:
   lines:
-    - 'SUPERSKYBROS'
-    - 'Click To Join'
-    - 'Main Lobby'
-    - '~-~-~-~-~-~-~'
+  - 1: 'SUPERSKYBROS'
+  - 2: 'Click To Join'
+  - 3: 'Main Lobby'
+  - 4: '~-~-~-~-~-~-~'

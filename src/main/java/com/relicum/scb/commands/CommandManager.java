@@ -1,6 +1,7 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.utils.MessageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,6 +28,8 @@ public class CommandManager implements TabExecutor {
     protected List<String> PLAYER = new ArrayList<>();
 
     protected List<String> ADMIN = new ArrayList<>();
+
+    protected List<String> WADMIN = new ArrayList<>();
 
 
     /**
@@ -59,7 +62,9 @@ public class CommandManager implements TabExecutor {
             String[] sp = entry.getValue().getCmd().split(" ");
             if (sp[0].equalsIgnoreCase("ssba")) {
                 ADMIN.add(sp[1]);
-            } else {
+            } else if (sp[0].equalsIgnoreCase("ssbw")) {
+                WADMIN.add(sp[1]);
+            } else if (sp[0].equalsIgnoreCase("ssb")) {
                 PLAYER.add(sp[1]);
             }
         }
@@ -91,6 +96,7 @@ public class CommandManager implements TabExecutor {
         clist.put("worldtp", new worldtp());
         clist.put("blacklisted", new blacklisted());
         clist.put("adminmode", new adminmode());
+        clist.put("autosetup", new autosetup());
     }
 
 
@@ -142,7 +148,7 @@ public class CommandManager implements TabExecutor {
         // Pre Execute command checks
         SubBase subCom = clist.get(sub);
         // Has the user the permission
-        if ((!player.isOp()) && (!SCB.perms.has(player, subCom.getPerm()))) {
+        if ((!player.isOp()) && (!VaultManager.perms.has(player, subCom.getPerm()))) {
             player.sendMessage(mm.getNoPerm());
             return true;
         }
@@ -289,6 +295,8 @@ public class CommandManager implements TabExecutor {
                 } else if (s.equalsIgnoreCase("ssba")) {
 
                     return StringUtil.copyPartialMatches(strings[0], ADMIN, new ArrayList<String>(ADMIN.size()));
+                } else if (s.equalsIgnoreCase("ssbw")) {
+                    return StringUtil.copyPartialMatches(strings[0], WADMIN, new ArrayList<String>(WADMIN.size()));
                 }
             }
             if (strings.length == 2 && s.equalsIgnoreCase("ssba")) {

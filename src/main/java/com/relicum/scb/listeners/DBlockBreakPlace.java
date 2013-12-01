@@ -1,6 +1,7 @@
 package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.hooks.VaultManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -34,7 +35,7 @@ public class DBlockBreakPlace implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBreak(BlockBreakEvent e) {
 
-        if (!SCB.perms.has(e.getPlayer(), "ssba.admin.breakbypass") && !e.getPlayer().isOp()) {
+        if (!VaultManager.perms.has(e.getPlayer(), "ssba.admin.breakbypass") && !e.getPlayer().isOp()) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(this.breakMessage);
         }
@@ -44,7 +45,7 @@ public class DBlockBreakPlace implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlace(BlockPlaceEvent e) {
 
-        if (!SCB.perms.has(e.getPlayer(), "ssba.admin.placebypass") && !e.getPlayer().isOp()) {
+        if (!VaultManager.perms.has(e.getPlayer(), "ssba.admin.placebypass") && !e.getPlayer().isOp()) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(this.placeMessage);
         }

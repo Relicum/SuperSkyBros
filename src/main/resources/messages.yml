@@ -43,6 +43,7 @@ command:
     worldtp: "&bAllows admins to tp to any world by command"
     blacklisted: "&bDisplays a list of Worlds that are currently blacklisted"
     adminmode: "&bToogle admin mode allows admin not to be restricted by other settings"
+    autosetup: "&bThis will automattically setup the server to be a dedicated server. Run &6/help ssbw autosetup &b for full info"
   message:
     worldOnBlackList: "Sorry this world is on the world blacklist. Remove it and restart the server and try again."
     joinNoLocation: "You can not use this as the Lobby Location has not been set yet"

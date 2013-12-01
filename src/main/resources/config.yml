@@ -10,9 +10,14 @@ ignoreWorlds:
   - 'world_the_end'
   - 'world_nether'
 dedicatedSSB: false
-useWorldManager: false
+useWorldManager: true
 worldGenerator: false
 generateDefaultWorld: false
+worldGenerateStage: 1
+worldGeneratorPlugin: 'CleanroomGenerator:.'
+worldDefault: 'world'
+newWorldDefault: 'SSB'
+disableTheEnd: false
 classesEnabled:
   - Creeper
 gemshop:
@@ -20,12 +25,11 @@ gemshop:
   itemOpen:
     - open: true
     - item: 'Material_Emerald'
-  meta:
     - displayName: 'Super Sky Bros Shop'
-    - lore:
-       - 'Sorry the shop is closed'
-       - 'Still in Development'
-    - slot: 8
+  lore:
+    - 'Sorry the shop is closed'
+    - 'Still in Development'
+  slot: 8
 joinBook:
   enable: true
   slot: 0

@@ -3,6 +3,7 @@ package com.relicum.scb.commands;
 import com.relicum.scb.SCB;
 import com.relicum.scb.conversations.DefaultConversationFactory;
 import com.relicum.scb.conversations.setmode.DisplayModesInput;
+import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.signs.utils.Col;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -65,7 +66,7 @@ public class CommandManagerFirstJoin implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender cs, Command command, String label, String[] args) {
         if (cs instanceof Player) {
-            if (!SCB.perms.has(cs, "ssba.admin.setmode")) {
+            if (!VaultManager.perms.has(cs, "ssba.admin.setmode")) {
                 cs.sendMessage(Col.Dark_Red() + "You do not have permission to run setmode");
                 return true;
             }
@@ -108,7 +109,7 @@ public class CommandManagerFirstJoin implements CommandExecutor {
         }
         Player player = (Player) cs;
 
-        if (!SCB.perms.has(player, "ssba.admins.setmode")) {
+        if (!VaultManager.perms.has(player, "ssba.admins.setmode")) {
             System.out.println("Failed perms check");
             return true;
         }

@@ -4,6 +4,7 @@ import com.relicum.scb.*;
 import com.relicum.scb.commands.CommandManager;
 import com.relicum.scb.hooks.ChatManager;
 import com.relicum.scb.hooks.PermsManager;
+import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.mini.SettingsManager2;
 import com.relicum.scb.objects.inventory.InventoryManager;
 import com.relicum.scb.utils.MessageManager;
@@ -40,6 +41,8 @@ public class SkyBrosApi {
     private static ChatManager chatManager;
 
     private static PropertiesManager propertiesManager;
+
+    public static VaultManager vaultManager;
 
     /**
      * Get command manager.
@@ -172,6 +175,16 @@ public class SkyBrosApi {
         return propertiesManager;
     }
 
+    /**
+     * Gets vault manager.
+     *
+     * @return the vault manager
+     */
+    public static VaultManager getVaultManager() {
+        if (vaultManager == null)
+            vaultManager = new VaultManager();
+        return vaultManager;
+    }
 
     /**
      * Get main plugin.

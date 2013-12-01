@@ -1,77 +1,94 @@
 package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.arena.ArenaIO;
-import com.relicum.scb.events.ArenaStatusChangeEvents;
+import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaStatus;
-import org.bukkit.event.EventHandler;
+import com.relicum.scb.events.ArenaStatusChangeEvent;
+import com.relicum.scb.types.SkyBrosApi;
 import org.bukkit.event.Listener;
 
 /**
- * SuperSkyBros First Created 11/09/13
+ * Deals with the ArenaChangeStatusEvent
+ * First Created 27/11/13
  *
  * @author Relicum
  * @version 0.1
  */
 public class ArenaChangeStatus implements Listener {
 
+    private SCB plugin = SkyBrosApi.getSCB();
+    private String newStatus;
+    private String previousStatus;
+    private Arena arena;
+    public NullPointerException isnull;
 
-    private SCB p;
-
-    private ArenaStatusChangeEvents event;
-
-
-    public ArenaChangeStatus(SCB pl) {
-        this.p = pl;
-    }
-
-
-    @EventHandler
-    public void ArenaStatusListen(ArenaStatusChangeEvents e) {
-        if (!e.isWithGame()) {
-            this.event = e;
-            this.test();
+    public void statusChange(ArenaStatusChangeEvent e) {
+        if (isValid(e.getArenaStatus())) {
+            newStatus = e.getArenaStatus();
         } else {
-            event = e;
+            plugin.getLogger().severe(isnull.getMessage());
         }
+        previousStatus = e.getPreviousStatus();
+        arena = e.getArena();
+
+        selected(ArenaStatus.valueOf(newStatus));
     }
 
 
-    public void test() {
+    public void selected(ArenaStatus status) {
 
-        p.getLogger().info("The Arena Status Change Event has been fired for Arena ID: " + event.getArena().getArenaId().toString());
-        p.getLogger().info("The status was " + event.getPrevious().name() + " it is now set to " + event.getStatus().name());
-    }
-
-
-    public void isDisabled() {
-        if ((event.getStatus().equals(event.getPrevious()))) {
-            p.getLogger().info("Nothing to do in ArenaStatusChangeEvents Previous and Current status both = DISABLED");
-            return;
+        switch (status) {
+            case DISABLED:
+                //Check if the Arena was in game
+                //Run end game functions
+                //Update Signs to Disable
+                //Mark Arena as disabled and no longer selectable
+                break;
+            case WAITING:
+                //Check user has permission if so teleport to arena lobby
+                //The arena should be checked it is ready
+                //Display initial data on Join signs Map,Players,Status
+                //Change PlayerList to reflect rank
+                //Update Gamer to show players in a arena lobby and their exact location
+                //Handle players returning to lobby using return signs
+                break;
+            case STARTING:
+                //Check the criteria is met to start a game
+                //Check they have a class if not give a default one
+                //apply correct game settings to players
+                //Start countdown and display via scoreboard to players
+                //Update sign
+                //Assign Spawn points to players including future spawns
+                //Teleport To Arena nd switch to game scoreboard
+                //Start game timer
+                //Game starts
+                break;
+            case INGAME:
+                break;
+            case RESTARTING:
+                break;
+            default:
+                break;
         }
-        if (event.getStatus().equals(ArenaStatus.DISABLED)) {
-
-            ArenaIO arenaIO = new ArenaIO();
-            arenaIO.saveArena(event.getArena());
-            arenaIO = null;
-
-        }
     }
-
 
     /**
-     * Tries to remove the arena from Arena Manager List
+     * Validate the status to check it is an ArenaStatus
      *
-     * @return boolean
+     * @param String the status to validate
+     * @return true if the new status is valid return false if not
      */
-    public boolean removeArena() {
+    private boolean isValid(String status) {
 
         try {
-            SCB.getInstance().ARM.removeArena(event.getArena().getArenaId(), event.getArena().getUniqueMap());
-        } catch (Exception e) {
-            System.out.println("Error has occurred removing the arena");
+            ArenaStatus.find(status);
+
+        } catch (NullPointerException e) {
+            isnull = e;
             return false;
         }
+
         return true;
     }
+
 }

@@ -4,6 +4,7 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.SettingsManager;
 import com.relicum.scb.SmashPlayer;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
+import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.utils.playerStatus;
 import com.relicum.scb.utils.timers.StartTimer;
 import lombok.Data;
@@ -64,7 +65,7 @@ public class PlayerJoin implements Listener {
 
         if (SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB)) {
             SmashPlayer pl = new SmashPlayer(e.getPlayer());
-            if (SCB.perms.has(pl.getPlayer(), "ssba.admin") || pl.getPlayer().isOp()) {
+            if (VaultManager.perms.has(pl.getPlayer(), "ssba.admin") || pl.getPlayer().isOp()) {
                 ChatColor b = ChatColor.BOLD;
                 String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
                 pl.sendMessage(
@@ -91,7 +92,7 @@ public class PlayerJoin implements Listener {
 
             }
 
-            if (SCB.perms.has(pl.getPlayer(), "ssb.player.join") || pl.isOp()) {
+            if (VaultManager.perms.has(pl.getPlayer(), "ssb.player.join") || pl.isOp()) {
                 e.setJoinMessage("");
 
                 pl.setpStatus(playerStatus.JOINEDSERVER);
@@ -115,7 +116,7 @@ public class PlayerJoin implements Listener {
             System.out.println("Player Join Returned right at the top");
             return;
         }
-        if (SettingsManager.getInstance().notWorlds().contains(e.getPlayer().getWorld().getName()) && plugin.getConfig().getBoolean(SCB.DEDICATED_SSB) && !SCB.perms.has(
+        if (SettingsManager.getInstance().notWorlds().contains(e.getPlayer().getWorld().getName()) && plugin.getConfig().getBoolean(SCB.DEDICATED_SSB) && !VaultManager.perms.has(
                 e.getPlayer(), "ssba.admin")) {
             e.setJoinMessage("");
             System.out.println("Player Join Event has been thrown");
@@ -126,7 +127,7 @@ public class PlayerJoin implements Listener {
         }
 
 
-        if (SCB.perms.has(e.getPlayer(), "ssba.admin") || e.getPlayer().isOp()) {
+        if (VaultManager.perms.has(e.getPlayer(), "ssba.admin") || e.getPlayer().isOp()) {
 
             ChatColor b = ChatColor.BOLD;
             String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";

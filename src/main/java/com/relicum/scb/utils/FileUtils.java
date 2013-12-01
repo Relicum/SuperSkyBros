@@ -26,6 +26,11 @@ public class FileUtils {
         }
     }
 
+    /**
+     * Clear and delete a directory
+     *
+     * @param file the directory path as a File
+     */
     public static void clear(File file) {
         if (!file.exists()) return;
         if (file.isFile()) {
