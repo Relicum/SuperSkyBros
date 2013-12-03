@@ -15,11 +15,11 @@ public class NewWorld {
     private String filePath;
 
 
-    public NewWorld(String filePath) {
-        this.filePath = filePath;
-        this.ws = new worldSettings();
+    // public NewWorld(String filePath) {
+    //    this.filePath = filePath;
+    //    this.ws = new worldSettings();
 
-    }
+    // }
 
 
     public void load() {

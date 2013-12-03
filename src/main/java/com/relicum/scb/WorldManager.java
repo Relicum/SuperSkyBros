@@ -55,12 +55,24 @@ public class WorldManager {
         this.plugin = SkyBrosApi.getSCB();
         defaultGenerate = this.plugin.getConfig().getBoolean("generateDefaultWorld");
         this.config = SkyBrosApi.getSettingsManager2().getWorldConfig();
-        this.worldSettings = this.config.getConfig().getConfigurationSection("worldSettings").getValues(true);
 
 
+        //this.worldSettings = this.config.getConfig().getConfigurationSection("worldSettings").getValues(true);
+
+        WorldConfigurator worldSettings = new WorldConfigurator();
         plugin.getLogger().info("WorldGenerator Successfully Loaded");
 
 
+    }
+
+    private void getMainWorldSettings() throws NoSuchFieldException {
+
+        World theWorld = Bukkit.getWorld("world");
+
+        //Method[] fields = World.class.getDeclaredMethods();
+        //Field f2 = fields.getClass().getDeclaredField("generator");
+
+        System.out.println(theWorld.getClass().getDeclaredMethods().toString());
     }
 
     /**

@@ -97,6 +97,7 @@ public class CommandManager implements TabExecutor {
         clist.put("blacklisted", new blacklisted());
         clist.put("adminmode", new adminmode());
         clist.put("autosetup", new autosetup());
+        clist.put("saveworld", new saveworld());
     }
 
 

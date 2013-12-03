@@ -193,7 +193,12 @@ public class SCB extends JavaPlugin implements Listener {
         saveDefaultConfig();
         getConfig().options().copyDefaults(true);
         SkyBrosApi.getSettingsManager2();
+        World theWorld = Bukkit.getWorld("world");
 
+        //Method[] fields = World.class.getDeclaredMethods();
+        //Field f2 = fields.getClass().getDeclaredField("generator");
+
+        //System.out.println(theWorld.getClass().getDeclaredMethods().toString());
 
         BukkitInterface.setServer(this.getServer());
 
