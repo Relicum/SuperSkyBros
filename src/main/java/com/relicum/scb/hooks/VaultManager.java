@@ -1,7 +1,7 @@
 package com.relicum.scb.hooks;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.types.SkyApi;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
@@ -61,27 +61,27 @@ public class VaultManager {
 
     private void setupEconomy() {
 
-        RegisteredServiceProvider<Economy> rsp = SkyBrosApi.getSCB().getServer().getServicesManager().getRegistration(
+        RegisteredServiceProvider<Economy> rsp = SkyApi.getSCB().getServer().getServicesManager().getRegistration(
                 net.milkbowl.vault.economy.Economy
                         .class);
 
         if (rsp != null) {
             econ = rsp.getProvider();
-            SkyBrosApi.getSCB().getLogger().info(SCB.SUCCESSFULLY_HOOKED_INTO_ECONOMY_PLUGIN);
+            SkyApi.getSCB().getLogger().info(SCB.SUCCESSFULLY_HOOKED_INTO_ECONOMY_PLUGIN);
         } else {
-            SkyBrosApi.getSCB().getLogger().warning(SCB.VAULT_COULD_NOT_HOOK_INTO_ECONOMY_PLUGIN);
+            SkyApi.getSCB().getLogger().warning(SCB.VAULT_COULD_NOT_HOOK_INTO_ECONOMY_PLUGIN);
         }
 
     }
 
 
     private void setupChat() {
-        RegisteredServiceProvider<Chat> rsp = SkyBrosApi.getSCB().getServer().getServicesManager().getRegistration(Chat.class);
+        RegisteredServiceProvider<Chat> rsp = SkyApi.getSCB().getServer().getServicesManager().getRegistration(Chat.class);
         if (rsp != null) {
             chat = rsp.getProvider();
-            SkyBrosApi.getSCB().getLogger().info(SCB.SUCCESSFULLY_HOOKED_INTO_CHAT_PLUGIN);
+            SkyApi.getSCB().getLogger().info(SCB.SUCCESSFULLY_HOOKED_INTO_CHAT_PLUGIN);
         } else {
-            SkyBrosApi.getSCB().getLogger().warning(SCB.VAULT_COULD_NOT_HOOK_INTO_CHAT_PLUGIN);
+            SkyApi.getSCB().getLogger().warning(SCB.VAULT_COULD_NOT_HOOK_INTO_CHAT_PLUGIN);
         }
 
 
@@ -89,14 +89,14 @@ public class VaultManager {
 
 
     private void setupPermissions() {
-        RegisteredServiceProvider<Permission> rsp = SkyBrosApi.getSCB().getServer().getServicesManager().getRegistration(Permission.class);
+        RegisteredServiceProvider<Permission> rsp = SkyApi.getSCB().getServer().getServicesManager().getRegistration(Permission.class);
 
 
         if (rsp != null) {
             perms = rsp.getProvider();
-            SkyBrosApi.getSCB().getLogger().info(SCB.SUCCESSFULLY_HOOKED_INTO_PERMISSIONS_PLUGIN);
+            SkyApi.getSCB().getLogger().info(SCB.SUCCESSFULLY_HOOKED_INTO_PERMISSIONS_PLUGIN);
         } else {
-            SkyBrosApi.getSCB().getLogger().warning(SCB.VAULT_COULD_NOT_HOOK_INTO_PERMISSIONS_PLUGIN);
+            SkyApi.getSCB().getLogger().warning(SCB.VAULT_COULD_NOT_HOOK_INTO_PERMISSIONS_PLUGIN);
         }
 
     }

@@ -1,5 +1,7 @@
 package com.relicum.scb.utils;
 
+import com.relicum.scb.types.SkyApi;
+
 import java.io.File;
 
 /**
@@ -21,8 +23,8 @@ public class FileUtils {
         if (!f) {
             boolean fi = new File(path + "/" + name).mkdirs();
 
-            if (fi) System.out.println("New Directory created at " + path + "/" + name);
-            else System.out.println("Error: Failed to directory at " + path + "/" + name);
+            if (!fi)
+                SkyApi.getCMsg().SERVE("Error: Failed to directory at " + path + "/" + name);
         }
     }
 

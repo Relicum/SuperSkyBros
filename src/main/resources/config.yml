@@ -51,3 +51,12 @@ joinBook:
         - lines:
           - '&5This is displaing on page 2'
           - '&5The good can have 250 pages'
+#Color Console Messages
+#True is that console messages will have color
+colorConsole: true
+#Set to false to disable info color
+infoColor: true
+#Set to false to disable warning color
+warningColor: true
+#set to false to disable serve color
+serveColor: true

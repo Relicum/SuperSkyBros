@@ -1,7 +1,6 @@
 package com.relicum.scb.commands;
 
-import com.relicum.scb.types.SkyBrosApi;
-import com.relicum.scb.utils.DelayedShutDown;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.ChatColor;
 import org.bukkit.conversations.ConversationFactory;
 import org.bukkit.entity.Player;
@@ -25,10 +24,7 @@ public class autosetup extends SubBase {
             "*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<\n";
 
     private StringBuilder sb;
-    String NORMAL = "\033[m";
-    String MENU = "\033[36m";  //Blue
-    String RED_TEXT = "\033[31m";  //Red
-    String GREEN_TEXT = "\033[32m";  //Green
+
 
     /**
      * @param player Player
@@ -37,14 +33,21 @@ public class autosetup extends SubBase {
      */
     @Override
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
-        SkyBrosApi.getSCB().getConfig().set("generateDefaultWorld", true);
-        SkyBrosApi.getSCB().saveConfig();
-        SkyBrosApi.getSCB().reloadConfig();
-        player.sendMessage(ChatColor.GREEN + "The server will now shutdown you will need to stop and start the server 4 times\n to complete the setup the console will display details of progress.");
-        player.sendMessage("");
-        player.sendMessage(ChatColor.RED + "The server will now shutdown in 6 seconds");
-        System.out.println(GREEN_TEXT + "The server will now shutdown in 6 seconds" + NORMAL);
-        DelayedShutDown.shutDown();
+
+        String[] strings1 = new String[19];
+        for (int i = 0; i < 19; i++) {
+            strings1[i] = "";
+        }
+        player.sendMessage(strings1);
+        player.sendMessage(this.cHeader);
+        player.sendMessage(ChatColor.GREEN + "Not quite finished");
+        //SkyApi.getSCB().getConfig().set("generateDefaultWorld", true);
+        //SkyApi.getSCB().saveConfig();
+        //player.sendMessage(ChatColor.GREEN + "The server will now shutdown you will need to stop and start the server 4 times\n to complete the setup the console will display details of progress.");
+        //player.sendMessage("");
+        //player.sendMessage(ChatColor.RED + "The server will now shutdown in 6 seconds");
+        //SkyApi.getCMsg().INFO("The server will now shutdown in 6 seconds");
+
         return true;
 
     }
@@ -111,7 +114,7 @@ public class autosetup extends SubBase {
 
     @Override
     public Plugin getPlugin() {
-        return SkyBrosApi.getSCB();
+        return SkyApi.getSCB();
     }
 
 

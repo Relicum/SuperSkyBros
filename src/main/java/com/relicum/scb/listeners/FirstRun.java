@@ -58,7 +58,7 @@ public class FirstRun implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void firstJoin(PlayerJoinEvent e) {
         if (!e.getPlayer().isOp()) {
-            e.getPlayer().kickPlayer("Sorry currently not allowed as server is being setup for SuperSkyBros");
+            e.getPlayer().kickPlayer(ChatColor.GREEN + "Sorry currently not allowed in as server is being setup for SuperSkyBros");
         } else {
             e.setJoinMessage(null);
             List<String> st = Arrays.asList(

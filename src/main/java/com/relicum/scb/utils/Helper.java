@@ -1,7 +1,7 @@
 package com.relicum.scb.utils;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.types.SkyApi;
 import com.sk89q.worldedit.Vector;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -36,7 +36,7 @@ public class Helper {
 
 
     public void setup() {
-        Helper.pl = SkyBrosApi.getSCB();
+        Helper.pl = SkyApi.getSCB();
     }
 
 

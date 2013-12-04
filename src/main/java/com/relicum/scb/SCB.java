@@ -8,7 +8,7 @@ import com.relicum.scb.listeners.*;
 import com.relicum.scb.mini.SerializedLocation;
 import com.relicum.scb.mini.SignLocationStore;
 import com.relicum.scb.objects.inventory.InventoryManager;
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.*;
 import com.relicum.scb.we.WorldEditPlugin;
 import lombok.Getter;
@@ -16,8 +16,10 @@ import lombok.Setter;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-import org.bukkit.*;
-import org.bukkit.block.Block;
+import org.bukkit.Bukkit;
+import org.bukkit.Difficulty;
+import org.bukkit.GameMode;
+import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -75,7 +77,6 @@ public class SCB extends JavaPlugin implements Listener {
     private static SCB p;
     private static Economy econ = null;
 
-
     /**
      * The Vault Chat Interface
      */
@@ -128,10 +129,6 @@ public class SCB extends JavaPlugin implements Listener {
     private WorldManager worldManager;
     private PluginManager pm = Bukkit.getServer().getPluginManager();
     private List<String> bWorlds = new ArrayList<>();
-    private final String NORMAL = "\033[m";
-    private final String BLUE_TEXT = "\033[36m";  //Blue
-    private final String RED_TEXT = "\033[31m";  //Red
-    private final String GREEN_TEXT = "\033[32m";  //Green
 
 
     /**
@@ -173,6 +170,7 @@ public class SCB extends JavaPlugin implements Listener {
         return bWorlds;
     }
 
+
     /**
      * On load. Registers any ConfigurationSerializable files at onLoad Before other things have started to load
      */
@@ -189,20 +187,22 @@ public class SCB extends JavaPlugin implements Listener {
 
         p = this;
         ConfigurationSerialization.registerClass(SerializedLocation.class);
-        SkyBrosApi.init(this);
-        saveDefaultConfig();
         getConfig().options().copyDefaults(true);
-        SkyBrosApi.getSettingsManager2();
-        World theWorld = Bukkit.getWorld("world");
+        saveDefaultConfig();
 
-        //Method[] fields = World.class.getDeclaredMethods();
-        //Field f2 = fields.getClass().getDeclaredField("generator");
+        SkyApi.init(this);
 
-        //System.out.println(theWorld.getClass().getDeclaredMethods().toString());
+        saveResource("messages.properties", true);
+        SkyApi.getCMsg().INFO("New Message Properties file saved");
 
         BukkitInterface.setServer(this.getServer());
 
-        SkyBrosApi.getVaultManager();
+        SkyApi.getVaultManager();
+
+        if (SkyApi.getSm().isUseWorldManagement() && SkyApi.getSm().isGenerateDefaultWorld()) {
+            SkyApi.getCMsg().INFO("Starting auto setup for dedicated servers");
+            updateBukkitConfigs();
+        }
 
         if (p.getConfig().getBoolean("debugCommands")) {
 
@@ -210,10 +210,10 @@ public class SCB extends JavaPlugin implements Listener {
             p.getCommand(DebugManager.V_LIST).setPermissionMessage("Only runs from console");
 
 
-            System.out.println("Debug Commands installed");
+            SkyApi.getCMsg().INFO("Debug Commands installed");
         }
 
-        if (SCB.getInstance().getConfig().getBoolean(FIRST_RUN)) {
+        if (getConfig().getBoolean(FIRST_RUN) && (!getConfig().getBoolean("modeSet"))) {
             this.saveOnDisable = false;
             CommandExecutor cm = new CommandManagerFirstJoin(p);
 
@@ -222,8 +222,6 @@ public class SCB extends JavaPlugin implements Listener {
             p.pm.registerEvents(new FirstRun(this), this);
             FileUtils.createDirectory(getDataFolder().toString(), "players");
             FileUtils.createDirectory(getDataFolder().toString(), "worlds");
-            StringBuilder pa = new StringBuilder();
-            pa.append(getBLUE_TEXT()).append("[<]").append("[1]").append(getRED_TEXT()).append("Yml world gen value is ").append(pa).append(getBLUE_TEXT()).append("[2]").append("[>]").append(getNORMAL());
 
         } else {
 
@@ -240,15 +238,6 @@ public class SCB extends JavaPlugin implements Listener {
             poolManager = new ScheduledManager(2);
             getServer().getScheduler().scheduleSyncDelayedTask(SCB.getInstance(), new Startup(), 15L);
 
-            SkyBrosApi.getSettingsManager2().getSignConfig().getConfig().options().copyDefaults(true);
-            SkyBrosApi.getSettingsManager2().getSignConfig().saveConfig();
-            new SignLocationStore(p);
-            StringBuilder pa = new StringBuilder();
-            String paa = StringUtils.replaceUtf8Characters(String.valueOf(pa.append(getBLUE_TEXT()).append("[<]").append("[1]").append(getRED_TEXT()).append("Yml world gen value is ").append(pa).append(getBLUE_TEXT()).append("[2]").append("[>]").append(getNORMAL())));
-            System.out.println(paa);
-            //SkyBrosApi.getSettingsManager2().getWorldConfig().getConfig().options().copyDefaults(true);
-            //SkyBrosApi.getSettingsManager2().getWorldConfig().saveConfig();
-            //SkyBrosApi.getWorldManager();
         }
 
 
@@ -260,26 +249,27 @@ public class SCB extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
 
-        if (this.getConfig().getBoolean("modeSet") == false || this.getConfig().getBoolean(FIRST_RUN)) {
-            if (((this.getConfig().getBoolean(FIRST_RUN)) && (!this.getConfig().getBoolean(FIRST_RUN_DONE)))) {
-                if (this.saveOnDisable) {
-                    this.getConfig().set(FIRST_RUN, false);
-                    this.getConfig().set(FIRST_RUN_DONE, true);
-                }
-                SkyBrosApi.getSettingsManager2().getLobbyConfig().saveConfig();
-                SkyBrosApi.getSettingsManager2().getWorldConfig().saveConfig();
-                SkyBrosApi.getSettingsManager2().getSignConfig().saveConfig();
-                this.saveConfig();
+
+        if ((this.getConfig().getBoolean(FIRST_RUN)) && (!this.getConfig().getBoolean(FIRST_RUN_DONE))) {
+            if (this.saveOnDisable) {
+                this.getConfig().set(FIRST_RUN, false);
+                this.getConfig().set(FIRST_RUN_DONE, true);
             }
-            return;
+            SkyApi.getSm().getLobbyConfig().saveConfig();
+            SkyApi.getSm().getWorldConfig().saveConfig();
+            SkyApi.getSm().getSignConfig().saveConfig();
+            SkyApi.getSm().getSignFormatConfig().saveConfig();
+            this.saveConfig();
+
+
         } else {
             try {
-                SkyBrosApi.getSettingsManager2().getLobbyConfig().saveConfig();
-                SkyBrosApi.getSettingsManager2().getWorldConfig().saveConfig();
-                SkyBrosApi.getSettingsManager2().getSignConfig().saveConfig();
+                SkyApi.getSm().getLobbyConfig().saveConfig();
+                SkyApi.getSm().getWorldConfig().saveConfig();
+                SkyApi.getSm().getSignConfig().saveConfig();
+                SkyApi.getSm().getSignFormatConfig().saveConfig();
                 ARC.saveConfig();
                 SPC.saveConfig();
-                SFM.saveConfig();
                 this.saveConfig();
                 ScheduledManager.getScheduler().shutdown();
             } catch (Exception e) {
@@ -292,7 +282,7 @@ public class SCB extends JavaPlugin implements Listener {
     public void loadLobbyEvents() {
 
         if (!this.getConfig().getBoolean(DEDICATED_SSB)) {
-            System.out.println("Loading Lobby Events in SSB");
+            SkyApi.getCMsg().INFO("Loading Lobby Events in SSB");
             p.pm.registerEvents(new LobbyBlockPlace(p), p);
             p.pm.registerEvents(new LobbyBlockBreak(p), p);
 
@@ -307,26 +297,8 @@ public class SCB extends JavaPlugin implements Listener {
             LobbyBlockBreak bl = new LobbyBlockBreak(this);
             LobbyBlockPlace bp = new LobbyBlockPlace(this);
 
-            System.out.println("UnLoading Lobby Events in SSB");
+            SkyApi.getCMsg().INFO("UnLoading Lobby Events in SSB");
         }
-    }
-
-    private void fileExists(String fi) {
-
-        File file = new File(getDataFolder(), fi);
-        FileConfiguration fCon;
-
-
-        try {
-            if (!file.exists()) {
-                file.createNewFile();
-                fCon = YamlConfiguration.loadConfiguration(SCB.getInstance().getResource(fi));
-                fCon.save(file);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 
     private void registerNewPerm(String name, String des, String parent) {
@@ -343,7 +315,7 @@ public class SCB extends JavaPlugin implements Listener {
     class Startup implements Runnable {
 
 
-        SCB p = SCB.getInstance();
+        SCB p = SkyApi.getSCB();
 
         /**
          * When an object implementing interface <code>Runnable</code> is used to create a thread, starting the thread
@@ -363,38 +335,31 @@ public class SCB extends JavaPlugin implements Listener {
             }
             p.INV = new InventoryManager();
 
-            p.LBC = SkyBrosApi.getSettingsManager2().getLobbyConfig();
+            p.LBC = SkyApi.getSm().getLobbyConfig();
 
+            new SignLocationStore(p);
 
             p.SPC = new SpawnConfig("spawns.yml");
             p.SPC.getConfig().options().copyDefaults(true);
             p.SPC.saveConfig();
 
-/*            p.SNC = new SignConfig("signs.yml");
-            p.SNC.getConfig().options().copyDefaults(true);
-            p.SNC.saveConfig();
-            new SignLocationStore(p);*/
 
             p.ARC = new ArenaConfig("arena.yml");
             p.ARC.getConfig().options().copyDefaults(true);
             p.ARC.saveConfig();
             p.ARM = new ArenaManager();
 
-            p.SFM = new SignFormat("signsText.yml");
-            p.SFM.getConfig().options().copyDefaults(true);
-            p.SFM.saveDefaultConfig();
-
 
             SettingsManager.getInstance().setup(p);
             //MM = new MessageManager(p);
             if (!p.getConfig().getBoolean(ENABLE)) {
-                getLogger().info("SCB is being disabled due to it enable being false in config.yml");
+                SkyApi.getCMsg().INFO("SCB is being disabled due to it enable being false in config.yml");
                 p.pm.disablePlugin(p);
                 return;
 
             }
 
-            p.LBS = SkyBrosApi.getLobbyManager();
+            p.LBS = SkyApi.getLobbyManager();
             if (p.LBC.getConfig().getBoolean(LOBBYSET)) {
                 if (p.getConfig().getBoolean(DEDICATED_SSB)) {
                     p.pm.registerEvents(new DBlockBreakPlace(p), p);
@@ -433,26 +398,9 @@ public class SCB extends JavaPlugin implements Listener {
             registerNewPerm(SSBA_ADMIN_CREATESIGN, "Allows user to create signs", SSBA_ADMIN);
             registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player.*");
 
-            applyWorldDefaultSettings("world");
 
         }
 
-    }
-
-    public String getGREEN_TEXT() {
-        return GREEN_TEXT;
-    }
-
-    public String getRED_TEXT() {
-        return RED_TEXT;
-    }
-
-    public String getBLUE_TEXT() {
-        return BLUE_TEXT;
-    }
-
-    public String getNORMAL() {
-        return NORMAL;
     }
 
 
@@ -463,6 +411,7 @@ public class SCB extends JavaPlugin implements Listener {
 
         try {
             config.save(new File("bukkit.yml"));
+            SkyApi.getCMsg().INFO("CleanroomGenerator has been set to world in bukkit.yml");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -472,17 +421,18 @@ public class SCB extends JavaPlugin implements Listener {
 
         try {
             config.save(new File("bukkit.yml"));
-
+            SkyApi.getCMsg().INFO("Allow the_end has been set to false in bukkit.yml");
         } catch (IOException e) {
             e.printStackTrace();
         }
         PropertiesManager prop = new PropertiesManager();
-        Map<String, Object> st = SkyBrosApi.getSettingsManager2().getWorldConfig().getConfig().getConfigurationSection("mainWorld").getValues(true);
+        Map<String, Object> st = SkyApi.getSm().getWorldConfig().getConfig().getConfigurationSection("mainWorld").getValues(true);
         for (Map.Entry e : st.entrySet()) {
             prop.setPropertiesConfig((String) e.getKey(), e.getValue());
         }
         try {
             prop.savePropertiesConfig();
+            SkyApi.getCMsg().INFO("New settings have been applied to server.properties file");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -491,15 +441,12 @@ public class SCB extends JavaPlugin implements Listener {
         this.removeDefaultWorld("world" + "_nether");
 
 
-        SkyBrosApi.getSettingsManager2().getWorldConfig().getConfig().set("mainWorld.level-name", "SSB");
+        //SkyApi.getSm().getWorldConfig().getConfig().set("mainWorld.level-name", "SSB");
 
 
-        SkyBrosApi.getSettingsManager2().getWorldConfig().getConfig().set("mainWorld.level-name", SkyBrosApi.getSCB().getConfig().getString("world"));
+        SkyApi.getSm().getWorldConfig().getConfig().set("mainWorld.level-name", SkyApi.getSCB().getConfig().getString("world"));
 
-
-        System.out.println(RED_TEXT + "The end set to false" + NORMAL);
-
-
+        SkyApi.getCMsg().INFO("This is the last line do we now change settings ??");
     }
 
     public boolean removeDefaultWorld(String path) {
@@ -509,11 +456,11 @@ public class SCB extends JavaPlugin implements Listener {
         try {
             FileUtils.clear(new File(path));
         } catch (Exception e) {
-            SkyBrosApi.getSCB().getLogger().severe(e.getMessage());
+            SkyApi.getSCB().getLogger().severe(e.getMessage());
             return false;
         }
 
-        SkyBrosApi.getSCB().getLogger().info("Successfully deleted " + path + " folder the server will now restart");
+        SkyApi.getCMsg().INFO("Successfully deleted " + path + " folder the server will now restart");
 
         return true;
     }
@@ -531,20 +478,20 @@ public class SCB extends JavaPlugin implements Listener {
             ex.printStackTrace();
             return null;
         }
-
-        world.loadChunk(0, 0, true);
-        world.setSpawnLocation(0, 32, 0);
+        SkyApi.getCMsg().INFO("Attempting to apply world settings to the world " + name);
+        //world.loadChunk(0, 0, true);
+        //world.setSpawnLocation(0, 32, 0);
         world.setKeepSpawnInMemory(true);
 
         world.getSpawnLocation().getWorld().getChunkAt(world.getSpawnLocation()).load();
-        Block block = world.getBlockAt(0, 31, 0);
+        /*Block block = world.getBlockAt(0, 31, 0);
 
         block.getState().getBlock().setType(Material.AIR);
 
         block.getState().update(true);
 
         block.getState().setType(Material.GOLD_BLOCK);
-        block.getState().update(true);
+        block.getState().update(true);*/
 
         world.setAutoSave(true);
         world.setDifficulty(Difficulty.HARD);
@@ -557,10 +504,9 @@ public class SCB extends JavaPlugin implements Listener {
         world.setGameRuleValue("doFireTick", "false");
         world.setGameRuleValue("doMobSpawning", "false");
         world.setGameRuleValue("mobGriefing", "false");
-        world.save();
 
 
-        System.out.println("Settings applied for  " + name + " has been successful");
+        SkyApi.getCMsg().INFO("Settings applied for  " + name + " has been successful");
         return world;
     }
 

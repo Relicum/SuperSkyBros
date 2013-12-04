@@ -6,11 +6,11 @@ package com.relicum.scb.configs;
  * @author Relicum
  * @version 0.1
  */
-public class ConfigManager {
+public class ConfigManagerold {
 
-/*	static ConfigManager instance = new ConfigManager();
+/*	static ConfigManagerold instance = new ConfigManagerold();
 
-	public static ConfigManager getInstance() {
+	public static ConfigManagerold getInstance() {
 		return instance;
 	}
 

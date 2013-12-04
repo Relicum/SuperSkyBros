@@ -2,7 +2,7 @@ package com.relicum.scb;
 
 import com.relicum.scb.configs.LobbyConfig;
 import com.relicum.scb.objects.LobbyRegion;
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -58,7 +58,7 @@ public class LobbyManager implements Listener {
     public void setup() {
 
         //sp = SCB.getInstance().Spawns;
-        this.config = SkyBrosApi.getSettingsManager2().getLobbyConfig();
+        this.config = SkyApi.getSm().getLobbyConfig();
 
 
         loadLobbySpawn();
@@ -83,12 +83,12 @@ public class LobbyManager implements Listener {
                     (org.bukkit.util.Vector) lrc.get("MIN"), (org.bukkit.util.Vector) lrc.get("MAX"), (org.bukkit.util.Vector) lrc.get("SPAWN"), (String) lrc.get("WORLD"),
                     (String) lrc.get("PERM"), (float) ya.floatValue());
 
-            SkyBrosApi.getSCB().getLogger().info("LobbySpawn has successfully been loaded");
+            SkyApi.getSCB().getLogger().info("LobbySpawn has successfully been loaded");
 
             return true;
         }
 
-        SkyBrosApi.getSCB().getLogger().info("No Lobby Spawn Point was been set yet");
+        SkyApi.getSCB().getLogger().info("No Lobby Spawn Point was been set yet");
 
         return false;
     }
@@ -102,8 +102,8 @@ public class LobbyManager implements Listener {
     public boolean saveLobbyFile() {
         try {
 
-            this.config.saveConfig();
-            this.config.reloadConfig();
+            this.config.saveDefaultConfig();
+
             setup();
 
         } catch (Exception e) {
@@ -243,7 +243,7 @@ public class LobbyManager implements Listener {
      */
     public World getWorld(String wo) {
 
-        return SkyBrosApi.getSCB().getServer().getWorld(wo);
+        return SkyApi.getSCB().getServer().getWorld(wo);
 
     }
 
@@ -321,34 +321,6 @@ public class LobbyManager implements Listener {
 
         return true;
     }
-
-
-    /**
-     * Create hash list. if enabled in config
-     */
-    public void createHashList() {
-
-        if (SkyBrosApi.getSCB().getConfig().getBoolean("enableLobbyProtection")) {
-
-            if (!checkExists("LOBBYHASH")) {
-                return;
-            }
-
-            this.hashList = this.config.getConfig().getStringList("LOBBYHASH");
-        }
-    }
-
-
-    /**
-     * Get hash list.
-     *
-     * @return List
-     */
-    public List<String> getHashList() {
-
-        return Collections.unmodifiableList(this.hashList);
-    }
-
 
     /**
      * Gets world as string.

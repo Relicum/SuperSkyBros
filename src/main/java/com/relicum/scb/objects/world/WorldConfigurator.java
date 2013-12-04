@@ -1,6 +1,6 @@
 package com.relicum.scb.objects.world;
 
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.FileUtils;
 import com.relicum.scb.utils.PropertiesManager;
 import com.relicum.scb.utils.StringUtils;
@@ -45,7 +45,7 @@ public class WorldConfigurator implements IWorlds {
      */
     public boolean setBukkit(boolean end, String gen, String wo, Integer stage) {
 
-        if (Bukkit.getAllowEnd() && SkyBrosApi.getSCB().getServer().getAllowEnd() == false) {
+        if (Bukkit.getAllowEnd() && SkyApi.getSCB().getServer().getAllowEnd() == false) {
             YamlConfiguration config = YamlConfiguration.loadConfiguration(new File("bukkit.yml"));
             config.set("settings.allow-end", end);
             StringBuilder pa = new StringBuilder();
@@ -63,7 +63,7 @@ public class WorldConfigurator implements IWorlds {
                 return false;
             }
         }
-        SkyBrosApi.getSCB().getLogger().info(BLUE_TEXT + "The _the_end has successfully been disabled and the WorldGenerator Plugin Added" + NORMAL);
+        SkyApi.getSCB().getLogger().info(BLUE_TEXT + "The _the_end has successfully been disabled and the WorldGenerator Plugin Added" + NORMAL);
 
         return true;
     }
@@ -74,18 +74,18 @@ public class WorldConfigurator implements IWorlds {
      * @return true if the properties were successfully updated
      */
     public boolean setMainProperties() {
-        Map<String, Object> st = SkyBrosApi.getSettingsManager2().getWorldConfig().getConfig().getConfigurationSection("mainWorld").getValues(true);
-        Integer stage = SkyBrosApi.getSCB().getConfig().getInt("worldGenerateStage");
+        Map<String, Object> st = SkyApi.getSm().getWorldConfig().getConfig().getConfigurationSection("mainWorld").getValues(true);
+        Integer stage = SkyApi.getSCB().getConfig().getInt("worldGenerateStage");
         System.out.println("Stage we are at is " + stage + " lenght of st is " + st.size());
         PropertiesManager prop = new PropertiesManager();
         String wn = "";
         if (stage == 1) {
-            wn = SkyBrosApi.getSCB().getConfig().getString("newWorldDefault");
+            wn = SkyApi.getSCB().getConfig().getString("newWorldDefault");
         }
 
         if (stage == 2) {
 
-            wn = SkyBrosApi.getSCB().getConfig().getString("worldDefault");
+            wn = SkyApi.getSCB().getConfig().getString("worldDefault");
         }
 
 
@@ -93,7 +93,7 @@ public class WorldConfigurator implements IWorlds {
         String theWorld = String.valueOf(obj);
         st.put("level-name", wn);
         if (stage == 1) {
-            SkyBrosApi.getSCB().getConfig().set("newWorldDefault", wn);
+            SkyApi.getSCB().getConfig().set("newWorldDefault", wn);
 
         }
 
@@ -108,19 +108,19 @@ public class WorldConfigurator implements IWorlds {
             ex.printStackTrace();
         }
         if (stage == 1) {
-            SkyBrosApi.getSettingsManager2().getWorldConfig().getConfig().set("mainWorld.level-name", SkyBrosApi.getSCB().getConfig().getString("newWorldDefault"));
+            SkyApi.getSm().getWorldConfig().getConfig().set("mainWorld.level-name", SkyApi.getSCB().getConfig().getString("newWorldDefault"));
         }
         if (stage == 2) {
-            SkyBrosApi.getSettingsManager2().getWorldConfig().getConfig().set("mainWorld.level-name", SkyBrosApi.getSCB().getConfig().getString("worldDefault"));
+            SkyApi.getSm().getWorldConfig().getConfig().set("mainWorld.level-name", SkyApi.getSCB().getConfig().getString("worldDefault"));
         }
 
-        SkyBrosApi.getSCB().saveConfig();
-        SkyBrosApi.getSCB().reloadConfig();
-        SkyBrosApi.getSettingsManager2().getWorldConfig().saveConfig();
-        SkyBrosApi.getSettingsManager2().getWorldConfig().reloadConfig();
+        SkyApi.getSCB().saveConfig();
+        SkyApi.getSCB().reloadConfig();
+        SkyApi.getSm().getWorldConfig().saveConfig();
+        SkyApi.getSm().getWorldConfig().reloadConfig();
 
 
-        SkyBrosApi.getSCB().getLogger().info("You have successfully update the properties file");
+        SkyApi.getSCB().getLogger().info("You have successfully update the properties file");
         return true;
     }
 
@@ -135,17 +135,17 @@ public class WorldConfigurator implements IWorlds {
         try {
             FileUtils.clear(new File(path));
         } catch (Exception e) {
-            SkyBrosApi.getSCB().getLogger().severe(e.getMessage());
+            SkyApi.getSCB().getLogger().severe(e.getMessage());
             return false;
         }
 
-        SkyBrosApi.getSCB().getLogger().info("Successfully deleted " + path + " folder the server will now restart");
+        SkyApi.getSCB().getLogger().info("Successfully deleted " + path + " folder the server will now restart");
 
         return true;
     }
 
     public void stopServer() {
-        SkyBrosApi.getSCB().getServer().shutdown();
+        SkyApi.getSCB().getServer().shutdown();
     }
 
     public WorldConfigurator WorldConfigurator() {

@@ -2,7 +2,7 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.SmashPlayer;
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -127,7 +127,7 @@ public class DebugManager implements CommandExecutor {
         }
         if (list.equalsIgnoreCase("wsettings")) {
 
-            SkyBrosApi.getWorldManager().applyWorldDefaultSettings("scb");
+            SkyApi.getWorldManager().applyWorldDefaultSettings("scb");
             System.out.println("World Settings have tried to be applied");
 
         }

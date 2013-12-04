@@ -3,7 +3,7 @@ package com.relicum.scb.utils;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.configs.Messages;
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.ChatColor;
 
 import java.util.Arrays;
@@ -41,7 +41,7 @@ public class MessageManager {
      * @param p SCB
      */
     public MessageManager() {
-        pl = SkyBrosApi.getSCB();
+        pl = SkyApi.getSCB();
         setup();
 
     }

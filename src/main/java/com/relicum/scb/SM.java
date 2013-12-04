@@ -1,15 +1,23 @@
-package com.relicum.scb.mini;
+package com.relicum.scb;
 
 import com.relicum.scb.configs.*;
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.mini.SerializedLocation;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.Location;
+
+import java.io.*;
 
 /**
  * The type Settings manager 2.
  */
-public class SettingsManager2 {
+public class SM {
 
-    private static SettingsManager2 instance;
+    private static SM instance;
+
+    /**
+     * Default Data Folder
+     */
+    private File dataFolder;
 
     /**
      * The Lobby config.
@@ -49,7 +57,7 @@ public class SettingsManager2 {
     /**
      * Instantiates a new Settings manager 2.
      */
-    public SettingsManager2() {
+    public SM() {
         setup();
     }
 
@@ -58,28 +66,34 @@ public class SettingsManager2 {
      * Sets .
      */
     public void setup() {
-        setgenerateDefaultWorld(SkyBrosApi.getSCB().getConfig().getBoolean("generateDefaultWorld"));
-        setUseWorldManagement(SkyBrosApi.getSCB().getConfig().getBoolean("useWorldManager"));
+
+        dataFolder = SkyApi.getSCB().getDataFolder();
+
+        setgenerateDefaultWorld(SkyApi.getSCB().getConfig().getBoolean("generateDefaultWorld"));
+        setUseWorldManagement(SkyApi.getSCB().getConfig().getBoolean("useWorldManager"));
 
 
         if (isUseWorldManagement()) {
             worldConfig = new WorldConfig("worlds.yml");
-            worldConfig.saveDefaultConfig();
             worldConfig.getConfig().options().copyDefaults(true);
+            worldConfig.saveDefaultConfig();
+
 
         }
         lobbyConfig = new LobbyConfig("lobby.yml");
-        lobbyConfig.saveDefaultConfig();
         lobbyConfig.getConfig().options().copyDefaults(true);
+        lobbyConfig.saveDefaultConfig();
+
 
         signConfig = new SignConfig("signs.yml");
-        signConfig.saveDefaultConfig();
         signConfig.getConfig().options().copyDefaults(true);
+        ;
+        signConfig.saveDefaultConfig();
 
 
         signFormatConfig = new SignFormat("signsText.yml");
         signFormatConfig.getConfig().options().copyDefaults(true);
-        signFormatConfig.reloadConfig();
+        signFormatConfig.saveDefaultConfig();
 /*
         spawnConfig = new SpawnConfig("spawns.yml");
         spawnConfig.getConfig().options().copyDefaults(true);
@@ -255,5 +269,40 @@ public class SettingsManager2 {
      */
     public void setgenerateDefaultWorld(boolean generateDefaultWorld) {
         this.generateDefaultWorld = generateDefaultWorld;
+    }
+
+    public void loadFile(File file) {
+
+        File t = file;
+
+
+        SkyApi.getCMsg().INFO("Writing new file: " + t.getAbsolutePath());
+
+
+        if (!t.exists()) {
+
+            try {
+                t.createNewFile();
+                FileWriter out = new FileWriter(t);
+                System.out.println(file);
+                InputStream is = getClass().getResourceAsStream("/" + file);
+                InputStreamReader isr = new InputStreamReader(is);
+                BufferedReader br = new BufferedReader(isr);
+                String line;
+                while ((line = br.readLine()) != null) {
+                    out.write(line + "\n");
+                    System.out.println(line);
+                }
+                out.flush();
+                is.close();
+                isr.close();
+                br.close();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 }

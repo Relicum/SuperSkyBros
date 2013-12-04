@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.relicum</groupId>
     <artifactId>SuperSkyBros</artifactId>
-    <version>0.2.95</version>
+    <version>0.2.98</version>
     <name>SuperSkyBros</name>
     <description>Super Sky Bros Brawl Mini-Game based off SethBlings project. This is a Bukkit Plugin Version designed
         to run in Minecraft
@@ -25,12 +25,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.comphenix.protocol</groupId>
-            <artifactId>ProtocolLib</artifactId>
-            <version>2.7.3</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
             <version>7.7.5-SNAPSHOT</version>
@@ -47,17 +41,6 @@
             <artifactId>lombok</artifactId>
             <version>1.12.2</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-profile</artifactId>
-            <version>2.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>2.2</version>
-            <type>maven-plugin</type>
         </dependency>
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
@@ -146,7 +129,7 @@
                     <outputDirectory>${project.basedir}/target</outputDirectory>
                     <testClassesDirectory>${project.basedir}target/test-classes</testClassesDirectory>
                     <archive>
-                        <addMavenDescriptor>true</addMavenDescriptor>
+                        <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>
                     <finalName>SuperSkyBros.Beta.${project.version}</finalName>
                 </configuration>
@@ -159,7 +142,7 @@
                 <directory>${project.basedir}/src/main/resources</directory>
                 <includes>
                     <include>*.yml</include>
-                    <include>*.xml</include>
+                    <include>*.properties</include>
                 </includes>
             </resource>
         </resources>

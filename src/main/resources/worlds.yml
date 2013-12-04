@@ -1,4 +1,4 @@
-## Do Not Delete
+# Do Not Delete
 mainWorld:
   force-gamemode: 'true'
   allow-nether: 'false'
@@ -13,6 +13,7 @@ mainWorld:
   allow-flight: 'true'
   spawn-animals: 'true'
   spawn-monsters: 'true'
+# Default New Woirld
 default:
   name: 'Template'
   type: 'FLAT'
@@ -20,6 +21,7 @@ default:
   generator: 'CleanroomGenerator:.'
   structures: 'false'
   fixedSpawn: '0,33,0'
+# General world settings
 worldSettings:
   setSpawnLocation: '0,33,0'
   setKeepSpawnInMemory: 'true'

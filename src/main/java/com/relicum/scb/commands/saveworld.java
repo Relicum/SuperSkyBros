@@ -1,6 +1,6 @@
 package com.relicum.scb.commands;
 
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -24,7 +24,7 @@ public class saveworld extends SubBase {
      */
     @Override
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
-        SkyBrosApi.getWorldManager();
+        SkyApi.getWorldManager();
         player.sendMessage(ChatColor.GREEN + "Welcome you have passed the test");
         return true;
     }
@@ -93,6 +93,6 @@ public class saveworld extends SubBase {
 
     @Override
     public Plugin getPlugin() {
-        return SkyBrosApi.getSCB();
+        return SkyApi.getSCB();
     }
 }

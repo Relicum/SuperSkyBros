@@ -3,7 +3,7 @@ package com.relicum.scb.commands;
 import com.relicum.scb.SCB;
 import com.relicum.scb.SmashPlayer;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.playerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -26,14 +26,14 @@ public class join extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) {
 
-        if (SkyBrosApi.getSCB().LBS.isInLobby(player)) {
+        if (SkyApi.getSCB().LBS.isInLobby(player)) {
             player.sendMessage(SCB.getMessageManager().getErrorMessage("listeners.playerJoin.alreadyInLobby"));
             return true;
         }
         SmashPlayer splayer = SmashPlayer.wrap(player);
 
         splayer.pStatus = playerStatus.UNKNOWN;
-        PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "COMMAND", SkyBrosApi.getSCB().getConfig().getBoolean(SCB.DEDICATED_SSB));
+        PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "COMMAND", SkyApi.getSCB().getConfig().getBoolean(SCB.DEDICATED_SSB));
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         return true;
@@ -51,8 +51,8 @@ public class join extends SubBase {
      */
     public boolean teleportToLobby(final Player p, final Location l) {
 
-        SkyBrosApi.getSCB().getServer().getScheduler().runTaskLater(
-                SkyBrosApi.getSCB(), new Runnable() {
+        SkyApi.getSCB().getServer().getScheduler().runTaskLater(
+                SkyApi.getSCB(), new Runnable() {
 
             @Override
             public void run() {
@@ -137,6 +137,6 @@ public class join extends SubBase {
 
     @Override
     public Plugin getPlugin() {
-        return SkyBrosApi.getSCB();
+        return SkyApi.getSCB();
     }
 }

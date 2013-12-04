@@ -1,7 +1,7 @@
 package com.relicum.scb;
 
 import com.relicum.scb.configs.SignConfig;
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.types.SkyApi;
 
 /**
  * SuperSkyBros First Created 10/09/13
@@ -27,7 +27,7 @@ public class SignManager {
         /*
       Stores BaseSign Config Object
      */
-        config = SkyBrosApi.getSettingsManager2().getSignConfig();
+        config = SkyApi.getSm().getSignConfig();
         SCB.getInstance().getLogger().info("New BaseSign Manager has been created");
 
     }

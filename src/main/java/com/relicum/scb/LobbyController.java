@@ -2,6 +2,7 @@ package com.relicum.scb;
 
 import com.relicum.scb.configs.LobbyConfig;
 import com.relicum.scb.mini.SerializedLocation;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.Location;
 
 /**
@@ -15,22 +16,15 @@ public class LobbyController {
 
     private LobbyConfig config;
 
-    private SCB plugin;
-
 
     public LobbyController() {
 
-
-        this.plugin = SCB.getInstance();
-        this.config = new LobbyConfig("lobby.yml");
-        this.config.getConfig().options().copyDefaults(true);
-        this.config.saveConfig();
-
+        this.config = SkyApi.getSm().getLobbyConfig();
     }
 
 
     public Location getLobbySpawn() {
-        return ((SerializedLocation) config.getConfig().get("lobby.box.spawn")).getLocation();
+        return ((SerializedLocation) SkyApi.getSm().getLobbyConfig().getConfig().get("lobby.box.spawn")).getLocation();
     }
 
 

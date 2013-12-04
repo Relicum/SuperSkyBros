@@ -1,6 +1,6 @@
 package com.relicum.scb.hooks;
 
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.types.SkyApi;
 import net.milkbowl.vault.permission.Permission;
 
 /**
@@ -17,7 +17,7 @@ public class PermsManager {
     }
 
     public static Permission getPerms() {
-        SkyBrosApi.getVaultManager();
+        SkyApi.getVaultManager();
         return VaultManager.getPerms();
     }
 }

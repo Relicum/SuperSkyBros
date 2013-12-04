@@ -2,9 +2,10 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.conversations.DefaultConversationFactory;
-import com.relicum.scb.conversations.setmode.DisplayModesInput;
+import com.relicum.scb.conversations.setmode.SetModeStart;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.signs.utils.Col;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
@@ -50,7 +51,7 @@ public class CommandManagerFirstJoin implements CommandExecutor {
         //   registerCommand("setmodes", des2, "/ssba setmodes", "ssba setmodes");
 
         factory = DefaultConversationFactory.getDefaultConversation();
-        plugin.getLogger().info("The " + this.getClass().getSimpleName() + " loader has run");
+        SkyApi.getCMsg().INFO("The " + this.getClass().getSimpleName() + " loader has run");
     }
 
 
@@ -77,15 +78,10 @@ public class CommandManagerFirstJoin implements CommandExecutor {
                 strings1[i] = "";
             }
             cs.sendMessage(strings1);
-            cs.sendMessage(this.cHeader);
-            cs.sendMessage(Col.Green() + "To begin setup you need to decided the server mode");
-            cs.sendMessage(
-                    Col.Green() + "There are 2 modes " + Col.Gold() + "MIXED " + Col.Green() + "or " + Col.Gold() + "DEDICATED");
-            cs.sendMessage("");
             Map<Object, Object> data = new HashMap<>();
-            data.put("pre", 1);
+            data.put("pre", 2);
             factory.withInitialSessionData(data);
-            factory.withFirstPrompt(new DisplayModesInput("Yes", "No"));
+            factory.withFirstPrompt(new SetModeStart());
             factory.buildConversation((Conversable) cs).begin();
 
             return true;
@@ -161,11 +157,11 @@ public class CommandManagerFirstJoin implements CommandExecutor {
         cd.setPermissionMessage(ChatColor.DARK_RED + "You do not have permission to run this command OP only");
 
         if (cmp.register(label, "mc", (Command) cd)) {
-            plugin.getLogger().info("Command: /" + label + " has successfully been registered");
+            SkyApi.getCMsg().INFO("Command: /" + label + " has successfully been registered");
             return true;
         }
 
-        plugin.getLogger().severe(
+        SkyApi.getCMsg().SERVE(
                 "Unknown error command: /" + label + " did not register at all. Investigation " +
                         "needed");
 

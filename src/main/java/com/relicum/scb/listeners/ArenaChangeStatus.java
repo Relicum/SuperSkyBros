@@ -4,7 +4,7 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaStatus;
 import com.relicum.scb.events.ArenaStatusChangeEvent;
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.event.Listener;
 
 /**
@@ -16,7 +16,7 @@ import org.bukkit.event.Listener;
  */
 public class ArenaChangeStatus implements Listener {
 
-    private SCB plugin = SkyBrosApi.getSCB();
+    private SCB plugin = SkyApi.getSCB();
     private String newStatus;
     private String previousStatus;
     private Arena arena;

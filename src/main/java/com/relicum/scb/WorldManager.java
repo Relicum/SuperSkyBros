@@ -2,7 +2,7 @@ package com.relicum.scb;
 
 import com.relicum.scb.configs.WorldConfig;
 import com.relicum.scb.objects.world.WorldConfigurator;
-import com.relicum.scb.types.SkyBrosApi;
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.DelayedShutDown;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
@@ -52,9 +52,9 @@ public class WorldManager {
 
 
     public WorldManager() {
-        this.plugin = SkyBrosApi.getSCB();
+        this.plugin = SkyApi.getSCB();
         defaultGenerate = this.plugin.getConfig().getBoolean("generateDefaultWorld");
-        this.config = SkyBrosApi.getSettingsManager2().getWorldConfig();
+        this.config = SkyApi.getSm().getWorldConfig();
 
 
         //this.worldSettings = this.config.getConfig().getConfigurationSection("worldSettings").getValues(true);
@@ -85,11 +85,11 @@ public class WorldManager {
         String RED_TEXT = "\033[31m";  //Red
         String GREEN_TEXT = "\033[32m";  //Green
         Integer stage = (Integer) this.plugin.getConfig().getInt("worldGenerateStage");
-        String defaultWo = SkyBrosApi.getSCB().getConfig().getString("worldDefault");
+        String defaultWo = SkyApi.getSCB().getConfig().getString("worldDefault");
         WorldConfigurator wc = new WorldConfigurator();
         switch (stage) {
             case 1:
-                wc.setBukkit(SkyBrosApi.getSCB().getConfig().getBoolean("disableTheEnd"), SkyBrosApi.getSCB().getConfig().getString("worldGeneratorPlugin") + ":.", "SSB", stage);
+                wc.setBukkit(SkyApi.getSCB().getConfig().getBoolean("disableTheEnd"), SkyApi.getSCB().getConfig().getString("worldGeneratorPlugin") + ":.", "SSB", stage);
                 wc.setMainProperties();
                 wc.removeDefaultWorld(defaultWo);
                 wc.removeDefaultWorld(defaultWo + "_the_end");
@@ -98,7 +98,7 @@ public class WorldManager {
                 this.plugin.saveConfig();
                 this.plugin.reloadConfig();
 
-                SkyBrosApi.getSCB().getLogger().info(GREEN_TEXT + "Part 1 of 3 complete. The server will now automatically stop itself in 5 seconds. Ignore any errors and restart the server" + NORMAL);
+                SkyApi.getSCB().getLogger().info(GREEN_TEXT + "Part 1 of 3 complete. The server will now automatically stop itself in 5 seconds. Ignore any errors and restart the server" + NORMAL);
                 DelayedShutDown.shutDown();
                 break;
             case 2:
@@ -109,7 +109,7 @@ public class WorldManager {
                 this.plugin.saveConfig();
                 this.plugin.reloadConfig();
 
-                SkyBrosApi.getSCB().getLogger().info(GREEN_TEXT + "Part 3 of 4 complete. The server will now automatically stop itself in 5 seconds. Ignore any errors and restart the server" + NORMAL);
+                SkyApi.getSCB().getLogger().info(GREEN_TEXT + "Part 3 of 4 complete. The server will now automatically stop itself in 5 seconds. Ignore any errors and restart the server" + NORMAL);
                 this.config.getConfig().set("worlds.default", defaultWo);
                 this.config.saveConfig();
                 this.config.reloadConfig();
@@ -123,12 +123,12 @@ public class WorldManager {
                 // this.config.getConfig().set("worlds.default." + defaultWo + ".uuid", this.defaultWorld.getUID().toString());
                 this.plugin.saveConfig();
                 this.plugin.reloadConfig();
-                SkyBrosApi.getSCB().getLogger().info(BLUE_TEXT + "You have successfully complete the process of converting the main world into a \nVoid world. Do not be surprised" +
+                SkyApi.getSCB().getLogger().info(BLUE_TEXT + "You have successfully complete the process of converting the main world into a \nVoid world. Do not be surprised" +
                         " when you login you will spawn on a single gold block" + NORMAL);
                 DelayedShutDown.shutDown();
                 break;
             default:
-                SkyBrosApi.getSCB().getLogger().severe(RED_TEXT + "Default world creation switch statement has hit default something has happened" + NORMAL);
+                SkyApi.getSCB().getLogger().severe(RED_TEXT + "Default world creation switch statement has hit default something has happened" + NORMAL);
                 break;
 
 

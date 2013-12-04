@@ -5,16 +5,16 @@ import com.relicum.scb.commands.CommandManager;
 import com.relicum.scb.hooks.ChatManager;
 import com.relicum.scb.hooks.PermsManager;
 import com.relicum.scb.hooks.VaultManager;
-import com.relicum.scb.mini.SettingsManager2;
+import com.relicum.scb.SM;
 import com.relicum.scb.objects.inventory.InventoryManager;
 import com.relicum.scb.utils.MessageManager;
 import com.relicum.scb.utils.PropertiesManager;
 import com.relicum.scb.we.WEManager;
 
 /**
- * The type SkyBrosApi.
+ * The type SkyApi.
  */
-public class SkyBrosApi {
+public class SkyApi {
 
     private static CommandManager commandManager;
 
@@ -22,7 +22,7 @@ public class SkyBrosApi {
 
     private static SCB scb;
 
-    private static SettingsManager2 settingsManager2;
+    private static SM sm;
 
     private static ArenaManager arenaManager;
 
@@ -43,6 +43,8 @@ public class SkyBrosApi {
     private static PropertiesManager propertiesManager;
 
     public static VaultManager vaultManager;
+
+    private static cMsg consoleColor;
 
     /**
      * Get command manager.
@@ -71,9 +73,9 @@ public class SkyBrosApi {
      *
      * @return the settings manager
      */
-    public static SettingsManager2 getSettingsManager2() {
-        if (settingsManager2 == null) settingsManager2 = new SettingsManager2();
-        return settingsManager2;
+    public static SM getSm() {
+        if (sm == null) sm = new SM();
+        return sm;
     }
 
 
@@ -87,6 +89,15 @@ public class SkyBrosApi {
         return arenaManager;
     }
 
+    /**
+     * Get the Colored Console Writer
+     *
+     * @return consoleColor the colored console manager
+     */
+    public static cMsg getCMsg() {
+        if (consoleColor == null) consoleColor = new cMsg(scb);
+        return consoleColor;
+    }
 
     /**
      * Get sign manager.
@@ -203,6 +214,8 @@ public class SkyBrosApi {
      */
     public static void init(SCB sCb) {
         scb = sCb;
+        getSm();
+        getCMsg();
     }
 
 }
