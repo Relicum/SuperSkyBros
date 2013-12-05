@@ -1,6 +1,7 @@
 package com.relicum.scb.conversations.setmode;
 
 import com.relicum.scb.objects.signs.utils.Col;
+import org.bukkit.conversations.Conversable;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.MessagePrompt;
 import org.bukkit.conversations.Prompt;
@@ -25,17 +26,17 @@ public class DisplayModes extends MessagePrompt {
 
     @Override
     public String getPromptText(ConversationContext context) {
-
+        Conversable c = context.getForWhom();
         String mess;
-        mess = "\n";
-        mess += Col.Gold() + "Dedicated Mode: " + Col.Reset() + "\n";
-        mess += Col.Green() + "Set to dedicated mode if the server will only be used for running SuperSkyBros" + Col.Reset() + "\n";
-        mess += "\n";
-        mess += Col.Gold() + "Mixed Mode: " + Col.Reset() + "\n";
-        mess += Col.Green() + "Set to mixed mode if the server runs other plugins like factions or has a survival " +
-                "world" + Col.Reset() + "\n";
-        mess += "\n";
-        mess += Col.Green() + "If unsure set to mixed mode you can always change it later" + Col.Reset() + "\n";
+        c.sendRawMessage("");
+        c.sendRawMessage(Col.Grey() + "---------------------------");
+        c.sendRawMessage(Col.Gold() + "Dedicated Mode: " + Col.Reset());
+        c.sendRawMessage(Col.Green() + "Set to dedicated mode if the server will only be used for SuperSkyBros" + Col.Reset());
+        c.sendRawMessage(Col.Grey() + "---------------------------");
+        c.sendRawMessage(Col.Gold() + "Mixed Mode: " + Col.Reset());
+        c.sendRawMessage(Col.Green() + "Set to mixed mode if the server runs other plugins like");
+        c.sendRawMessage(Col.Green() + "factions or has a survival world" + Col.Reset());
+        mess = Col.Blue() + "If unsure set to mixed mode you can always change it later" + Col.Reset();
 
         return mess;
     }

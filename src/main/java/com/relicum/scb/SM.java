@@ -6,6 +6,7 @@ import com.relicum.scb.types.SkyApi;
 import org.bukkit.Location;
 
 import java.io.*;
+import java.util.List;
 
 /**
  * The type Settings manager 2.
@@ -45,6 +46,12 @@ public class SM {
     private ArenaConfig arenaConfig;
 
 
+    private boolean dedicated;
+
+    /**
+     * Blacklisted Worlds
+     */
+    private List<String> worldBlackListed;
     /**
      * The Worlds Config.
      */
@@ -68,7 +75,8 @@ public class SM {
     public void setup() {
 
         dataFolder = SkyApi.getSCB().getDataFolder();
-
+        worldBlackListed = SkyApi.getSCB().getConfig().getStringList("ignoreWorlds");
+        dedicated = SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB");
         setgenerateDefaultWorld(SkyApi.getSCB().getConfig().getBoolean("generateDefaultWorld"));
         setUseWorldManagement(SkyApi.getSCB().getConfig().getBoolean("useWorldManager"));
 
@@ -269,6 +277,24 @@ public class SM {
      */
     public void setgenerateDefaultWorld(boolean generateDefaultWorld) {
         this.generateDefaultWorld = generateDefaultWorld;
+    }
+
+    /**
+     * Black listed Worlds
+     *
+     * @return the list of worlds black listed
+     */
+    public List<String> blackListed() {
+        return worldBlackListed;
+    }
+
+    /**
+     * Is server in dedicated mode
+     *
+     * @return true if the server is in dedicated mode
+     */
+    public boolean isDedicated() {
+        return dedicated;
     }
 
     public void loadFile(File file) {

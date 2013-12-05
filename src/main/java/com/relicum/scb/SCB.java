@@ -16,10 +16,8 @@ import lombok.Setter;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-import org.bukkit.Bukkit;
-import org.bukkit.Difficulty;
-import org.bukkit.GameMode;
-import org.bukkit.World;
+import org.bukkit.*;
+import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -193,7 +191,7 @@ public class SCB extends JavaPlugin implements Listener {
         SkyApi.init(this);
 
         saveResource("messages.properties", true);
-        SkyApi.getCMsg().INFO("New Message Properties file saved");
+        //SkyApi.getCMsg().INFO("New Message Properties file saved");
 
         BukkitInterface.setServer(this.getServer());
 
@@ -328,6 +326,7 @@ public class SCB extends JavaPlugin implements Listener {
         @Override
         public void run() {
 
+
             p.bWorlds = p.getConfig().getStringList(IGNORE_WORLDS);
             for (String w : p.bWorlds) {
 
@@ -369,6 +368,7 @@ public class SCB extends JavaPlugin implements Listener {
                 }
             }
 
+            p.pm.registerEvents(new WorldListeners(), p);
             p.pm.registerEvents(new onBlockClick(p), p);
             p.pm.registerEvents(new PlayerJoin(p), p);
             p.pm.registerEvents(new PlayerQuit(p), p);
@@ -404,7 +404,24 @@ public class SCB extends JavaPlugin implements Listener {
     }
 
 
+    /**
+     * Update Main World Settings
+     */
     public void updateBukkitConfigs() {
+        int currentStage = getConfig().getInt("worldGenerateStage");
+        if (currentStage == 3) {
+            getServer().getScheduler().scheduleSyncDelayedTask(SkyApi.getSCB(), new Runnable() {
+                @Override
+                public void run() {
+                    applyWorldDefaultSettings("world");
+                }
+            }, 20l);
+
+            getConfig().set("generateDefaultWorld", false);
+            getConfig().set("worldGenerateStage", 1);
+            saveConfig();
+            return;
+        }
         YamlConfiguration config = YamlConfiguration.loadConfiguration(new File("bukkit.yml"));
 
         config.set("worlds.world.generator", "CleanroomGenerator:.");
@@ -441,12 +458,18 @@ public class SCB extends JavaPlugin implements Listener {
         this.removeDefaultWorld("world" + "_nether");
 
 
-        //SkyApi.getSm().getWorldConfig().getConfig().set("mainWorld.level-name", "SSB");
-
-
         SkyApi.getSm().getWorldConfig().getConfig().set("mainWorld.level-name", SkyApi.getSCB().getConfig().getString("world"));
-
-        SkyApi.getCMsg().INFO("This is the last line do we now change settings ??");
+        if (currentStage == 1) {
+            getConfig().set("worldGenerateStage", 2);
+            saveConfig();
+            SkyApi.getCMsg().INFO("The server will shutdown please restart to complete set up");
+            DelayedShutDown.shutDown();
+        } else if (currentStage == 2) {
+            getConfig().set("worldGenerateStage", 3);
+            saveConfig();
+            SkyApi.getCMsg().INFO("The server will shutdown please restart to complete set up");
+            DelayedShutDown.shutDown();
+        }
     }
 
     public boolean removeDefaultWorld(String path) {
@@ -465,12 +488,12 @@ public class SCB extends JavaPlugin implements Listener {
         return true;
     }
 
-    public World applyWorldDefaultSettings(String name) {
+    public World applyWorldDefaultSettings(final String name) {
 
         World world;
 
         try {
-            world = Bukkit.getServer().getWorld("world");
+            world = Bukkit.getServer().getWorld(name);
         } catch (NullPointerException e) {
             e.printStackTrace();
             return null;
@@ -479,22 +502,20 @@ public class SCB extends JavaPlugin implements Listener {
             return null;
         }
         SkyApi.getCMsg().INFO("Attempting to apply world settings to the world " + name);
-        //world.loadChunk(0, 0, true);
-        //world.setSpawnLocation(0, 32, 0);
+        world.loadChunk(0, 0, true);
+        BlockState block = world.getBlockAt(0, 31, 0).getState();
+
+        block.setType(Material.GOLD_BLOCK);
+        block.update(true);
+        SkyApi.getCMsg().INFO("The block is of type " + block.getType().toString());
+
+
+        world.setSpawnLocation(0, 32, 0);
         world.setKeepSpawnInMemory(true);
-
-        world.getSpawnLocation().getWorld().getChunkAt(world.getSpawnLocation()).load();
-        /*Block block = world.getBlockAt(0, 31, 0);
-
-        block.getState().getBlock().setType(Material.AIR);
-
-        block.getState().update(true);
-
-        block.getState().setType(Material.GOLD_BLOCK);
-        block.getState().update(true);*/
 
         world.setAutoSave(true);
         world.setDifficulty(Difficulty.HARD);
+
         world.setStorm(false);
         world.setThundering(false);
         world.setWeatherDuration(9999999);
@@ -504,9 +525,12 @@ public class SCB extends JavaPlugin implements Listener {
         world.setGameRuleValue("doFireTick", "false");
         world.setGameRuleValue("doMobSpawning", "false");
         world.setGameRuleValue("mobGriefing", "false");
-
+        world.save();
+        SkyApi.getCMsg().INFO("The spawn is set at " + world.getSpawnLocation().toVector().toString());
+        SkyApi.getCMsg().INFO("The fireticks rule should be false " + world.getGameRuleValue("doFireTick"));
 
         SkyApi.getCMsg().INFO("Settings applied for  " + name + " has been successful");
+        SkyApi.getCMsg().INFO("You can now login enjoy !!");
         return world;
     }
 

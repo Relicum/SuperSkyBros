@@ -38,6 +38,8 @@ public class DisplayModesInput extends AbstractCustomFixedInput {
     @Override
     public String getPromptText(ConversationContext context) {
 
+        context.getForWhom().sendRawMessage("");
+        context.getForWhom().sendRawMessage(Col.Grey() + "---------------------------");
         return ChatColor.GREEN + "Would you like to see a description of each mode? " + Col.Reset() + "\n" +
                 formatFixedSet();
     }

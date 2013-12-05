@@ -4,6 +4,7 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.objects.signs.utils.Col;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.DelayedShutDown;
+import org.bukkit.ChatColor;
 import org.bukkit.conversations.ConversationContext;
 import org.bukkit.conversations.MessagePrompt;
 import org.bukkit.conversations.Prompt;
@@ -31,22 +32,30 @@ public class SetModeResult extends MessagePrompt {
     @Override
     public String getPromptText(ConversationContext context) {
         if (context.getSessionData("mode").toString().equalsIgnoreCase("mixed")) {
+            for (int i = 0; i < 10; i++) {
+                context.getForWhom().sendRawMessage("");
+            }
+            context.getForWhom().sendRawMessage(Col.Grey() + "---------------------------");
             if (!setupMode(false)) {
                 return Col.Dark_Red() + "Error occurred while setting mode to mixed please check logs";
             }
 
-            DelayedShutDown.shutDown();
 
-            return Col.Gold() + "Mode successfully set to MIXED, the server requires a reboot. The server will shutdown now";
+            context.getForWhom().sendRawMessage(ChatColor.YELLOW + "Mode successfully set to MIXED MODE");
+            context.getForWhom().sendRawMessage(Col.Grey() + "---------------------------");
+            DelayedShutDown.shutDown();
+            return ChatColor.YELLOW + "The server will shutdown";
         }
         if (context.getSessionData("mode").toString().equalsIgnoreCase("dedicated")) {
             if (!setupMode(true)) {
                 return Col.Dark_Red() + "Error occurred while setting mode to DEDICATED please check logs";
             }
 
-            DelayedShutDown.shutDown();
 
-            return Col.Gold() + "Mode successfully set to DEDICATED,  the server requires a reboot. The server will shutdown now";
+            context.getForWhom().sendRawMessage(ChatColor.YELLOW + "Mode successfully set to DEDICATED");
+            context.getForWhom().sendRawMessage(Col.Grey() + "---------------------------");
+            DelayedShutDown.shutDown();
+            return ChatColor.YELLOW + "The server will shutdown";
         }
 
 

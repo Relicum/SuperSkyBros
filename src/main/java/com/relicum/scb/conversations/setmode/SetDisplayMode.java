@@ -36,6 +36,7 @@ public class SetDisplayMode extends AbstractCustomFixedInput {
     @Override
     public String getPromptText(ConversationContext context) {
 
+        context.getForWhom().sendRawMessage(Col.Grey() + "---------------------------");
         return Col.Green() + "Please select mode: " + Col.Reset() + formatFixedSet();
 
 
