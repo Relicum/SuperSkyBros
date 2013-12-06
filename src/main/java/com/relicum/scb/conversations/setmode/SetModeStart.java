@@ -1,5 +1,6 @@
 package com.relicum.scb.conversations.setmode;
 
+import com.relicum.scb.objects.signs.utils.Col;
 import org.bukkit.ChatColor;
 import org.bukkit.conversations.Conversable;
 import org.bukkit.conversations.ConversationContext;
@@ -29,10 +30,11 @@ public class SetModeStart extends MessagePrompt {
     public String getPromptText(ConversationContext context) {
         Conversable c = context.getForWhom();
         c.sendRawMessage(cHeader);
-        c.sendRawMessage(ChatColor.AQUA + "To begin you need to decide the server mode");
-        c.sendRawMessage(ChatColor.AQUA + "There are 2 modes that you can choose");
+        c.sendRawMessage(ChatColor.GREEN + "To begin you need to decide the server mode");
+        c.sendRawMessage(ChatColor.GREEN + "There are 2 modes that you can choose");
+        c.sendRawMessage("");
         c.sendRawMessage(ChatColor.GOLD + "MIXED MODE" + ChatColor.GREEN + " or " + ChatColor.GOLD + "DEDICATED MODE");
-        c.sendRawMessage(ChatColor.GREEN + "-----------------------------------------------");
+        context.getForWhom().sendRawMessage(Col.Grey() + "---------------------------");
         return ChatColor.BLUE + "Type /quit at anytime to exit";
     }
 }

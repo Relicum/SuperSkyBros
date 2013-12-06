@@ -62,7 +62,7 @@ public class PlayerJoin implements Listener {
 
         if (SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB)) {
             SmashPlayer pl = new SmashPlayer(e.getPlayer());
-            if (VaultManager.perms.has(pl.getPlayer(), "ssba.admin") || pl.getPlayer().isOp()) {
+/*            if (VaultManager.perms.has(pl.getPlayer(), "ssba.admin") || pl.getPlayer().isOp()) {
                 ChatColor b = ChatColor.BOLD;
                 String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
                 pl.sendMessage(
@@ -70,7 +70,7 @@ public class PlayerJoin implements Listener {
                                 SCB.getInstance().getDescription().getVersion() + " this should not be run on " +
                                 "a live server be warned");
 
-            }
+            }*/
             if (!SCB.getInstance().LBC.getConfig().contains("LOBBY.REGION")) {
                 if (pl.isOp()) {
                     e.setJoinMessage(SCB.getMessageManager().getErrorMessage("system.opAutoJoinOverRide"));
@@ -124,7 +124,7 @@ public class PlayerJoin implements Listener {
         }
 
 
-        if (VaultManager.perms.has(e.getPlayer(), "ssba.admin") || e.getPlayer().isOp()) {
+/*        if (VaultManager.perms.has(e.getPlayer(), "ssba.admin") || e.getPlayer().isOp()) {
 
             ChatColor b = ChatColor.BOLD;
             String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
@@ -134,7 +134,7 @@ public class PlayerJoin implements Listener {
                             "should not be run on a live server be warned");
 
 
-        }
+        }*/
 
         if (!SCB.getInstance().LBC.getConfig().contains("LOBBY.REGION")) {
             if (e.getPlayer().isOp()) {
@@ -154,6 +154,10 @@ public class PlayerJoin implements Listener {
 
         }
 
+        //Display Special Message Advertising the plugin only to new players
+        for (String s : plugin.getConfig().getStringList("rel.lines.line")) {
+            e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', s));
+        }
 
         System.out.println("Player passed right through all Join event conditions ???");
     }

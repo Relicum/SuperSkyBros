@@ -44,7 +44,7 @@ public class SetModeResult extends MessagePrompt {
             context.getForWhom().sendRawMessage(ChatColor.YELLOW + "Mode successfully set to MIXED MODE");
             context.getForWhom().sendRawMessage(Col.Grey() + "---------------------------");
             DelayedShutDown.shutDown();
-            return ChatColor.YELLOW + "The server will shutdown";
+            return ChatColor.BLUE + "The server will shutdown now please restart";
         }
         if (context.getSessionData("mode").toString().equalsIgnoreCase("dedicated")) {
             if (!setupMode(true)) {
@@ -54,8 +54,9 @@ public class SetModeResult extends MessagePrompt {
 
             context.getForWhom().sendRawMessage(ChatColor.YELLOW + "Mode successfully set to DEDICATED");
             context.getForWhom().sendRawMessage(Col.Grey() + "---------------------------");
+            context.getForWhom().sendRawMessage("");
             DelayedShutDown.shutDown();
-            return ChatColor.YELLOW + "The server will shutdown";
+            return ChatColor.BLUE + "The server will shutdown now please restart";
         }
 
 
@@ -65,16 +66,14 @@ public class SetModeResult extends MessagePrompt {
 
     private boolean setupMode(boolean isDedicated) {
 
-        SCB plugin = SCB.getInstance();
 
         try {
-            SkyApi.getCMsg().INFO("setMode is now before saving " + SkyApi.getSCB().getConfig().get("modeSet"));
+
             SkyApi.getSCB().getConfig().set(SCB.DEDICATED_SSB, isDedicated);
             SkyApi.getSCB().getConfig().set("modeSet", true);
             SkyApi.getSCB().saveOnDisable = true;
             SkyApi.getSCB().saveConfig();
             SkyApi.getSCB().reloadConfig();
-            SkyApi.getCMsg().INFO("Set Mode has been saved to file its value is  " + SkyApi.getSCB().getConfig().get("modeSet"));
 
 
         } catch (Exception ex) {

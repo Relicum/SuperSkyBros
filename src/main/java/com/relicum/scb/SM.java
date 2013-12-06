@@ -3,9 +3,12 @@ package com.relicum.scb;
 import com.relicum.scb.configs.*;
 import com.relicum.scb.mini.SerializedLocation;
 import com.relicum.scb.types.SkyApi;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,7 +54,14 @@ public class SM {
     /**
      * Blacklisted Worlds
      */
-    private List<String> worldBlackListed;
+    private List<String> worldBlackListed = new ArrayList<>();
+
+    /**
+     * Worlds that are dedicated to SSB only
+     */
+    private List<String> ssbWorlds = new ArrayList<>();
+
+
     /**
      * The Worlds Config.
      */
@@ -75,7 +85,7 @@ public class SM {
     public void setup() {
 
         dataFolder = SkyApi.getSCB().getDataFolder();
-        worldBlackListed = SkyApi.getSCB().getConfig().getStringList("ignoreWorlds");
+        worldBlackListed.addAll(SkyApi.getSCB().getConfig().getStringList("ignoreWorlds"));
         dedicated = SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB");
         setgenerateDefaultWorld(SkyApi.getSCB().getConfig().getBoolean("generateDefaultWorld"));
         setUseWorldManagement(SkyApi.getSCB().getConfig().getBoolean("useWorldManager"));
@@ -95,13 +105,13 @@ public class SM {
 
         signConfig = new SignConfig("signs.yml");
         signConfig.getConfig().options().copyDefaults(true);
-        ;
         signConfig.saveDefaultConfig();
 
 
         signFormatConfig = new SignFormat("signsText.yml");
         signFormatConfig.getConfig().options().copyDefaults(true);
         signFormatConfig.saveDefaultConfig();
+
 /*
         spawnConfig = new SpawnConfig("spawns.yml");
         spawnConfig.getConfig().options().copyDefaults(true);
@@ -113,6 +123,12 @@ public class SM {
 
     }
 
+
+    public void setSerializedWorldSpawnLocation(SerializedLocation location, String name) {
+
+        worldConfig.getConfig().set("worlds." + name + ".spawnLocation", location);
+        worldConfig.saveConfig();
+    }
 
     /**
      * Gets lobby spawn.
@@ -152,7 +168,6 @@ public class SM {
     public ArenaConfig getArenaConfig() {
         return arenaConfig;
     }
-
 
     /**
      * Sets arena config.
@@ -287,6 +302,33 @@ public class SM {
     public List<String> blackListed() {
         return worldBlackListed;
     }
+
+
+    /**
+     * Gets ssb worlds list
+     *
+     * @return the ssb worlds list contain worlds dedicated to SSB
+     */
+    public ArrayList<String> getSsbWorlds() {
+        return (ArrayList<String>) ssbWorlds;
+    }
+
+    /**
+     * Sets ssb worlds list
+     */
+    public void setSsbWorlds() {
+        List<World> worlds = Bukkit.getWorlds();
+
+        for (World world : worlds) {
+            SkyApi.getCMsg().INFO("Name of world is " + world.getName());
+            if (!worldBlackListed.contains(world.getName()))
+                SkyApi.getCMsg().INFO("World " + world.getName() + " has been added");
+            ssbWorlds.add(world.getName());
+        }
+
+        worlds.clear();
+    }
+
 
     /**
      * Is server in dedicated mode

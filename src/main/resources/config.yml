@@ -23,13 +23,13 @@ classesEnabled:
 gemshop:
   ecoPlugin: false
   itemOpen:
-    - open: true
-    - item: 'Material_Emerald'
-    - displayName: 'Super Sky Bros Shop'
-  lore:
-    - 'Sorry the shop is closed'
-    - 'Still in Development'
-  slot: 8
+    open: true
+    item: "Material_Emerald"
+    displayName: "Super Sky Bros Shop"
+    lore:
+      - "&4Sorry the shop is closed"
+      - "&aStill in Development"
+    slot: 8
 joinBook:
   enable: true
   slot: 0
@@ -60,3 +60,14 @@ infoColor: true
 warningColor: true
 #set to false to disable serve color
 serveColor: true
+rel:
+  lines:
+    line:
+    - '&b<<     ----------------------------------------     >>'
+    - '&2#                                                                        #'
+    - '&2#                   &4SUPER&7&l-&bSKY&7&l-&6BROS&7&l-&aBRAWL                  &2#'
+    - '&2#         &6Download it free for your server            &2#'
+    - '&2#                                                                        #'
+    - '&2#&5  dev.bukkit.org/bukkit-plugins/superskybros/ &2#'
+    - '&b<<     ----------------------------------------     >>'
+

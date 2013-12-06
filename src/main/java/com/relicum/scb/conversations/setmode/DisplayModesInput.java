@@ -40,6 +40,7 @@ public class DisplayModesInput extends AbstractCustomFixedInput {
 
         context.getForWhom().sendRawMessage("");
         context.getForWhom().sendRawMessage(Col.Grey() + "---------------------------");
+        context.getForWhom().sendRawMessage("");
         return ChatColor.GREEN + "Would you like to see a description of each mode? " + Col.Reset() + "\n" +
                 formatFixedSet();
     }

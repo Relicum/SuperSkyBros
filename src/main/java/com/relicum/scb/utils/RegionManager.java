@@ -27,8 +27,6 @@ public class RegionManager {
 
     private static MessageManager mm = SCB.getMessageManager();
 
-    private static Helper hp = Helper.getInstance();
-
     private LocalWorld lw;
 
     private Location lo;

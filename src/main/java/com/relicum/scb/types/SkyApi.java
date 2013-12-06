@@ -16,35 +16,11 @@ import com.relicum.scb.we.WEManager;
  */
 public class SkyApi {
 
-    private static CommandManager commandManager;
-
-    private static LobbyManager lobbyManager;
-
     private static SCB scb;
 
-    private static SM sm;
-
-    private static ArenaManager arenaManager;
-
-    private static SignManager signManager;
-
-    private static WEManager worldEditManager;
-
-    private static MessageManager messageManager;
-
-    private static InventoryManager inventoryManager;
-
-    private static WorldManager worldManager;
-
-    private static PermsManager permsManager;
-
-    private static ChatManager chatManager;
-
-    private static PropertiesManager propertiesManager;
-
-    public static VaultManager vaultManager;
-
-    private static cMsg consoleColor;
+    private static class CommandManagerHolder {
+        private static final CommandManager commandManager = new CommandManager();
+    }
 
     /**
      * Get command manager.
@@ -52,10 +28,13 @@ public class SkyApi {
      * @return the command manager
      */
     public static CommandManager getCommandManager() {
-        if (commandManager == null) commandManager = new CommandManager(SCB.getInstance());
-        return commandManager;
+        return CommandManagerHolder.commandManager;
     }
 
+
+    private static class LobbyManagerHolder {
+        private static final LobbyManager lobbyManager = new LobbyManager();
+    }
 
     /**
      * Get lobby manager.
@@ -63,10 +42,13 @@ public class SkyApi {
      * @return the lobby manager
      */
     public static LobbyManager getLobbyManager() {
-        if (lobbyManager == null) lobbyManager = new LobbyManager();
-        return lobbyManager;
+        return LobbyManagerHolder.lobbyManager;
     }
 
+
+    private static class SMHolder {
+        private static final SM sm = new SM();
+    }
 
     /**
      * Get settings manager.
@@ -74,10 +56,13 @@ public class SkyApi {
      * @return the settings manager
      */
     public static SM getSm() {
-        if (sm == null) sm = new SM();
-        return sm;
+        return SMHolder.sm;
     }
 
+
+    private static class ArenaManagerHolder {
+        private static final ArenaManager arenaManager = new ArenaManager();
+    }
 
     /**
      * Get arena manager.
@@ -85,8 +70,11 @@ public class SkyApi {
      * @return the arena manager
      */
     public static ArenaManager getArenaManager() {
-        if (arenaManager == null) arenaManager = new ArenaManager();
-        return arenaManager;
+        return ArenaManagerHolder.arenaManager;
+    }
+
+    private static class cMsgHolder {
+        private static final cMsg consoleColor = new cMsg(scb);
     }
 
     /**
@@ -95,8 +83,11 @@ public class SkyApi {
      * @return consoleColor the colored console manager
      */
     public static cMsg getCMsg() {
-        if (consoleColor == null) consoleColor = new cMsg(scb);
-        return consoleColor;
+        return cMsgHolder.consoleColor;
+    }
+
+    private static class SignManagerHolder {
+        private static final SignManager signManager = new SignManager();
     }
 
     /**
@@ -105,10 +96,13 @@ public class SkyApi {
      * @return the sign manager
      */
     public static SignManager getSignManager() {
-        if (signManager == null) signManager = new SignManager();
-        return signManager;
+        return SignManagerHolder.signManager;
     }
 
+
+    private static class WEManagerHolder {
+        private static final WEManager worldEditManager = new WEManager();
+    }
 
     /**
      * Get world edit manager.
@@ -116,10 +110,13 @@ public class SkyApi {
      * @return the world edit manager
      */
     public static WEManager getWorldEditManager() {
-        if (worldEditManager == null) worldEditManager = new WEManager();
-        return worldEditManager;
+        return WEManagerHolder.worldEditManager;
     }
 
+
+    private static class MessageManagerHolder {
+        private static final MessageManager messageManager = new MessageManager();
+    }
 
     /**
      * Get message manager.
@@ -127,10 +124,13 @@ public class SkyApi {
      * @return the message manager
      */
     public static MessageManager getMessageManager() {
-        if (messageManager == null) messageManager = new MessageManager();
-        return messageManager;
+        return MessageManagerHolder.messageManager;
     }
 
+
+    private static class InventoryManagerHolder {
+        private static final InventoryManager inventoryManager = new InventoryManager();
+    }
 
     /**
      * Gets inventory manager.
@@ -138,10 +138,13 @@ public class SkyApi {
      * @return the inventory manager
      */
     public static InventoryManager getInventoryManager() {
-        if (inventoryManager == null) inventoryManager = new InventoryManager();
-        return inventoryManager;
+        return InventoryManagerHolder.inventoryManager;
     }
 
+
+    private static class WorldManagerHolder {
+        private static final WorldManager worldManager = new WorldManager();
+    }
 
     /**
      * Get world manager.
@@ -149,10 +152,13 @@ public class SkyApi {
      * @return the world manager
      */
     public static WorldManager getWorldManager() {
-        if (worldManager == null) worldManager = new WorldManager();
-        return worldManager;
+        return WorldManagerHolder.worldManager;
     }
 
+
+    private static class PermsManagerHolder {
+        private static final PermsManager permsManager = new PermsManager();
+    }
 
     /**
      * Get perms manager.
@@ -160,10 +166,13 @@ public class SkyApi {
      * @return the perms manager
      */
     public static PermsManager getPermsManager() {
-        if (permsManager == null) permsManager = new PermsManager();
-        return permsManager;
+        return PermsManagerHolder.permsManager;
     }
 
+
+    private static class ChatManagerHolder {
+        private static final ChatManager chatManager = new ChatManager();
+    }
 
     /**
      * Get chat manager.
@@ -171,10 +180,13 @@ public class SkyApi {
      * @return the chat manager
      */
     public static ChatManager getChatManager() {
-        if (chatManager == null) chatManager = new ChatManager();
-        return chatManager;
+        return ChatManagerHolder.chatManager;
     }
 
+
+    private static class PropertiesManagerHolder {
+        private static final PropertiesManager propertiesManager = new PropertiesManager();
+    }
 
     /**
      * Gets properties manager.
@@ -182,8 +194,11 @@ public class SkyApi {
      * @return the properties manager
      */
     public static PropertiesManager getPropertiesManager() {
-        if (propertiesManager == null) propertiesManager = new PropertiesManager();
-        return propertiesManager;
+        return PropertiesManagerHolder.propertiesManager;
+    }
+
+    private static class VaultManagerHolder {
+        private static final VaultManager vaultManager = new VaultManager();
     }
 
     /**
@@ -192,9 +207,7 @@ public class SkyApi {
      * @return the vault manager
      */
     public static VaultManager getVaultManager() {
-        if (vaultManager == null)
-            vaultManager = new VaultManager();
-        return vaultManager;
+        return VaultManagerHolder.vaultManager;
     }
 
     /**
@@ -214,8 +227,8 @@ public class SkyApi {
      */
     public static void init(SCB sCb) {
         scb = sCb;
-        getSm();
-        getCMsg();
+
+
     }
 
 }

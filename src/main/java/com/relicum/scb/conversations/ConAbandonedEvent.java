@@ -1,6 +1,6 @@
 package com.relicum.scb.conversations;
 
-import com.relicum.scb.SCB;
+import com.relicum.scb.objects.signs.utils.Col;
 import org.bukkit.ChatColor;
 import org.bukkit.conversations.ConversationAbandonedEvent;
 import org.bukkit.conversations.ConversationAbandonedListener;
@@ -17,10 +17,13 @@ public class ConAbandonedEvent implements ConversationAbandonedListener {
 
     @Override
     public void conversationAbandoned(ConversationAbandonedEvent event) {
-        SCB.getInstance().getLogger().info("Conversation AbandonEvent has been called");
+
         if (event.gracefulExit()) {
-            event.getContext().getForWhom().sendRawMessage(ChatColor.BLUE + "The End");
-            return;
+            event.getContext().getForWhom().sendRawMessage(Col.Grey() + "---------------------------");
+            event.getContext().getForWhom().sendRawMessage(Col.Green() + "Setup Closed" + Col.Reset());
+            event.getContext().getForWhom().sendRawMessage(Col.Grey() + "---------------------------");
+
+
         } else {
             if (event.getCanceller() instanceof InactivityConversationCanceller) {
                 event.getContext().getForWhom().sendRawMessage(ChatColor.RED + "Conversation Timed Out");

@@ -100,6 +100,9 @@ public class ArenaIO {
 
     }
 
+    public ArenaConfig getConfig() {
+        return this.config;
+    }
 
     /**
      * New create.

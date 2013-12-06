@@ -1,15 +1,6 @@
 package com.relicum.scb.objects.world;
 
 import com.relicum.scb.types.SkyApi;
-import com.relicum.scb.utils.FileUtils;
-import com.relicum.scb.utils.PropertiesManager;
-import com.relicum.scb.utils.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.configuration.file.YamlConfiguration;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
 
 /**
  * SuperSkyBros
@@ -19,130 +10,14 @@ import java.util.Map;
  * @version 0.1
  */
 public class WorldConfigurator implements IWorlds {
-    public String NORMAL = "\033[m";
-    public String BLUE_TEXT = "\033[36m";  //Blue
-    public String RED_TEXT = "\033[31m";  //Red
-    public String GREEN_TEXT = "\033[32m";  //Green
 
-    //TODO If its Default world Get Settings to overwrite server.properties
-    //TODO Update bukkit.yml setting the generator and the_end to false
-    //TODO apon restart delete old world folder
-    //TODO start creation of new world
+
     //TODO Apply default settings and a spawn platform to first spawn into
     //TODO Register any Listeners|Events specific to the world
     //TODO Create App to copy a current worlds settings to be used as a template
     //TODO Worlds backup facility, could be used to restore if worlds get damaged
     //TODO Ongoing user interface to manage the world
     private WorldConfigurator worldCon;
-
-    /**
-     * Sets the world_the_end to false and adds in WorldGenerator configs
-     *
-     * @param end   set to false to disable the end.
-     * @param gen   set the WorldGenerator plugin
-     * @param world the name of the default world as a string
-     * @return true on success
-     */
-    public boolean setBukkit(boolean end, String gen, String wo, Integer stage) {
-
-        if (Bukkit.getAllowEnd() && SkyApi.getSCB().getServer().getAllowEnd() == false) {
-            YamlConfiguration config = YamlConfiguration.loadConfiguration(new File("bukkit.yml"));
-            config.set("settings.allow-end", end);
-            StringBuilder pa = new StringBuilder();
-            pa.append("Yml world gen value is " + gen);
-            System.out.println(StringUtils.replaceUtf8Characters(pa.toString()));
-            if (stage > 1) {
-                System.out.println(BLUE_TEXT + "Yml at stage 3 world gen value is " + pa + NORMAL);
-                config.set("worlds.world.generator", "CleanroomGenerator\\:\\.");
-            }
-            try {
-                config.save(new File("bukkit.yml"));
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-        SkyApi.getSCB().getLogger().info(BLUE_TEXT + "The _the_end has successfully been disabled and the WorldGenerator Plugin Added" + NORMAL);
-
-        return true;
-    }
-
-    /**
-     * Updates server.properties to begin creating void worlds
-     *
-     * @return true if the properties were successfully updated
-     */
-    public boolean setMainProperties() {
-        Map<String, Object> st = SkyApi.getSm().getWorldConfig().getConfig().getConfigurationSection("mainWorld").getValues(true);
-        Integer stage = SkyApi.getSCB().getConfig().getInt("worldGenerateStage");
-        System.out.println("Stage we are at is " + stage + " lenght of st is " + st.size());
-        PropertiesManager prop = new PropertiesManager();
-        String wn = "";
-        if (stage == 1) {
-            wn = SkyApi.getSCB().getConfig().getString("newWorldDefault");
-        }
-
-        if (stage == 2) {
-
-            wn = SkyApi.getSCB().getConfig().getString("worldDefault");
-        }
-
-
-        Object obj = (String) prop.getPropertiesConfig("level-name", wn);
-        String theWorld = String.valueOf(obj);
-        st.put("level-name", wn);
-        if (stage == 1) {
-            SkyApi.getSCB().getConfig().set("newWorldDefault", wn);
-
-        }
-
-
-        for (Map.Entry e : st.entrySet()) {
-            prop.setPropertiesConfig((String) e.getKey(), e.getValue());
-
-        }
-        try {
-            prop.savePropertiesConfig();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        if (stage == 1) {
-            SkyApi.getSm().getWorldConfig().getConfig().set("mainWorld.level-name", SkyApi.getSCB().getConfig().getString("newWorldDefault"));
-        }
-        if (stage == 2) {
-            SkyApi.getSm().getWorldConfig().getConfig().set("mainWorld.level-name", SkyApi.getSCB().getConfig().getString("worldDefault"));
-        }
-
-        SkyApi.getSCB().saveConfig();
-        SkyApi.getSCB().reloadConfig();
-        SkyApi.getSm().getWorldConfig().saveConfig();
-        SkyApi.getSm().getWorldConfig().reloadConfig();
-
-
-        SkyApi.getSCB().getLogger().info("You have successfully update the properties file");
-        return true;
-    }
-
-    /**
-     * Remove default world, world_the_end and world_nether
-     *
-     * @param path the path to the world directories
-     * @return the boolean true if successfully deleted
-     */
-    public boolean removeDefaultWorld(String path) {
-        FileUtils.clear(new File(path));
-        try {
-            FileUtils.clear(new File(path));
-        } catch (Exception e) {
-            SkyApi.getSCB().getLogger().severe(e.getMessage());
-            return false;
-        }
-
-        SkyApi.getSCB().getLogger().info("Successfully deleted " + path + " folder the server will now restart");
-
-        return true;
-    }
 
     public void stopServer() {
         SkyApi.getSCB().getServer().shutdown();

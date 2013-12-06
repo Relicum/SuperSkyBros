@@ -35,14 +35,14 @@ public class autosetup extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
 
-        String[] strings1 = new String[10];
-        for (int i = 0; i < 10; i++) {
+        String[] strings1 = new String[6];
+        for (int i = 0; i < 6; i++) {
             strings1[i] = "";
         }
         player.sendMessage(strings1);
         player.sendMessage(this.cHeader);
-        SkyApi.getSCB().getConfig().set("generateDefaultWorld", true);
-        SkyApi.getSCB().saveConfig();
+        getPlugin().getConfig().set("generateDefaultWorld", true);
+        getPlugin().saveConfig();
         player.sendMessage(ChatColor.GREEN + "The server will now shutdown you will need to stop and start the server");
         player.sendMessage("3 times to complete the setup the console will display details of progress.");
         player.sendMessage(ChatColor.GRAY + "----------------------------------------------");

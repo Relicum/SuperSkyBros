@@ -2,6 +2,7 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.hooks.VaultManager;
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.MessageManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,12 +26,15 @@ import java.util.*;
  */
 public class CommandManager implements TabExecutor {
 
-    protected List<String> PLAYER = new ArrayList<>();
+    protected final List<String> PLAYER = new ArrayList<>();
 
-    protected List<String> ADMIN = new ArrayList<>();
+    protected final List<String> ADMIN = new ArrayList<>();
 
-    protected List<String> WADMIN = new ArrayList<>();
+    protected final List<String> WADMIN = new ArrayList<>();
 
+    protected List<String> WSET = new ArrayList<>();
+
+    protected final List<String> WSETTING;
 
     /**
      * Stores an instance of the main plugin class
@@ -42,6 +46,15 @@ public class CommandManager implements TabExecutor {
      */
     public Map<String, SubBase> clist = new HashMap<String, SubBase>();
 
+    public boolean addWorld(String w) {
+        if (Bukkit.getWorld(w) != null) {
+            WSET.add(w);
+            return true;
+        }
+        SkyApi.getCMsg().WARNING("The world could not be added to Command Manager as it is not a valid Bukkit world");
+        return false;
+    }
+
     public static MessageManager mm = SCB.getMessageManager();
 
 
@@ -50,12 +63,14 @@ public class CommandManager implements TabExecutor {
      *
      * @param p SCB
      */
-    public CommandManager(SCB p) {
+    public CommandManager() {
 
-        plugin = p;
+        plugin = SkyApi.getSCB();
         loadCommands();
-
-
+        WSET = SkyApi.getSm().getSsbWorlds();
+        WSETTING = new ArrayList<>(2);
+        WSETTING.add("spawn");
+        WSETTING.add("time");
         for (Map.Entry<String, SubBase> entry : clist.entrySet()) {
 
             registerCommand(entry.getKey(), entry.getValue());
@@ -98,6 +113,8 @@ public class CommandManager implements TabExecutor {
         clist.put("adminmode", new adminmode());
         clist.put("autosetup", new autosetup());
         clist.put("saveworld", new saveworld());
+        clist.put("createworld", new createworld());
+        clist.put("set", new set());
     }
 
 
@@ -285,8 +302,7 @@ public class CommandManager implements TabExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String s, String[] strings) {
-        System.out.println(strings[0]);
-        System.out.println("Strings length" + strings.length);
+
         if (sender instanceof Player) {
             Player player = (Player) sender;
             if (strings.length == 1) {
@@ -310,7 +326,18 @@ public class CommandManager implements TabExecutor {
                     return Arrays.asList("true", "false");
                 }
             }
+            if (strings.length == 2 && s.equalsIgnoreCase("ssbw")) {
 
+                if (strings[0].equalsIgnoreCase("set")) {
+                    return StringUtil.copyPartialMatches(strings[1], WSET, new ArrayList<String>(WSET.size()));
+                }
+            }
+            if (strings.length == 3 && s.equalsIgnoreCase("ssbw")) {
+
+                if (strings[0].equalsIgnoreCase("set")) {
+                    return StringUtil.copyPartialMatches(strings[2], WSETTING, new ArrayList<String>(WSETTING.size()));
+                }
+            }
 
         }
 

@@ -20,8 +20,6 @@ public class WorldEditManager {
 
     private static SCB p;
 
-    private static Helper hp = Helper.getInstance();
-
     private Region r;
 
     private RegionSelector rs;
@@ -77,7 +75,7 @@ public class WorldEditManager {
      */
     public Region getSelectionAsRegion(Player pl) {
 
-        String pworld = hp.getPlayersCurrentWorld(pl);
+        String pworld = pl.getWorld().getName();
 
         Selection sel = WEP.getSelection(pl);
         RegionSelector rs = sel.getRegionSelector();

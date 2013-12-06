@@ -1,6 +1,5 @@
 package com.relicum.scb;
 
-import com.relicum.scb.commands.CommandManager;
 import com.relicum.scb.commands.CommandManagerFirstJoin;
 import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.*;
@@ -224,7 +223,7 @@ public class SCB extends JavaPlugin implements Listener {
         } else {
 
             MM = new MessageManager();
-            CommandExecutor cm = new CommandManager(p);
+            CommandExecutor cm = SkyApi.getCommandManager();
             p.getCommand("ssb").setExecutor(cm);
             p.getCommand("ssba").setExecutor(cm);
             p.getCommand("ssbw").setExecutor(cm);
@@ -332,6 +331,8 @@ public class SCB extends JavaPlugin implements Listener {
 
                 System.out.println("World " + w + " is in the blacklist");
             }
+
+            //SkyApi.getSm().setSsbWorlds();
             p.INV = new InventoryManager();
 
             p.LBC = SkyApi.getSm().getLobbyConfig();
@@ -389,9 +390,6 @@ public class SCB extends JavaPlugin implements Listener {
             GemShop gemShop = new GemShop(p);
             p.SNM = new SignManager();
 
-
-            //TODO Must refactor out this Helper Class
-            Helper.getInstance().setup();
 
             registerNewPerm(SSBA_ADMIN_BREAKBLOCKS, "Allows  user to break blocks", SSBA_ADMIN);
             registerNewPerm(SSBA_ADMIN_PLACEBLOCKS, "Allow user to place blocks", SSBA_ADMIN);
@@ -507,8 +505,6 @@ public class SCB extends JavaPlugin implements Listener {
 
         block.setType(Material.GOLD_BLOCK);
         block.update(true);
-        SkyApi.getCMsg().INFO("The block is of type " + block.getType().toString());
-
 
         world.setSpawnLocation(0, 32, 0);
         world.setKeepSpawnInMemory(true);
@@ -526,8 +522,6 @@ public class SCB extends JavaPlugin implements Listener {
         world.setGameRuleValue("doMobSpawning", "false");
         world.setGameRuleValue("mobGriefing", "false");
         world.save();
-        SkyApi.getCMsg().INFO("The spawn is set at " + world.getSpawnLocation().toVector().toString());
-        SkyApi.getCMsg().INFO("The fireticks rule should be false " + world.getGameRuleValue("doFireTick"));
 
         SkyApi.getCMsg().INFO("Settings applied for  " + name + " has been successful");
         SkyApi.getCMsg().INFO("You can now login enjoy !!");

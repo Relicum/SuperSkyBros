@@ -1,9 +1,7 @@
 package com.relicum.scb.utils;
 
 
-import com.relicum.scb.SCB;
-import com.relicum.scb.configs.Messages;
-import com.relicum.scb.types.SkyApi;
+import com.relicum.scb.configs.MessConfig;
 import org.bukkit.ChatColor;
 
 import java.util.Arrays;
@@ -16,12 +14,7 @@ import java.util.Arrays;
  */
 public class MessageManager {
 
-
-    private static SCB pl;
-
-    private static Helper hp;
-
-    private Messages messConfig;
+    private MessConfig messConfig;
 
     private String prefix;
 
@@ -41,35 +34,17 @@ public class MessageManager {
      * @param p SCB
      */
     public MessageManager() {
-        pl = SkyApi.getSCB();
-        setup();
 
-    }
-
-
-    private void setup() {
-
-
-        hp = Helper.getInstance();
-        hp.setup();
-        if (hp.fileExists("messages.yml")) {
-            try {
-                hp.loadFile("messages.yml");
-            } catch (Exception e) {
-                System.out.println(Arrays.toString(e.getStackTrace()));
-                return;
-            }
-        }
-        messConfig = new Messages(pl, "messages.yml");
+        messConfig = new MessConfig("messages.yml");
         messConfig.getConfig().options().copyDefaults(true);
         messConfig.saveDefaultConfig();
+
         setupMessageColors("system.color");
         setPrefix("system.prefix");
         noPerm = setNoPermMessage();
-        pl.getLogger().info("Messages Config Successfully Loaded");
+
 
     }
-
 
     /**
      * Gets string config.
