@@ -12,8 +12,6 @@ import com.relicum.scb.utils.*;
 import com.relicum.scb.we.WorldEditPlugin;
 import lombok.Getter;
 import lombok.Setter;
-import net.milkbowl.vault.chat.Chat;
-import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.*;
 import org.bukkit.block.BlockState;
@@ -32,7 +30,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 
 /**
@@ -59,9 +56,7 @@ public class SCB extends JavaPlugin implements Listener {
     public static final String SSBA_ADMIN_CREATESIGN = "ssba.admin.createsign";
     public static final String IGNORE_WORLDS = "ignoreWorlds";
     public static final String ENABLE = "enable";
-    private static final Logger log = Logger.getLogger("Minecraft");
     private static final String FIRST_RUN_DONE = "firstRunDone";
-    private static final String WORLD_GENERATOR = "worldGenerator";
     private static final String FIRST_RUN = "firstRun";
     /**
      * The constant MM.
@@ -72,12 +67,7 @@ public class SCB extends JavaPlugin implements Listener {
      */
     @SuppressWarnings("StaticVariableOfConcreteClass")
     private static SCB p;
-    private static Economy econ = null;
 
-    /**
-     * The Vault Chat Interface
-     */
-    private static Chat chat = null;
     /**
      * The Group spawn file.
      */

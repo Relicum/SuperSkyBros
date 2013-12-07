@@ -5,7 +5,6 @@ import com.relicum.scb.commands.CommandManager;
 import com.relicum.scb.hooks.ChatManager;
 import com.relicum.scb.hooks.PermsManager;
 import com.relicum.scb.hooks.VaultManager;
-import com.relicum.scb.SM;
 import com.relicum.scb.objects.inventory.InventoryManager;
 import com.relicum.scb.utils.MessageManager;
 import com.relicum.scb.utils.PropertiesManager;

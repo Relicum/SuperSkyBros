@@ -72,7 +72,8 @@ public class InventoryManager {
     public boolean storeOldInventory(Player player) {
 
 
-        if (this.playerStore.containsKey(player.getName())) System.out.println("Player already stored but we will update it");
+        if (this.playerStore.containsKey(player.getName()))
+            System.out.println("Player already stored but we will update it");
 
         StorePlayerSettings ps = PlayerStore.storePlayer(player);
 

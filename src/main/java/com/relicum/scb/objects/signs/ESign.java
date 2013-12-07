@@ -8,4 +8,4 @@ package com.relicum.scb.objects.signs;
  */
 public enum ESign {
     JOINLOBBY, JOIN, CLASS, STATS, LEAVE, DISPLAY, VOTE, DONATE
-};
+}

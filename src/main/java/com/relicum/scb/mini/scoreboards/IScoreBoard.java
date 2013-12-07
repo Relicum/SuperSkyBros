@@ -22,8 +22,6 @@ public interface IScoreBoard {
          */PLAYER_LIST
     }
 
-    ;
-
 
     /**
      * Gets sB manager.

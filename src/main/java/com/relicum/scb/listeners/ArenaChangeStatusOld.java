@@ -2,8 +2,8 @@ package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.arena.ArenaIO;
-import com.relicum.scb.events.ArenaStatusChangeEvents;
 import com.relicum.scb.arena.ArenaStatus;
+import com.relicum.scb.events.ArenaStatusChangeEvents;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 

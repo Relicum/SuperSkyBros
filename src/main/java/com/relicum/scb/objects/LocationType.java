@@ -8,4 +8,4 @@ package com.relicum.scb.objects;
  */
 public enum LocationType {
     CUBOID, AREANSPAWN, ARENAADMIN, LOBBYSPAWN, WORLD, JOINSIGN, CLASSSIGN, DROPS, STATSSIGN
-};
+}

@@ -205,7 +205,8 @@ public class SmashPlayer extends BukkitPlayer {
                 if (!getPlayer().teleport(SCB.getInstance().LBS.getLobbyRegion().getLobbySpawn())) {
                     System.out.println("Error teleporting player to lobby");
                 }
-                if (!SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB)) getPlayer().sendMessage(SCB.MM.getMessage("command.message.teleportToLobby"));
+                if (!SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB))
+                    getPlayer().sendMessage(SCB.MM.getMessage("command.message.teleportToLobby"));
             }
         }, 1L);
 

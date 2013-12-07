@@ -55,7 +55,7 @@ public class FirstRun implements Listener {
     }
 
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void firstJoin(PlayerJoinEvent e) {
         if (!e.getPlayer().isOp()) {
             e.getPlayer().kickPlayer(ChatColor.GREEN + "Sorry currently not allowed in as server is being setup for SuperSkyBros");
@@ -75,6 +75,8 @@ public class FirstRun implements Listener {
 
             e.getPlayer().sendMessage("");
             e.getPlayer().sendMessage(ChatColor.DARK_RED + "IMPORTANT RUN " + ChatColor.GOLD + "/ssba setmode " + ChatColor.DARK_RED + "TO START SUPERSKYBROS SETUP");
+            e.getPlayer().sendMessage("");
+            e.getPlayer().sendMessage("");
         }
     }
 }

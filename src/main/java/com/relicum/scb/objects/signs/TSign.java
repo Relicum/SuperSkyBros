@@ -9,4 +9,4 @@ package com.relicum.scb.objects.signs;
  */
 public enum TSign {
     ACTION, INFO
-};
+}

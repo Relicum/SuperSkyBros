@@ -82,6 +82,7 @@ public class WorldMeta implements Metadatable {
             e.printStackTrace();
         }
 
-        if (this.hasMetadata(s)) SCB.getInstance().getLogger().severe("Unable to remove the MetaData for plugin " + plugin.getName());
+        if (this.hasMetadata(s))
+            SCB.getInstance().getLogger().severe("Unable to remove the MetaData for plugin " + plugin.getName());
     }
 }

@@ -8,4 +8,4 @@ package com.relicum.scb.utils;
  */
 public enum playerStatus {
     LOBBY, GAME, UNKNOWN, OFFLINE, JOINEDSERVER
-};
+}
