@@ -191,14 +191,6 @@ public class SCB extends JavaPlugin implements Listener {
             updateBukkitConfigs();
         }
 
-        if (p.getConfig().getBoolean("debugCommands")) {
-
-            p.getCommand(DebugManager.V_LIST).setExecutor(new DebugManager(p));
-            p.getCommand(DebugManager.V_LIST).setPermissionMessage("Only runs from console");
-
-
-            SkyApi.getCMsg().INFO("Debug Commands installed");
-        }
 
         if (getConfig().getBoolean(FIRST_RUN) && (!getConfig().getBoolean("modeSet"))) {
             this.saveOnDisable = false;
@@ -211,7 +203,14 @@ public class SCB extends JavaPlugin implements Listener {
             FileUtils.createDirectory(getDataFolder().toString(), "worlds");
 
         } else {
+            if (p.getConfig().getBoolean("debugCommands")) {
 
+                p.getCommand(DebugManager.V_LIST).setExecutor(new DebugManager(p));
+                p.getCommand(DebugManager.V_LIST).setPermissionMessage("Only runs from console");
+
+
+                SkyApi.getCMsg().INFO("Debug Commands installed");
+            }
             MM = new MessageManager();
             CommandExecutor cm = SkyApi.getCommandManager();
             p.getCommand("ssb").setExecutor(cm);
@@ -381,10 +380,13 @@ public class SCB extends JavaPlugin implements Listener {
             p.SNM = new SignManager();
 
 
-            registerNewPerm(SSBA_ADMIN_BREAKBLOCKS, "Allows  user to break blocks", SSBA_ADMIN);
-            registerNewPerm(SSBA_ADMIN_PLACEBLOCKS, "Allow user to place blocks", SSBA_ADMIN);
-            registerNewPerm(SSBA_ADMIN_CREATESIGN, "Allows user to create signs", SSBA_ADMIN);
-            registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player.*");
+            registerNewPerm(SSBA_ADMIN_BREAKBLOCKS, "Allows  user to break blocks", "ssba.admin");
+            registerNewPerm(SSBA_ADMIN_PLACEBLOCKS, "Allow user to place blocks", "ssba.admin");
+            registerNewPerm("ssba.admin.createsign", "Allows user to create signs", "ssba.admin");
+            registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player");
+            registerNewPerm("ssb.player.uselobbyleave", "Allows user to use a lobby leave sign", "ssb.player");
+            registerNewPerm("ssb.player.usearenajoin", "Allows user to use a arena leave sign", "ssb.player");
+            registerNewPerm("ssb.player.usearenareturn", "Allows user to use a Arena lobby return to main lobby signs", "ssb.player");
 
 
         }

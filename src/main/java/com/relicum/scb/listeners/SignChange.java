@@ -43,7 +43,7 @@ public class SignChange implements Listener {
         //Lobby Join Sign
         if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("join")) {
 
-            if (VaultManager.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
+            if (VaultManager.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
                 e.setLine(0, Col.Dark_Red() + "[JOIN LOBBY]");
                 e.setLine(1, "CLICK TO JOIN");
                 e.setLine(2, Col.Aqua() + Col.Italic() + "SUPER");
@@ -63,7 +63,7 @@ public class SignChange implements Listener {
         //Lobby Leave Sign
         if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("leave")) {
 
-            if (VaultManager.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
+            if (VaultManager.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
                 e.setLine(0, Col.Dark_Red() + "[LEAVE LOBBY]");
                 e.setLine(1, "CLICK TO LEAVE");
                 e.setLine(2, Col.Aqua() + Col.Italic() + "SUPER");
@@ -82,7 +82,7 @@ public class SignChange implements Listener {
         //Lobby Return Sign used in arena lobbies to take the player back to the main lobby
         if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("return")) {
 
-            if (VaultManager.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
+            if (VaultManager.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
                 e.setLine(0, Col.Dark_Red() + "[RETURN]");
                 e.setLine(1, "CLICK TO RETURN");
                 e.setLine(2, "TO LOBBY");
@@ -101,7 +101,7 @@ public class SignChange implements Listener {
         //Arena Join Sign updates to show game status, number of players etc
         if (lines[0].equalsIgnoreCase("[SSBARENA]") && lines[1].equalsIgnoreCase("join") && Integer.parseInt(lines[2]) > 0) {
 
-            if (VaultManager.perms.has(e.getPlayer(), SCB.SSBA_ADMIN_CREATESIGN)) {
+            if (VaultManager.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
 
                 Integer arenaID = Integer.parseInt(lines[2]);
                 if (!plugin.ARC.getConfig().contains("arena.arenas." + arenaID.toString())) {

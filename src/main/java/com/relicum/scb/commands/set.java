@@ -34,7 +34,7 @@ public class set extends SubBase {
         if (args[1].equalsIgnoreCase("spawn")) {
             String[] cords = args[2].split(",");
             if (cords.length != 3) {
-                SkyApi.getMessageManager().getErrorMessage("worlds.messages.setSpawnArgsInVaild");
+                player.sendMessage(SkyApi.getMessageManager().getErrorMessage("worlds.messages.setSpawnArgsInVaild"));
                 SkyApi.getCMsg().SERVE("Spawn cords must be an int");
                 return false;
             }
@@ -42,7 +42,7 @@ public class set extends SubBase {
                 world.setSpawnLocation(Integer.parseInt(cords[0]), Integer.parseInt(cords[1]), Integer.parseInt(cords[2]));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
-                SkyApi.getMessageManager().getErrorMessage("worlds.messages.setSpawnArgsInVaild");
+                player.sendMessage(SkyApi.getMessageManager().getErrorMessage("worlds.messages.setSpawnArgsInVaild"));
                 return false;
             }
         }
@@ -51,7 +51,7 @@ public class set extends SubBase {
         SerializedLocation location;
         location = new SerializedLocation(world.getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ(), StringUtils.getDirection(player.getLocation().getYaw()), (float) Math.round(player.getLocation().getPitch()));
         SkyApi.getSm().setSerializedWorldSpawnLocation(location, world.getName());
-        SkyApi.getMessageManager().getAdminMessage("worlds.messages.setSpawnSuccess");
+        player.sendMessage(SkyApi.getMessageManager().getAdminMessage("worlds.messages.setSpawnSuccess"));
 
         return true;
     }

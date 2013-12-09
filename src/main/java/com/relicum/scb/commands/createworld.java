@@ -1,11 +1,10 @@
 package com.relicum.scb.commands;
 
+import com.relicum.scb.mini.SerializedLocation;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.block.BlockState;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -45,10 +44,27 @@ public class createworld extends SubBase {
             player.sendMessage(SkyApi.getMessageManager().getErrorMessage("createWorldError"));
             return true;
         }
+
         player.sendMessage(SkyApi.getMessageManager().getAdminMessage("createWorldSuccess").replace("%NAME%", name));
         player.sendMessage(SkyApi.getMessageManager().getMessage("createWorldStartSettingss").replace("%NAME%", name));
 
-        if (world.loadChunk(0, 0, true)) {
+        try {
+            world = SkyApi.getWorldManager().applyWorldDefaultSettings(name);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            player.sendMessage(SkyApi.getMessageManager().getErrorMessage("createWorldAlreadyExists").replace("%NAME%", name));
+            return false;
+        }
+
+        SkyApi.getWorldManager().getConfig().set("worlds." + name + ".enable", true);
+        SerializedLocation location = new SerializedLocation(name, 0, 32, 0, 90.0f, 0.0f);
+        SkyApi.getSm().setSerializedWorldSpawnLocation(location, name);
+
+        player.sendMessage(SkyApi.getMessageManager().getAdminMessage("applyWorldSettings").replace("%NAME%", name));
+        return true;
+
+/*        if (world.loadChunk(0, 0, true)) {
             BlockState blockState = world.getBlockAt(0, 31, 0).getState();
             SkyApi.getCMsg().INFO("The block is currently " + blockState.getType().toString());
             blockState.setType(Material.GOLD_BLOCK);
@@ -75,11 +91,12 @@ public class createworld extends SubBase {
             world.setGameRuleValue("mobGriefing", "false");
             world.save();
             world.setAutoSave(true);
-            SkyApi.getCMsg().INFO("All world settings and spawn point have been ve for world " + name);
+
+            SkyApi.getCMsg().INFO("All world settings and spawn point have been applied for world " + name);
             player.sendMessage(SkyApi.getMessageManager().getAdminMessage("applyWorldSettings").replace("%NAME%", name));
         }
 
-        return true;
+        return true;*/
     }
 
     /**

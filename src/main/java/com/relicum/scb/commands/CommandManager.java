@@ -32,9 +32,9 @@ public class CommandManager implements TabExecutor {
 
     protected final List<String> WADMIN = new ArrayList<>();
 
-    protected List<String> WSET = new ArrayList<>();
+    protected List<String> WSET = null;
 
-    protected final List<String> WSETTING;
+    protected List<String> WSETTING = null;
 
     /**
      * Stores an instance of the main plugin class
@@ -47,6 +47,7 @@ public class CommandManager implements TabExecutor {
     public Map<String, SubBase> clist = new HashMap<String, SubBase>();
 
     public boolean addWorld(String w) {
+        SkyApi.getCMsg().INFO("We get here with world " + w);
         if (Bukkit.getWorld(w) != null) {
             WSET.add(w);
             return true;
@@ -65,12 +66,26 @@ public class CommandManager implements TabExecutor {
      */
     public CommandManager() {
 
-        plugin = SkyApi.getSCB();
+        this.plugin = SkyApi.getSCB();
+
+        //Only Load world management commands if enabled
+        if (SkyApi.getSm().isUseWorldManagement()) {
+
+            clist.put("autosetup", new autosetup());
+            clist.put("saveworld", new saveworld());
+            clist.put("createworld", new createworld());
+            clist.put("set", new set());
+
+            WSET = new ArrayList<>();
+
+            WSET = SkyApi.getSm().getSsbWorlds();
+            WSETTING = new ArrayList<>();
+            WSETTING.add("spawn");
+            WSETTING.add("time");
+        }
+
         loadCommands();
-        WSET = SkyApi.getSm().getSsbWorlds();
-        WSETTING = new ArrayList<>(2);
-        WSETTING.add("spawn");
-        WSETTING.add("time");
+
         for (Map.Entry<String, SubBase> entry : clist.entrySet()) {
 
             registerCommand(entry.getKey(), entry.getValue());
@@ -92,6 +107,7 @@ public class CommandManager implements TabExecutor {
      */
     private void loadCommands() {
 
+
         clist.put("createarena", new createarena());
         clist.put("setspawn", new setspawn());
         clist.put("join", new join());
@@ -102,7 +118,7 @@ public class CommandManager implements TabExecutor {
         clist.put("listarenas", new listarenas());
         clist.put("arenatp", new arenatp());
         clist.put("leave", new leave());
-        clist.put(SCB.ENABLE, new enable());
+        clist.put("enable", new enable());
         clist.put("disable", new disable());
         clist.put("blacklist", new blacklist());
         clist.put("player", new player());
@@ -111,10 +127,7 @@ public class CommandManager implements TabExecutor {
         clist.put("worldtp", new worldtp());
         clist.put("blacklisted", new blacklisted());
         clist.put("adminmode", new adminmode());
-        clist.put("autosetup", new autosetup());
-        clist.put("saveworld", new saveworld());
-        clist.put("createworld", new createworld());
-        clist.put("set", new set());
+
     }
 
 

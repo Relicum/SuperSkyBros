@@ -40,7 +40,7 @@ public class setlobbyprotection extends SubBase {
             return true;
 
         }
-        //TODO Still requires a reload when setting protection to off
+        //TODOR Still requires a reload when setting protection to off
         SCB.getInstance().getConfig().set("enableLobbyProtection", setTo);
         if (!setTo) {
             SCB.getInstance().unloadLobbyEvents();

@@ -74,20 +74,20 @@ public class onBlockClick implements Listener {
             return;
         }
 
-        if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[LEAVE LOBBY]"))) {
+        if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.uselobbyleave") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[LEAVE LOBBY]"))) {
 
             e.getPlayer().performCommand("ssb leave");
 
         }
 
-        if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[RETURN]"))) {
+        if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.usearenareturn") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[RETURN]"))) {
             ClearInventory.applyLobbyInv(e.getPlayer());
             e.getPlayer().sendMessage(SCB.getMessageManager().getMessage("listeners.onblockclick.returnToLobby"));
             SCB.getInstance().LBS.teleportToLobby(e.getPlayer(), SCB.getInstance().LBS.getLobbyRegion().getWorld().getSpawnLocation());
 
         }
 
-        if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).startsWith("[Arena"))) {
+        if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.usearenajoin") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).startsWith("[Arena"))) {
             if (ChatColor.stripColor(lines[3]).equalsIgnoreCase("waiting")) {
                 e.getPlayer().sendMessage("Sign Starts with [Arena and status is waiting");
                 return;

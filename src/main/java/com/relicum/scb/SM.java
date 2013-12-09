@@ -314,9 +314,20 @@ public class SM {
     }
 
     /**
+     * Is server in dedicated mode
+     *
+     * @return true if the server is in dedicated mode
+     */
+    public boolean isDedicated() {
+        return dedicated;
+    }
+
+    /**
      * Sets ssb worlds list
      */
     public void setSsbWorlds() {
+        if (dedicated)
+            return;
         List<World> worlds = Bukkit.getWorlds();
 
         for (World world : worlds) {
@@ -329,15 +340,6 @@ public class SM {
         worlds.clear();
     }
 
-
-    /**
-     * Is server in dedicated mode
-     *
-     * @return true if the server is in dedicated mode
-     */
-    public boolean isDedicated() {
-        return dedicated;
-    }
 
     public void loadFile(File file) {
 

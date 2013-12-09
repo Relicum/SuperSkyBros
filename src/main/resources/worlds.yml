@@ -20,7 +20,7 @@ default:
   environment: 'NORMAL'
   generator: 'CleanroomGenerator:.'
   structures: 'false'
-  fixedSpawn: '0,31,0'
+  fixedSpawn: '0,32,0'
 # General world settings
 worldSettings:
   setSpawnLocation: '0,31,0'
@@ -31,3 +31,24 @@ worldSettings:
   animals: 'false'
   setAutoSave: 'true'
   setDifficulty: 'HARD'
+defaultWorldSettings:
+  keepSpawnInMemory: true
+  spawnBlockMaterial: GOLD_BLOCK
+  autoSave: true
+  difficulty: HARD
+  setStorm: false
+  setThundering: false
+  setTime: 6000
+  spawnLocation:
+    z: 0
+    y: 32
+    x: 0
+  spawnBlockLocation:
+    z: 0
+    y: 31
+    x: 0
+  gameRules:
+    doFireTick: false
+    mobGriefing: false
+    doMobSpawning: false
+    doDaylightCycle: false

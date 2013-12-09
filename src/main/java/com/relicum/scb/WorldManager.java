@@ -241,9 +241,10 @@ public class WorldManager {
         world.setGameRuleValue("doDaylightCycle", "false");
         world.setGameRuleValue("doFireTick", "false");
         world.setGameRuleValue("mobGriefing", "false");
+        world.setGameRuleValue("mobSpawning", "false");
         world.save();
 
-        System.out.println("Settings applied for  " + name + " has been successful");
+        SkyApi.getCMsg().INFO("Settings applied for  " + name + " has been successful");
         return world;
     }
 

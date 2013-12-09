@@ -121,6 +121,15 @@ public class DebugManager implements CommandExecutor {
                             System.out.println(ak);
                         }
                     }
+                    if (k.getName().equalsIgnoreCase("ssbw.admin")) {
+                        System.out.println("Parent Node: ssbw.admin");
+                        System.out.println("Has the Child Perms");
+                        Permission ad = plugin.getServer().getPluginManager().getPermission("ssbw.admin");
+                        Map<String, Boolean> adc = ad.getChildren();
+                        for (String ak : adc.keySet()) {
+                            System.out.println(ak);
+                        }
+                    }
                 }
             }
 
