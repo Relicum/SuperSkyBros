@@ -62,6 +62,10 @@ public class createworld extends SubBase {
         SkyApi.getSm().setSerializedWorldSpawnLocation(location, name);
 
         player.sendMessage(SkyApi.getMessageManager().getAdminMessage("applyWorldSettings").replace("%NAME%", name));
+        SkyApi.getWorldManager().config.saveConfig();
+        SkyApi.getSCB().saveConfig();
+        SkyApi.getWorldManager().config.reloadConfig();
+        SkyApi.getSCB().reloadConfig();
         return true;
 
 /*        if (world.loadChunk(0, 0, true)) {

@@ -42,7 +42,7 @@ public class DebugManager implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] strings) {
         if (strings == null || strings.length < 1) {
-            System.out.println("vList must pass type of list options are: Lobby, Lobbyname,Perms,wsettings");
+            System.out.println("vList must pass type of list options are: Lobby, Lobbyname, Perms, wsettings, blacklist");
             return true;
         }
 
@@ -138,6 +138,19 @@ public class DebugManager implements CommandExecutor {
 
             SkyApi.getWorldManager().applyWorldDefaultSettings("scb");
             System.out.println("World Settings have tried to be applied");
+
+        }
+
+        if (list.equalsIgnoreCase("blacklist")) {
+            System.out.println("Currently in black and whitelist are");
+            System.out.println("In the black list there is: ");
+            for (String s : plugin.getConfig().getStringList("ignoreWorlds")) {
+                System.out.println(s);
+            }
+            System.out.println("In the whitelist there are: ");
+            for (String s : plugin.getConfig().getStringList("dedicatedSSBWorlds")) {
+                System.out.println(s);
+            }
 
         }
 

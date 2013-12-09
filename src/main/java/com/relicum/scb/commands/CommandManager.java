@@ -26,15 +26,16 @@ import java.util.*;
  */
 public class CommandManager implements TabExecutor {
 
-    protected final List<String> PLAYER = new ArrayList<>();
+    private final List<String> PLAYER = new ArrayList<>();
 
-    protected final List<String> ADMIN = new ArrayList<>();
+    private final List<String> ADMIN = new ArrayList<>();
 
-    protected final List<String> WADMIN = new ArrayList<>();
+    private final List<String> WADMIN = new ArrayList<>();
 
-    protected List<String> WSET = null;
+    private List<String> WSET = new ArrayList<>(8);
 
-    protected List<String> WSETTING = null;
+    private List<String> WSETTING = null;
+
 
     /**
      * Stores an instance of the main plugin class
@@ -47,7 +48,7 @@ public class CommandManager implements TabExecutor {
     public Map<String, SubBase> clist = new HashMap<String, SubBase>();
 
     public boolean addWorld(String w) {
-        SkyApi.getCMsg().INFO("We get here with world " + w);
+        SkyApi.getCMsg().INFO("We got here with world " + w);
         if (Bukkit.getWorld(w) != null) {
             WSET.add(w);
             return true;
@@ -55,6 +56,31 @@ public class CommandManager implements TabExecutor {
         SkyApi.getCMsg().WARNING("The world could not be added to Command Manager as it is not a valid Bukkit world");
         return false;
     }
+
+    public void addWorld(List<String> w) {
+
+        for (String wo : w) {
+            if (Bukkit.getWorld(wo) != null) {
+                SkyApi.getCMsg().WARNING("The world " + wo + " could not be added to Command Manager as it is not a valid Bukkit world");
+            } else if (WSET.contains(wo)) {
+                SkyApi.getCMsg().WARNING("The world " + wo + " could not be added as it is already in the list");
+            } else if (!WSET.contains(wo)) {
+                WSET.add(wo);
+                SkyApi.getCMsg().INFO("The world " + wo + " has successfully been added to the list");
+            }
+        }
+    }
+
+    public void resetWhiteList() {
+        WSET.clear();
+
+        try {
+            WSET.addAll(plugin.getConfig().getStringList("dedicatedSSBWorlds"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public static MessageManager mm = SCB.getMessageManager();
 
@@ -68,17 +94,18 @@ public class CommandManager implements TabExecutor {
 
         this.plugin = SkyApi.getSCB();
 
+
         //Only Load world management commands if enabled
+
         if (SkyApi.getSm().isUseWorldManagement()) {
+            resetWhiteList();
+            //WSET.addAll(plugin.getConfig().getStringList("dedicatedSSBWorlds"));
 
             clist.put("autosetup", new autosetup());
             clist.put("saveworld", new saveworld());
             clist.put("createworld", new createworld());
             clist.put("set", new set());
 
-            WSET = new ArrayList<>();
-
-            WSET = SkyApi.getSm().getSsbWorlds();
             WSETTING = new ArrayList<>();
             WSETTING.add("spawn");
             WSETTING.add("time");
@@ -152,7 +179,7 @@ public class CommandManager implements TabExecutor {
         Player player = (Player) cs;
 
 
-        if (plugin.getBlackList().contains(player.getWorld().getName())) {
+        if (plugin.getConfig().contains(player.getWorld().getName())) {
             player.sendMessage(mm.getErrorMessage("command.message.worldOnBlackList"));
             plugin.getLogger().info("You can not run commands in world " + player.getWorld().getName() + " as the world is on the world blacklist remove it from config.yml");
             return true;

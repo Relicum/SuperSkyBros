@@ -116,7 +116,7 @@ public class SCB extends JavaPlugin implements Listener {
     private WorldManager worldManager;
     private PluginManager pm = Bukkit.getServer().getPluginManager();
     private List<String> bWorlds = new ArrayList<>();
-
+    //public SM settings;
 
     /**
      * Gets p.
@@ -178,7 +178,10 @@ public class SCB extends JavaPlugin implements Listener {
         saveDefaultConfig();
 
         SkyApi.init(this);
-
+        SkyApi.getCMsg().INFO("Initialising SuperSkyBros Started");
+        SkyApi.getSm();
+        SkyApi.getCMsg().INFO("Settings manager Initialised");
+        //settings.setup();
         saveResource("messages.properties", true);
         //SkyApi.getCMsg().INFO("New Message Properties file saved");
 
@@ -211,8 +214,11 @@ public class SCB extends JavaPlugin implements Listener {
 
                 SkyApi.getCMsg().INFO("Debug Commands installed");
             }
+
+
             MM = new MessageManager();
             CommandExecutor cm = SkyApi.getCommandManager();
+            //SkyApi.getCommandManager().addWorld(SkyApi.getSm().getSsbWorlds());
             p.getCommand("ssb").setExecutor(cm);
             p.getCommand("ssba").setExecutor(cm);
             p.getCommand("ssbw").setExecutor(cm);
@@ -320,6 +326,11 @@ public class SCB extends JavaPlugin implements Listener {
 
                 System.out.println("World " + w + " is in the blacklist");
             }
+            /*SkyApi.getSm().setSsbWorlds();
+            List<String> w = SkyApi.getSm().getSsbWorlds();
+            for(String wo : w){
+                SkyApi.getCommandManager().addWorld(wo);
+            }*/
 
             //SkyApi.getSm().setSsbWorlds();
             p.INV = new InventoryManager();

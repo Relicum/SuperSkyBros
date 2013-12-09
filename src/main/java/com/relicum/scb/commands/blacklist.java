@@ -2,6 +2,7 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.BukkitInterface;
 import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -31,24 +32,22 @@ public class blacklist extends SubBase {
         if (args[0].equalsIgnoreCase("add")) {
 
             if (BukkitInterface.getWorld(args[1]) != null) {
-                if (SCB.getInstance().getBlackList().contains(args[1])) {
-                    player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.blacklistAlreadyAdded").replace("%WORLD%", args[1]));
+                if (SkyApi.getSm().addWorldToBlackList(args[1])) {
+                    //SCB.getInstance().getBlackList().add(args[1]);
+                    //SCB.getInstance().getConfig().set(SCB.IGNORE_WORLDS, SCB.getInstance().getBlackList());
+                    SCB.getInstance().saveConfig();
+                    SCB.getInstance().reloadConfig();
+                    player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.blacklistSuccess").replace("%WORLD%", args[1]).replace("%ARG%", "ADDED"));
                     return true;
                 }
-                SCB.getInstance().getBlackList().add(args[1]);
-                SCB.getInstance().getConfig().set(SCB.IGNORE_WORLDS, SCB.getInstance().getBlackList());
-                SCB.getInstance().saveConfig();
-                SCB.getInstance().reloadConfig();
-                player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.blacklistSuccess").replace("%WORLD%", args[1]).replace("%ARG%", "ADDED"));
-                return true;
             } else {
                 player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.blacklistInvalidWorld"));
             }
         }
         if (args[0].equalsIgnoreCase("remove")) {
-            if (SCB.getInstance().getBlackList().contains(args[1])) {
-                SCB.getInstance().getBlackList().remove(args[1]);
-                SCB.getInstance().getConfig().set(SCB.IGNORE_WORLDS, SCB.getInstance().getBlackList());
+            if (SkyApi.getSm().addWorldToWhiteList(args[1])) {
+                //SCB.getInstance().getBlackList().remove(args[1]);
+                //SCB.getInstance().getConfig().set(SCB.IGNORE_WORLDS, SCB.getInstance().getBlackList());
                 SCB.getInstance().saveConfig();
                 SCB.getInstance().reloadConfig();
                 player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.blacklistSuccess").replace("%WORLD%", args[1]).replace("%ARG%", "REMOVED"));

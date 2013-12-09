@@ -78,7 +78,8 @@ public class ClearInventory {
         player.setMaximumNoDamageTicks(12000);
         player.setHealth(20.0D);
         player.setFoodLevel(20);
-        player.setAllowFlight(true);
+        player.setFlying(false);
+        player.setAllowFlight(false);
         player.setLevel(0);
         player.setExp(0.0F);
         player.getInventory().setItem(0, bo);

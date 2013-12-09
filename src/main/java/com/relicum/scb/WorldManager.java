@@ -194,6 +194,7 @@ public class WorldManager {
         World world;
         try {
             world = worldCreator.createWorld();
+            SkyApi.getSm().addWorldToWhiteList(name);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -242,6 +243,7 @@ public class WorldManager {
         world.setGameRuleValue("doFireTick", "false");
         world.setGameRuleValue("mobGriefing", "false");
         world.setGameRuleValue("mobSpawning", "false");
+
         world.save();
 
         SkyApi.getCMsg().INFO("Settings applied for  " + name + " has been successful");

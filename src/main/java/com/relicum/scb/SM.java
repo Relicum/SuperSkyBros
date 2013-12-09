@@ -3,9 +3,8 @@ package com.relicum.scb;
 import com.relicum.scb.configs.*;
 import com.relicum.scb.mini.SerializedLocation;
 import com.relicum.scb.types.SkyApi;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -17,6 +16,8 @@ import java.util.List;
 public class SM {
 
     private static SM instance;
+
+    private FileConfiguration config;
 
     /**
      * Default Data Folder
@@ -83,12 +84,13 @@ public class SM {
      * Sets .
      */
     public void setup() {
-
+        config = SkyApi.getSCB().getConfig();
         dataFolder = SkyApi.getSCB().getDataFolder();
-        worldBlackListed.addAll(SkyApi.getSCB().getConfig().getStringList("ignoreWorlds"));
-        dedicated = SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB");
-        setgenerateDefaultWorld(SkyApi.getSCB().getConfig().getBoolean("generateDefaultWorld"));
-        setUseWorldManagement(SkyApi.getSCB().getConfig().getBoolean("useWorldManager"));
+        worldBlackListed.addAll(config.getStringList("ignoreWorlds"));
+        ssbWorlds.addAll(config.getStringList("dedicatedSSBWorlds"));
+        dedicated = config.getBoolean("dedicatedSSB");
+        setgenerateDefaultWorld(config.getBoolean("generateDefaultWorld"));
+        setUseWorldManagement(config.getBoolean("useWorldManager"));
 
 
         if (isUseWorldManagement()) {
@@ -309,8 +311,8 @@ public class SM {
      *
      * @return the ssb worlds list contain worlds dedicated to SSB
      */
-    public ArrayList<String> getSsbWorlds() {
-        return (ArrayList<String>) ssbWorlds;
+    public List<String> getSsbWorlds() {
+        return ssbWorlds;
     }
 
     /**
@@ -325,19 +327,84 @@ public class SM {
     /**
      * Sets ssb worlds list
      */
-    public void setSsbWorlds() {
-        if (dedicated)
-            return;
-        List<World> worlds = Bukkit.getWorlds();
+    public boolean addWorldToWhiteList(String w) {
 
-        for (World world : worlds) {
-            SkyApi.getCMsg().INFO("Name of world is " + world.getName());
-            if (!worldBlackListed.contains(world.getName()))
-                SkyApi.getCMsg().INFO("World " + world.getName() + " has been added");
-            ssbWorlds.add(world.getName());
+        if (blackListed().contains(w)) {
+            blackListed().remove(w);
+            config.set("ignoreWorlds", blackListed());
+        }
+        try {
+            if (!ssbWorlds.contains(w)) {
+                ssbWorlds.add(w);
+                config.set("dedicatedSSBWorlds", ssbWorlds);
+                SkyApi.getCommandManager().resetWhiteList();
+                SkyApi.getCMsg().INFO("World " + w + " has been successfully added to the white list");
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Gets plugin config.
+     *
+     * @return the plugin config
+     */
+    public FileConfiguration getPluginConfig() {
+        return config;
+    }
+
+    public boolean addWorldToBlackList(String w) {
+        if (ssbWorlds.contains(w)) {
+            ssbWorlds.remove(w);
+            config.set("dedicatedSSBWorlds", ssbWorlds);
+
+        }
+        try {
+            if (!blackListed().contains(w)) {
+                blackListed().add(w);
+                config.set("ignoreWorlds", blackListed());
+                SkyApi.getCommandManager().resetWhiteList();
+
+                SkyApi.getCMsg().INFO("World " + w + " has been successfully added to the white list");
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Remove world form black and white list.
+     *
+     * @param w the w
+     * @return the boolean
+     */
+    public boolean removeWorldFormBlackAndWhiteList(String w) {
+
+
+        try {
+            if (ssbWorlds.contains(w)) {
+                ssbWorlds.remove(w);
+            }
+            if (blackListed().contains(w)) {
+                blackListed().remove(w);
+            }
+
+            config.set("dedicatedSSBWorlds", ssbWorlds);
+            config.set("ignoreWorlds", blackListed());
+
+            return true;
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
 
-        worlds.clear();
     }
 
 

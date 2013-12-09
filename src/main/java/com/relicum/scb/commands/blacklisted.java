@@ -1,11 +1,11 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * SuperSkyBros First Created 08/11/13
@@ -23,10 +23,14 @@ public class blacklisted extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
 
-        List<String> blacklist = SCB.getInstance().getBlackList();
-        for (String s : blacklist) {
+        for (String s : SCB.getInstance().getConfig().getStringList("ignoreWorlds")) {
             player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.blacklistedWorlds").replace("%WORLD%", s));
         }
+        player.sendMessage(ChatColor.GRAY + "-----------------------------");
+        for (String s : SCB.getInstance().getConfig().getStringList("dedicatedSSBWorlds")) {
+            player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.whitelistedWorlds").replace("%WORLD%", s));
+        }
+
         return true;
     }
 
