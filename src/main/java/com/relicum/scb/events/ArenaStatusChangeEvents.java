@@ -2,7 +2,7 @@ package com.relicum.scb.events;
 
 import com.relicum.scb.Game;
 import com.relicum.scb.arena.Arena;
-import com.relicum.scb.utils.playerStatus;
+import com.relicum.scb.utils.PlayerStatus;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -19,9 +19,9 @@ public class ArenaStatusChangeEvents extends Event {
 
     private Arena arena;
 
-    private playerStatus pre;
+    private PlayerStatus pre;
 
-    private playerStatus status;
+    private PlayerStatus status;
 
     private Player player;
 
@@ -33,7 +33,7 @@ public class ArenaStatusChangeEvents extends Event {
     /**
      * The default constructor is defined for cleaner code. This constructor assumes the event is synchronous.
      */
-    ArenaStatusChangeEvents(Player player, playerStatus previous, Arena ar, playerStatus st) {
+    ArenaStatusChangeEvents(Player player, PlayerStatus previous, Arena ar, PlayerStatus st) {
         this.player = player;
         this.arena = ar;
         this.status = st;
@@ -46,7 +46,7 @@ public class ArenaStatusChangeEvents extends Event {
     /**
      * Alternative Constructor which also passes the Game Instance to
      */
-    public ArenaStatusChangeEvents(Player player, playerStatus previous, Game game, playerStatus st) {
+    public ArenaStatusChangeEvents(Player player, PlayerStatus previous, Game game, PlayerStatus st) {
 
         this.player = player;
         this.game = game;
@@ -58,7 +58,7 @@ public class ArenaStatusChangeEvents extends Event {
     /**
      * Alternative Constructor which also passes the Game Instance to
      */
-    public ArenaStatusChangeEvents(Player player, playerStatus previous, playerStatus st) {
+    public ArenaStatusChangeEvents(Player player, PlayerStatus previous, PlayerStatus st) {
         this.player = player;
         this.pre = previous;
         this.status = st;
@@ -70,7 +70,7 @@ public class ArenaStatusChangeEvents extends Event {
      *
      * @return ArenaStatus the Arena Status
      */
-    public playerStatus getPrevious() {
+    public PlayerStatus getPrevious() {
         return this.pre;
     }
 
@@ -80,7 +80,7 @@ public class ArenaStatusChangeEvents extends Event {
      *
      * @return ArenaStatus the current Status
      */
-    public playerStatus getStatus() {
+    public PlayerStatus getStatus() {
         return this.status;
     }
 

@@ -6,6 +6,6 @@ package com.relicum.scb.utils;
  * @author Relicum
  * @version 0.1
  */
-public enum playerStatus {
+public enum PlayerStatus {
     LOBBY, GAME, UNKNOWN, OFFLINE, JOINEDSERVER, ADMINMODE
 }

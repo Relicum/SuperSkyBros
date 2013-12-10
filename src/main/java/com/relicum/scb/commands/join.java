@@ -4,7 +4,7 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.SmashPl;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.types.SkyApi;
-import com.relicum.scb.utils.playerStatus;
+import com.relicum.scb.utils.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -32,7 +32,7 @@ public class join extends SubBase {
         }
         SmashPl splayer = SmashPl.wrap(player);
 
-        splayer.pStatus = playerStatus.UNKNOWN;
+        splayer.pStatus = PlayerStatus.UNKNOWN;
         PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "COMMAND", SkyApi.getSCB().getConfig().getBoolean(SCB.DEDICATED_SSB));
         Bukkit.getServer().getPluginManager().callEvent(event);
 

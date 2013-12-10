@@ -5,7 +5,7 @@ import com.relicum.scb.SettingsManager;
 import com.relicum.scb.SmashPl;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.hooks.VaultManager;
-import com.relicum.scb.utils.playerStatus;
+import com.relicum.scb.utils.PlayerStatus;
 import com.relicum.scb.utils.timers.StartTimer;
 import lombok.Data;
 import org.bukkit.Bukkit;
@@ -30,7 +30,7 @@ public class PlayerJoin implements Listener {
 
     private SCB plugin;
     private boolean firstTimeOverride;
-    private playerStatus status;
+    private PlayerStatus status;
     private boolean mode;
 
 
@@ -101,7 +101,7 @@ public class PlayerJoin implements Listener {
             if (VaultManager.perms.has(pl.getPlayer(), "ssb.player.join") || pl.isOp()) {
                 e.setJoinMessage("");
 
-                pl.setpStatus(playerStatus.JOINEDSERVER);
+                pl.setpStatus(PlayerStatus.JOINEDSERVER);
                 pl.setMyLocation("JOINEDSERVER");
                 PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(pl, "JOINEDSERVER", SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB));
                 Bukkit.getServer().getPluginManager().callEvent(event);

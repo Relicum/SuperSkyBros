@@ -23,7 +23,7 @@ public class lobbytp extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
 
-        Location loc = SCB.getInstance().LBS.getLobbyRegion().getLobbySpawn();
+        Location loc = SCB.getInstance().LBS.getLobbyRg().getLobbySpawn();
 
         SCB.getInstance().LBS.teleportToLobby(player, loc);
 

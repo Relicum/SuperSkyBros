@@ -11,7 +11,7 @@ import org.bukkit.util.Vector;
  * @author Relicum
  * @version 0.1
  */
-public class LobbyRegion {
+public class LobbyRg {
 
 
     private Vector lobbySpawn = null;
@@ -27,7 +27,7 @@ public class LobbyRegion {
     private float yaw;
 
 
-    public LobbyRegion(Vector min, Vector max, Vector lobbySpawn, String wo, String p, float y) {
+    public LobbyRg(Vector min, Vector max, Vector lobbySpawn, String wo, String p, float y) {
         this.world = wo;
         this.lobbySpawn = lobbySpawn;
         this.max = max;

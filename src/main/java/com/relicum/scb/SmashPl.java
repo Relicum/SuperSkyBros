@@ -1,7 +1,7 @@
 package com.relicum.scb;
 
 import com.relicum.scb.objects.BukkitPlayer;
-import com.relicum.scb.utils.playerStatus;
+import com.relicum.scb.utils.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ import java.util.UUID;
  */
 public class SmashPl extends BukkitPlayer {
 
-    public playerStatus pStatus;
+    public PlayerStatus pStatus;
 
     private String playerLocation;
 
@@ -82,12 +82,12 @@ public class SmashPl extends BukkitPlayer {
     }
 
 
-    public playerStatus getStatus() {
+    public PlayerStatus getStatus() {
         return this.pStatus;
     }
 
 
-    public void setpStatus(playerStatus pls) {
+    public void setpStatus(PlayerStatus pls) {
 
         this.pStatus = pls;
     }
@@ -202,7 +202,7 @@ public class SmashPl extends BukkitPlayer {
             @Override
             public void run() {
 
-                if (!getPlayer().teleport(SCB.getInstance().LBS.getLobbyRegion().getLobbySpawn())) {
+                if (!getPlayer().teleport(SCB.getInstance().LBS.getLobbyRg().getLobbySpawn())) {
                     System.out.println("Error teleporting player to lobby");
                 }
                 if (!SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB))

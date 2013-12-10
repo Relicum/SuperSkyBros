@@ -36,7 +36,7 @@ public class leave extends SubBase {
                 SCB.getInstance().INV.removePlayerFromStore(player.getName());
                 SCB.getInstance().LBS.removePlayer(splayer);
 
-                player.teleport(SCB.getInstance().LBS.getLobbyRegion().getWorld().getSpawnLocation());
+                player.teleport(SCB.getInstance().LBS.getLobbyRg().getWorld().getSpawnLocation());
                 splayer.sendMessage(SCB.getMessageManager().getMessage("command.message.leaveSuccess"));
             } else {
 

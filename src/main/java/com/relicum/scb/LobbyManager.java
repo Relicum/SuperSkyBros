@@ -1,7 +1,7 @@
 package com.relicum.scb;
 
 import com.relicum.scb.configs.LobbyConfig;
-import com.relicum.scb.objects.LobbyRegion;
+import com.relicum.scb.objects.LobbyRg;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -40,7 +40,7 @@ public class LobbyManager implements Listener {
 
     private ArrayList<UUID> players2 = new ArrayList<>();
 
-    private LobbyRegion lobbyRegion;
+    private LobbyRg lobbyRg;
 
 
     /**
@@ -79,7 +79,7 @@ public class LobbyManager implements Listener {
             Double ya = (Double) lrc.get("YAW");
 
             Double pit = (Double) lrc.get("PITCH");
-            this.lobbyRegion = new LobbyRegion(
+            this.lobbyRg = new LobbyRg(
                     (org.bukkit.util.Vector) lrc.get("MIN"), (org.bukkit.util.Vector) lrc.get("MAX"), (org.bukkit.util.Vector) lrc.get("SPAWN"), (String) lrc.get("WORLD"),
                     (String) lrc.get("PERM"), (float) ya.floatValue());
 
@@ -316,7 +316,7 @@ public class LobbyManager implements Listener {
      * @return boolean
      */
     @Deprecated
-    public boolean StoreLobbyRegion(LobbyRegion cu) {
+    public boolean StoreLobbyRegion(LobbyRg cu) {
         Map<String, Object> reg = new HashMap<>();
 
         return true;
@@ -345,15 +345,15 @@ public class LobbyManager implements Listener {
     /**
      * Gets lobby region.
      *
-     * @return LobbyRegion lobby region
+     * @return LobbyRg lobby region
      */
-    public LobbyRegion getLobbyRegion() {
-        return lobbyRegion;
+    public LobbyRg getLobbyRg() {
+        return lobbyRg;
     }
 
 
-    public void setLobbyRegion(LobbyRegion l) {
-        this.lobbyRegion = l;
+    public void setLobbyRg(LobbyRg l) {
+        this.lobbyRg = l;
     }
 
 

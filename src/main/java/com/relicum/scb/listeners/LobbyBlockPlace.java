@@ -49,9 +49,9 @@ public class LobbyBlockPlace implements Listener, Cancellable {
         this.plugin = (SCB) pl;
         this.protectionSet = this.plugin.getConfig().getBoolean("enableLobbyProtection");
         this.blacklist = plugin.getBlackList();
-        this.min = plugin.LBS.getLobbyRegion().getMinVector();
-        this.max = plugin.LBS.getLobbyRegion().getMaxVector();
-        this.world = plugin.LBS.getLobbyRegion().getWorld().getName();
+        this.min = plugin.LBS.getLobbyRg().getMinVector();
+        this.max = plugin.LBS.getLobbyRg().getMaxVector();
+        this.world = plugin.LBS.getLobbyRg().getWorld().getName();
 
     }
 
@@ -70,7 +70,7 @@ public class LobbyBlockPlace implements Listener, Cancellable {
         String wo = player.getWorld().getName();
 
         if (!VaultManager.perms.has(player, "ssba.admin.placeblocks")) {
-            if (SCB.getInstance().LBS.getLobbyRegion().isAABB(e.getBlock().getLocation().toVector())) {
+            if (SCB.getInstance().LBS.getLobbyRg().isAABB(e.getBlock().getLocation().toVector())) {
                 e.setCancelled(true);
                 player.sendMessage(SCB.MM.getErrorMessage("listeners.blockplace.lobbyPlace"));
             }

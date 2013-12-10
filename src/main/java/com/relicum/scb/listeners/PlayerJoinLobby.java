@@ -3,7 +3,7 @@ package com.relicum.scb.listeners;
 import com.relicum.scb.SCB;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.objects.inventory.ClearInventory;
-import com.relicum.scb.utils.playerStatus;
+import com.relicum.scb.utils.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -40,11 +40,11 @@ public class PlayerJoinLobby implements Listener {
             SCB.getInstance().INV.storeOldInventory(e.getPlayer().getPlayer());
             ClearInventory.applyLobbyInv(e.getPlayer().getPlayer());
             SCB.getInstance().LBS.addPlayer(e.getPlayer());
-            e.getPlayer().pStatus = playerStatus.LOBBY;
+            e.getPlayer().pStatus = PlayerStatus.LOBBY;
             if (!e.isDedicated()) {
                 e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("command.message.teleportToLobby"));
             }
-            this.teleportToLobby(e.getPlayer().getPlayer(), SCB.getInstance().LBS.getLobbyRegion().getLobbySpawn().add(0.5, 0.5, 0.5));
+            this.teleportToLobby(e.getPlayer().getPlayer(), SCB.getInstance().LBS.getLobbyRg().getLobbySpawn().add(0.5, 0.5, 0.5));
             System.out.println(e.getPlayer().getName() + " Has been transported to the lobby");
 
             Bukkit.broadcast(

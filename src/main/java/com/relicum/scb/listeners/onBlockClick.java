@@ -5,7 +5,7 @@ import com.relicum.scb.SmashPl;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.inventory.ClearInventory;
-import com.relicum.scb.utils.playerStatus;
+import com.relicum.scb.utils.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -66,7 +66,7 @@ public class onBlockClick implements Listener {
 
             SmashPl splayer = SmashPl.wrap(e.getPlayer());
 
-            splayer.pStatus = playerStatus.UNKNOWN;
+            splayer.pStatus = PlayerStatus.UNKNOWN;
             PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "SIGN", SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB));
             Bukkit.getServer().getPluginManager().callEvent(event);
 
@@ -83,7 +83,7 @@ public class onBlockClick implements Listener {
         if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.usearenareturn") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[RETURN]"))) {
             ClearInventory.applyLobbyInv(e.getPlayer());
             e.getPlayer().sendMessage(SCB.getMessageManager().getMessage("listeners.onblockclick.returnToLobby"));
-            SCB.getInstance().LBS.teleportToLobby(e.getPlayer(), SCB.getInstance().LBS.getLobbyRegion().getWorld().getSpawnLocation());
+            SCB.getInstance().LBS.teleportToLobby(e.getPlayer(), SCB.getInstance().LBS.getLobbyRg().getWorld().getSpawnLocation());
 
         }
 

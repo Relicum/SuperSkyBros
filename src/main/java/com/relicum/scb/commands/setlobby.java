@@ -2,7 +2,7 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.configs.LobbyConfig;
-import com.relicum.scb.objects.LobbyRegion;
+import com.relicum.scb.objects.LobbyRg;
 import com.relicum.scb.utils.SerializedLocation;
 import com.relicum.scb.we.WEManager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
@@ -52,7 +52,7 @@ public class setlobby extends SubBase {
                 player.getLocation().getBlockX() + 0.5, player.getLocation().getBlockY() + 0.5, player.getLocation().getBlockZ() + 0.5);
         Float dir = SCB.getInstance().LBS.getDirection(player.getLocation().getYaw());
 
-        LobbyRegion region = new LobbyRegion(
+        LobbyRg region = new LobbyRg(
                 rmin, rmax, lobbySpawn, player.getWorld().getName(), perm, player.getLocation().getYaw());
 
         LobbyConfig LC = SCB.getInstance().LBS.getLobbySaveObject();
@@ -60,9 +60,8 @@ public class setlobby extends SubBase {
 
         SerializedLocation minls = new SerializedLocation(cr.getMinimumPoint());
         SerializedLocation maxls = new SerializedLocation(cr.getMaximumPoint());
-        SerializedLocation sspawn = new SerializedLocation(
-                player.getLocation().getWorld().getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ(), dir,
-                player.getLocation().getPitch());
+        SerializedLocation sspawn = new SerializedLocation(player.getLocation().add(0.5, 0.5, 0.5));
+
 
         try {
             if (!LC.getConfig().contains("LOBBY")) {
@@ -99,7 +98,7 @@ public class setlobby extends SubBase {
 
         }
 
-        SCB.getInstance().LBS.setLobbyRegion(region);
+        SCB.getInstance().LBS.setLobbyRg(region);
 
         SCB.getInstance().getConfig().set("enableLobbyProtection", true);
         SCB.getInstance().saveConfig();
