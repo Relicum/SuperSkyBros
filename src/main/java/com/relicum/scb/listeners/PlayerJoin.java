@@ -29,19 +29,28 @@ import java.util.List;
 public class PlayerJoin implements Listener {
 
     private SCB plugin;
-
+    private boolean firstTimeOverride;
     private playerStatus status;
+    private boolean mode;
 
 
     public PlayerJoin(SCB plugin) {
         this.plugin = plugin;
-
+        firstTimeOverride = plugin.getConfig().getBoolean("firstJoinOverride");
+        mode = plugin.getConfig().getBoolean("dedicatedSSB");
     }
 
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void playJoin(PlayerJoinEvent e) {
 
+
+        if (firstTimeOverride && !e.getPlayer().hasPlayedBefore() && !e.getPlayer().isOp()) {
+            if (VaultManager.perms.has(e.getPlayer(), "ssb.player.join") && (!mode)) {
+                e.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation().add(0.5, 0.5, 0.5));
+            }
+
+        }
 
         //CraftPlayer player1 = (CraftPlayer) e.getPlayer();
         // EntityPlayer player = player1.getHandle();
@@ -153,6 +162,7 @@ public class PlayerJoin implements Listener {
             }
 
         }
+
 
         //Display Special Message Advertising the plugin only to new players
         for (String s : plugin.getConfig().getStringList("rel.lines.line")) {

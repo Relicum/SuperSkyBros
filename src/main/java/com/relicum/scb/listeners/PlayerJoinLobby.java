@@ -44,7 +44,7 @@ public class PlayerJoinLobby implements Listener {
             if (!e.isDedicated()) {
                 e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("command.message.teleportToLobby"));
             }
-            this.teleportToLobby(e.getPlayer().getPlayer(), SCB.getInstance().LBS.getLobbyRegion().getLobbySpawn());
+            this.teleportToLobby(e.getPlayer().getPlayer(), SCB.getInstance().LBS.getLobbyRegion().getLobbySpawn().add(0.5, 0.5, 0.5));
             System.out.println(e.getPlayer().getName() + " Has been transported to the lobby");
 
             Bukkit.broadcast(

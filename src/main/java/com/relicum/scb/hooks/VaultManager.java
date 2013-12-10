@@ -67,9 +67,9 @@ public class VaultManager {
 
         if (rsp != null) {
             econ = rsp.getProvider();
-            SkyApi.getSCB().getLogger().info(SCB.SUCCESSFULLY_HOOKED_INTO_ECONOMY_PLUGIN);
+            SkyApi.getCMsg().INFO(SCB.SUCCESSFULLY_HOOKED_INTO_ECONOMY_PLUGIN);
         } else {
-            SkyApi.getSCB().getLogger().warning(SCB.VAULT_COULD_NOT_HOOK_INTO_ECONOMY_PLUGIN);
+            SkyApi.getCMsg().WARNING(SCB.VAULT_COULD_NOT_HOOK_INTO_ECONOMY_PLUGIN);
         }
 
     }
@@ -79,9 +79,9 @@ public class VaultManager {
         RegisteredServiceProvider<Chat> rsp = SkyApi.getSCB().getServer().getServicesManager().getRegistration(Chat.class);
         if (rsp != null) {
             chat = rsp.getProvider();
-            SkyApi.getSCB().getLogger().info(SCB.SUCCESSFULLY_HOOKED_INTO_CHAT_PLUGIN);
+            SkyApi.getCMsg().INFO(SCB.SUCCESSFULLY_HOOKED_INTO_CHAT_PLUGIN);
         } else {
-            SkyApi.getSCB().getLogger().warning(SCB.VAULT_COULD_NOT_HOOK_INTO_CHAT_PLUGIN);
+            SkyApi.getCMsg().WARNING(SCB.VAULT_COULD_NOT_HOOK_INTO_CHAT_PLUGIN);
         }
 
 
@@ -94,9 +94,9 @@ public class VaultManager {
 
         if (rsp != null) {
             perms = rsp.getProvider();
-            SkyApi.getSCB().getLogger().info(SCB.SUCCESSFULLY_HOOKED_INTO_PERMISSIONS_PLUGIN);
+            SkyApi.getCMsg().INFO(SCB.SUCCESSFULLY_HOOKED_INTO_PERMISSIONS_PLUGIN);
         } else {
-            SkyApi.getSCB().getLogger().warning(SCB.VAULT_COULD_NOT_HOOK_INTO_PERMISSIONS_PLUGIN);
+            SkyApi.getCMsg().WARNING(SCB.VAULT_COULD_NOT_HOOK_INTO_PERMISSIONS_PLUGIN);
         }
 
     }

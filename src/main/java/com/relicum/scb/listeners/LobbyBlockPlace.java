@@ -69,7 +69,7 @@ public class LobbyBlockPlace implements Listener, Cancellable {
         Player player = e.getPlayer();
         String wo = player.getWorld().getName();
 
-        if (!VaultManager.perms.has(player, SCB.SSBA_ADMIN_PLACEBLOCKS) && !player.isOp()) {
+        if (!VaultManager.perms.has(player, "ssba.admin.placeblocks")) {
             if (SCB.getInstance().LBS.getLobbyRegion().isAABB(e.getBlock().getLocation().toVector())) {
                 e.setCancelled(true);
                 player.sendMessage(SCB.MM.getErrorMessage("listeners.blockplace.lobbyPlace"));

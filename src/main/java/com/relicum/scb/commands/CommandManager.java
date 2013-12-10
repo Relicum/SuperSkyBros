@@ -99,7 +99,6 @@ public class CommandManager implements TabExecutor {
 
         if (SkyApi.getSm().isUseWorldManagement()) {
             resetWhiteList();
-            //WSET.addAll(plugin.getConfig().getStringList("dedicatedSSBWorlds"));
 
             clist.put("autosetup", new autosetup());
             clist.put("saveworld", new saveworld());
@@ -212,7 +211,7 @@ public class CommandManager implements TabExecutor {
         }
 
         // Check correct args are passed if not send usage
-        if (strings.length != subCom.getNumArgs()) {
+        if ((!subCom.mNode.equalsIgnoreCase("set")) && strings.length != subCom.getNumArgs()) {
 
             send(player, ChatColor.DARK_RED + "Usage: " + subCom.getUseage());
             return true;

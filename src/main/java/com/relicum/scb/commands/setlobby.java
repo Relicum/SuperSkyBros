@@ -2,8 +2,8 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.configs.LobbyConfig;
-import com.relicum.scb.mini.SerializedLocation;
 import com.relicum.scb.objects.LobbyRegion;
+import com.relicum.scb.utils.SerializedLocation;
 import com.relicum.scb.we.WEManager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.Selection;

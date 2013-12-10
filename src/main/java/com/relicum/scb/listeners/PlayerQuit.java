@@ -14,7 +14,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
  * @author Relicum
  * @version 0.1
  */
-@SuppressWarnings("deprecation")
 public class PlayerQuit implements Listener {
 
     private SCB plugin;
@@ -35,7 +34,7 @@ public class PlayerQuit implements Listener {
 
         if (plugin.LBS.isInLobby(e.getPlayer())) {
             RestoreInventory.restore(e.getPlayer());
-            e.getPlayer().teleport(SCB.getInstance().LBS.getLobbyRegion().getWorld().getSpawnLocation());
+            e.getPlayer().teleport(SCB.getInstance().LBS.getLobbyRegion().getWorld().getSpawnLocation().add(0.5, 0.5, 0.5));
             e.setQuitMessage("");
             System.out.println("Player quit event happened for " + e.getPlayer().getName());
             plugin.INV.removePlayerFromStore(e.getPlayer().getName());

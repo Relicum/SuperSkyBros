@@ -1,8 +1,8 @@
 package com.relicum.scb;
 
 import com.relicum.scb.configs.*;
-import com.relicum.scb.mini.SerializedLocation;
 import com.relicum.scb.types.SkyApi;
+import com.relicum.scb.utils.SerializedLocation;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -17,6 +17,9 @@ public class SM {
 
     private static SM instance;
 
+    /**
+     * Main Plugin Configs
+     */
     private FileConfiguration config;
 
     /**

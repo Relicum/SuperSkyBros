@@ -160,7 +160,7 @@ public class SerializeSignLocation implements ConfigurationSerializable {
      */
     @Override
     public String toString() {
-        return "SerializedLocation:world=" + getWorld() + ":x=" + getX() + ":y=" + getY() + ":z=" + getZ();
+        return "SerializeSignLocation:world=" + getWorld() + ":x=" + getX() + ":y=" + getY() + ":z=" + getZ();
 
     }
 }

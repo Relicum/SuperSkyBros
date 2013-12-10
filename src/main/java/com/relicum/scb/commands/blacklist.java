@@ -33,8 +33,6 @@ public class blacklist extends SubBase {
 
             if (BukkitInterface.getWorld(args[1]) != null) {
                 if (SkyApi.getSm().addWorldToBlackList(args[1])) {
-                    //SCB.getInstance().getBlackList().add(args[1]);
-                    //SCB.getInstance().getConfig().set(SCB.IGNORE_WORLDS, SCB.getInstance().getBlackList());
                     SCB.getInstance().saveConfig();
                     SCB.getInstance().reloadConfig();
                     player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.blacklistSuccess").replace("%WORLD%", args[1]).replace("%ARG%", "ADDED"));
@@ -46,8 +44,6 @@ public class blacklist extends SubBase {
         }
         if (args[0].equalsIgnoreCase("remove")) {
             if (SkyApi.getSm().addWorldToWhiteList(args[1])) {
-                //SCB.getInstance().getBlackList().remove(args[1]);
-                //SCB.getInstance().getConfig().set(SCB.IGNORE_WORLDS, SCB.getInstance().getBlackList());
                 SCB.getInstance().saveConfig();
                 SCB.getInstance().reloadConfig();
                 player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.blacklistSuccess").replace("%WORLD%", args[1]).replace("%ARG%", "REMOVED"));

@@ -23,6 +23,12 @@ default:
   fixedSpawn: '0,32,0'
 # General world settings
 worldSettings:
+  creator:
+    type: 'FLAT'
+    environment: 'NORMAL'
+    generator: 'CleanroomGenerator'
+    structures: 'false'
+    fixedSpawn: '0,32,0'
   setSpawnLocation: '0,31,0'
   setKeepSpawnInMemory: 'true'
   spawnBlock: 'GOLD_BLOCK'
@@ -32,6 +38,12 @@ worldSettings:
   setAutoSave: 'true'
   setDifficulty: 'HARD'
 defaultWorldSettings:
+  creator:
+    type: 'FLAT'
+    environment: 'NORMAL'
+    generator: 'CleanroomGenerator'
+    structures: 'false'
+    fixedSpawn: '0,32,0'
   keepSpawnInMemory: true
   spawnBlockMaterial: GOLD_BLOCK
   autoSave: true

@@ -1,8 +1,8 @@
 package com.relicum.scb;
 
 import com.relicum.scb.configs.LobbyConfig;
-import com.relicum.scb.mini.SerializedLocation;
 import com.relicum.scb.types.SkyApi;
+import com.relicum.scb.utils.SerializedLocation;
 import org.bukkit.Location;
 
 /**

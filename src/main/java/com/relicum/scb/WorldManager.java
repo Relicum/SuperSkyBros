@@ -5,12 +5,14 @@ import com.relicum.scb.types.SkyApi;
 import org.bukkit.*;
 import org.bukkit.World.Environment;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.metadata.MetadataStoreBase;
 import org.bukkit.metadata.MetadataValue;
 
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * The type World manager.
@@ -21,7 +23,6 @@ public class WorldManager {
     private final Environment defaultEnvironment;
     private final boolean generateStructures;
     private final String worldGenerator;
-
     public WorldConfig config;
     private WorldCreator template;
     private World defaultWorld;
@@ -57,9 +58,38 @@ public class WorldManager {
         worldGenerator = this.getConfig().getString("default.generator");
 
 
-        SkyApi.getSCB().getLogger().info("WorldGenerator Successfully Loaded");
+        SkyApi.getCMsg().INFO("WorldGenerator Successfully Loaded");
 
 
+    }
+
+    public ConfigurationSection getDefaultWorldSettings() {
+        return this.config.getConfig().getConfigurationSection("defaultWorldSettings");
+
+    }
+
+    public void loadEnabledWorlds() {
+
+        if (config.getConfig().contains("worlds")) {
+
+            Set<String> st = config.getConfig().getConfigurationSection("worlds").getKeys(false);
+            for (String e : st) {
+                if (config.getConfig().getBoolean("worlds." + e + ".enable")) {
+                    try {
+                        SkyApi.getSCB().getWorldCreator(e).createWorld();
+                        SkyApi.getCMsg().INFO("World " + e + " was been loaded");
+                    } catch (Exception e1) {
+                        SkyApi.getCMsg().SERVE("World " + e + " could not be loaded see stack trace");
+                        e1.printStackTrace();
+                    }
+
+                }
+            }
+
+            return;
+        }
+
+        SkyApi.getCMsg().INFO("No worlds found");
     }
 
 
@@ -213,6 +243,7 @@ public class WorldManager {
     public World applyWorldDefaultSettings(String name) {
 
         World world = null;
+        ConfigurationSection wd = this.config.getConfig().getConfigurationSection("defaultWorldSettings");
 
         try {
             world = Bukkit.getServer().getWorld(name);
@@ -224,25 +255,29 @@ public class WorldManager {
             return null;
         }
 
+        //ConfigurationSection spawn = wd.getConfigurationSection("spawnLocation");
+        ConfigurationSection blockSpawn = wd.getConfigurationSection("spawnBlockLocation");
+        ConfigurationSection gameRule = wd.getConfigurationSection("gameRules");
+
         world.loadChunk(0, 0, true);
-        world.setSpawnLocation(0, 32, 0);
-        world.setKeepSpawnInMemory(true);
+        world.setSpawnLocation(wd.getInt("spawnLocation.x"), wd.getInt("spawnLocation.y"), wd.getInt("spawnLocation.z"));
+        world.setKeepSpawnInMemory(wd.getBoolean("keepSpawnInMemory"));
 
         world.getSpawnLocation().getWorld().getChunkAt(world.getSpawnLocation()).load();
-        Block block = world.getBlockAt(0, 31, 0);
-        block.getState().setType(Material.GOLD_BLOCK);
+        Block block = world.getBlockAt(blockSpawn.getInt("x"), blockSpawn.getInt("y"), blockSpawn.getInt("z"));
+        block.getState().setType(Material.valueOf(wd.getString("spawnBlockMaterial")));
         block.getState().update(true);
-        world.setAutoSave(true);
-        world.setDifficulty(Difficulty.HARD);
-        world.setStorm(false);
-        world.setThundering(false);
+        world.setAutoSave(wd.getBoolean("autoSave"));
+        world.setDifficulty(Difficulty.valueOf(wd.getString("difficulty")));
+        world.setStorm(wd.getBoolean("setStorm"));
+        world.setThundering(wd.getBoolean("setThundering"));
         world.setWeatherDuration(9999999);
-        world.setTime(6000);
-        SkyApi.getSCB().getServer().setDefaultGameMode(GameMode.ADVENTURE);
-        world.setGameRuleValue("doDaylightCycle", "false");
-        world.setGameRuleValue("doFireTick", "false");
-        world.setGameRuleValue("mobGriefing", "false");
-        world.setGameRuleValue("mobSpawning", "false");
+        world.setTime(wd.getLong("setTime"));
+
+        world.setGameRuleValue("doDaylightCycle", gameRule.getString("doDaylightCycle"));
+        world.setGameRuleValue("doFireTick", gameRule.getString("doFireTick"));
+        world.setGameRuleValue("mobGriefing", gameRule.getString("mobGriefing"));
+        world.setGameRuleValue("mobSpawning", gameRule.getString("doMobSpawning"));
 
         world.save();
 
@@ -261,7 +296,7 @@ public class WorldManager {
      *
      * @return Randon Long as a world seed
      */
-    private long randomSeed() {
+    public long randomSeed() {
 
         Random random = new Random();
         return random.nextLong();

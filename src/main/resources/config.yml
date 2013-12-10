@@ -20,6 +20,7 @@ worldGeneratorPlugin: 'CleanroomGenerator:.'
 worldDefault: 'world'
 newWorldDefault: 'SSB'
 disableTheEnd: false
+firstJoinOverride: true
 classesEnabled:
   - Creeper
 gemshop:
@@ -66,10 +67,10 @@ rel:
   lines:
     line:
     - '&b<<     ----------------------------------------     >>'
-    - '&2#                                                                        #'
+    - '&2#                                                     #'
     - '&2#                   &4SUPER&7&l-&bSKY&7&l-&6BROS&7&l-&aBRAWL                  &2#'
     - '&2#         &6Download it free for your server            &2#'
-    - '&2#                                                                        #'
+    - '&2#                                                    #'
     - '&2#&5  dev.bukkit.org/bukkit-plugins/superskybros/ &2#'
     - '&b<<     ----------------------------------------     >>'
 

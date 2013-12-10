@@ -1,13 +1,17 @@
 package com.relicum.scb.commands;
 
+import com.relicum.scb.conversations.DefaultConversationFactory;
+import com.relicum.scb.conversations.autosetup.SetAutoStart;
+import com.relicum.scb.objects.signs.utils.Col;
 import com.relicum.scb.types.SkyApi;
-import com.relicum.scb.utils.DelayedShutDown;
-import org.bukkit.ChatColor;
+import org.bukkit.conversations.Conversable;
 import org.bukkit.conversations.ConversationFactory;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * SuperSkyBros
@@ -35,11 +39,24 @@ public class autosetup extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
 
+        if (!SkyApi.getSm().isDedicated()) {
+            player.sendMessage(Col.Dark_Red() + "You can only run this in Dedicated mode");
+            return true;
+        }
+
+        factory = DefaultConversationFactory.getDefaultConversation();
         String[] strings1 = new String[6];
         for (int i = 0; i < 6; i++) {
             strings1[i] = "";
         }
+
         player.sendMessage(strings1);
+        Map<Object, Object> data = new HashMap<>();
+        data.put("pre", 2);
+        factory.withInitialSessionData(data);
+        factory.withFirstPrompt(new SetAutoStart());
+        factory.buildConversation((Conversable) player).begin();
+        /*player.sendMessage(strings1);
         player.sendMessage(this.cHeader);
         getPlugin().getConfig().set("generateDefaultWorld", true);
         getPlugin().saveConfig();
@@ -47,7 +64,7 @@ public class autosetup extends SubBase {
         player.sendMessage("3 times to complete the setup the console will display details of progress.");
         player.sendMessage(ChatColor.GRAY + "----------------------------------------------");
         DelayedShutDown.shutDown();
-        player.sendMessage(ChatColor.RED + "The server will now shutdown in 5 seconds");
+        player.sendMessage(ChatColor.RED + "The server will now shutdown in 5 seconds");*/
 
         return true;
 

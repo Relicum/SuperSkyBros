@@ -1,5 +1,7 @@
 package com.relicum.scb.mini;
 
+import com.relicum.scb.utils.SerializedLocation;
+
 import java.util.ArrayList;
 import java.util.List;
 

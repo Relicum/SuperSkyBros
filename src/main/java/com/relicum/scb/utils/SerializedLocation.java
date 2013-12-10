@@ -1,4 +1,4 @@
-package com.relicum.scb.mini;
+package com.relicum.scb.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

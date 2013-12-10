@@ -55,7 +55,6 @@ public class WorldListeners implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void leafDecay(LeavesDecayEvent e) {
         if (isDedicated() || isNotBlacklist(e.getBlock().getWorld().getName())) {
-            SkyApi.getCMsg().INFO("Cancelled Leave Decay in world " + e.getBlock().getWorld().getName());
             e.setCancelled(true);
         }
     }
@@ -64,7 +63,6 @@ public class WorldListeners implements Listener {
     public void weatherChange(WeatherChangeEvent e) {
         if (isDedicated() || isNotBlacklist(e.getWorld().getName())) {
             if (e.toWeatherState()) {
-                SkyApi.getCMsg().INFO("Cancelled weather event in world " + e.getWorld().getName());
                 e.setCancelled(true);
             }
         }
@@ -74,7 +72,6 @@ public class WorldListeners implements Listener {
     public void thunder(ThunderChangeEvent e) {
         if (isDedicated() || isNotBlacklist(e.getWorld().getName())) {
             if (e.toThunderState()) {
-                SkyApi.getCMsg().INFO("Cancelled thunder event in world " + e.getWorld().getName());
                 e.setCancelled(true);
             }
         }

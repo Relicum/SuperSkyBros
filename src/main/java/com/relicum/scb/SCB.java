@@ -4,7 +4,6 @@ import com.relicum.scb.commands.CommandManagerFirstJoin;
 import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.*;
 import com.relicum.scb.listeners.*;
-import com.relicum.scb.mini.SerializedLocation;
 import com.relicum.scb.mini.SignLocationStore;
 import com.relicum.scb.objects.inventory.InventoryManager;
 import com.relicum.scb.types.SkyApi;
@@ -216,7 +215,7 @@ public class SCB extends JavaPlugin implements Listener {
             }
 
 
-            MM = new MessageManager();
+            MM = SkyApi.getMessageManager();
             CommandExecutor cm = SkyApi.getCommandManager();
             //SkyApi.getCommandManager().addWorld(SkyApi.getSm().getSsbWorlds());
             p.getCommand("ssb").setExecutor(cm);
@@ -326,13 +325,9 @@ public class SCB extends JavaPlugin implements Listener {
 
                 System.out.println("World " + w + " is in the blacklist");
             }
-            /*SkyApi.getSm().setSsbWorlds();
-            List<String> w = SkyApi.getSm().getSsbWorlds();
-            for(String wo : w){
-                SkyApi.getCommandManager().addWorld(wo);
-            }*/
 
-            //SkyApi.getSm().setSsbWorlds();
+            SkyApi.getWorldManager().loadEnabledWorlds();
+
             p.INV = new InventoryManager();
 
             p.LBC = SkyApi.getSm().getLobbyConfig();
@@ -363,6 +358,7 @@ public class SCB extends JavaPlugin implements Listener {
             if (p.LBC.getConfig().getBoolean(LOBBYSET)) {
                 if (p.getConfig().getBoolean(DEDICATED_SSB)) {
                     p.pm.registerEvents(new DBlockBreakPlace(p), p);
+                    SkyApi.getCMsg().INFO("Dedicated mode block place and break listener activated");
                 } else {
 
                     p.loadLobbyEvents();
@@ -391,8 +387,11 @@ public class SCB extends JavaPlugin implements Listener {
             p.SNM = new SignManager();
 
 
-            registerNewPerm(SSBA_ADMIN_BREAKBLOCKS, "Allows  user to break blocks", "ssba.admin");
-            registerNewPerm(SSBA_ADMIN_PLACEBLOCKS, "Allow user to place blocks", "ssba.admin");
+            registerNewPerm("ssba.admin.breakblocks", "Allows  user to break blocks", "ssba.admin");
+            registerNewPerm("ssba.admin.placeblocks", "Allow user to place blocks", "ssba.admin");
+            registerNewPerm("ssba.admin.breakbypass", "Allow user to bypass breaking of blocks anywhere", "ssba.admin");
+            registerNewPerm("ssba.admin.placebypass", "Allow user to bypass placing of blocks anywhere", "ssba.admin");
+
             registerNewPerm("ssba.admin.createsign", "Allows user to create signs", "ssba.admin");
             registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player");
             registerNewPerm("ssb.player.uselobbyleave", "Allows user to use a lobby leave sign", "ssb.player");
@@ -531,5 +530,13 @@ public class SCB extends JavaPlugin implements Listener {
         return world;
     }
 
-
+    /**
+     * Get world creator.
+     *
+     * @param name the name of the world
+     * @return the world creator
+     */
+    public WorldCreator getWorldCreator(String name) {
+        return new WorldCreator(name);
+    }
 }

@@ -1,10 +1,10 @@
 package com.relicum.scb.commands;
 
-import com.relicum.scb.mini.SerializedLocation;
 import com.relicum.scb.types.SkyApi;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.World;
+import com.relicum.scb.utils.SerializedLocation;
+import org.bukkit.*;
+import org.bukkit.block.BlockState;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -25,7 +25,7 @@ public class createworld extends SubBase {
      */
     @Override
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
-        String name = ChatColor.stripColor(args[0]);
+        final String name = ChatColor.stripColor(args[0]);
         if (name.length() < 4) {
             player.sendMessage(SkyApi.getMessageManager().getErrorMessage("createWorldNameError").replace("%NAME%", name));
             return true;
@@ -37,70 +37,79 @@ public class createworld extends SubBase {
         }
         SkyApi.getCMsg().INFO("Attempting to create the new world " + name);
         World world;
+        WorldCreator worldCreator;
+        final ConfigurationSection ws = SkyApi.getWorldManager().getDefaultWorldSettings();
         try {
-            world = SkyApi.getWorldManager().createNewWorld(name);
+
+            worldCreator = SkyApi.getSCB().getWorldCreator(name);
+            worldCreator.type(WorldType.valueOf(ws.getString("creator.type")));
+            worldCreator.environment(World.Environment.valueOf(ws.getString("creator.environment")));
+            worldCreator.generateStructures(ws.getBoolean("creator.structures"));
+            worldCreator.generator(ws.getString("creator.generator") + ":.");
+            worldCreator.seed(SkyApi.getWorldManager().randomSeed());
+
+            world = worldCreator.createWorld();
+            world.setSpawnLocation(ws.getInt("spawnLocation.x"), ws.getInt("spawnLocation.y"), ws.getInt("spawnLocation.z"));
+            world.setKeepSpawnInMemory(ws.getBoolean("keepSpawnInMemory"));
+            SkyApi.getSm().addWorldToWhiteList(name);
+
+
         } catch (Exception e) {
             e.printStackTrace();
             player.sendMessage(SkyApi.getMessageManager().getErrorMessage("createWorldError"));
             return true;
         }
+        player.sendMessage(ChatColor.GREEN + "World Created Successfully");
 
-        player.sendMessage(SkyApi.getMessageManager().getAdminMessage("createWorldSuccess").replace("%NAME%", name));
-        player.sendMessage(SkyApi.getMessageManager().getMessage("createWorldStartSettingss").replace("%NAME%", name));
+        player.sendMessage(SkyApi.getMessageManager().getAdminMessage("createWorldSuccess"));
+        player.sendMessage(SkyApi.getMessageManager().getMessage("createWorldStartSettingss"));
+        final World world1 = Bukkit.getWorld(name);
 
-        try {
-            world = SkyApi.getWorldManager().applyWorldDefaultSettings(name);
+        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(SkyApi.getSCB(), new Runnable() {
+            @Override
+            public void run() {
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            player.sendMessage(SkyApi.getMessageManager().getErrorMessage("createWorldAlreadyExists").replace("%NAME%", name));
-            return false;
-        }
+                //ConfigurationSection spawn = ws.getConfigurationSection("spawnLocation");
+                ConfigurationSection blockSpawn = ws.getConfigurationSection("spawnBlockLocation");
+                ConfigurationSection gameRule = ws.getConfigurationSection("gameRules");
 
-        SkyApi.getWorldManager().getConfig().set("worlds." + name + ".enable", true);
-        SerializedLocation location = new SerializedLocation(name, 0, 32, 0, 90.0f, 0.0f);
-        SkyApi.getSm().setSerializedWorldSpawnLocation(location, name);
+                world1.loadChunk(0, 0, true);
 
-        player.sendMessage(SkyApi.getMessageManager().getAdminMessage("applyWorldSettings").replace("%NAME%", name));
-        SkyApi.getWorldManager().config.saveConfig();
-        SkyApi.getSCB().saveConfig();
-        SkyApi.getWorldManager().config.reloadConfig();
-        SkyApi.getSCB().reloadConfig();
-        return true;
+                BlockState block = world1.getBlockAt(ws.getInt("spawnBlockLocation.x"), ws.getInt("spawnBlockLocation.y"), ws.getInt("spawnBlockLocation.z")).getState();
+                SkyApi.getCMsg().INFO("The block is set to " + block.getType().toString());
+                block.setType(Material.valueOf(ws.getString("spawnBlockMaterial")));
+                block.update(true);
+                SkyApi.getCMsg().INFO("The block is now set to " + block.getType().toString());
 
-/*        if (world.loadChunk(0, 0, true)) {
-            BlockState blockState = world.getBlockAt(0, 31, 0).getState();
-            SkyApi.getCMsg().INFO("The block is currently " + blockState.getType().toString());
-            blockState.setType(Material.GOLD_BLOCK);
-            blockState.update(true);
-            SkyApi.getCMsg().INFO("The block has now been set as a " + blockState.getType().toString());
-            world.setSpawnLocation(0, 32, 0);
-            world.setKeepSpawnInMemory(true);
-            world.setAutoSave(true);
-            try {
-                Thread.sleep(200l);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-                player.sendMessage(SkyApi.getMessageManager().getErrorMessage("createWorldError"));
-                return true;
+
+                world1.setAutoSave(ws.getBoolean("autoSave"));
+                world1.setDifficulty(Difficulty.valueOf(ws.getString("difficulty")));
+                world1.setStorm(ws.getBoolean("setStorm"));
+                world1.setThundering(ws.getBoolean("setThundering"));
+                world1.setWeatherDuration(9999999);
+                world1.setTime(ws.getLong("setTime"));
+
+                world1.setGameRuleValue("doDaylightCycle", gameRule.getString("doDaylightCycle"));
+                world1.setGameRuleValue("doFireTick", gameRule.getString("doFireTick"));
+                world1.setGameRuleValue("mobGriefing", gameRule.getString("mobGriefing"));
+                world1.setGameRuleValue("mobSpawning", gameRule.getString("doMobSpawning"));
+
             }
-            world.setPVP(true);
-            world.setTime(6000);
-            world.setWeatherDuration(999999);
-            world.setThundering(false);
-            world.setStorm(false);
-            world.setGameRuleValue("doDaylightCycle", "false");
-            world.setGameRuleValue("doFireTick", "false");
-            world.setGameRuleValue("doMobSpawning", "false");
-            world.setGameRuleValue("mobGriefing", "false");
-            world.save();
-            world.setAutoSave(true);
+        }, 20l);
 
-            SkyApi.getCMsg().INFO("All world settings and spawn point have been applied for world " + name);
-            player.sendMessage(SkyApi.getMessageManager().getAdminMessage("applyWorldSettings").replace("%NAME%", name));
-        }
+        SkyApi.getCMsg().INFO("Settings applied for  " + name + " has been successful");
 
-        return true;*/
+        Location location = world.getSpawnLocation();
+        location.setPitch(0.0f);
+        location.setYaw(90.0f);
+        SerializedLocation sl = new SerializedLocation(location);
+
+        SkyApi.getWorldManager().getConfig().set("worlds." + name + ".spawnLocation", sl);
+
+        SkyApi.getWorldManager().getConfigs().saveConfig();
+        SkyApi.getSCB().saveConfig();
+
+        return true;
     }
 
     /**

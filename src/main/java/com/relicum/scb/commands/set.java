@@ -1,9 +1,10 @@
 package com.relicum.scb.commands;
 
-import com.relicum.scb.mini.SerializedLocation;
 import com.relicum.scb.types.SkyApi;
+import com.relicum.scb.utils.SerializedLocation;
 import com.relicum.scb.utils.StringUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -32,27 +33,19 @@ public class set extends SubBase {
         }
 
         if (args[1].equalsIgnoreCase("spawn")) {
-            String[] cords = args[2].split(",");
-            if (cords.length != 3) {
-                player.sendMessage(SkyApi.getMessageManager().getErrorMessage("worlds.messages.setSpawnArgsInVaild"));
-                SkyApi.getCMsg().SERVE("Spawn cords must be an int");
-                return false;
-            }
-            try {
-                world.setSpawnLocation(Integer.parseInt(cords[0]), Integer.parseInt(cords[1]), Integer.parseInt(cords[2]));
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-                player.sendMessage(SkyApi.getMessageManager().getErrorMessage("worlds.messages.setSpawnArgsInVaild"));
-                return false;
-            }
-        }
-        world.setSpawnLocation(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
-        world.setKeepSpawnInMemory(true);
-        SerializedLocation location;
-        location = new SerializedLocation(world.getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ(), StringUtils.getDirection(player.getLocation().getYaw()), (float) Math.round(player.getLocation().getPitch()));
-        SkyApi.getSm().setSerializedWorldSpawnLocation(location, world.getName());
-        player.sendMessage(SkyApi.getMessageManager().getAdminMessage("worlds.messages.setSpawnSuccess"));
 
+            world.setSpawnLocation(player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ());
+            world.setKeepSpawnInMemory(true);
+
+            Location location = world.getSpawnLocation();
+            location.setPitch((float) Math.round(player.getLocation().getPitch()));
+            location.setYaw(StringUtils.getDirection(player.getLocation().getYaw()));
+            SerializedLocation sl = new SerializedLocation(location);
+
+            //location = new SerializedLocation(world.getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ(), StringUtils.getDirection(player.getLocation().getYaw()), (float) Math.round(player.getLocation().getPitch()));
+            SkyApi.getSm().setSerializedWorldSpawnLocation(sl, world.getName());
+            player.sendMessage(SkyApi.getMessageManager().getAdminMessage("worlds.messages.setSpawnSuccess"));
+        }
         return true;
     }
 

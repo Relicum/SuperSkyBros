@@ -61,7 +61,7 @@ public class LobbyBlockBreak implements Listener, Cancellable {
         Player player = e.getPlayer();
         String wo = player.getWorld().getName();
 
-        if (!VaultManager.perms.has(player, SCB.SSBA_ADMIN_BREAKBLOCKS) && !player.isOp()) {
+        if (!VaultManager.perms.has(player, "ssba.admin.breakblocks")) {
             if (SCB.getInstance().LBS.getLobbyRegion().isAABB(e.getBlock().getLocation().toVector())) {
                 e.setCancelled(true);
                 player.sendMessage(SCB.MM.getErrorMessage("listeners.blockbreak.lobbyBreak"));

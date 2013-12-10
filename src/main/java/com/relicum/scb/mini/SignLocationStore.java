@@ -2,6 +2,7 @@ package com.relicum.scb.mini;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.configs.SignConfig;
+import com.relicum.scb.utils.SerializedLocation;
 
 /**
  * SuperSkyBros First Created 13/11/13
