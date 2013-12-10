@@ -1,6 +1,6 @@
 package com.relicum.scb.objects.signs.interfaces;
 
-import com.relicum.scb.SmashPlayer;
+import com.relicum.scb.SmashPl;
 import org.bukkit.block.Sign;
 
 /**
@@ -32,6 +32,6 @@ public interface PSign {
      * @param SmashPlayer
      * @return boolean
      */
-    boolean useSign(Sign sign, SmashPlayer player);
+    boolean useSign(Sign sign, SmashPl player);
 
 }

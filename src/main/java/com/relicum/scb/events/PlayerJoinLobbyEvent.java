@@ -1,6 +1,6 @@
 package com.relicum.scb.events;
 
-import com.relicum.scb.SmashPlayer;
+import com.relicum.scb.SmashPl;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -14,14 +14,14 @@ public class PlayerJoinLobbyEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
-    private SmashPlayer player;
+    private SmashPl player;
 
     private String from;
 
     private boolean isdedicated;
 
 
-    public PlayerJoinLobbyEvent(SmashPlayer p, String fr, boolean type) {
+    public PlayerJoinLobbyEvent(SmashPl p, String fr, boolean type) {
 
         this.player = p;
         this.from = fr;
@@ -30,7 +30,7 @@ public class PlayerJoinLobbyEvent extends Event {
     }
 
 
-    public SmashPlayer getPlayer() {
+    public SmashPl getPlayer() {
         return this.player;
     }
 

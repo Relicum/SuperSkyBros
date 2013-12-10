@@ -2,7 +2,7 @@ package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.SettingsManager;
-import com.relicum.scb.SmashPlayer;
+import com.relicum.scb.SmashPl;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.utils.playerStatus;
@@ -70,7 +70,7 @@ public class PlayerJoin implements Listener {
                         e.getPlayer().getName() + " welcome to the server");
 
         if (SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB)) {
-            SmashPlayer pl = new SmashPlayer(e.getPlayer());
+            SmashPl pl = new SmashPl(e.getPlayer());
 /*            if (VaultManager.perms.has(pl.getPlayer(), "ssba.admin") || pl.getPlayer().isOp()) {
                 ChatColor b = ChatColor.BOLD;
                 String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";

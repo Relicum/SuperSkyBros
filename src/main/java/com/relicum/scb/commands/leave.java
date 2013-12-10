@@ -1,7 +1,7 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.SmashPlayer;
+import com.relicum.scb.SmashPl;
 import com.relicum.scb.objects.inventory.RestoreInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -24,8 +24,8 @@ public class leave extends SubBase {
 
 
         if (SCB.getInstance().LBS.isInLobby(player)) {
-            if (!(player instanceof SmashPlayer)) {
-                SmashPlayer splayer = SCB.getInstance().LBS.getSmashPlayer(player.getName());
+            if (!(player instanceof SmashPl)) {
+                SmashPl splayer = SCB.getInstance().LBS.getSmashPlayer(player.getName());
                 if (SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB)) {
                     String tmp;
                     player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.leaveNoWhereToGo"));

@@ -1,6 +1,8 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -28,9 +30,15 @@ public class adminmode extends SubBase {
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
 
         if (args[0].equalsIgnoreCase("on")) {
+            if (!SkyApi.getSm().getAdminMode().contains(player.getName())) {
+                SkyApi.getSm().setAdminMode(player.getName());
+                player.setDisplayName(ChatColor.DARK_RED + "[AM]" + player.getName());
+            }
             player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.adminmodeToggle").replace("%TOGGLE%", "ON"));
             return true;
         } else if (args[0].equalsIgnoreCase("off")) {
+            SkyApi.getSm().getAdminMode().remove(player.getName());
+            player.setDisplayName(player.getName());
             player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.adminmodeToggle").replace("%TOGGLE%", "OFF"));
             return true;
         }

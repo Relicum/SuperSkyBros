@@ -1,7 +1,7 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.SmashPlayer;
+import com.relicum.scb.SmashPl;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -70,7 +70,7 @@ public class DebugManager implements CommandExecutor {
                 System.out.println("There are no players in Lobby List");
                 return;
             }
-            for (SmashPlayer sm : SCB.getInstance().LBS.getPlayersInLobby()) {
+            for (SmashPl sm : SCB.getInstance().LBS.getPlayersInLobby()) {
 
                 System.out.println("Player " + sm.getName() + " is in the Lobby List");
             }

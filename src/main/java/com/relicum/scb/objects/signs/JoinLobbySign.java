@@ -1,6 +1,6 @@
 package com.relicum.scb.objects.signs;
 
-import com.relicum.scb.SmashPlayer;
+import com.relicum.scb.SmashPl;
 import com.relicum.scb.objects.signs.abstracts.JoinSign;
 import org.bukkit.block.Sign;
 import org.bukkit.event.EventHandler;
@@ -63,7 +63,7 @@ public class JoinLobbySign extends JoinSign {
      * @return boolean
      */
     @Override
-    public boolean useSign(Sign sign, SmashPlayer player) {
+    public boolean useSign(Sign sign, SmashPl player) {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

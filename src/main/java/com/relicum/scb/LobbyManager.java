@@ -36,7 +36,7 @@ public class LobbyManager implements Listener {
     /**
      * Stores List of players in the Lobby
      */
-    private Map<String, SmashPlayer> players = new HashMap<>();
+    private Map<String, SmashPl> players = new HashMap<>();
 
     private ArrayList<UUID> players2 = new ArrayList<>();
 
@@ -120,7 +120,7 @@ public class LobbyManager implements Listener {
      *
      * @param play String
      */
-    public void addPlayer(SmashPlayer player) {
+    public void addPlayer(SmashPl player) {
 
 
         if (!isInLobby(player)) {
@@ -135,11 +135,11 @@ public class LobbyManager implements Listener {
 
 
     /**
-     * removes a player from the lobby using SmashPlayer as input
+     * removes a player from the lobby using SmashPl as input
      *
      * @param play String
      */
-    public void removePlayer(SmashPlayer play) {
+    public void removePlayer(SmashPl play) {
 
         if (isInLobby(play.getName())) {
             players.remove(play.getName());
@@ -180,12 +180,12 @@ public class LobbyManager implements Listener {
 
 
     /**
-     * Checks to see if a player is already in the lobby using the SmashPlayer object
+     * Checks to see if a player is already in the lobby using the SmashPl object
      *
-     * @param player the SmashPlayer
+     * @param player the SmashPl
      * @return the boolean
      */
-    public boolean isInLobby(SmashPlayer player) {
+    public boolean isInLobby(SmashPl player) {
         return pname.contains(player.getName());
     }
 
@@ -253,7 +253,7 @@ public class LobbyManager implements Listener {
      *
      * @return the list
      */
-    public Collection<SmashPlayer> getPlayersInLobby() {
+    public Collection<SmashPl> getPlayersInLobby() {
 
         return players.values();
     }
@@ -390,7 +390,7 @@ public class LobbyManager implements Listener {
     }
 
 
-    public SmashPlayer getSmashPlayer(String name) {
+    public SmashPl getSmashPlayer(String name) {
         return players.get(name);
     }
 

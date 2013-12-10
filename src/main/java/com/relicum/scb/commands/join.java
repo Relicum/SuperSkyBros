@@ -1,7 +1,7 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.SmashPlayer;
+import com.relicum.scb.SmashPl;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.playerStatus;
@@ -30,7 +30,7 @@ public class join extends SubBase {
             player.sendMessage(SCB.getMessageManager().getErrorMessage("listeners.playerJoin.alreadyInLobby"));
             return true;
         }
-        SmashPlayer splayer = SmashPlayer.wrap(player);
+        SmashPl splayer = SmashPl.wrap(player);
 
         splayer.pStatus = playerStatus.UNKNOWN;
         PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "COMMAND", SkyApi.getSCB().getConfig().getBoolean(SCB.DEDICATED_SSB));

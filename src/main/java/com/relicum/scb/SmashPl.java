@@ -13,7 +13,7 @@ import java.util.UUID;
 /**
  * The type Smash player.
  */
-public class SmashPlayer extends BukkitPlayer {
+public class SmashPl extends BukkitPlayer {
 
     public playerStatus pStatus;
 
@@ -26,7 +26,7 @@ public class SmashPlayer extends BukkitPlayer {
      */
     private Integer gID = null;
 
-    public SmashPlayer instance;
+    public SmashPl instance;
 
 
     /**
@@ -34,7 +34,7 @@ public class SmashPlayer extends BukkitPlayer {
      *
      * @param p the p
      */
-    public SmashPlayer(Player p) {
+    public SmashPl(Player p) {
         super(p);
 
     }
@@ -45,7 +45,7 @@ public class SmashPlayer extends BukkitPlayer {
      *
      * @param sender the sender
      */
-    public SmashPlayer(CommandSender sender) {
+    public SmashPl(CommandSender sender) {
         super(sender);
     }
 
@@ -56,8 +56,8 @@ public class SmashPlayer extends BukkitPlayer {
      * @param p the p
      * @return the smash player
      */
-    public static SmashPlayer wrap(Player p) {
-        return new SmashPlayer(p);
+    public static SmashPl wrap(Player p) {
+        return new SmashPl(p);
     }
 
 
@@ -67,8 +67,8 @@ public class SmashPlayer extends BukkitPlayer {
      * @param String the String
      * @return the smash player
      */
-    public static SmashPlayer warp(String pname) {
-        return new SmashPlayer(Bukkit.getPlayerExact(pname));
+    public static SmashPl warp(String pname) {
+        return new SmashPl(Bukkit.getPlayerExact(pname));
     }
 
 
@@ -126,14 +126,14 @@ public class SmashPlayer extends BukkitPlayer {
     }
 
 
-    public SmashPlayer removeArmour() {
+    public SmashPl removeArmour() {
         getPlayer().getInventory().setArmorContents(new ItemStack[4]);
         System.out.println("Old removed");
         return this;
     }
 
 
-    public SmashPlayer clearInventory(SmashPlayer pl) {
+    public SmashPl clearInventory(SmashPl pl) {
 
         pl.getInventory().clear();
         return this;
@@ -151,32 +151,32 @@ public class SmashPlayer extends BukkitPlayer {
     }
 
 
-    public SmashPlayer closeInventory(SmashPlayer pl) {
+    public SmashPl closeInventory(SmashPl pl) {
         pl.closeInventory();
         return this;
     }
 
 
     @Deprecated
-    public SmashPlayer updateInventory(SmashPlayer pl) {
+    public SmashPl updateInventory(SmashPl pl) {
         invUpdate(pl);
         return this;
     }
 
 
-    public SmashPlayer resetHealth(Float f) {
+    public SmashPl resetHealth(Float f) {
         getPlayer().setHealth(f);
         return this;
     }
 
 
-    public SmashPlayer removeFire() {
+    public SmashPl removeFire() {
         getPlayer().setFireTicks(0);
         return this;
     }
 
 
-    public void invUpdate(final SmashPlayer pl) {
+    public void invUpdate(final SmashPl pl) {
         SCB.getInstance().getServer().getScheduler().runTask(
                 SCB.getInstance(), new Runnable() {
 

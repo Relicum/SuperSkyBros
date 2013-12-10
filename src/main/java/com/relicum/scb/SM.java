@@ -75,6 +75,8 @@ public class SM {
     private boolean useWorldManagement;
     private boolean generateDefaultWorld;
 
+    private List<String> adminMode = new ArrayList<>(5);
+
     /**
      * Instantiates a new Settings manager 2.
      */
@@ -410,6 +412,23 @@ public class SM {
 
     }
 
+    /**
+     * Gets list of players in admin mode
+     *
+     * @return the admin mode
+     */
+    public List<String> getAdminMode() {
+        return adminMode;
+    }
+
+    /**
+     * Sets a player to be in admin mode
+     *
+     * @param adminMode the admin mode
+     */
+    public void setAdminMode(String player) {
+        this.adminMode.add(player);
+    }
 
     public void loadFile(File file) {
 

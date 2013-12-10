@@ -1,7 +1,7 @@
 package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
-import com.relicum.scb.SmashPlayer;
+import com.relicum.scb.SmashPl;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.inventory.ClearInventory;
@@ -64,7 +64,7 @@ public class onBlockClick implements Listener {
                 return;
             }
 
-            SmashPlayer splayer = SmashPlayer.wrap(e.getPlayer());
+            SmashPl splayer = SmashPl.wrap(e.getPlayer());
 
             splayer.pStatus = playerStatus.UNKNOWN;
             PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "SIGN", SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB));

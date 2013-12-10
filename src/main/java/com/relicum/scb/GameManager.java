@@ -81,7 +81,7 @@ public class GameManager {
     }
 
 
-    public void addPlayer(SmashPlayer sp) {
+    public void addPlayer(SmashPl sp) {
 
         this.players.put(sp.getPlayer().getUniqueId().toString(), sp.getStatus().toString());
     }

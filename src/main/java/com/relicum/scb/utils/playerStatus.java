@@ -7,5 +7,5 @@ package com.relicum.scb.utils;
  * @version 0.1
  */
 public enum playerStatus {
-    LOBBY, GAME, UNKNOWN, OFFLINE, JOINEDSERVER
+    LOBBY, GAME, UNKNOWN, OFFLINE, JOINEDSERVER, ADMINMODE
 }
