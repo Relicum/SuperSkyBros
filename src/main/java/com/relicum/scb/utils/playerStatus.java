@@ -7,5 +7,19 @@ package com.relicum.scb.utils;
  * @version 0.1
  */
 public enum PlayerStatus {
-    LOBBY, GAME, UNKNOWN, OFFLINE, JOINEDSERVER, ADMINMODE
+    LOBBY,
+    GAME,
+    UNKNOWN,
+    OFFLINE,
+    JOINEDSERVER,
+    ADMINMODE;
+
+    public static PlayerStatus find(String abbr) {
+        for (PlayerStatus v : values()) {
+            if (v.equals(abbr)) {
+                return v;
+            }
+        }
+        return null;
+    }
 }
