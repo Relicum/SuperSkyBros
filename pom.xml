@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.relicum</groupId>
     <artifactId>SuperSkyBros</artifactId>
-    <version>0.3.14</version>
+    <version>0.3.15</version>
     <name>SuperSkyBros</name>
     <description>Super Sky Bros Brawl Mini-Game based off Seth Blings project. This is a Bukkit Plugin Version designed
         to run in Minecraft
@@ -59,12 +59,6 @@
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
             <version>1.2.27</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>15.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
