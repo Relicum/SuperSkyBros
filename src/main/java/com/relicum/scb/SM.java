@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The type Settings manager 2.
+ * The type SM.
  */
 public class SM {
 
@@ -53,6 +53,9 @@ public class SM {
     private ArenaConfig arenaConfig;
 
 
+    /**
+     * Is server a dedicated SSB Server
+     */
     private boolean dedicated;
 
     /**
@@ -73,12 +76,13 @@ public class SM {
 
 
     private boolean useWorldManagement;
+
     private boolean generateDefaultWorld;
 
     private List<String> adminMode = new ArrayList<>(5);
 
     /**
-     * Instantiates a new Settings manager 2.
+     * Instantiates a new SM.
      */
     public SM() {
         setup();
@@ -119,18 +123,24 @@ public class SM {
         signFormatConfig.getConfig().options().copyDefaults(true);
         signFormatConfig.saveDefaultConfig();
 
-/*
+
         spawnConfig = new SpawnConfig("spawns.yml");
         spawnConfig.getConfig().options().copyDefaults(true);
-        spawnConfig.reloadConfig();
+        spawnConfig.saveDefaultConfig();
 
         arenaConfig = new ArenaConfig("arena.yml");
         arenaConfig.getConfig().options().copyDefaults(true);
-        arenaConfig.reloadConfig();*/
+        arenaConfig.saveDefaultConfig();
 
     }
 
 
+    /**
+     * Sets serialized world spawn location.
+     *
+     * @param location the location
+     * @param name     the name
+     */
     public void setSerializedWorldSpawnLocation(SerializedLocation location, String name) {
 
         worldConfig.getConfig().set("worlds." + name + ".spawnLocation", location);
@@ -266,7 +276,7 @@ public class SM {
     }
 
     /**
-     * Should we use inbuilt world Management
+     * Is use world management.
      *
      * @return the boolean
      */
@@ -275,7 +285,7 @@ public class SM {
     }
 
     /**
-     * Sets if we should use inbuilt world management
+     * Sets use world management.
      *
      * @param useWorldManagement the use world management
      */
@@ -284,27 +294,27 @@ public class SM {
     }
 
     /**
-     * Is generate default world. True or false
+     * Is generate default world.
      *
-     * @return the boolean if true we will be generating the default world
+     * @return the boolean
      */
     public boolean isGenerateDefaultWorld() {
         return generateDefaultWorld;
     }
 
     /**
-     * Sets default world to be true or false. Eg True means we will set default world.
+     * Sets default world.
      *
-     * @param boolean should we generate default world
+     * @param generateDefaultWorld the generate default world
      */
     public void setgenerateDefaultWorld(boolean generateDefaultWorld) {
         this.generateDefaultWorld = generateDefaultWorld;
     }
 
     /**
-     * Black listed Worlds
+     * Black listed.
      *
-     * @return the list of worlds black listed
+     * @return the list
      */
     public List<String> blackListed() {
         return worldBlackListed;
@@ -312,25 +322,28 @@ public class SM {
 
 
     /**
-     * Gets ssb worlds list
+     * Gets ssb worlds.
      *
-     * @return the ssb worlds list contain worlds dedicated to SSB
+     * @return the ssb worlds
      */
     public List<String> getSsbWorlds() {
         return ssbWorlds;
     }
 
     /**
-     * Is server in dedicated mode
+     * Is dedicated.
      *
-     * @return true if the server is in dedicated mode
+     * @return the boolean
      */
     public boolean isDedicated() {
         return dedicated;
     }
 
     /**
-     * Sets ssb worlds list
+     * Add world to white list.
+     *
+     * @param w the w
+     * @return the boolean
      */
     public boolean addWorldToWhiteList(String w) {
 
@@ -361,6 +374,12 @@ public class SM {
         return config;
     }
 
+    /**
+     * Add world to black list.
+     *
+     * @param w the w
+     * @return the boolean
+     */
     public boolean addWorldToBlackList(String w) {
         if (ssbWorlds.contains(w)) {
             ssbWorlds.remove(w);
@@ -413,7 +432,7 @@ public class SM {
     }
 
     /**
-     * Gets list of players in admin mode
+     * Gets admin mode.
      *
      * @return the admin mode
      */
@@ -422,14 +441,20 @@ public class SM {
     }
 
     /**
-     * Sets a player to be in admin mode
+     * Sets admin mode.
      *
-     * @param adminMode the admin mode
+     * @param player the player
      */
     public void setAdminMode(String player) {
         this.adminMode.add(player);
     }
 
+
+    /**
+     * Load file.
+     *
+     * @param file the file
+     */
     public void loadFile(File file) {
 
         File t = file;

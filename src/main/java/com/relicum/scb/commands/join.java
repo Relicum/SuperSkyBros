@@ -1,6 +1,5 @@
 package com.relicum.scb.commands;
 
-import com.relicum.scb.SCB;
 import com.relicum.scb.SmashPl;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.types.SkyApi;
@@ -26,14 +25,14 @@ public class join extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) {
 
-        if (SkyApi.getSCB().LBS.isInLobby(player)) {
-            player.sendMessage(SCB.getMessageManager().getErrorMessage("listeners.playerJoin.alreadyInLobby"));
+        if (SkyApi.getLobbyManager().isInLobby(player)) {
+            player.sendMessage(SkyApi.getMessageManager().getErrorMessage("listeners.playerJoin.alreadyInLobby"));
             return true;
         }
         SmashPl splayer = SmashPl.wrap(player);
 
         splayer.pStatus = PlayerStatus.UNKNOWN;
-        PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "COMMAND", SkyApi.getSCB().getConfig().getBoolean(SCB.DEDICATED_SSB));
+        PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "COMMAND", SkyApi.getSm().isDedicated());
         Bukkit.getServer().getPluginManager().callEvent(event);
 
         return true;
@@ -59,9 +58,9 @@ public class join extends SubBase {
 
 
                 if (!p.teleport(l)) {
-                    System.out.println("Error teleporting player to lobby");
+                    SkyApi.getCMsg().SERVE("Error teleporting player to lobby");
                 }
-                p.sendMessage(SCB.MM.getMessage("command.message.teleportToLobby"));
+                p.sendMessage(SkyApi.getMessageManager().getMessage("command.message.teleportToLobby"));
             }
         }, 10L);
 

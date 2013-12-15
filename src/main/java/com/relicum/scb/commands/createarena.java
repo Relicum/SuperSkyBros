@@ -4,6 +4,8 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.arena.ArenaIO;
 import com.relicum.scb.arena.ArenaRegion;
 import com.relicum.scb.configs.ArenaConfig;
+import com.relicum.scb.types.SkyApi;
+import com.relicum.scb.utils.SerializedLocation;
 import com.relicum.scb.we.WEManager;
 import com.sk89q.worldedit.IncompleteRegionException;
 import com.sk89q.worldedit.Vector;
@@ -50,14 +52,14 @@ public class createarena extends SubBase {
         try {
             cen = new Vector(S.getRegionSelector().getRegion().getCenter());
         } catch (IncompleteRegionException e) {
-            player.sendMessage(SCB.MM.getErrorMessage("command.message.noSelection"));
-            SCB.getInstance().getLogger().severe("Error setting Arena Region, WorldEdit selection not set correctly");
+            player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.noSelection"));
+            SkyApi.getCMsg().SERVE("Error setting Arena Region, WorldEdit selection not set correctly");
             e.printStackTrace();
             return true;
         }
 
 
-        ArenaConfig ac = SCB.getInstance().ARC;
+        ArenaConfig ac = SkyApi.getSm().getArenaConfig();
 
         Integer last = ac.getConfig().getInt("arena.lastId");
         last += 1;
@@ -73,20 +75,20 @@ public class createarena extends SubBase {
         chunks.add(S.getMaximumPoint().toVector());
         chunks.get(0).setY(radmin.getY());
 
-        AER = new ArenaRegion(rmin, rmax, radmin, last, player.getWorld().getName(), aname);
+        AER = new ArenaRegion(rmin, rmax, radmin, last, player.getWorld().getName(), aname, new SerializedLocation(S.getMaximumPoint()), new SerializedLocation(S.getMinimumPoint()), new SerializedLocation(radmin.toLocation(player.getWorld())));
 
         ArenaIO AIO = new ArenaIO();
         if (AIO.newCreate(AER, chunks)) {
-            System.out.println("Region has been created");
+            SkyApi.getCMsg().INFO("Region has been created");
             //player.sendMessage("A new arena has been created and stored");
         } else {
-            SCB.getInstance().getLogger().severe("Error creating or saving new Arena");
-            player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.failedToCreateArena"));
+            SkyApi.getCMsg().SERVE("Error creating or saving new Arena");
+            player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.failedToCreateArena"));
             return true;
         }
 
 
-        String cm = SCB.getMessageManager().getAdminMessage("command.message.createArenaSucceeded");
+        String cm = SkyApi.getMessageManager().getAdminMessage("command.message.createArenaSucceeded");
         String ct;
         ct = cm.replace("%nn%", last.toString());
         player.sendMessage(ct);

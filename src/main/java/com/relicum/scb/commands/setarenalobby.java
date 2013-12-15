@@ -4,6 +4,7 @@ import com.relicum.scb.ArenaManager;
 import com.relicum.scb.SCB;
 import com.relicum.scb.arena.ALobbyIO;
 import com.relicum.scb.objects.ArenaLobby;
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.we.WEManager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.Selection;
@@ -29,7 +30,7 @@ public class setarenalobby extends SubBase {
      */
     @Override
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
-        ArenaManager ar = SCB.getInstance().ARM;
+        ArenaManager ar = SkyApi.getArenaManager();
 
         if (ar.getCurrent() == 0) {
             player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.NoArenaSet"));

@@ -1,6 +1,7 @@
 package com.relicum.scb.objects.inventory;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
 
 /**
@@ -14,7 +15,7 @@ public class RestoreInventory {
     public static Player restore(Player player) {
 
         ClearInventory.Clear(player);
-        StorePlayerSettings store = SCB.getInstance().INV.getPlayersStore(player.getName());
+        StorePlayerSettings store = SkyApi.getInventoryManager().getPlayersStore(player.getName());
         player.setExp(store.getXp());
         player.setTotalExperience(store.getTotalExperience());
         player.setLevel(store.getLevel());

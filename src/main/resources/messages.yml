@@ -47,6 +47,7 @@ command:
     saveworld: "&bApplies / saves the worlds current settings"
     createworld: "&bUsed to create a new world just need to provide the name for the new world"
     set: "&bUsed to set world settings &e/ssbw set [world] [setting] [value]$a do $a/ssbw worldhelp&b for more info"
+    modifyworld: "&bUsed to load,unload,remove and delete a world &e/ssbw modifyworld [world] [load|unload|remove|delete] $a/ssbw worldhelp&b for more info"
   message:
     worldOnBlackList: "Sorry this world is on the world blacklist. Remove it and restart the server and try again."
     joinNoLocation: "You can not use this as the Lobby Location has not been set yet"
@@ -99,6 +100,7 @@ command:
     playerMinSuccess: "You have successfully set the minimum number of players to &7%MIN%&r"
     playerMaxSuccess: "You have successfully set the maximum number of players to &7%MAX%&r"
     lobbytpSuccess: "You have successfully returned to the main lobby"
+    lobbytpFail: "Error can not TP to main lobby as it is not set yet"
     setarenalobbySuccess: "Arena Lobby has sucessfully been created for arena &6%ID%"
     worldtpWorldNotFound: "World not found can not tp to &6%WORLD%"
     worldtpSuccess: "World has been found teleporting to world %WORLD%"
@@ -108,7 +110,7 @@ command:
     createWorldSuccess: "You have successully created a new world called &6%WORLD%"
     createWorldError: "Error occured while trying to create new world, check logs for details"
     createWorldNameError: "Error the name &6%NAME%&5 is to short must be over 4 characters in length"
-    createWorldAlreadyExists: "Error the name &6%NAME%&5 is already used a world"
+    createWorldAlreadyExists: "Error the name &6%NAME%&5 is already used as a world"
     createWorldStartSettings: "Now the worlds settings will be applied for world &6%NAME%"
     applyWorldSettings: "World settings for &6%NAME%&a have successfully been applied"
 listeners:
@@ -131,6 +133,9 @@ listeners:
     returnToLobby: "You have successfully returned to the lobby"
 world:
   messages:
+    restartAdvisable: "It is advisable to restart the server before going any further"
     setSpawnArgsInVaild: "Invaild spawn arguments. Vaild simila to this &420,40,20"
-    setSpawnSuccess: "You have set the new world spawn to X = &6%s&a and Y = &6%&a and Z = &6%s&a"
+    setSpawnSuccess: "You have set the new world spawn to X = &6%X%&a and Y = &6%Y%&a and Z = &6%Z%&a"
+    modifyworldFailed: "Error: failed to &7%ACTION%&5 the world &7%WORLD%&5 see logs for more details"
+    modifyworldSuccess: "You were successful in &7%ACTION%&5 the world &7%WORLD%&5"
 

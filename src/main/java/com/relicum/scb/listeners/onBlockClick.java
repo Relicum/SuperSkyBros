@@ -5,6 +5,7 @@ import com.relicum.scb.SmashPl;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.inventory.ClearInventory;
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -53,13 +54,9 @@ public class onBlockClick implements Listener {
             return;
 
 
-        // if ((clicked.getType() == Material.SIGN || clicked.getType() == Material.SIGN_POST || clicked.getType() == Material.WALL_SIGN)) {
-        System.out.println(clicked.getType().toString());
-
-
         if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[JOIN LOBBY]"))) {
 
-            if (SCB.getInstance().LBS.isInLobby(e.getPlayer())) {
+            if (SkyApi.getLobbyManager().isInLobby(e.getPlayer())) {
                 e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.playerJoin.alreadyInLobby"));
                 return;
             }
@@ -83,7 +80,7 @@ public class onBlockClick implements Listener {
         if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.usearenareturn") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[RETURN]"))) {
             ClearInventory.applyLobbyInv(e.getPlayer());
             e.getPlayer().sendMessage(SCB.getMessageManager().getMessage("listeners.onblockclick.returnToLobby"));
-            SCB.getInstance().LBS.teleportToLobby(e.getPlayer(), SCB.getInstance().LBS.getLobbyRg().getWorld().getSpawnLocation());
+            SkyApi.getLobbyManager().teleportToLobby(e.getPlayer(), SkyApi.getLobbyManager().getLobbyRg().getWorld().getSpawnLocation());
 
         }
 

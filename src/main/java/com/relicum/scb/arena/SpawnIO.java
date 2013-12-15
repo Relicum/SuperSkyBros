@@ -1,11 +1,11 @@
 package com.relicum.scb.arena;
 
-import com.relicum.scb.SCB;
 import com.relicum.scb.configs.SpawnConfig;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
 import com.relicum.scb.objects.spawns.ArenaSpawn;
+import com.relicum.scb.types.SkyApi;
+import com.relicum.scb.utils.SerializedLocation;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.util.Vector;
 
 import java.util.List;
 import java.util.Map;
@@ -32,7 +32,7 @@ public class SpawnIO {
      * Instantiates a new Spawn iO.
      */
     public SpawnIO() {
-        this.setConfig(SCB.getInstance().SPC);
+        this.setConfig(SkyApi.getSm().getSpawnConfig());
     }
 
 
@@ -61,7 +61,7 @@ public class SpawnIO {
                 cs.set("groupspawn.spawns." + a.getHashStore().get("groupid"), a.getHashStore());
             }
             System.out.println("There is " + sw.size() + " arena spawns");
-            cs.set("groupspawn.chunks", (List<Vector>) map.get("chunks"));
+            cs.set("groupspawn.chunks", map.get("chunks"));
 
             config.saveConfig();
             config.reloadConfig();
@@ -73,7 +73,7 @@ public class SpawnIO {
 
         ConfigurationSection cs = this.config.getConfig().getConfigurationSection(pa);
         ArenaGroupSpawn ar = this.makeGroupSpawn(id, cs);
-        SCB.getInstance().ARM.getArenaById(id).setArenaSpawnGroup(ar);
+        SkyApi.getArenaManager().getArenaById(id).setArenaSpawnGroup(ar);
 
         return true;
     }
@@ -106,10 +106,10 @@ public class SpawnIO {
         }
 
         ConfigurationSection lcon = this.config.getConfig().getConfigurationSection(pa + ".groupspawn.spawns." + as.getHashStore().get("groupid"));
-        ArenaSpawn nas = new ArenaSpawn(lcon.getVector("vector"), lcon.getInt("arenaid"), lcon.getString("world"));
+        ArenaSpawn nas = new ArenaSpawn(lcon.getVector("vector"), lcon.getInt("arenaid"), lcon.getString("world"), (SerializedLocation) lcon.get("location"));
         nas.setGroupId(lcon.getInt("groupid"));
 
-        if (SCB.getInstance().ARM.getArenaById(id).getSpawnGroup().addSpawn(nas)) {
+        if (SkyApi.getArenaManager().getArenaById(id).getSpawnGroup().addSpawn(nas)) {
 
             System.out.println("New spawn successfully saved and reloaded and added to Arena");
         }
@@ -126,7 +126,7 @@ public class SpawnIO {
 
             ConfigurationSection m = st.getConfigurationSection("groupspawn.spawns." + k);
 
-            ArenaSpawn sp = new ArenaSpawn(m.getVector("vector"), m.getInt("arenaid"), m.getString("world"));
+            ArenaSpawn sp = new ArenaSpawn(m.getVector("vector"), m.getInt("arenaid"), m.getString("world"), (SerializedLocation) m.get("location"));
             sp.setGroupId(m.getInt("groupid"));
 
             as.addSpawn(sp);

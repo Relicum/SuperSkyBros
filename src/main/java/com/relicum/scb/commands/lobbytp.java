@@ -1,6 +1,7 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -23,9 +24,14 @@ public class lobbytp extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
 
-        Location loc = SCB.getInstance().LBS.getLobbyRg().getLobbySpawn();
+        if (!SkyApi.getSm().getLobbyConfig().getConfig().getBoolean("LOBBYSET")) {
+            player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.lobbytpFail"));
+            return true;
+        }
 
-        SCB.getInstance().LBS.teleportToLobby(player, loc);
+        Location loc = SkyApi.getLobbyManager().getLobbyRg().getLobbySpawn();
+
+        SkyApi.getLobbyManager().teleportToLobby(player, loc);
 
         player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.lobbytpSuccess"));
 

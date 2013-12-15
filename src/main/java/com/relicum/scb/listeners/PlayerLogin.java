@@ -12,7 +12,9 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
  */
 public class PlayerLogin implements Listener {
 
+
     public void preLogin(AsyncPlayerPreLoginEvent event) {
+
 
         if (Bukkit.getPlayerExact(event.getName()) == null) {
             System.out.println(event.getName() + " has not played before");

@@ -1,6 +1,7 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -32,9 +33,9 @@ public class arenatp extends SubBase {
         Block b = null;
         try {
 
-            Integer s = SCB.getInstance().ARM.total;
+            Integer s = SkyApi.getArenaManager().total;
             id = Integer.parseInt(args[0]);
-            tpto = SCB.getInstance().ARM.getArenaById(id).getAreg().getadminSpawn();
+            tpto = SkyApi.getArenaManager().getArenaById(id).getAreg().getadminSpawn();
             tpto.add(0.0D, 1.0D, 0.0D);
             below = new Location(tpto.getWorld(), tpto.getX(), tpto.getY(), tpto.getZ());
             below.subtract(0.00D, 1.00D, 0.00D);

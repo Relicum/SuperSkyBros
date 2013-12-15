@@ -1,6 +1,7 @@
 package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.GemShop;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -38,7 +39,7 @@ public class PlayerInteract implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void itemDrop(PlayerDropItemEvent e) {
         if (this.blacklist.contains(e.getPlayer().getWorld().getName())) return;
-        if (SCB.getInstance().LBS.isInLobby(e.getPlayer())) {
+        if (SkyApi.getLobbyManager().isInLobby(e.getPlayer())) {
             e.setCancelled(true);
             return;
         }
@@ -49,7 +50,7 @@ public class PlayerInteract implements Listener {
     public void onClick(PlayerInteractEvent e) {
         if (this.blacklist.contains(e.getPlayer().getWorld().getName())) return;
         if ((e.getAction() != Action.RIGHT_CLICK_BLOCK && e.getAction() != Action.RIGHT_CLICK_AIR)) return;
-        if (!(SCB.getInstance().LBS.isInLobby(e.getPlayer()))) return;
+        if (!(SkyApi.getLobbyManager().isInLobby(e.getPlayer()))) return;
 
 
         Player player = e.getPlayer();
@@ -64,7 +65,7 @@ public class PlayerInteract implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void dragItem(InventoryDragEvent e) {
         if (this.blacklist.contains(e.getWhoClicked().getWorld().getName())) return;
-        if (!(SCB.getInstance().LBS.isInLobby(e.getWhoClicked().getName()))) {
+        if (!(SkyApi.getLobbyManager().isInLobby(e.getWhoClicked().getName()))) {
             return;
         } else {
             e.setCancelled(true);

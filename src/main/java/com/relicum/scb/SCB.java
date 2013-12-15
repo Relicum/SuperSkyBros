@@ -2,20 +2,18 @@ package com.relicum.scb;
 
 import com.relicum.scb.commands.CommandManagerFirstJoin;
 import com.relicum.scb.commands.DebugManager;
-import com.relicum.scb.configs.*;
+import com.relicum.scb.configs.SignConfig;
+import com.relicum.scb.configs.SignFormat;
 import com.relicum.scb.listeners.*;
 import com.relicum.scb.mini.SignLocationStore;
-import com.relicum.scb.objects.inventory.InventoryManager;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.*;
 import com.relicum.scb.we.WorldEditPlugin;
 import lombok.Getter;
-import lombok.Setter;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.*;
 import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandExecutor;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.event.Listener;
@@ -29,6 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
 
 
 /**
@@ -57,6 +56,8 @@ public class SCB extends JavaPlugin implements Listener {
     public static final String ENABLE = "enable";
     private static final String FIRST_RUN_DONE = "firstRunDone";
     private static final String FIRST_RUN = "firstRun";
+
+    public long primaryThread = Thread.currentThread().getId();
     /**
      * The constant MM.
      */
@@ -68,50 +69,27 @@ public class SCB extends JavaPlugin implements Listener {
     private static SCB p;
 
     /**
-     * The Group spawn file.
-     */
-    public File groupSpawnFile = null;
-    /**
-     * The Group spawn.
-     */
-    public FileConfiguration groupSpawn = null;
-    /**
-     * The LBS.
-     */
-    public LobbyManager LBS;
-    /**
-     * Lobby Config Object
-     */
-    public LobbyConfig LBC;
-    /**
-     * Arena Config Object
-     */
-    public ArenaConfig ARC;
-    public ArenaManager ARM;
-    /**
-     * Spawn Config Object
-     */
-    public SpawnConfig SPC;
-    /**
      * BaseSign Config Manager
      */
     public SignConfig SNC;
     public boolean saveOnDisable = true;
-    @Setter
-    public InventoryManager INV;
+
     @Getter
     public boolean isUpdatesEnabled = true;
     protected ArrayList<Permission> plist = new ArrayList<>();
-    /**
-     * The SignManager
-     */
-    private SignManager SNM;
+
     /**
      * The BaseSign Formatter Config.
      */
+
+
+    /**
+     * Type of thread management to use for login management
+     * Either Fixed or Cached
+     */
+    public boolean useLoginService;
+    public ExecutorService loginService;
     private SignFormat SFM;
-    private ScheduledManager poolManager;
-    private WorldConfig WCF;
     private WorldManager worldManager;
     private PluginManager pm = Bukkit.getServer().getPluginManager();
     private List<String> bWorlds = new ArrayList<>();
@@ -160,6 +138,8 @@ public class SCB extends JavaPlugin implements Listener {
     /**
      * On load. Registers any ConfigurationSerializable files at onLoad Before other things have started to load
      */
+    @SuppressWarnings("RefusedBequest")
+    @Override
     public void onLoad() {
 
 
@@ -168,16 +148,31 @@ public class SCB extends JavaPlugin implements Listener {
     /**
      * On enable.
      */
+    @SuppressWarnings("RefusedBequest")
     @Override
     public void onEnable() {
 
         p = this;
         ConfigurationSerialization.registerClass(SerializedLocation.class);
+        ConfigurationSerialization.registerClass(LocationChecker.class);
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
 
         SkyApi.init(this);
         SkyApi.getCMsg().INFO("Initialising SuperSkyBros Started");
+        SkyApi.getCMsg().INFO("Main Thread ID is " + primaryThread);
+        useLoginService = getConfig().getBoolean("threads.useLoginService");
+
+        if (useLoginService) {
+
+            try {
+                loginService = ScheduledManager.loginService(getConfig().getInt("threads.loginThreads"));
+                SkyApi.getCMsg().INFO("New Login ExecutorService created");
+            } catch (Exception e) {
+                SkyApi.getCMsg().SERVE("Fatal error creating Login ExecutorService");
+                e.printStackTrace();
+            }
+        }
         SkyApi.getSm();
         SkyApi.getCMsg().INFO("Settings manager Initialised");
         //settings.setup();
@@ -200,7 +195,9 @@ public class SCB extends JavaPlugin implements Listener {
 
             p.getCommand("ssba").setExecutor(cm);
             p.getCommand("ssba").setPermissionMessage("You do not have permission to run this command");
-            p.pm.registerEvents(new FirstRun(this), this);
+
+            p.pm.registerEvents(new FirstRun(), this);
+
             FileUtils.createDirectory(getDataFolder().toString(), "players");
             FileUtils.createDirectory(getDataFolder().toString(), "worlds");
 
@@ -226,7 +223,7 @@ public class SCB extends JavaPlugin implements Listener {
             p.getCommand("ssbw").setPermissionMessage(MM.getNoPerm());
             //Debug Commands
 
-            poolManager = new ScheduledManager(2);
+            ScheduledManager poolManager = new ScheduledManager(getConfig().getInt("threads.timerScheduled"));
             getServer().getScheduler().scheduleSyncDelayedTask(SCB.getInstance(), new Startup(), 15L);
 
         }
@@ -237,6 +234,7 @@ public class SCB extends JavaPlugin implements Listener {
     /**
      * On disable.
      */
+    @SuppressWarnings("RefusedBequest")
     @Override
     public void onDisable() {
 
@@ -250,6 +248,13 @@ public class SCB extends JavaPlugin implements Listener {
             SkyApi.getSm().getWorldConfig().saveConfig();
             SkyApi.getSm().getSignConfig().saveConfig();
             SkyApi.getSm().getSignFormatConfig().saveConfig();
+            if (useLoginService) {
+                if (ScheduledManager.loginServiceForShutDown()) {
+                    SkyApi.getCMsg().INFO("Login Service Shutdown successfully");
+                } else {
+                    SkyApi.getCMsg().SERVE("Fatal error shutting down Login Service");
+                }
+            }
             this.saveConfig();
 
 
@@ -259,8 +264,15 @@ public class SCB extends JavaPlugin implements Listener {
                 SkyApi.getSm().getWorldConfig().saveConfig();
                 SkyApi.getSm().getSignConfig().saveConfig();
                 SkyApi.getSm().getSignFormatConfig().saveConfig();
-                ARC.saveConfig();
-                SPC.saveConfig();
+                SkyApi.getSm().getArenaConfig().saveConfig();
+                SkyApi.getSm().getSpawnConfig().saveConfig();
+                if (useLoginService) {
+                    if (ScheduledManager.loginServiceForShutDown()) {
+                        SkyApi.getCMsg().INFO("Login Service Shutdown successfully");
+                    } else {
+                        SkyApi.getCMsg().SERVE("Fatal error shutting down Login Service");
+                    }
+                }
                 this.saveConfig();
                 ScheduledManager.getScheduler().shutdown();
             } catch (Exception e) {
@@ -327,26 +339,12 @@ public class SCB extends JavaPlugin implements Listener {
             }
 
             SkyApi.getWorldManager().loadEnabledWorlds();
-
-            p.INV = new InventoryManager();
-
-            p.LBC = SkyApi.getSm().getLobbyConfig();
+            SkyApi.loadManagers();
 
             new SignLocationStore(p);
 
-            p.SPC = new SpawnConfig("spawns.yml");
-            p.SPC.getConfig().options().copyDefaults(true);
-            p.SPC.saveConfig();
-
-
-            p.ARC = new ArenaConfig("arena.yml");
-            p.ARC.getConfig().options().copyDefaults(true);
-            p.ARC.saveConfig();
-            p.ARM = new ArenaManager();
-
-
             SettingsManager.getInstance().setup(p);
-            //MM = new MessageManager(p);
+
             if (!p.getConfig().getBoolean(ENABLE)) {
                 SkyApi.getCMsg().INFO("SCB is being disabled due to it enable being false in config.yml");
                 p.pm.disablePlugin(p);
@@ -354,8 +352,8 @@ public class SCB extends JavaPlugin implements Listener {
 
             }
 
-            p.LBS = SkyApi.getLobbyManager();
-            if (p.LBC.getConfig().getBoolean(LOBBYSET)) {
+
+            if (SkyApi.getSm().getLobbyConfig().getConfig().getBoolean(LOBBYSET)) {
                 if (p.getConfig().getBoolean(DEDICATED_SSB)) {
                     p.pm.registerEvents(new DBlockBreakPlace(p), p);
                     SkyApi.getCMsg().INFO("Dedicated mode block place and break listener activated");
@@ -384,7 +382,6 @@ public class SCB extends JavaPlugin implements Listener {
 
             BroadcastManager.setup();
             GemShop gemShop = new GemShop(p);
-            p.SNM = new SignManager();
 
 
             registerNewPerm("ssba.admin.breakblocks", "Allows  user to break blocks", "ssba.admin");
@@ -398,6 +395,9 @@ public class SCB extends JavaPlugin implements Listener {
             registerNewPerm("ssb.player.usearenajoin", "Allows user to use a arena leave sign", "ssb.player");
             registerNewPerm("ssb.player.usearenareturn", "Allows user to use a Arena lobby return to main lobby signs", "ssb.player");
 
+            if (SkyApi.getSm().isUseWorldManagement() && SkyApi.getSm().isGenerateDefaultWorld()) {
+                SkyApi.getCMsg().INFO("Please restart the server as part of autosetup");
+            }
 
         }
 

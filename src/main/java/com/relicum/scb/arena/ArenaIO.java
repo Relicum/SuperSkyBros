@@ -4,6 +4,8 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.configs.ArenaConfig;
 import com.relicum.scb.objects.ArenaLobby;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
+import com.relicum.scb.types.SkyApi;
+import com.relicum.scb.utils.SerializedLocation;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.util.Vector;
 
@@ -81,7 +83,7 @@ public class ArenaIO {
 
 
     public ArenaIO() {
-        this.config = SCB.getInstance().ARC;
+        this.config = SkyApi.getSm().getArenaConfig();
         if (!this.config.getConfig().contains("ARENADEFAULTS")) {
             this.config.getConfig().createSection("ARENADEFAULTS");
             this.config.getConfig().getConfigurationSection("ARENADEFAULTS");
@@ -154,7 +156,7 @@ public class ArenaIO {
         System.out.println(path);
         ConfigurationSection cs = config.getConfig().getConfigurationSection(path);
         Arena arena = this.makeArena(last, cs);
-        if (SCB.getInstance().ARM.addNewArena(arena)) {
+        if (SkyApi.getArenaManager().addNewArena(arena)) {
             System.out.println("Arena successfully added to Arena Manager");
         }
         return true;
@@ -199,7 +201,7 @@ public class ArenaIO {
         for (String k : f) {
             String path = "arena.arenas." + k;
             String spath = "group.groups." + k;
-            ConfigurationSection spn = SCB.getInstance().SPC.getConfig().getConfigurationSection(spath);
+            ConfigurationSection spn = SkyApi.getSm().getSpawnConfig().getConfig().getConfigurationSection(spath);
             ConfigurationSection st = config.getConfig().getConfigurationSection(path);
             Arena na = makeArena(Integer.parseInt(k), st);
             ar.put(Integer.parseInt(k), na);
@@ -641,7 +643,7 @@ public class ArenaIO {
         arena.setPerm(st.getString("permission"));
         arena.setStatus(st.getString("status"));
         arena.setUniqueMap(st.getString("umap"));
-        ArenaRegion ag = new ArenaRegion(st.getVector("region.min"), st.getVector("region.max"), st.getVector("region.top"), id, st.getString("world"), st.getString("map"));
+        ArenaRegion ag = new ArenaRegion(st.getVector("region.min"), st.getVector("region.max"), st.getVector("region.top"), id, st.getString("world"), st.getString("map"), (SerializedLocation) st.get("lmax"), (SerializedLocation) st.get("lmin"), (SerializedLocation) st.get("lad"));
         arena.setChunk((List<Vector>) st.get("chunks"));
         arena.setAreg(ag);
         arena.setWorldName(st.getString("world"));

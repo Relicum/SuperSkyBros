@@ -83,12 +83,12 @@ public class LobbyManager implements Listener {
                     (org.bukkit.util.Vector) lrc.get("MIN"), (org.bukkit.util.Vector) lrc.get("MAX"), (org.bukkit.util.Vector) lrc.get("SPAWN"), (String) lrc.get("WORLD"),
                     (String) lrc.get("PERM"), (float) ya.floatValue());
 
-            SkyApi.getSCB().getLogger().info("LobbySpawn has successfully been loaded");
+            SkyApi.getCMsg().INFO("Lobby and Lobby Spawn have successfully been loaded");
 
             return true;
         }
 
-        SkyApi.getSCB().getLogger().info("No Lobby Spawn Point was been set yet");
+        SkyApi.getCMsg().WARNING("No Lobby has been created and set");
 
         return false;
     }

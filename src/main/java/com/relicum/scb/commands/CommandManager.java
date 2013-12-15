@@ -100,6 +100,7 @@ public class CommandManager implements TabExecutor {
         if (SkyApi.getSm().isUseWorldManagement()) {
             resetWhiteList();
 
+            clist.put("modifyworld", new modifyworld());
             clist.put("autosetup", new autosetup());
             clist.put("saveworld", new saveworld());
             clist.put("createworld", new createworld());

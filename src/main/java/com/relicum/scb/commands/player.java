@@ -3,6 +3,7 @@ package com.relicum.scb.commands;
 import com.relicum.scb.ArenaManager;
 import com.relicum.scb.SCB;
 import com.relicum.scb.arena.Arena;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -23,7 +24,7 @@ public class player extends SubBase {
      */
     @Override
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
-        ArenaManager ar = SCB.getInstance().ARM;
+        ArenaManager ar = SkyApi.getArenaManager();
         Arena arena = ar.getArenaById(ar.getCurrent());
 
         if (ar.getCurrent() == 0) {

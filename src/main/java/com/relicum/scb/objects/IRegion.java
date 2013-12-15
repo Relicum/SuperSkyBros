@@ -1,6 +1,7 @@
 package com.relicum.scb.objects;
 
 import com.relicum.scb.BukkitInterface;
+import com.relicum.scb.utils.SerializedLocation;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
@@ -27,8 +28,11 @@ public class IRegion {
 
     private String mn;
 
+    private SerializedLocation lmax;
+    private SerializedLocation lmin;
+    private SerializedLocation lad;
 
-    public IRegion(Vector min, Vector max, Vector ad, Integer i, String wo, String mn) {
+    public IRegion(Vector min, Vector max, Vector ad, Integer i, String wo, String mn, SerializedLocation lmax, SerializedLocation lmin, SerializedLocation lad) {
         this.world = wo;
         this.adminSpawn = ad;
         this.max = max;
@@ -36,8 +40,34 @@ public class IRegion {
         this.setMn(mn);
         this.setRegionID(i);
         this.setUmname();
+        this.setLmax(lmax);
+        this.setLmin(lmin);
+        this.setLad(lad);
     }
 
+    public SerializedLocation getLmax() {
+        return lmax;
+    }
+
+    public void setLmax(SerializedLocation lmax) {
+        this.lmax = lmax;
+    }
+
+    public SerializedLocation getLmin() {
+        return lmin;
+    }
+
+    public void setLmin(SerializedLocation lmin) {
+        this.lmin = lmin;
+    }
+
+    public SerializedLocation getLad() {
+        return lad;
+    }
+
+    public void setLad(SerializedLocation lad) {
+        this.lad = lad;
+    }
 
     /**
      * Set the Region ID must be same as Arena

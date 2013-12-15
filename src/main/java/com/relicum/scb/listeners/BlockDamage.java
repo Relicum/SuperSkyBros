@@ -3,6 +3,7 @@ package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.hooks.VaultManager;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -41,7 +42,7 @@ public class BlockDamage implements Listener {
         if (this.blacklist.contains(e.getPlayer().getWorld().getName())) return;
 
         Player player = e.getPlayer();
-        if (SCB.getInstance().LBS.isInLobby(player) && !VaultManager.perms.has(player, SCB.SSBA_ADMIN_BREAKBLOCKS)) {
+        if (SkyApi.getLobbyManager().isInLobby(player) && !VaultManager.perms.has(player, SCB.SSBA_ADMIN_BREAKBLOCKS)) {
             e.setCancelled(true);
             player.addPotionEffect(pe, true);
             player.addPotionEffect(ps);
@@ -56,7 +57,7 @@ public class BlockDamage implements Listener {
         if (this.blacklist.contains(e.getPlayer().getWorld().getName())) return;
 
         Player player = e.getPlayer();
-        if (SCB.getInstance().LBS.isInLobby(player) && !VaultManager.perms.has(player, SCB.SSBA_ADMIN_BREAKBLOCKS)) {
+        if (SkyApi.getLobbyManager().isInLobby(player) && !VaultManager.perms.has(player, SCB.SSBA_ADMIN_BREAKBLOCKS)) {
             e.setCancelled(true);
             player.addPotionEffect(pe);
             player.sendMessage(SCB.MM.getErrorMessage("listeners.blockbreak.lobbyBreak"));

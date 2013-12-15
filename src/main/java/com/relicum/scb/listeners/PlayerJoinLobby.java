@@ -3,6 +3,7 @@ package com.relicum.scb.listeners;
 import com.relicum.scb.SCB;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.objects.inventory.ClearInventory;
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -37,20 +38,19 @@ public class PlayerJoinLobby implements Listener {
 
             e.getPlayer().setPermissionAttachment(e.getPlayer().getPlayer().addAttachment(SCB.getInstance(), "bukkit.broadcast.ssblobby", true));
 
-            SCB.getInstance().INV.storeOldInventory(e.getPlayer().getPlayer());
+            SkyApi.getInventoryManager().storeOldInventory(e.getPlayer().getPlayer());
             ClearInventory.applyLobbyInv(e.getPlayer().getPlayer());
-            SCB.getInstance().LBS.addPlayer(e.getPlayer());
+            SkyApi.getLobbyManager().addPlayer(e.getPlayer());
             e.getPlayer().pStatus = PlayerStatus.LOBBY;
             if (!e.isDedicated()) {
                 e.getPlayer().sendMessage(SCB.getMessageManager().getAdminMessage("command.message.teleportToLobby"));
             }
-            this.teleportToLobby(e.getPlayer().getPlayer(), SCB.getInstance().LBS.getLobbyRg().getLobbySpawn().add(0.5, 0.5, 0.5));
+            this.teleportToLobby(e.getPlayer().getPlayer(), SkyApi.getLobbyManager().getLobbyRg().getLobbySpawn().add(0.5, 0.5, 0.5));
             System.out.println(e.getPlayer().getName() + " Has been transported to the lobby");
 
             Bukkit.broadcast(
                     ChatColor.translateAlternateColorCodes('&', SCB.MM.getRawMessage("system.lobbyJoinWelcome").replace("%name%", e.getPlayer().getName())),
                     "bukkit.broadcast.ssblobby");
-            //StartTimer.makeTimer(1, 1, 31);
 
         } else {
 
@@ -58,8 +58,6 @@ public class PlayerJoinLobby implements Listener {
             e.getPlayer().sendMessage(SCB.MM.getErrorMessage("command.message.teleportFail"));
 
         }
-
-        System.out.println("PlayerJoinLobbyEvent  Ended");
     }
 
 

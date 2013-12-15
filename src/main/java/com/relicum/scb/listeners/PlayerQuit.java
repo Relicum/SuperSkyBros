@@ -2,6 +2,7 @@ package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.objects.inventory.RestoreInventory;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -25,20 +26,23 @@ public class PlayerQuit implements Listener {
     }
 
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void playQuit(PlayerQuitEvent e) {
 
         if (Result.KICK_OTHER.equals(Result.KICK_OTHER)) {
             e.setQuitMessage("");
         }
-
-        if (plugin.LBS.isInLobby(e.getPlayer())) {
+        if (SkyApi.getSm().getAdminMode().contains(e.getPlayer().getName())) {
+            SkyApi.getSm().getAdminMode().remove(e.getPlayer().getName());
+        }
+        if (SkyApi.getLobbyManager().isInLobby(e.getPlayer())) {
             RestoreInventory.restore(e.getPlayer());
-            e.getPlayer().teleport(SCB.getInstance().LBS.getLobbyRg().getWorld().getSpawnLocation().add(0.5, 0.5, 0.5));
+            e.getPlayer().teleport(SkyApi.getLobbyManager().getLobbyRg().getWorld().getSpawnLocation().add(0.5, 0.5, 0.5));
             e.setQuitMessage("");
-            System.out.println("Player quit event happened for " + e.getPlayer().getName());
-            plugin.INV.removePlayerFromStore(e.getPlayer().getName());
-            plugin.LBS.removePlayer(e.getPlayer());
+            SkyApi.getInventoryManager().removePlayerFromStore(e.getPlayer().getName());
+            SkyApi.getLobbyManager().removePlayer(e.getPlayer());
+
+
         }
 
     }

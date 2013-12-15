@@ -1,6 +1,7 @@
 package com.relicum.scb;
 
 
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.MessageManager;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -225,7 +226,7 @@ public class SettingsManager {
 
     public Integer setTotalArenas() {
 
-        Integer to = p.ARC.getConfig().getInt("arena.total");
+        Integer to = SkyApi.getSm().getArenaConfig().getConfig().getInt("arena.total");
 
         return to;
 

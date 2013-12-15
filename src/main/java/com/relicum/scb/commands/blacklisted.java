@@ -1,6 +1,7 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -23,12 +24,12 @@ public class blacklisted extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) throws IOException, ClassNotFoundException {
 
-        for (String s : SCB.getInstance().getConfig().getStringList("ignoreWorlds")) {
-            player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.blacklistedWorlds").replace("%WORLD%", s));
+        for (String s : SkyApi.getSm().blackListed()) {
+            player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.blacklistedWorlds").replace("%WORLD%", s));
         }
         player.sendMessage(ChatColor.GRAY + "-----------------------------");
-        for (String s : SCB.getInstance().getConfig().getStringList("dedicatedSSBWorlds")) {
-            player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.whitelistedWorlds").replace("%WORLD%", s));
+        for (String s : SkyApi.getSm().getSsbWorlds()) {
+            player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.whitelistedWorlds").replace("%WORLD%", s));
         }
 
         return true;

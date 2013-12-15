@@ -4,6 +4,7 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.arena.ArenaIO;
 import com.relicum.scb.arena.ArenaStatus;
 import com.relicum.scb.events.ArenaStatusChangeEvents;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
@@ -67,7 +68,7 @@ public class ArenaChangeStatusOld implements Listener {
     public boolean removeArena() {
 
         try {
-            SCB.getInstance().ARM.removeArena(event.getArena().getArenaId(), event.getArena().getUniqueMap());
+            SkyApi.getArenaManager().removeArena(event.getArena().getArenaId(), event.getArena().getUniqueMap());
         } catch (Exception e) {
             System.out.println("Error has occurred removing the arena");
             return false;

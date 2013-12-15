@@ -1,5 +1,6 @@
 package com.relicum.scb.objects.spawns;
 
+import com.relicum.scb.utils.SerializedLocation;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
@@ -23,6 +24,7 @@ public class ArenaSpawn extends SpawnInst {
 
     private int groupId;
 
+    private SerializedLocation loc;
 
     public ArenaSpawn() {
     }
@@ -34,13 +36,22 @@ public class ArenaSpawn extends SpawnInst {
      * @param Vector
      * @param Integer
      * @param String
+     * @param SerializedLocation
      */
-    public ArenaSpawn(Vector vec, Integer aId, String world) {
+    public ArenaSpawn(Vector vec, Integer aId, String world, SerializedLocation location) {
         super(vec);
         this.arenaId = aId;
         this.setWorld(world);
+        this.loc = location;
     }
 
+    public SerializedLocation getLoc() {
+        return loc;
+    }
+
+    public void setLoc(SerializedLocation loc) {
+        this.loc = loc;
+    }
 
     /**
      * Set world.
@@ -133,7 +144,7 @@ public class ArenaSpawn extends SpawnInst {
         map.put("world", this.getWorldString());
         map.put("arenaid", this.getArenaid());
         map.put("vector", this.getVector());
-
+        map.put("location", this.getLoc());
         return map;
     }
 }

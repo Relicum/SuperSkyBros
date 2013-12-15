@@ -6,6 +6,8 @@ import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.SpawnIO;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
 import com.relicum.scb.objects.spawns.ArenaSpawn;
+import com.relicum.scb.types.SkyApi;
+import com.relicum.scb.utils.SerializedLocation;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
@@ -26,10 +28,10 @@ public class setspawn extends SubBase {
      */
     public boolean onCommand(Player player, String[] args) {
 
-        ArenaManager ar = SCB.getInstance().ARM;
+        ArenaManager ar = SkyApi.getArenaManager();
         SpawnIO sio = new SpawnIO();
         if (ar.getCurrent() == 0) {
-            player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.NoArenaSet"));
+            player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.NoArenaSet"));
             return true;
         }
         if (ar.checkBlockLocation(player.getLocation().toVector())) {
@@ -41,18 +43,18 @@ public class setspawn extends SubBase {
                 System.out.println("The Arena Group is null means this is first spawn and need to create and Save new SpawnGroup First and then add it to the arena object");
 
                 Vector vt = new Vector(Math.round(player.getLocation().getX()) + 0.5, player.getLocation().getY() + 0.5, Math.round(player.getLocation().getZ()) + 0.5);
-                ArenaSpawn as = new ArenaSpawn(vt, ar.getCurrent(), player.getWorld().getName());
+                ArenaSpawn as = new ArenaSpawn(vt, ar.getCurrent(), player.getWorld().getName(), new SerializedLocation(player.getLocation().add(0.5, 0.5, 0.5)));
 
 
                 if (sio.createNewGroup(as)) {
 
-                    String tmp;
-                    player.sendMessage(tmp = SCB.getMessageManager().getAdminMessage("command.message.setSpawnSuccess").replace("%ID%", "1"));
+
+                    player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.setSpawnSuccess").replace("%ID%", "1"));
 
                     return true;
                 } else {
 
-                    player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.setspawnFail"));
+                    player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.setspawnFail"));
                     return true;
                 }
 
@@ -62,7 +64,7 @@ public class setspawn extends SubBase {
                 System.out.println("Well more than one record try and save it");
 
                 Vector vt = new Vector(Math.round(player.getLocation().getX()), player.getLocation().getY(), Math.round(player.getLocation().getZ()));
-                ArenaSpawn as = new ArenaSpawn(vt, ar.getCurrent(), player.getWorld().getName());
+                ArenaSpawn as = new ArenaSpawn(vt, ar.getCurrent(), player.getWorld().getName(), new SerializedLocation(player.getLocation().add(0.5, 0.5, 0.5)));
 
                 Arena myar = ar.getArenaById(ar.getCurrent());
                 as.setGroupId(myar.getSpawnGroup().getTotal());
@@ -70,13 +72,13 @@ public class setspawn extends SubBase {
 
                 if (sio.saveSpawn(as)) {
 
-                    String tmp;
-                    player.sendMessage(tmp = SCB.getMessageManager().getAdminMessage("command.message.setSpawnSuccess").replace("%ID%", t.toString()));
+
+                    player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.setSpawnSuccess").replace("%ID%", t.toString()));
                     return true;
 
                 } else {
 
-                    player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.setspawnFail"));
+                    player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.setspawnFail"));
                     return true;
 
                 }
@@ -87,7 +89,7 @@ public class setspawn extends SubBase {
         } else {
 
 
-            player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.setspawnNotInArena"));
+            player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.setspawnNotInArena"));
 
 
         }

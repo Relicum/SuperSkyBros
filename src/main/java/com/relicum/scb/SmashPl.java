@@ -1,6 +1,7 @@
 package com.relicum.scb;
 
 import com.relicum.scb.objects.BukkitPlayer;
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.PlayerStatus;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -202,7 +203,7 @@ public class SmashPl extends BukkitPlayer {
             @Override
             public void run() {
 
-                if (!getPlayer().teleport(SCB.getInstance().LBS.getLobbyRg().getLobbySpawn())) {
+                if (!getPlayer().teleport(SkyApi.getLobbyManager().getLobbyRg().getLobbySpawn())) {
                     System.out.println("Error teleporting player to lobby");
                 }
                 if (!SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB))

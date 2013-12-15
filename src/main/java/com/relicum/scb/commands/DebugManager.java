@@ -66,33 +66,33 @@ public class DebugManager implements CommandExecutor {
     public void vList(String list) {
 
         if (list.equalsIgnoreCase("lobby")) {
-            if (SCB.getInstance().LBS.getPlayersInLobby().size() == 0) {
+            if (SkyApi.getLobbyManager().getPlayersInLobby().size() == 0) {
                 System.out.println("There are no players in Lobby List");
                 return;
             }
-            for (SmashPl sm : SCB.getInstance().LBS.getPlayersInLobby()) {
+            for (SmashPl sm : SkyApi.getLobbyManager().getPlayersInLobby()) {
 
                 System.out.println("Player " + sm.getName() + " is in the Lobby List");
             }
         }
 
         if (list.equalsIgnoreCase("lobbyname")) {
-            if (SCB.getInstance().LBS.getPlayerNamesInLobby().size() == 0) {
+            if (SkyApi.getLobbyManager().getPlayerNamesInLobby().size() == 0) {
                 System.out.println("There are no player names in Lobby name list");
                 return;
             }
-            for (String s : SCB.getInstance().LBS.getPlayerNamesInLobby()) {
+            for (String s : SkyApi.getLobbyManager().getPlayerNamesInLobby()) {
                 System.out.println("Player name " + s + " is in the Lobby name List");
             }
 
         }
 
         if (list.equalsIgnoreCase("uuid")) {
-            if (SCB.getInstance().LBS.getPlayersInUUIDList().size() == 0) {
+            if (SkyApi.getLobbyManager().getPlayersInUUIDList().size() == 0) {
                 System.out.println("There are no player names in UUID name list");
                 return;
             }
-            for (UUID s : SCB.getInstance().LBS.getPlayersInUUIDList()) {
+            for (UUID s : SkyApi.getLobbyManager().getPlayersInUUIDList()) {
                 System.out.println("Player name " + s.toString() + " is in the Lobby name List");
             }
 

@@ -2,6 +2,7 @@ package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.hooks.VaultManager;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
@@ -48,10 +49,10 @@ public class LobbyBlockPlace implements Listener, Cancellable {
     public LobbyBlockPlace(JavaPlugin pl) {
         this.plugin = (SCB) pl;
         this.protectionSet = this.plugin.getConfig().getBoolean("enableLobbyProtection");
-        this.blacklist = plugin.getBlackList();
-        this.min = plugin.LBS.getLobbyRg().getMinVector();
-        this.max = plugin.LBS.getLobbyRg().getMaxVector();
-        this.world = plugin.LBS.getLobbyRg().getWorld().getName();
+        this.blacklist = SkyApi.getSm().blackListed();
+        this.min = SkyApi.getLobbyManager().getLobbyRg().getMinVector();
+        this.max = SkyApi.getLobbyManager().getLobbyRg().getMaxVector();
+        this.world = SkyApi.getLobbyManager().getLobbyRg().getWorld().getName();
 
     }
 
@@ -70,7 +71,7 @@ public class LobbyBlockPlace implements Listener, Cancellable {
         String wo = player.getWorld().getName();
 
         if (!VaultManager.perms.has(player, "ssba.admin.placeblocks")) {
-            if (SCB.getInstance().LBS.getLobbyRg().isAABB(e.getBlock().getLocation().toVector())) {
+            if (SkyApi.getLobbyManager().getLobbyRg().isAABB(e.getBlock().getLocation().toVector())) {
                 e.setCancelled(true);
                 player.sendMessage(SCB.MM.getErrorMessage("listeners.blockplace.lobbyPlace"));
             }

@@ -34,12 +34,12 @@ public class adminmode extends SubBase {
                 SkyApi.getSm().setAdminMode(player.getName());
                 player.setDisplayName(ChatColor.DARK_RED + "[AM]" + player.getName());
             }
-            player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.adminmodeToggle").replace("%TOGGLE%", "ON"));
+            player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.adminmodeToggle").replace("%TOGGLE%", "ON"));
             return true;
         } else if (args[0].equalsIgnoreCase("off")) {
             SkyApi.getSm().getAdminMode().remove(player.getName());
             player.setDisplayName(player.getName());
-            player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.adminmodeToggle").replace("%TOGGLE%", "OFF"));
+            player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.adminmodeToggle").replace("%TOGGLE%", "OFF"));
             return true;
         }
 

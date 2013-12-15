@@ -3,10 +3,14 @@ package com.relicum.scb.commands;
 import com.relicum.scb.SCB;
 import com.relicum.scb.configs.LobbyConfig;
 import com.relicum.scb.objects.LobbyRg;
+import com.relicum.scb.types.SkyApi;
+import com.relicum.scb.utils.LocationChecker;
 import com.relicum.scb.utils.SerializedLocation;
+import com.relicum.scb.utils.StringUtils;
 import com.relicum.scb.we.WEManager;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.Selection;
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -36,8 +40,8 @@ public class setlobby extends SubBase {
                     cr.getMinimumPoint().getBlockX(), cr.getMinimumPoint().getBlockY(), cr.getMinimumPoint().getBlockZ());
 
         } catch (Exception e) {
-            player.sendMessage(SCB.MM.getErrorMessage("command.message.setlobbyNoSel"));
-            SCB.getInstance().getLogger().severe("Error setting lobby WorldEdit selection not set correctly");
+            player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.setlobbyNoSel"));
+            SkyApi.getCMsg().SERVE("Error setting lobby WorldEdit selection not set correctly");
             e.printStackTrace();
             return true;
         }
@@ -50,17 +54,19 @@ public class setlobby extends SubBase {
 
         Vector lobbySpawn = new Vector(
                 player.getLocation().getBlockX() + 0.5, player.getLocation().getBlockY() + 0.5, player.getLocation().getBlockZ() + 0.5);
-        Float dir = SCB.getInstance().LBS.getDirection(player.getLocation().getYaw());
+        Float dir = SkyApi.getLobbyManager().getDirection(player.getLocation().getYaw());
 
         LobbyRg region = new LobbyRg(
                 rmin, rmax, lobbySpawn, player.getWorld().getName(), perm, player.getLocation().getYaw());
 
-        LobbyConfig LC = SCB.getInstance().LBS.getLobbySaveObject();
+        LobbyConfig LC = SkyApi.getLobbyManager().getLobbySaveObject();
 
-
+        Location location = player.getLocation();
+        location.setPitch((float) Math.round(player.getLocation().getPitch()));
+        location.setYaw(StringUtils.getDirection(player.getLocation().getYaw()));
         SerializedLocation minls = new SerializedLocation(cr.getMinimumPoint());
         SerializedLocation maxls = new SerializedLocation(cr.getMaximumPoint());
-        SerializedLocation sspawn = new SerializedLocation(player.getLocation().add(0.5, 0.5, 0.5));
+        SerializedLocation sspawn = new SerializedLocation(location);
 
 
         try {
@@ -77,12 +83,15 @@ public class setlobby extends SubBase {
             if (!LC.getConfig().contains("lobby.box")) {
                 LC.getConfig().createSection("lobby.box");
             }
+
+            LocationChecker lc = new LocationChecker(cr.getMaximumPoint().toVector(), cr.getMinimumPoint().toVector(), "LOBBY", 1);
             ConfigurationSection box = LC.getConfig().getConfigurationSection("lobby.box");
             box.set("min", minls);
             box.set("max", maxls);
             box.set("spawn", sspawn);
             box.set("world", player.getWorld().getName());
             box.set("perm", "ssb.player.join");
+            box.set("checker", lc);
 
             if (!LC.getConfig().contains(SCB.LOBBYSET)) {
                 LC.getConfig().createSection(SCB.LOBBYSET);
@@ -92,20 +101,20 @@ public class setlobby extends SubBase {
             LC.reloadConfig();
         } catch (Exception e) {
 
-            SCB.getInstance().getLogger().severe("Error: saving Lobby Region");
-            System.out.println(e.getStackTrace().toString());
-            player.sendMessage(SCB.MM.getErrorMessage("command.message.setlobbyFail"));
-
+            SkyApi.getCMsg().SERVE("Error: saving Lobby Region");
+            e.printStackTrace();
+            player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.setlobbyFail"));
+            return true;
         }
 
-        SCB.getInstance().LBS.setLobbyRg(region);
+        SkyApi.getLobbyManager().setLobbyRg(region);
 
         SCB.getInstance().getConfig().set("enableLobbyProtection", true);
         SCB.getInstance().saveConfig();
         SCB.getInstance().reloadConfig();
         SCB.getInstance().loadLobbyEvents();
-        player.sendMessage(SCB.MM.getAdminMessage("command.message.setlobbySuccess"));
-        SCB.getInstance().getLogger().info("Lobby Region and Spawn Point have Been Successfully Set");
+        player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.setlobbySuccess"));
+        SkyApi.getCMsg().INFO("Lobby Region and Spawn Point have Been Successfully Set");
 
         return true;
     }

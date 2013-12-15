@@ -1,7 +1,7 @@
 package com.relicum.scb;
 
 import com.relicum.scb.utils.consoleColors;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.configuration.ConfigurationSection;
 
 /**
  * SuperSkyBros
@@ -15,28 +15,32 @@ public class cMsg implements consoleColors {
     private String prefix;
     private String warning;
     private String serve;
-    private boolean useColor = true;
-    private boolean useInfo = true;
-    private boolean useWarning = true;
-    private boolean useServe = true;
+    private boolean useColor;
+    private boolean useInfo;
+    private boolean useWarning;
+    private boolean useServe;
 
 
-    public cMsg(Plugin pl) {
-        useColor = pl.getConfig().getBoolean("colorConsole");
+    public cMsg() {
+        ConfigurationSection consoleSection = SCB.getInstance().getConfig().getConfigurationSection("coloredConsole");
+        useColor = consoleSection.getBoolean("colorConsole");
+
+        if (useColor) {
+            useInfo = consoleSection.getBoolean("infoColor");
+            useWarning = consoleSection.getBoolean("warningColor");
+            useServe = consoleSection.getBoolean("serveColor");
+        }
+
         if (!useColor) {
             useColor = false;
             useInfo = false;
             useWarning = false;
             useServe = false;
         }
-        if (useColor) {
-            useInfo = pl.getConfig().getBoolean("infoColor");
-            useWarning = pl.getConfig().getBoolean("warningColor");
-            useServe = pl.getConfig().getBoolean("serveColor");
-        }
 
-        if (pl.getDescription().getPrefix() != null) {
-            prefix = BOLDMAGENTA + "[" + pl.getDescription().getPrefix() + "]" + " " + RESET;
+
+        if (SCB.getInstance().getDescription().getPrefix() != null) {
+            prefix = BOLDMAGENTA + "[" + SCB.getInstance().getDescription().getPrefix() + "]" + " " + consoleColors.RESET;
         } else
             prefix = "";
         warning = BOLDGREEN;
@@ -53,7 +57,7 @@ public class cMsg implements consoleColors {
             noColor(msg);
             return;
         }
-        System.out.println(prefix + BOLDYELLOW + msg + RESET);
+        System.out.println(prefix + BOLDYELLOW + msg + consoleColors.RESET);
     }
 
     /**
@@ -66,7 +70,7 @@ public class cMsg implements consoleColors {
             noColor(msg);
             return;
         }
-        System.out.println(warning + prefix + BOLDGREEN + msg + RESET);
+        System.out.println(warning + prefix + BOLDGREEN + msg + consoleColors.RESET);
     }
 
     /**
@@ -79,7 +83,7 @@ public class cMsg implements consoleColors {
             noColor(msg);
             return;
         }
-        System.out.println(serve + prefix + BOLDRED + msg + RESET);
+        System.out.println(serve + prefix + BOLDRED + msg + consoleColors.RESET);
     }
 
     private static void noColor(String msg) {

@@ -2,6 +2,7 @@ package com.relicum.scb;
 
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaStatus;
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.MessageManager;
 
 import java.util.List;
@@ -37,24 +38,13 @@ public class GameManager {
 
 
     private void setup() {
-        Map<Integer, Arena> are = getArenaManager().getAllArenas();
+        Map<Integer, Arena> are = SkyApi.getArenaManager().getAllArenas();
 
         for (Integer i : are.keySet()) {
             Arena a = are.get(i);
 
         }
 
-    }
-
-
-    /**
-     * Returns a reference to the ArenaManager
-     *
-     * @return ArenaManager
-     */
-    public ArenaManager getArenaManager() {
-
-        return this.p.ARM;
     }
 
 
@@ -66,7 +56,7 @@ public class GameManager {
     public LobbyManager getLobbyManager() {
 
 
-        return this.p.LBS;
+        return SkyApi.getLobbyManager();
     }
 
 
@@ -89,7 +79,7 @@ public class GameManager {
 
     public ArenaStatus getArenaStatus(Integer i) {
 
-        return getArenaManager().getArenaById(i).getArenaStatus();
+        return SkyApi.getArenaManager().getArenaById(i).getArenaStatus();
     }
 
 

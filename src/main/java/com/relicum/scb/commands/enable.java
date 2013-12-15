@@ -4,6 +4,7 @@ import com.relicum.scb.ArenaManager;
 import com.relicum.scb.SCB;
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaIO;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -21,7 +22,7 @@ public class enable extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) {
         String tmp;
-        ArenaManager ar = SCB.getInstance().ARM;
+        ArenaManager ar = SkyApi.getArenaManager();
         if (ar.getCurrent() != Integer.parseInt(args[0])) {
             player.sendMessage(
                     tmp = SCB.getMessageManager().getErrorMessage("command.message.enableMisMatch").replace("%ID%", args[0]).replace("%MID%", ar.getCurrent().toString()));

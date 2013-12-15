@@ -1,6 +1,7 @@
 package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -9,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,11 +23,28 @@ import java.util.List;
  */
 public class FirstRun implements Listener {
 
-    private SCB plugin;
+    private boolean modeset;
 
 
-    public FirstRun(SCB pl) {
-        this.plugin = pl;
+    public FirstRun() {
+
+        SkyApi.getSCB().getConfig().getBoolean("modeSet");
+    }
+
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void preLogin(PlayerLoginEvent e) {
+
+
+        if (!modeset && !e.getPlayer().isOp()) {
+            e.setKickMessage(ChatColor.stripColor(SkyApi.getMessageManager().getErrorMessage("system.kickJoinNoPerm")));
+            e.disallow(PlayerLoginEvent.Result.KICK_OTHER, e.getKickMessage());
+            e.setResult(PlayerLoginEvent.Result.KICK_OTHER);
+
+
+        } else
+            e.allow();
+
     }
 
 
@@ -33,7 +52,7 @@ public class FirstRun implements Listener {
     public void preLogin(PlayerJoinEvent event) {
         final Player player = event.getPlayer();
         if (!player.hasPlayedBefore()) {
-            System.out.println("Player NOT played before");
+
             Location location = player.getWorld().getSpawnLocation();
             location.add(0.5, 0.5, 0.5);
             final Location loc = location;
@@ -48,9 +67,9 @@ public class FirstRun implements Listener {
                     player.sendMessage(ChatColor.GREEN + "You have been spawned here as you are a first time player");
                 }
             }, 1l);
-            return;
 
-        } else System.out.println("Player has been here before");
+
+        }
 
     }
 

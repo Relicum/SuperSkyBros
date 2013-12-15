@@ -3,6 +3,7 @@ package com.relicum.scb.commands;
 import com.relicum.scb.SCB;
 import com.relicum.scb.SmashPl;
 import com.relicum.scb.objects.inventory.RestoreInventory;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -23,20 +24,22 @@ public class leave extends SubBase {
     public boolean onCommand(Player player, String[] args) {
 
 
-        if (SCB.getInstance().LBS.isInLobby(player)) {
+        if (SkyApi.getLobbyManager().isInLobby(player)) {
             if (!(player instanceof SmashPl)) {
-                SmashPl splayer = SCB.getInstance().LBS.getSmashPlayer(player.getName());
+                SmashPl splayer = SkyApi.getLobbyManager().getSmashPlayer(player.getName());
                 if (SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB)) {
-                    String tmp;
-                    player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.leaveNoWhereToGo"));
-                    return true;
+                    if (!SkyApi.getSm().getAdminMode().contains(player.getPlayer().getName())) {
+                        String tmp;
+                        player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.leaveNoWhereToGo"));
+                        return true;
+                    }
                 }
                 player.removeAttachment(splayer.getPermissionAttachment());
                 RestoreInventory.restore(player);
-                SCB.getInstance().INV.removePlayerFromStore(player.getName());
-                SCB.getInstance().LBS.removePlayer(splayer);
+                SkyApi.getInventoryManager().removePlayerFromStore(player.getName());
+                SkyApi.getLobbyManager().removePlayer(splayer);
 
-                player.teleport(SCB.getInstance().LBS.getLobbyRg().getWorld().getSpawnLocation());
+                player.teleport(SkyApi.getLobbyManager().getLobbyRg().getWorld().getSpawnLocation());
                 splayer.sendMessage(SCB.getMessageManager().getMessage("command.message.leaveSuccess"));
             } else {
 

@@ -48,6 +48,7 @@ defaultWorldSettings:
   spawnBlockMaterial: GOLD_BLOCK
   autoSave: true
   difficulty: HARD
+  pvp: true
   setStorm: false
   setThundering: false
   setTime: 6000

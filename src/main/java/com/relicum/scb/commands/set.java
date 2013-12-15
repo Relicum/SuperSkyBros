@@ -44,7 +44,10 @@ public class set extends SubBase {
 
             //location = new SerializedLocation(world.getName(), player.getLocation().getBlockX(), player.getLocation().getBlockY(), player.getLocation().getBlockZ(), StringUtils.getDirection(player.getLocation().getYaw()), (float) Math.round(player.getLocation().getPitch()));
             SkyApi.getSm().setSerializedWorldSpawnLocation(sl, world.getName());
-            player.sendMessage(SkyApi.getMessageManager().getAdminMessage("worlds.messages.setSpawnSuccess"));
+            player.sendMessage(SkyApi.getMessageManager().getAdminMessage("world.messages.setSpawnSuccess")
+                    .replace("%X%", String.valueOf(player.getLocation().getBlockX()))
+                    .replace("%Y%", String.valueOf(player.getLocation().getBlockY()))
+                    .replace("%Z%", String.valueOf(player.getLocation().getBlockZ())));
         }
         return true;
     }

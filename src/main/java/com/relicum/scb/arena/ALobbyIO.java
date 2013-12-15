@@ -1,7 +1,7 @@
 package com.relicum.scb.arena;
 
-import com.relicum.scb.SCB;
 import com.relicum.scb.objects.ArenaLobby;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.configuration.ConfigurationSection;
 
 /**
@@ -42,8 +42,8 @@ public class ALobbyIO {
     public ALobbyIO(ArenaLobby arenaLobby) {
 
         this.arenaLobby = arenaLobby;
-        this.section = SCB.getInstance().ARC.getConfig().getConfigurationSection("arena.arenas." + arenaLobby.getArenaId());
-        this.arena = SCB.getInstance().ARM.getArenaById(arenaLobby.getArenaId());
+        this.section = SkyApi.getSm().getArenaConfig().getConfig().getConfigurationSection("arena.arenas." + arenaLobby.getArenaId());
+        this.arena = SkyApi.getArenaManager().getArenaById(arenaLobby.getArenaId());
     }
 
 
@@ -55,8 +55,8 @@ public class ALobbyIO {
         this.section.set("lobby.world", this.arenaLobby.getWorld().getName());
         this.section.set("lobby.id", this.arenaLobby.getArenaId());
 
-        SCB.getInstance().ARC.saveConfig();
-        SCB.getInstance().ARC.reloadConfig();
+        SkyApi.getSm().getArenaConfig().saveConfig();
+        SkyApi.getSm().getArenaConfig().reloadConfig();
         this.arena.setArenaLobby(arenaLobby);
         this.arena.saveArena();
 

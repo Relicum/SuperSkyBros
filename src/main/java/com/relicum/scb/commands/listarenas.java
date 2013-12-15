@@ -2,6 +2,7 @@ package com.relicum.scb.commands;
 
 import com.relicum.scb.ArenaManager;
 import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -23,7 +24,7 @@ public class listarenas extends SubBase {
     @Override
     public boolean onCommand(Player player, String[] args) {
 
-        ArenaManager aman = SCB.getInstance().ARM;
+        ArenaManager aman = SkyApi.getArenaManager();
         ArrayList<String> arl = aman.getListMessages();
         if (arl.isEmpty()) return true;
         for (String m : arl) {

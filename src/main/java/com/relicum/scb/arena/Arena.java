@@ -1,6 +1,5 @@
 package com.relicum.scb.arena;
 
-import com.relicum.scb.SCB;
 import com.relicum.scb.events.ArenaStatusChangeEvent;
 import com.relicum.scb.objects.ArenaLobby;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
@@ -107,7 +106,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     @Override
     public void saveArena() {
-        SCB.getInstance().ARM.saveArenaById(getArenaId());
+        SkyApi.getArenaManager().saveArenaById(getArenaId());
     }
 
 

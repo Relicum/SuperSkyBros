@@ -69,7 +69,7 @@ class ArenaManager {
 
 
         this.setCurrent(0);
-        this.total = SCB.getInstance().ARC.getConfig().getInt("arena.total");
+        this.total = SkyApi.getSm().getArenaConfig().getConfig().getInt("arena.total");
         if (total > 0) {
             ArenaIO Aio = new ArenaIO();
             thearenas = Aio.loadArenas();
@@ -81,7 +81,7 @@ class ArenaManager {
 
 
         } else {
-            plugin.getLogger().info("No Arenas were loaded, most likely none have been created");
+            SkyApi.getCMsg().WARNING("No Arenas were loaded, most likely none have been created");
 
         }
     }

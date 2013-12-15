@@ -5,6 +5,7 @@ import com.relicum.scb.SettingsManager;
 import com.relicum.scb.SmashPl;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.hooks.VaultManager;
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.PlayerStatus;
 import com.relicum.scb.utils.timers.StartTimer;
 import lombok.Data;
@@ -45,11 +46,13 @@ public class PlayerJoin implements Listener {
     public void playJoin(PlayerJoinEvent e) {
 
 
-        if (firstTimeOverride && !e.getPlayer().hasPlayedBefore() && !e.getPlayer().isOp()) {
-            if (VaultManager.perms.has(e.getPlayer(), "ssb.player.join") && (!mode)) {
-                e.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation().add(0.5, 0.5, 0.5));
-            }
+        {
+            if (firstTimeOverride && !e.getPlayer().hasPlayedBefore() && !e.getPlayer().isOp()) {
+                if (VaultManager.perms.has(e.getPlayer(), "ssb.player.join") && (!mode)) {
+                    e.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation().add(0.5, 0.5, 0.5));
+                }
 
+            }
         }
 
         //CraftPlayer player1 = (CraftPlayer) e.getPlayer();
@@ -80,7 +83,7 @@ public class PlayerJoin implements Listener {
                                 "a live server be warned");
 
             }*/
-            if (!SCB.getInstance().LBC.getConfig().contains("LOBBY.REGION")) {
+            if (!SkyApi.getSm().getLobbyConfig().getConfig().contains("LOBBY.REGION")) {
                 if (pl.isOp()) {
                     e.setJoinMessage(SCB.getMessageManager().getErrorMessage("system.opAutoJoinOverRide"));
                     plugin.getLogger().severe("You need to set a lobby spawn or players can not join");
@@ -145,7 +148,7 @@ public class PlayerJoin implements Listener {
 
         }*/
 
-        if (!SCB.getInstance().LBC.getConfig().contains("LOBBY.REGION")) {
+        if (!SkyApi.getSm().getLobbyConfig().getConfig().contains("LOBBY.REGION")) {
             if (e.getPlayer().isOp()) {
                 e.setJoinMessage(SCB.getMessageManager().getErrorMessage("system.opAutoJoinOverRide"));
                 plugin.getLogger().severe("You need to set a lobby spawn or players can not join");

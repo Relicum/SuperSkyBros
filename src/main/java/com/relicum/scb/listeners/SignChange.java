@@ -3,6 +3,7 @@ package com.relicum.scb.listeners;
 import com.relicum.scb.SCB;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.signs.utils.Col;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -104,7 +105,7 @@ public class SignChange implements Listener {
             if (VaultManager.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
 
                 Integer arenaID = Integer.parseInt(lines[2]);
-                if (!plugin.ARC.getConfig().contains("arena.arenas." + arenaID.toString())) {
+                if (!SkyApi.getSm().getArenaConfig().getConfig().contains("arena.arenas." + arenaID.toString())) {
                     e.setCancelled(true);
                     e.getBlock().breakNaturally();
                     e.getPlayer().sendMessage(
@@ -112,7 +113,7 @@ public class SignChange implements Listener {
                                     "listeners.signchange" + ".arenaIdNotFound").replace("%ID%", arenaID.toString()));
                     return;
                 }
-                ConfigurationSection config = plugin.ARC.getConfig().getConfigurationSection(
+                ConfigurationSection config = SkyApi.getSm().getArenaConfig().getConfig().getConfigurationSection(
                         "arena.arenas." + arenaID.toString());
 
                 if (!config.getBoolean("enabled")) {

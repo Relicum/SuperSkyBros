@@ -23,6 +23,10 @@ disableTheEnd: false
 firstJoinOverride: true
 classesEnabled:
   - Creeper
+threads:
+    timerScheduled: 2
+    useLoginService: false
+    loginThreads: 0
 gemshop:
   ecoPlugin: false
   itemOpen:
@@ -56,13 +60,14 @@ joinBook:
           - '&5The good can have 250 pages'
 #Color Console Messages
 #True is that console messages will have color
-colorConsole: true
+coloredConsole:
+    colorConsole: true
 #Set to false to disable info color
-infoColor: true
+    infoColor: true
 #Set to false to disable warning color
-warningColor: true
+    warningColor: true
 #set to false to disable serve color
-serveColor: true
+    serveColor: true
 rel:
   lines:
     line:
