@@ -1,7 +1,7 @@
 package com.relicum.scb;
 
 import com.relicum.scb.classes.PlayerType;
-import com.relicum.scb.utils.PlayerStatus;
+import com.relicum.scb.utils.PlayerSt;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -22,7 +22,7 @@ public class SkyPlayer {
     private UUID playerID;
     private String name;
     private PlayerType playerType;
-    private PlayerStatus playerStatus;
+    private PlayerSt playerStatus;
     private Long firstSeen;
     private Long lastSeen;
     private List<String> playerPerms;

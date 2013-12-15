@@ -2,7 +2,7 @@ package com.relicum.scb;
 
 import com.relicum.scb.objects.BukkitPlayer;
 import com.relicum.scb.types.SkyApi;
-import com.relicum.scb.utils.PlayerStatus;
+import com.relicum.scb.utils.PlayerSt;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ import java.util.UUID;
  */
 public class SmashPl extends BukkitPlayer {
 
-    public PlayerStatus pStatus;
+    public PlayerSt pStatus;
 
     private String playerLocation;
 
@@ -83,12 +83,12 @@ public class SmashPl extends BukkitPlayer {
     }
 
 
-    public PlayerStatus getStatus() {
+    public PlayerSt getStatus() {
         return this.pStatus;
     }
 
 
-    public void setpStatus(PlayerStatus pls) {
+    public void setpStatus(PlayerSt pls) {
 
         this.pStatus = pls;
     }

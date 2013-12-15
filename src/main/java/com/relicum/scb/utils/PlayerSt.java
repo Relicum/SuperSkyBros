@@ -6,7 +6,7 @@ package com.relicum.scb.utils;
  * @author Relicum
  * @version 0.1
  */
-public enum PlayerStatus {
+public enum PlayerSt {
     LOBBY,
     GAME,
     UNKNOWN,
@@ -14,8 +14,8 @@ public enum PlayerStatus {
     JOINEDSERVER,
     ADMINMODE;
 
-    public static PlayerStatus find(String abbr) {
-        for (PlayerStatus v : values()) {
+    public static PlayerSt find(String abbr) {
+        for (PlayerSt v : values()) {
             if (v.equals(abbr)) {
                 return v;
             }

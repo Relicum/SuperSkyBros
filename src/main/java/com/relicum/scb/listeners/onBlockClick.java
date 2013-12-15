@@ -6,7 +6,7 @@ import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.inventory.ClearInventory;
 import com.relicum.scb.types.SkyApi;
-import com.relicum.scb.utils.PlayerStatus;
+import com.relicum.scb.utils.PlayerSt;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -63,7 +63,7 @@ public class onBlockClick implements Listener {
 
             SmashPl splayer = SmashPl.wrap(e.getPlayer());
 
-            splayer.pStatus = PlayerStatus.UNKNOWN;
+            splayer.pStatus = PlayerSt.UNKNOWN;
             PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "SIGN", SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB));
             Bukkit.getServer().getPluginManager().callEvent(event);
 
