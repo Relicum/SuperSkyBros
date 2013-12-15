@@ -1,6 +1,5 @@
 package com.relicum.scb.mini.scoreboards;
 
-import lombok.Data;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scoreboard.*;
 
@@ -8,206 +7,207 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-/**
- * The type GameScoreBoard.
- */
-
-public
-@Data
-class GameScoreBoard implements IScoreboardMaker {
-
-    /**
-     * The scoreboard type.
-     */
+public class GameScoreBoard
+        implements IScoreboardMaker {
     private ScoreboardType scoreboardType;
-
-    /**
-     * The Max players.
-     */
-
     private int maxPlayers;
-
-    /**
-     * The Min players.
-     */
     private int minPlayers;
-
-    /**
-     * The Max lives.
-     */
     private int maxLives;
-
-    /**
-     * The Score board display name.
-     */
     private String scoreBoardDisplayName;
-
-    /**
-     * The Max view.
-     */
     private int maxView;
-
-    /**
-     * The Game length.
-     */
     private long gameLength;
-
-    /**
-     * The Update schedule.
-     */
     private long updateSchedule;
-
-    /**
-     * The Scoreboard.
-     */
     public Scoreboard scoreboard;
-
-    private Map<String, Objective> objectiveMap = new HashMap<>();
-
+    private Map<String, Objective> objectiveMap = new HashMap();
 
     public GameScoreBoard(Scoreboard sb) {
-        this.setScoreboard(sb);
-
-
+        setScoreboard(sb);
     }
 
-
-    /**
-     * Gets id.
-     *
-     * @return the id
-     */
-    @Override
     public UUID getId() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-
-    /**
-     * Gets scoreboard type.
-     *
-     * @return the scoreboard type
-     */
-    @Override
-    public ScoreboardType getScoreboardType() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-
-    /**
-     * Gets new scoreboard.
-     *
-     * @return the new scoreboard
-     */
-    @Override
-    public Scoreboard getNewScoreboard() {
-
         return null;
-
     }
 
+    public ScoreboardType getScoreboardType() {
+        return null;
+    }
 
-    /**
-     * Gets main objective and is registered with the scoreboard at the same time Gets stored in HashMap
-     *
-     * @param name     the name
-     * @param criteria the criteria
-     * @return the objective has already been registered to the scoreboard
-     */
+    public Scoreboard getNewScoreboard() {
+        return null;
+    }
+
     public Objective setObjective(String name, String criteria) {
-
-        Objective o = this.getScoreboard().registerNewObjective(name, criteria);
-        this.objectiveMap.put(name, o);
+        Objective o = getScoreboard().registerNewObjective(name, criteria);
+        objectiveMap.put(name, o);
         return o;
     }
 
-
-    /**
-     * Gets criteria.
-     *
-     * @return the criteria
-     */
-    @Override
     public Criterias getCriteria() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
-
-    /**
-     * Gets display slot.
-     *
-     * @return the display slot
-     */
-    @Override
     public DisplaySlot getDisplaySlot() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
-
-    /**
-     * Gets team.
-     *
-     * @return the team
-     */
-    @Override
     public Team getTeam() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
-
-    /**
-     * Gets score.
-     *
-     * @return the score
-     */
-    @Override
     public Score getScore() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
-
-    /**
-     * Gets offline player.
-     *
-     * @param player the player
-     * @return the offline player
-     */
-    @Override
     public OfflinePlayer getOfflinePlayer(String player) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
-
-    /**
-     * Update scoreboard.
-     *
-     * @param uuid the uuid
-     * @return the boolean
-     */
-    @Override
     public boolean updateScoreboard(UUID uuid) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return false;
     }
 
-
-    /**
-     * Update all scoreboards.
-     *
-     * @return the boolean
-     */
-    @Override
     public boolean updateAllScoreboards() {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return false;
     }
 
-
-    /**
-     * Gets objective.
-     *
-     * @return the objective
-     */
-    @Override
     public Objective getObjective() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public int getMinPlayers() {
+        return minPlayers;
+    }
+
+    public int getMaxLives() {
+        return maxLives;
+    }
+
+    public String getScoreBoardDisplayName() {
+        return scoreBoardDisplayName;
+    }
+
+    public int getMaxView() {
+        return maxView;
+    }
+
+    public long getGameLength() {
+        return gameLength;
+    }
+
+    public long getUpdateSchedule() {
+        return updateSchedule;
+    }
+
+    public Scoreboard getScoreboard() {
+        return scoreboard;
+    }
+
+    public Map<String, Objective> getObjectiveMap() {
+        return objectiveMap;
+    }
+
+
+    public void setScoreboardType(ScoreboardType scoreboardType) {
+        this.scoreboardType = scoreboardType;
+    }
+
+    public void setMaxPlayers(int maxPlayers) {
+        this.maxPlayers = maxPlayers;
+    }
+
+    public void setMinPlayers(int minPlayers) {
+        this.minPlayers = minPlayers;
+    }
+
+    public void setMaxLives(int maxLives) {
+        this.maxLives = maxLives;
+    }
+
+    public void setScoreBoardDisplayName(String scoreBoardDisplayName) {
+        this.scoreBoardDisplayName = scoreBoardDisplayName;
+    }
+
+    public void setMaxView(int maxView) {
+        this.maxView = maxView;
+    }
+
+    public void setGameLength(long gameLength) {
+        this.gameLength = gameLength;
+    }
+
+    public void setUpdateSchedule(long updateSchedule) {
+        this.updateSchedule = updateSchedule;
+    }
+
+    public void setScoreboard(Scoreboard scoreboard) {
+        this.scoreboard = scoreboard;
+    }
+
+    public void setObjectiveMap(Map<String, Objective> objectiveMap) {
+        this.objectiveMap = objectiveMap;
+    }
+
+
+    public boolean equals(Object o) {
+        if (o == this) return true;
+        if (!(o instanceof GameScoreBoard)) return false;
+        GameScoreBoard other = (GameScoreBoard) o;
+        if (!other.canEqual(this)) return false;
+        Object this$scoreboardType = getScoreboardType();
+        Object other$scoreboardType = other.getScoreboardType();
+        if (this$scoreboardType == null ? other$scoreboardType != null : !this$scoreboardType.equals(other$scoreboardType))
+            return false;
+        if (getMaxPlayers() != other.getMaxPlayers()) return false;
+        if (getMinPlayers() != other.getMinPlayers()) return false;
+        if (getMaxLives() != other.getMaxLives()) return false;
+        Object this$scoreBoardDisplayName = getScoreBoardDisplayName();
+        Object other$scoreBoardDisplayName = other.getScoreBoardDisplayName();
+        if (this$scoreBoardDisplayName == null ? other$scoreBoardDisplayName != null : !this$scoreBoardDisplayName.equals(other$scoreBoardDisplayName))
+            return false;
+        if (getMaxView() != other.getMaxView()) return false;
+        if (getGameLength() != other.getGameLength()) return false;
+        if (getUpdateSchedule() != other.getUpdateSchedule()) return false;
+        Object this$scoreboard = getScoreboard();
+        Object other$scoreboard = other.getScoreboard();
+        if (this$scoreboard == null ? other$scoreboard != null : !this$scoreboard.equals(other$scoreboard))
+            return false;
+        Object this$objectiveMap = getObjectiveMap();
+        Object other$objectiveMap = other.getObjectiveMap();
+        return this$objectiveMap == null ? other$objectiveMap == null : this$objectiveMap.equals(other$objectiveMap);
+    }
+
+    public boolean canEqual(Object other) {
+        return other instanceof GameScoreBoard;
+    }
+
+    public int hashCode() {
+        int PRIME = 31;
+        int result = 1;
+        Object $scoreboardType = getScoreboardType();
+        result = result * 31 + ($scoreboardType == null ? 0 : $scoreboardType.hashCode());
+        result = result * 31 + getMaxPlayers();
+        result = result * 31 + getMinPlayers();
+        result = result * 31 + getMaxLives();
+        Object $scoreBoardDisplayName = getScoreBoardDisplayName();
+        result = result * 31 + ($scoreBoardDisplayName == null ? 0 : $scoreBoardDisplayName.hashCode());
+        result = result * 31 + getMaxView();
+        long $gameLength = getGameLength();
+        result = result * 31 + (int) ($gameLength >>> 32 ^ $gameLength);
+        long $updateSchedule = getUpdateSchedule();
+        result = result * 31 + (int) ($updateSchedule >>> 32 ^ $updateSchedule);
+        Object $scoreboard = getScoreboard();
+        result = result * 31 + ($scoreboard == null ? 0 : $scoreboard.hashCode());
+        Object $objectiveMap = getObjectiveMap();
+        result = result * 31 + ($objectiveMap == null ? 0 : $objectiveMap.hashCode());
+        return result;
+    }
+
+    public String toString() {
+        return "GameScoreBoard(scoreboardType=" + getScoreboardType() + ", maxPlayers=" + getMaxPlayers() + ", minPlayers=" + getMinPlayers() + ", maxLives=" + getMaxLives() + ", scoreBoardDisplayName=" + getScoreBoardDisplayName() + ", maxView=" + getMaxView() + ", gameLength=" + getGameLength() + ", updateSchedule=" + getUpdateSchedule() + ", scoreboard=" + getScoreboard() + ", objectiveMap=" + getObjectiveMap() + ")";
+    }
+
 }
