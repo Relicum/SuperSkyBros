@@ -48,9 +48,9 @@ public class PlayerInteract implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onClick(PlayerInteractEvent e) {
-        if (this.blacklist.contains(e.getPlayer().getWorld().getName())) return;
+
         if ((e.getAction() != Action.RIGHT_CLICK_BLOCK && e.getAction() != Action.RIGHT_CLICK_AIR)) return;
-        if (!(SkyApi.getLobbyManager().isInLobby(e.getPlayer()))) return;
+        //TODO Deal with mixed mode and if player is in lobby
 
 
         Player player = e.getPlayer();

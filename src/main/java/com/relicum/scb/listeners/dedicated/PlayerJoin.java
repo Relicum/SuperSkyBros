@@ -1,13 +1,13 @@
 package com.relicum.scb.listeners.dedicated;
 
-import com.relicum.scb.PlayerLoginManager;
 import com.relicum.scb.PlayerSettings;
-import com.relicum.scb.classes.PlayerType;
 import com.relicum.scb.configs.PlayerConfig;
 import com.relicum.scb.configs.ServerStatus;
-import com.relicum.scb.types.SkyApi;
+import com.relicum.scb.objects.inventory.PlayerDefaults;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -29,14 +29,16 @@ public class PlayerJoin implements Listener {
         this.status = s;
     }
 
-
+    @EventHandler(priority = EventPriority.LOWEST)
     public void playerJoin(PlayerJoinEvent e) {
 
 
         Player p = e.getPlayer();
 
 
-        if (!p.isOp() && (!status.name().equalsIgnoreCase("READY"))) {
+
+
+/*        if (!p.isOp() && (!status.name().equalsIgnoreCase("READY"))) {
 
             p.kickPlayer("You have been kicked as the server is not ready to be used");
         } else {
@@ -68,10 +70,12 @@ public class PlayerJoin implements Listener {
             PlayerSettings settings = (PlayerSettings) relfile.getConfig().get(p.getName());
             p.sendMessage("Play type is " + settings.getPlayerType().name());
             p.sendMessage("Lobby status is " + settings.isInLobby());
-        }
+        }*/
 
         e.setJoinMessage("");
 
+        PlayerDefaults.applyDefaultSettings(p);
+        PlayerDefaults.applyLobbyInventory(p);
 
         String[] strings = new String[2];
         strings[0] = "    " + "\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<";

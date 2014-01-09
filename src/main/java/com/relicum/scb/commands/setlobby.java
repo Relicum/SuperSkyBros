@@ -7,6 +7,7 @@ import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.objects.LobbyRg;
 import com.relicum.scb.objects.LocationType;
 import com.relicum.scb.objects.location.LobbyStatus;
+import com.relicum.scb.objects.world.ApplyWorldSettings;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.LocationChecker;
 import com.relicum.scb.utils.SerializedLocation;
@@ -135,7 +136,7 @@ public class setlobby extends SubBase {
             player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.setlobbyFail"));
             return true;
         }
-
+        ApplyWorldSettings.apply(player.getWorld());
         SkyApi.getLobbyManager().setLobbyRg(region);
 
         SCB.getInstance().getConfig().set("enableLobbyProtection", true);
