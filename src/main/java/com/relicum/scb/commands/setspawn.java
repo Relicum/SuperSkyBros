@@ -4,6 +4,7 @@ import com.relicum.scb.ArenaManager;
 import com.relicum.scb.SCB;
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.SpawnIO;
+import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
 import com.relicum.scb.objects.spawns.ArenaSpawn;
 import com.relicum.scb.types.SkyApi;
@@ -72,7 +73,10 @@ public class setspawn extends SubBase {
 
                 if (sio.saveSpawn(as)) {
 
-
+                    if (SkyApi.getSCB().getConfig().getString("serverStatus").equalsIgnoreCase(ServerStatus.SETAREASPAWNS.name())) {
+                        SkyApi.getSCB().getConfig().set("serverStatus", ServerStatus.SETAREALOBBY.name());
+                        SkyApi.getSCB().saveConfig();
+                    }
                     player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.setSpawnSuccess").replace("%ID%", t.toString()));
                     return true;
 

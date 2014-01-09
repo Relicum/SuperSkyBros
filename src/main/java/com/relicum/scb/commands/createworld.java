@@ -15,7 +15,7 @@ import java.io.IOException;
  * First Created 05/12/13
  *
  * @author Relicum
- * @version 0.1
+ * @version 0.3
  */
 public class createworld extends SubBase {
     /**
@@ -62,7 +62,7 @@ public class createworld extends SubBase {
 
 
         player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.createWorldSuccess").replace("%WORLD%", name));
-        player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.createWorldStartSettings").replace("%WORLD%", name));
+        player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.createWorldStartSettings").replace("%NAME%", name));
 
         //ConfigurationSection spawn = ws.getConfigurationSection("spawnLocation");
         ConfigurationSection blockSpawn = ws.getConfigurationSection("spawnBlockLocation");

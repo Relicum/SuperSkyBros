@@ -46,9 +46,6 @@ public class CommandManagerFirstJoin implements CommandExecutor {
         message = "&b This command will help you setup the server mode for SuperSkyBros";
         String des = ChatColor.translateAlternateColorCodes('&', message);
         registerCommand("setmode", des, "/ssba setmode", "ssba setmode");
-        //  message="&b This command will help you walk you through the setup using the Conversation API";
-        //  String des2 = ChatColor.translateAlternateColorCodes('&', message);
-        //   registerCommand("setmodes", des2, "/ssba setmodes", "ssba setmodes");
 
         factory = DefaultConversationFactory.getDefaultConversation();
         SkyApi.getCMsg().INFO("The " + this.getClass().getSimpleName() + " loader has run");
@@ -86,61 +83,6 @@ public class CommandManagerFirstJoin implements CommandExecutor {
 
             return true;
         } else return false;
-
-/*      if (!(cs instanceof Player)) {
-            plugin.getLogger().severe("Error all SSB commands must be run in game not from console");
-            return false;
-        }
-
-        if(args != null && args[0].equalsIgnoreCase("setmodes")){
-            Player player = (Player) cs;
-
-            setmodes(player,args[1]);
-
-            return true;
-        }
-
-        if (args == null || args.length < 2L) {
-            return false;
-        }
-        Player player = (Player) cs;
-
-        if (!VaultManager.perms.has(player, "ssba.admins.setmode")) {
-            System.out.println("Failed perms check");
-            return true;
-        }
-
-        setmode(player, args[1]);
-
-        return true;
-    }  */
-
-
-/*    private boolean setmode(Player player, String mode) {
-
-
-        if (!mode.equalsIgnoreCase("mixed") && !mode.equalsIgnoreCase("dedicated")) {
-            player.sendMessage(ChatColor.RED + "Error: the choice is " + ChatColor.GOLD + "mixed " + ChatColor.RED +
-            "OR " + ChatColor.GOLD + "dedicated");
-            player.sendMessage(ChatColor.RED + "Please run again with a valid option");
-            return true;
-        }
-
-        boolean themode = false;
-        if (mode.equalsIgnoreCase("dedicated"))
-            themode = true;
-        plugin.getConfig().set("dedicatedSSB", themode);
-        // plugin.getConfig().set("firstRun", false);
-        // plugin.getConfig().set("firstRunDone",true);
-        plugin.saveConfig();
-        plugin.reloadConfig();
-
-        player.sendMessage(ChatColor.GREEN + "You have successfully set the server mode to " + mode);
-        player.sendMessage(ChatColor.AQUA + "Now stop the server and restart it to continue");
-
-        plugin.saveOnDisable = true;
-        return true;
-    }*/
 
     }
 

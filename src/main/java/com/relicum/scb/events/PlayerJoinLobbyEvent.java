@@ -27,6 +27,7 @@ public class PlayerJoinLobbyEvent extends Event {
         this.from = fr;
         this.isdedicated = type;
 
+
     }
 
 

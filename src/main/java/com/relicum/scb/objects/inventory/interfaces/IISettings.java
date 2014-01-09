@@ -21,6 +21,6 @@ public interface IISettings {
 
     public float getXp();
 
-    public String getName();
+    //public String getName();
 
 }

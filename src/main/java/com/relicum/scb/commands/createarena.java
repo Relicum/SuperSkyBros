@@ -4,6 +4,7 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.arena.ArenaIO;
 import com.relicum.scb.arena.ArenaRegion;
 import com.relicum.scb.configs.ArenaConfig;
+import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.SerializedLocation;
 import com.relicum.scb.we.WEManager;
@@ -86,8 +87,10 @@ public class createarena extends SubBase {
             player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.failedToCreateArena"));
             return true;
         }
-
-
+        if (SkyApi.getSCB().getConfig().getString("serverStatus").equalsIgnoreCase(ServerStatus.SETARENA.name())) {
+            SkyApi.getSCB().getConfig().set("serverStatus", ServerStatus.SETAREASPAWNS.name());
+            SkyApi.getSCB().saveConfig();
+        }
         String cm = SkyApi.getMessageManager().getAdminMessage("command.message.createArenaSucceeded");
         String ct;
         ct = cm.replace("%nn%", last.toString());

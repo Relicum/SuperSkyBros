@@ -1,6 +1,7 @@
 package com.relicum.scb;
 
 import com.relicum.scb.configs.*;
+import com.relicum.scb.objects.inventory.StorageType;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.SerializedLocation;
 import org.bukkit.Location;
@@ -31,6 +32,9 @@ public class SM {
      * The Lobby config.
      */
     private LobbyConfig lobbyConfig;
+
+
+    private Lobby2Config lobby2Config;
 
     /**
      * The Sign config.
@@ -68,7 +72,7 @@ public class SM {
      */
     private List<String> ssbWorlds = new ArrayList<>();
 
-
+    private StorageType storageType;
     /**
      * The Worlds Config.
      */
@@ -94,6 +98,7 @@ public class SM {
      */
     public void setup() {
         config = SkyApi.getSCB().getConfig();
+        setStorageType(StorageType.valueOf(config.getString("storageType")));
         dataFolder = SkyApi.getSCB().getDataFolder();
         worldBlackListed.addAll(config.getStringList("ignoreWorlds"));
         ssbWorlds.addAll(config.getStringList("dedicatedSSBWorlds"));
@@ -112,6 +117,10 @@ public class SM {
         lobbyConfig = new LobbyConfig("lobby.yml");
         lobbyConfig.getConfig().options().copyDefaults(true);
         lobbyConfig.saveDefaultConfig();
+
+        lobby2Config = new Lobby2Config("lobby2.yml");
+        lobby2Config.getConfig().options().copyDefaults(true);
+        lobby2Config.saveDefaultConfig();
 
 
         signConfig = new SignConfig("signs.yml");
@@ -176,6 +185,24 @@ public class SM {
         this.lobbyConfig = lobbyConfig;
     }
 
+
+    /**
+     * Gets lobby 2 config.
+     *
+     * @return the lobby 2 config
+     */
+    public Lobby2Config getLobby2Config() {
+        return lobby2Config;
+    }
+
+    /**
+     * Sets lobby 2 config.
+     *
+     * @param lobby2Config the lobby 2 config
+     */
+    public void setLobby2Config(Lobby2Config lobby2Config) {
+        this.lobby2Config = lobby2Config;
+    }
 
     /**
      * Gets arena config.
@@ -449,6 +476,23 @@ public class SM {
         this.adminMode.add(player);
     }
 
+    /**
+     * Gets plugins storage type.
+     *
+     * @return the storage type
+     */
+    public StorageType getStorageType() {
+        return storageType;
+    }
+
+    /**
+     * Sets storage type.
+     *
+     * @param storageType the storage type
+     */
+    public void setStorageType(StorageType storageType) {
+        this.storageType = storageType;
+    }
 
     /**
      * Load file.

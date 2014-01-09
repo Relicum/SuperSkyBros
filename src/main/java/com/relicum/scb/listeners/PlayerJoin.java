@@ -1,10 +1,12 @@
 package com.relicum.scb.listeners;
 
-import com.relicum.scb.SCB;
-import com.relicum.scb.SettingsManager;
-import com.relicum.scb.SmashPl;
+import com.relicum.scb.*;
+import com.relicum.scb.classes.PlayerType;
+import com.relicum.scb.configs.PlayerConfig;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.hooks.VaultManager;
+import com.relicum.scb.objects.inventory.SerializableInventory;
+import com.relicum.scb.objects.inventory.StorePlayerSettings;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.PlayerSt;
 import com.relicum.scb.utils.timers.StartTimer;
@@ -12,11 +14,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +37,9 @@ public class PlayerJoin implements Listener {
     private boolean firstTimeOverride;
     private PlayerSt status;
     private boolean mode;
-
+    public PlayerSettings relicum;
+    public StorePlayerSettings playerSettings;
+    public PlayerConfig relfile;
 
     public PlayerJoin(SCB plugin) {
         this.plugin = plugin;
@@ -44,18 +48,63 @@ public class PlayerJoin implements Listener {
     }
 
 
-    @EventHandler(priority = EventPriority.LOWEST)
     public void playJoin(PlayerJoinEvent e) {
 
 
-        {
-            if (firstTimeOverride && !e.getPlayer().hasPlayedBefore() && !e.getPlayer().isOp()) {
-                if (VaultManager.perms.has(e.getPlayer(), "ssb.player.join") && (!mode)) {
-                    e.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation().add(0.5, 0.5, 0.5));
-                }
+        //Testing StorePlayerSettings
+        Player p = e.getPlayer();
+        playerSettings = new StorePlayerSettings();
+        playerSettings.setGameMode(p.getGameMode());
+        playerSettings.setInventory(new SerializableInventory(p.getInventory().getArmorContents(), p.getInventory().getContents()));
+        playerSettings.setPlayerTime(p.getPlayerTime());
+        playerSettings.setExhaustion(p.getExhaustion());
+        playerSettings.setSaturation(p.getSaturation());
+        playerSettings.setPlayerHealth(p.getHealth());
+        playerSettings.setFoodLevel(p.getFoodLevel());
+        playerSettings.setTotalExperience(p.getTotalExperience());
+        playerSettings.setLevel(p.getLevel());
+        playerSettings.setXp(p.getExp());
+        playerSettings.setAllowedFlight(p.getAllowFlight());
+        playerSettings.setFlying(p.isFlying());
+        playerSettings.setFlySpeed(p.getFlySpeed());
+        playerSettings.setWalkSpeed(p.getWalkSpeed());
+        playerSettings.setPlayerName(p.getName());
+        playerSettings.setDisplayName(p.getDisplayName());
+        playerSettings.setFireTicks(p.getFireTicks());
 
-            }
+        SkyApi.getSCB().getConfig().set(p.getName(), playerSettings);
+        SkyApi.getSCB().saveConfig();
+
+        //End test
+
+        //Test Player Profiles
+        if (PlayerLoginManager.hasProfile(e.getPlayer().getName())) {
+            this.relicum = (PlayerSettings) relfile.getConfig().get("player." + e.getPlayer().getName());
+
+            SkyApi.getCMsg().INFO("The player " + this.relicum.getPlayerName() + " has a profile");
+            SkyApi.getCMsg().WARNING(Paths.get(PlayerLoginManager.path).resolve(e.getPlayer().getName() + ".yml").toString());
+        } else {
+            this.relfile = new PlayerConfig(PlayerLoginManager.profilePath(e.getPlayer().getName()));
+
+            this.relicum = new PlayerSettings()
+                    .setPlayerName(e.getPlayer().getName())
+                    .setPlayerType(PlayerType.PLAYER)
+                    .setInLobby(true);
+            this.relfile.getConfig().set("player." + e.getPlayer().getName(), this.relicum);
+            this.relfile.saveConfig();
+            SkyApi.getCMsg().INFO("No profile found for player " + e.getPlayer().getName());
+            SkyApi.getCMsg().WARNING(Paths.get(PlayerLoginManager.path).resolve(e.getPlayer().getName() + ".yml").toString());
         }
+        //End test player profiles
+
+
+        if (firstTimeOverride && !e.getPlayer().hasPlayedBefore() && !e.getPlayer().isOp()) {
+            if (VaultManager.perms.has(e.getPlayer(), "ssb.player.join") && (!mode)) {
+                e.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation().add(0.5, 0.5, 0.5));
+            }
+
+        }
+
 
         //CraftPlayer player1 = (CraftPlayer) e.getPlayer();
         // EntityPlayer player = player1.getHandle();
@@ -85,23 +134,7 @@ public class PlayerJoin implements Listener {
                                 "a live server be warned");
 
             }*/
-            if (!SkyApi.getSm().getLobbyConfig().getConfig().contains("LOBBY.REGION")) {
-                if (pl.isOp()) {
-                    e.setJoinMessage(SCB.getMessageManager().getErrorMessage("system.opAutoJoinOverRide"));
-                    plugin.getLogger().severe("You need to set a lobby spawn or players can not join");
-                    return;
 
-                } else {
-
-                    e.setJoinMessage("");
-                    pl.kickPlayer(SCB.getMessageManager().getErrorMessage("system.noLobby"));
-                    plugin.getLogger().severe(
-                            e.getPlayer().getName() + " has been kicked as you have not set a Lobby" +
-                                    " Spawn yet");
-                    return;
-                }
-
-            }
 
             if (VaultManager.perms.has(pl.getPlayer(), "ssb.player.join") || pl.isOp()) {
                 e.setJoinMessage("");

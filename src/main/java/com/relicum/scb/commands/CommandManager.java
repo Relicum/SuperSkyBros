@@ -118,7 +118,8 @@ public class CommandManager implements TabExecutor {
             registerCommand(entry.getKey(), entry.getValue());
             String[] sp = entry.getValue().getCmd().split(" ");
             if (sp[0].equalsIgnoreCase("ssba")) {
-                ADMIN.add(sp[1]);
+                ADMIN.
+                        add(sp[1]);
             } else if (sp[0].equalsIgnoreCase("ssbw")) {
                 WADMIN.add(sp[1]);
             } else if (sp[0].equalsIgnoreCase("ssb")) {
@@ -325,6 +326,8 @@ public class CommandManager implements TabExecutor {
     public CommandMap getCommandMap() {
         CommandMap commandMap = null;
         PluginManager pm = Bukkit.getServer().getPluginManager();
+
+
         try {
             if (pm instanceof PluginManager) {
                 Field f = pm.getClass().getDeclaredField("commandMap");
@@ -360,6 +363,10 @@ public class CommandManager implements TabExecutor {
 
                 if (strings[0].equalsIgnoreCase("adminmode")) {
                     return Arrays.asList("On", "Off");
+                }
+
+                if (strings[0].equalsIgnoreCase("worldtp")) {
+                    return StringUtil.copyPartialMatches(strings[1], WSET, new ArrayList<String>(WSET.size()));
                 }
 
                 if (strings[0].equalsIgnoreCase("setdedicated")) {

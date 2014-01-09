@@ -1,8 +1,12 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.configs.Lobby2Config;
 import com.relicum.scb.configs.LobbyConfig;
+import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.objects.LobbyRg;
+import com.relicum.scb.objects.LocationType;
+import com.relicum.scb.objects.location.LobbyStatus;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.LocationChecker;
 import com.relicum.scb.utils.SerializedLocation;
@@ -15,6 +19,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Bukkit-SCB
@@ -68,6 +75,28 @@ public class setlobby extends SubBase {
         SerializedLocation maxls = new SerializedLocation(cr.getMaximumPoint());
         SerializedLocation sspawn = new SerializedLocation(location);
 
+        //TEMP TESTING ON NEW NODES
+        Lobby2Config lobby2Config = SkyApi.getSm().getLobby2Config();
+
+        ConfigurationSection l2 = lobby2Config.getConfig().createSection("main-lobby");
+        Map<String, Object> players = new HashMap<>();
+        players.put("Relicum.armour", player.getInventory().getArmorContents());
+        players.put("Relicum.contents", player.getInventory().getContents());
+        player.closeInventory();
+        l2.set("points.min", cr.getMinimumPoint().toVector());
+        l2.set("points.max", cr.getMaximumPoint().toVector());
+        l2.set("spawn", sspawn);
+        l2.set("permission", "ssb.player.join");
+        l2.set("type", LocationType.LOBBYSPAWN.toString());
+        l2.set("status", LobbyStatus.ONLINE.toString());
+        l2.set("checks.canFly", false);
+        l2.set("checks.canBuild", true);
+        l2.set("inventories", players);
+
+        lobby2Config.saveConfig();
+        lobby2Config.reloadConfig();
+        //END TEMP TESTING
+
 
         try {
             if (!LC.getConfig().contains("LOBBY")) {
@@ -110,9 +139,16 @@ public class setlobby extends SubBase {
         SkyApi.getLobbyManager().setLobbyRg(region);
 
         SCB.getInstance().getConfig().set("enableLobbyProtection", true);
-        SCB.getInstance().saveConfig();
-        SCB.getInstance().reloadConfig();
-        SCB.getInstance().loadLobbyEvents();
+        if (SkyApi.getSCB().getConfig().getString("serverStatus").equalsIgnoreCase(ServerStatus.SETLOBBY.name())) {
+            SkyApi.getSCB().getConfig().set("serverStatus", ServerStatus.SETARENA.name());
+        }
+
+        wm.getWorldEdit().clearSessions();
+
+        SkyApi.getSCB().saveConfig();
+        SkyApi.getSCB().reloadConfig();
+        SkyApi.getSCB().loadLobbyEvents();
+
         player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.setlobbySuccess"));
         SkyApi.getCMsg().INFO("Lobby Region and Spawn Point have Been Successfully Set");
 

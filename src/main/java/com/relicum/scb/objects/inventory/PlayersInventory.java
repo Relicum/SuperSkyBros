@@ -4,7 +4,6 @@ import com.relicum.scb.objects.inventory.interfaces.IArmour;
 import com.relicum.scb.objects.inventory.interfaces.IInventory;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 /**
  * SuperSkyBros First Created 02/10/13
@@ -14,7 +13,7 @@ import org.bukkit.inventory.PlayerInventory;
  */
 public class PlayersInventory implements IInventory, IArmour {
 
-    private PlayerInventory inventory;
+    private ItemStack[] inventory = new ItemStack[36];
 
     private ItemStack[] armour = new ItemStack[4];
 
@@ -38,7 +37,7 @@ public class PlayersInventory implements IInventory, IArmour {
      * @return the inventory as an ItemStack
      */
     @Override
-    public PlayerInventory getInventory() {
+    public ItemStack[] getInventory() {
 
         return this.inventory;
     }
@@ -46,13 +45,14 @@ public class PlayersInventory implements IInventory, IArmour {
 
     private void setPlayerInventory(Player player) {
 
-        this.inventory = player.getInventory();
+        this.inventory = player.getInventory().getContents();
+        this.setArmourInit(player.getInventory().getArmorContents());
         player.closeInventory();
 
     }
 
 
-    private void setArmourInit() {
-        this.armour = this.getInventory().getArmorContents();
+    private void setArmourInit(ItemStack[] armour) {
+        this.armour = armour;
     }
 }

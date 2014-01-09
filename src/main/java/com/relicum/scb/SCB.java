@@ -2,10 +2,13 @@ package com.relicum.scb;
 
 import com.relicum.scb.commands.CommandManagerFirstJoin;
 import com.relicum.scb.commands.DebugManager;
+import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.configs.SignConfig;
 import com.relicum.scb.configs.SignFormat;
 import com.relicum.scb.listeners.*;
 import com.relicum.scb.mini.SignLocationStore;
+import com.relicum.scb.objects.inventory.StorePlayerSettings;
+import com.relicum.scb.objects.location.LobbyBase;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.*;
 import com.relicum.scb.we.WorldEditPlugin;
@@ -155,12 +158,17 @@ public class SCB extends JavaPlugin implements Listener {
         p = this;
         ConfigurationSerialization.registerClass(SerializedLocation.class);
         ConfigurationSerialization.registerClass(LocationChecker.class);
+        ConfigurationSerialization.registerClass(LobbyBase.class);
+        ConfigurationSerialization.registerClass(PlayerSettings.class);
+        ConfigurationSerialization.registerClass(StorePlayerSettings.class);
+
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
 
         SkyApi.init(this);
         SkyApi.getCMsg().INFO("Initialising SuperSkyBros Started");
         SkyApi.getCMsg().INFO("Main Thread ID is " + primaryThread);
+        SkyApi.getCMsg().INFO("ServerStatus is set to " + getConfig().getString("serverStatus"));
         useLoginService = getConfig().getBoolean("threads.useLoginService");
 
         if (useLoginService) {
@@ -189,18 +197,20 @@ public class SCB extends JavaPlugin implements Listener {
         }
 
 
-        if (getConfig().getBoolean(FIRST_RUN) && (!getConfig().getBoolean("modeSet"))) {
-            this.saveOnDisable = false;
-            CommandExecutor cm = new CommandManagerFirstJoin(p);
+        if (getConfig().getString("serverStatus").equalsIgnoreCase("MODEUNSET")) {
+            if (getConfig().getBoolean(FIRST_RUN) && (!getConfig().getBoolean("modeSet"))) {
+                this.saveOnDisable = false;
+                CommandExecutor cm = new CommandManagerFirstJoin(p);
 
-            p.getCommand("ssba").setExecutor(cm);
-            p.getCommand("ssba").setPermissionMessage("You do not have permission to run this command");
+                p.getCommand("ssba").setExecutor(cm);
+                p.getCommand("ssba").setPermissionMessage("You do not have permission to run this command");
 
-            p.pm.registerEvents(new FirstRun(), this);
+                p.pm.registerEvents(new FirstRun(), this);
 
-            FileUtils.createDirectory(getDataFolder().toString(), "players");
-            FileUtils.createDirectory(getDataFolder().toString(), "worlds");
+                FileUtils.createDirectory(getDataFolder().toString(), "players");
+                FileUtils.createDirectory(getDataFolder().toString(), "worlds");
 
+            }
         } else {
             if (p.getConfig().getBoolean("debugCommands")) {
 
@@ -214,6 +224,7 @@ public class SCB extends JavaPlugin implements Listener {
 
             MM = SkyApi.getMessageManager();
             CommandExecutor cm = SkyApi.getCommandManager();
+
             //SkyApi.getCommandManager().addWorld(SkyApi.getSm().getSsbWorlds());
             p.getCommand("ssb").setExecutor(cm);
             p.getCommand("ssba").setExecutor(cm);
@@ -352,6 +363,23 @@ public class SCB extends JavaPlugin implements Listener {
 
             }
 
+            //Load PlayerJoin Listener dependant if server is setup thn, if it's dedicated mode or mixed mode
+            if (!getConfig().getString("serverStatus").equalsIgnoreCase("READY")) {
+
+                p.pm.registerEvents(new SetupPlayerJoin(ServerStatus.valueOf(getConfig().getString("serverStatus"))), p);
+                SkyApi.getCMsg().INFO("Player Join Listener loaded for setup");
+
+            } else if (getConfig().getString("serverStatus").equalsIgnoreCase("READY") && p.getConfig().getBoolean(DEDICATED_SSB)) {
+
+                p.pm.registerEvents(new com.relicum.scb.listeners.dedicated.PlayerJoin(ServerStatus.valueOf(getConfig().getString("serverStatus"))), p);
+                SkyApi.getCMsg().INFO("Player Join Listener loaded for dedicated");
+
+            } else {
+
+                p.pm.registerEvents(new com.relicum.scb.listeners.mixed.PlayerJoin(), p);
+                SkyApi.getCMsg().INFO("Player Join Listener loaded for mixed");
+            }
+
 
             if (SkyApi.getSm().getLobbyConfig().getConfig().getBoolean(LOBBYSET)) {
                 if (p.getConfig().getBoolean(DEDICATED_SSB)) {
@@ -363,11 +391,12 @@ public class SCB extends JavaPlugin implements Listener {
                 }
             }
 
+
             p.pm.registerEvents(new WorldListeners(), p);
             p.pm.registerEvents(new onBlockClick(p), p);
-            p.pm.registerEvents(new PlayerJoin(p), p);
+            //p.pm.registerEvents(new PlayerJoin(p), p);
             p.pm.registerEvents(new PlayerQuit(p), p);
-            p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
+            //p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
             //p.pm.registerEvents(new BlockDamage(p), p);
             p.pm.registerEvents(new PlayerJoinLobby(), p);
 
@@ -524,7 +553,8 @@ public class SCB extends JavaPlugin implements Listener {
         world.setGameRuleValue("doMobSpawning", "false");
         world.setGameRuleValue("mobGriefing", "false");
         world.save();
-
+        getConfig().set("autosetupRun", true);
+        saveConfig();
         SkyApi.getCMsg().INFO("Settings applied for  " + name + " has been successful");
         SkyApi.getCMsg().INFO("You can now login enjoy !!");
         return world;

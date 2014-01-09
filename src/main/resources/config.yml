@@ -4,14 +4,18 @@ firstRunDone: false
 modeSet: false
 debugCommands: true
 enable: true
+storageType: FLATFILE
 enableLobbyProtection: false
 saving: true
+serverStatus: MODEUNSET
+autosetupRun: false
 ignoreWorlds:
   - 'world_the_end'
   - 'world_nether'
 dedicatedSSBWorlds:
   - 'world'
 dedicatedSSB: false
+inventorySave: false
 useWorldManager: true
 worldGenerator: false
 generateDefaultWorld: false
@@ -72,10 +76,10 @@ rel:
   lines:
     line:
     - '&b<<     ----------------------------------------     >>'
-    - '&2#                                                     #'
-    - '&2#                   &4SUPER&7&l-&bSKY&7&l-&6BROS&7&l-&aBRAWL                  &2#'
-    - '&2#         &6Download it free for your server            &2#'
-    - '&2#                                                    #'
-    - '&2#&5  dev.bukkit.org/bukkit-plugins/superskybros/ &2#'
+    - '&2#                                                                 #'
+    - '&2#                      &4SUPER&7&l-&bSKY&7&l-&6BROS&7&l-&aBRAWL                  &2#'
+    - '&2#               &6Download it free for your server            &2#'
+    - '&2#                                                                #'
+    - '&2#&5      dev.bukkit.org/bukkit-plugins/superskybros/     &2#'
     - '&b<<     ----------------------------------------     >>'
 

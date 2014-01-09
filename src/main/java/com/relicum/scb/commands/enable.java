@@ -4,6 +4,7 @@ import com.relicum.scb.ArenaManager;
 import com.relicum.scb.SCB;
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaIO;
+import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -51,6 +52,11 @@ public class enable extends SubBase {
             e.printStackTrace();
             player.sendMessage(tmp = SCB.getMessageManager().getErrorMessage("command.message.enableFailedToSave").replace("%ID%", args[0]));
             return true;
+
+        }
+        if (SkyApi.getSCB().getConfig().getString("serverStatus").equalsIgnoreCase(ServerStatus.SETENABLE.name())) {
+            SkyApi.getSCB().getConfig().set("serverStatus", ServerStatus.CREATEJOINSIGN.name());
+            SkyApi.getSCB().saveConfig();
 
         }
         player.sendMessage(tmp = SCB.getMessageManager().getAdminMessage("command.message.enableSuccess").replace("%ID%", ar.getCurrent().toString()));

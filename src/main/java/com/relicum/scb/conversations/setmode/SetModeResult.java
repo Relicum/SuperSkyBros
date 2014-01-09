@@ -1,6 +1,7 @@
 package com.relicum.scb.conversations.setmode;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.objects.signs.utils.Col;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.DelayedShutDown;
@@ -71,6 +72,7 @@ public class SetModeResult extends MessagePrompt {
 
             SkyApi.getSCB().getConfig().set(SCB.DEDICATED_SSB, isDedicated);
             SkyApi.getSCB().getConfig().set("modeSet", true);
+            SkyApi.getSCB().getConfig().set("serverStatus", ServerStatus.SETLOBBY.name());
             SkyApi.getSCB().saveOnDisable = true;
             SkyApi.getSCB().saveConfig();
             SkyApi.getSCB().reloadConfig();

@@ -3,6 +3,7 @@ package com.relicum.scb.commands;
 import com.relicum.scb.ArenaManager;
 import com.relicum.scb.SCB;
 import com.relicum.scb.arena.ALobbyIO;
+import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.objects.ArenaLobby;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.we.WEManager;
@@ -67,9 +68,14 @@ public class setarenalobby extends SubBase {
             player.sendMessage(ChatColor.RED + "Error occurred while trying to save lobby check the logs");
             return true;
         }
-        SCB.getInstance().getLogger().info("Arena Lobby for arena " + ar.getCurrent() + " has been saved successfully");
+        SkyApi.getCMsg().INFO("Arena Lobby for arena " + ar.getCurrent() + " has been saved successfully");
         player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.setarenalobbySuccess").replace("%ID%", ar.getCurrent().toString()));
         wm.getWorldEdit().clearSessions();
+        if (SkyApi.getSCB().getConfig().getString("serverStatus").equalsIgnoreCase(ServerStatus.SETAREALOBBY.name())) {
+            SkyApi.getSCB().getConfig().set("serverStatus", ServerStatus.SETENABLE.name());
+            SkyApi.getSCB().saveConfig();
+
+        }
         wm = null;
         cr = null;
         return true;

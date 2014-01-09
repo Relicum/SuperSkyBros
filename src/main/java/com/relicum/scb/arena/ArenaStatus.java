@@ -14,7 +14,7 @@ public enum ArenaStatus {
     RESTARTING,
     ERROR;
 
-    public static ArenaStatus find(String abbr) {
+    public static ArenaStatus find(ArenaStatus abbr) {
         for (ArenaStatus v : values()) {
             if (v.equals(abbr)) {
                 return v;

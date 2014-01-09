@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.relicum</groupId>
     <artifactId>SuperSkyBros</artifactId>
-    <version>0.3.15</version>
+    <version>0.4.01</version>
     <name>SuperSkyBros</name>
     <description>Super Sky Bros Brawl Mini-Game based off Seth Blings project. This is a Bukkit Plugin Version designed
         to run in Minecraft
@@ -15,32 +15,33 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.6.4-R2.1-SNAPSHOT</version>
+            <version>1.7.2-R0.3-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.6.4-R2.1-SNAPSHOT</version>
+            <version>1.7.2-R0.3-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.comphenix.protocol</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>3.0.0-SNAPSHOT</version>
+            <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
-            <version>7.7.5-SNAPSHOT</version>
+            <version>LATEST</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.sk89q</groupId>
             <artifactId>worldedit</artifactId>
-            <version>5.5.8</version>
+            <version>5.5.9-SNAPSHOT</version>
             <scope>provided</scope>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -51,14 +52,14 @@
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
-            <version>1.4.5</version>
+            <version>1.4.6</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.milkbowl.vault</groupId>
             <artifactId>Vault</artifactId>
-            <version>1.2.27</version>
+            <version>1.2.30</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -68,17 +69,17 @@
             <url>http://repo.bukkit.org/content/groups/public</url>
         </repository>
         <repository>
-            <id>sk89q-repo</id>
-            <url>http://maven.sk89q.com/repo/</url>
-        </repository>
-        <repository>
             <id>comphenix-rep</id>
             <name>Comphenix Repository</name>
             <url>http://repo.comphenix.net/content/groups/public</url>
         </repository>
         <repository>
-            <id>vault-repo</id>
-            <url>http://ci.herocraftonline.com/plugin/repository/everything/</url>
+            <id>cloudbees-private-release-repository</id>
+            <url>https://repository-relicum.forge.cloudbees.com/release/</url>
+        </repository>
+        <repository>
+            <id>cloudbees-private-snapshot-repository</id>
+            <url>https://repository-relicum.forge.cloudbees.com/snapshot/</url>
         </repository>
         <repository>
             <id>libs-disguises-repo</id>

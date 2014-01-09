@@ -1,6 +1,7 @@
 package com.relicum.scb.listeners;
 
 import com.relicum.scb.SCB;
+import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.signs.utils.Col;
 import com.relicum.scb.types.SkyApi;
@@ -132,8 +133,11 @@ public class SignChange implements Listener {
                 e.getPlayer().sendMessage(
                         SCB.getMessageManager().getAdminMessage(
                                 "listeners.signchange" + ".arenaSignSuccess").replace("%MAP%", config.getString("map")));
+                if (SkyApi.getSCB().getConfig().getString("serverStatus").equalsIgnoreCase(ServerStatus.CREATEJOINSIGN.name())) {
+                    SkyApi.getSCB().getConfig().set("serverStatus", ServerStatus.READY.name());
+                }
                 SCB.getInstance().getLogger().info("An Arena Join Sign has been place by " + e.getPlayer().getName());
-                return;
+
             } else {
                 e.setCancelled(true);
                 e.getBlock().breakNaturally();

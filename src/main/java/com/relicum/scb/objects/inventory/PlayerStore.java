@@ -18,15 +18,13 @@ public class PlayerStore {
 
 
     public static StorePlayerSettings storePlayer(Player player) {
-
         StorePlayerSettings ps = new StorePlayerSettings();
+        ps.setInventory(new SerializableInventory(player.getInventory().getContents(), player.getInventory().getArmorContents()));
         ps.setAllowedFlight(player.getAllowFlight());
         ps.setPlayerHealth(player.getHealth());
         ps.setPlayerDamage(player.getExhaustion());
         ps.setTotalExperience(player.getTotalExperience());
         ps.setFoodLevel(player.getFoodLevel());
-        ps.setInventory(player.getInventory().getContents());
-        ps.setArmour(player.getInventory().getArmorContents());
         ps.setPlayerName(player.getName());
         ps.setGameMode(player.getGameMode());
         ps.setXp(player.getExp());

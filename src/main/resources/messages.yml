@@ -11,7 +11,7 @@ system:
   autoJoin: "&bPlayer %player% has joined the Super Sky Bros Server"
   opAutoJoinOverRide: "&4&lYou need to set the lobby spawn or no players can join"
   autoJoinFirstTime: "Player %player% has joined Super Sky Bros for the first time say Hi !"
-  kickJoinNoPerm: "You do not have permission to join the SSB Lobby"
+  kickJoinNoPerm: "You do not have permission to join the Super Sky Bros as it is being set up"
   kickJoinWorldBlacklisted: "You were kicked as the world you are trying to login to is on the SSB world ignore SSB events blacklist"
   lobbyJoinWelcome: "&5%name% has joined &9Super &eSky &9Bros &5 lobby.&r"
   internal:
@@ -138,4 +138,12 @@ world:
     setSpawnSuccess: "You have set the new world spawn to X = &6%X%&a and Y = &6%Y%&a and Z = &6%Z%&a"
     modifyworldFailed: "Error: failed to &7%ACTION%&5 the world &7%WORLD%&5 see logs for more details"
     modifyworldSuccess: "You were successful in &7%ACTION%&5 the world &7%WORLD%&5"
+setup:
+  lobby: "You now need to setup the main lobby before you can go any further"
+  arena: "You now need to set up an arena before you can go any further"
+  arenalobby: "You now need to setup an arena lobby each arena must have it's own lobby"
+  setspawns: "You now need to set the arena spawn points before you can go any further"
+  enable: "You now need to enable the arena before you can go any further"
+  arenasign: "You now need to set an arena join sign which must be in the main lobby. Once done you have completed a basic setup and players can join"
+  ready: "You have already completed the basic setup guide"
 

@@ -27,8 +27,10 @@ public class RestoreInventory {
         player.setFlying(false);
         player.setFlySpeed(store.getFlySpeed());
         player.setWalkSpeed(store.getWalkSpeed());
-        player.getInventory().setContents(store.getInv());
-        player.getInventory().setArmorContents(store.getArmour());
+        //TODO need to iterate through these to use materials
+        player.getInventory().setContents(store.getInventory().getContents());
+        player.getInventory().setArmorContents(store.getInventory().getArmour());
+
         UpdateInv(player);
 
         return player;

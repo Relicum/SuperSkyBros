@@ -1,7 +1,7 @@
 package com.relicum.scb.objects.inventory.interfaces;
 
 
-import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * SuperSkyBros First Created 02/10/13 Top level Interface for Inventor's
@@ -12,10 +12,10 @@ import org.bukkit.inventory.Inventory;
 public interface IInventory {
 
     /**
-     * Gets inventory.
+     * Gets inventory as ItemStack[]
      *
      * @return the inventory as an ItemStack
      */
-    Inventory getInventory();
+    ItemStack[] getInventory();
 
 }

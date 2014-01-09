@@ -81,7 +81,7 @@ public class ArenaChangeStatus implements Listener {
     private boolean isValid(String status) {
 
         try {
-            ArenaStatus.find(status);
+            ArenaStatus.find(ArenaStatus.valueOf(status));
 
         } catch (NullPointerException e) {
             isnull = e;
