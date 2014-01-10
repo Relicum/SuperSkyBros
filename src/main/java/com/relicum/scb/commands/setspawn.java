@@ -78,6 +78,8 @@ public class setspawn extends SubBase {
                         SkyApi.getSCB().saveConfig();
                     }
                     player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.setSpawnSuccess").replace("%ID%", t.toString()));
+                    player.sendMessage("");
+                    player.sendMessage(SkyApi.getMessageManager().getMessage("setup.arenalobby"));
                     return true;
 
                 } else {

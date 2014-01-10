@@ -21,9 +21,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Bukkit-SCB
  *
@@ -70,29 +67,39 @@ public class setlobby extends SubBase {
         LobbyConfig LC = SkyApi.getLobbyManager().getLobbySaveObject();
 
         Location location = player.getLocation();
+
         location.setPitch((float) Math.round(player.getLocation().getPitch()));
         location.setYaw(StringUtils.getDirection(player.getLocation().getYaw()));
         SerializedLocation minls = new SerializedLocation(cr.getMinimumPoint());
         SerializedLocation maxls = new SerializedLocation(cr.getMaximumPoint());
         SerializedLocation sspawn = new SerializedLocation(location);
+        LocationChecker lc = new LocationChecker(cr.getMaximumPoint().toVector(), cr.getMinimumPoint().toVector(), "LOBBY", 1);
 
         //TEMP TESTING ON NEW NODES
         Lobby2Config lobby2Config = SkyApi.getSm().getLobby2Config();
-
+        lobby2Config.getConfig().set("LOBBYSET", true);
         ConfigurationSection l2 = lobby2Config.getConfig().createSection("main-lobby");
-        Map<String, Object> players = new HashMap<>();
-        players.put("Relicum.armour", player.getInventory().getArmorContents());
-        players.put("Relicum.contents", player.getInventory().getContents());
-        player.closeInventory();
-        l2.set("points.min", cr.getMinimumPoint().toVector());
-        l2.set("points.max", cr.getMaximumPoint().toVector());
+        l2.set("region", lc);
         l2.set("spawn", sspawn);
         l2.set("permission", "ssb.player.join");
         l2.set("type", LocationType.LOBBYSPAWN.toString());
         l2.set("status", LobbyStatus.ONLINE.toString());
-        l2.set("checks.canFly", false);
-        l2.set("checks.canBuild", true);
-        l2.set("inventories", players);
+        l2.set("settings.can-fly", false);
+        l2.set("settings.can-build", false);
+        l2.set("settings.can-jump", true);
+        l2.set("settings.god-mode", true);
+        l2.set("settings.give-book", true);
+        l2.set("settings.give-gem", true);
+        l2.set("settings.scoreboard", false);
+        l2.set("settings.boss-bar", false);
+        l2.set("settings.dedicated-leave", false);
+        l2.set("settings.random-join", false);
+        l2.set("settings.join-full", false);
+        l2.set("settings.colored-names", false);
+        l2.set("settings.hide-players", false);
+        l2.set("settings.mute-players", false);
+        l2.set("settings.join-message", true);
+
 
         lobby2Config.saveConfig();
         lobby2Config.reloadConfig();
@@ -114,7 +121,6 @@ public class setlobby extends SubBase {
                 LC.getConfig().createSection("lobby.box");
             }
 
-            LocationChecker lc = new LocationChecker(cr.getMaximumPoint().toVector(), cr.getMinimumPoint().toVector(), "LOBBY", 1);
             ConfigurationSection box = LC.getConfig().getConfigurationSection("lobby.box");
             box.set("min", minls);
             box.set("max", maxls);
@@ -145,13 +151,15 @@ public class setlobby extends SubBase {
         }
 
         wm.getWorldEdit().clearSessions();
-
+        wm = null;
         SkyApi.getSCB().saveConfig();
         SkyApi.getSCB().reloadConfig();
         SkyApi.getSCB().loadLobbyEvents();
 
         player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.setlobbySuccess"));
         SkyApi.getCMsg().INFO("Lobby Region and Spawn Point have Been Successfully Set");
+        player.sendMessage("");
+        player.sendMessage(SkyApi.getMessageManager().getMessage("setup.arena"));
 
         return true;
     }

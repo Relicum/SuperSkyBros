@@ -1,8 +1,11 @@
 package com.relicum.scb.listeners.dedicated;
 
+import com.relicum.scb.PlayerLoginManager;
 import com.relicum.scb.PlayerSettings;
+import com.relicum.scb.classes.PlayerType;
 import com.relicum.scb.configs.PlayerConfig;
 import com.relicum.scb.configs.ServerStatus;
+import com.relicum.scb.objects.PlayerLocation;
 import com.relicum.scb.objects.inventory.PlayerDefaults;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -20,8 +23,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
  */
 public class PlayerJoin implements Listener {
 
-    public PlayerSettings relicum;
-    public PlayerConfig relfile;
+    public PlayerSettings settings;
+    public PlayerConfig playerConfig;
     public PlayerSettings playerSettings;
     public ServerStatus status;
 
@@ -36,50 +39,45 @@ public class PlayerJoin implements Listener {
         Player p = e.getPlayer();
 
 
-
-
-/*        if (!p.isOp() && (!status.name().equalsIgnoreCase("READY"))) {
-
-            p.kickPlayer("You have been kicked as the server is not ready to be used");
-        } else {
-            p.sendMessage("The server status is currently set to " + status.name() + " meaning you need to " + status.name());
-        }
-
         if (!PlayerLoginManager.hasProfile(p.getName())) {
 
-            relfile = new PlayerConfig(PlayerLoginManager.profilePath(p.getName()));
-            relfile.saveConfig();
-
-            SkyApi.getCMsg().INFO("File not found creating one");
+            playerConfig = new PlayerConfig(PlayerLoginManager.profilePath(p.getName()));
+            playerConfig.saveConfig();
 
             playerSettings = new PlayerSettings();
             playerSettings.setPlayerName(p.getName());
             playerSettings.setPlayerType(PlayerType.PLAYER);
             playerSettings.setInLobby(true);
+            playerSettings.setOp(p.isOp());
+            playerSettings.setWorld(p.getWorld().getName());
+            playerSettings.setPlayerLocation(PlayerLocation.LOBBY);
 
+            playerConfig.getConfig().set(p.getName(), playerSettings);
 
-            relfile.getConfig().set(p.getName(), playerSettings);
-            relfile.saveConfig();
-            relfile.reloadConfig();
+            playerConfig.saveConfig();
+            playerConfig = null;
 
-            SkyApi.getCMsg().INFO("New Player Settings Stored");
         } else if (PlayerLoginManager.hasProfile(p.getName())) {
-            SkyApi.getCMsg().INFO("Settings found for " + p.getName());
-            relfile = new PlayerConfig(PlayerLoginManager.profilePath(p.getName()));
-            relfile.saveConfig();
-            PlayerSettings settings = (PlayerSettings) relfile.getConfig().get(p.getName());
-            p.sendMessage("Play type is " + settings.getPlayerType().name());
-            p.sendMessage("Lobby status is " + settings.isInLobby());
-        }*/
+
+            playerConfig = new PlayerConfig(PlayerLoginManager.profilePath(p.getName()));
+
+            playerConfig.saveConfig();
+            playerSettings = (PlayerSettings) playerConfig.getConfig().get(p.getName());
+            playerSettings.setPlayerLocation(PlayerLocation.LOBBY);
+            playerConfig.saveConfig();
+            playerConfig.reloadConfig();
+            playerConfig = null;
+        }
 
         e.setJoinMessage("");
 
         PlayerDefaults.applyDefaultSettings(p);
         PlayerDefaults.applyLobbyInventory(p);
 
-        String[] strings = new String[2];
+        String[] strings = new String[3];
         strings[0] = "    " + "\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<";
         strings[1] = ChatColor.GOLD + p.getName() + " welcome to the server";
+        strings[2] = ChatColor.AQUA + "Player game name is " + playerSettings.getPlayerName();
 
         p.sendMessage(strings);
 

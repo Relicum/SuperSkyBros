@@ -95,6 +95,8 @@ public class createarena extends SubBase {
         String ct;
         ct = cm.replace("%nn%", last.toString());
         player.sendMessage(ct);
+        player.sendMessage("");
+        player.sendMessage(SkyApi.getMessageManager().getMessage("setup.setspawns"));
         return true;
 
 

@@ -54,13 +54,15 @@ public class enable extends SubBase {
             return true;
 
         }
+
+        player.sendMessage(tmp = SCB.getMessageManager().getAdminMessage("command.message.enableSuccess").replace("%ID%", ar.getCurrent().toString()));
         if (SkyApi.getSCB().getConfig().getString("serverStatus").equalsIgnoreCase(ServerStatus.SETENABLE.name())) {
             SkyApi.getSCB().getConfig().set("serverStatus", ServerStatus.CREATEJOINSIGN.name());
             SkyApi.getSCB().saveConfig();
+            player.sendMessage("");
+            player.sendMessage(SkyApi.getMessageManager().getMessage("setup.arenasign"));
 
         }
-        player.sendMessage(tmp = SCB.getMessageManager().getAdminMessage("command.message.enableSuccess").replace("%ID%", ar.getCurrent().toString()));
-
         return true;
     }
 

@@ -1,6 +1,7 @@
 package com.relicum.scb;
 
 import com.relicum.scb.classes.PlayerType;
+import com.relicum.scb.objects.PlayerLocation;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
@@ -21,65 +22,51 @@ public class PlayerSettings implements ConfigurationSerializable {
     private boolean isInLobby;
     private String playerName;
     private boolean seen;
+    private PlayerLocation playerLocation;
+    private boolean isOp;
+    private String world;
+    private int kills = 0;
+    private int deaths = 0;
+    private double kdr = 0.0d;
+    private int wins = 0;
+    private int gamesPlayed = 0;
+
 
     /**
-     * Serialize map.
+     * Instantiates a new Player settings.
      *
-     * @return the map
+     * @param pt the pt
+     * @param firstS the first s
+     * @param lastS the last s
+     * @param inLobby the in lobby
+     * @param name the name
+     * @param seenBefore the seen before
+     * @param pl the pl
+     * @param world the world
+     * @param isOp the is op
+     * @param k the k
+     * @param d the d
+     * @param kd the kd
+     * @param w the w
+     * @param gp the gp
      */
-    @Override
-    public Map<String, Object> serialize() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("plType", getPlayerType().name());
-        this.setLastSeen();
-        map.put("seenLast", getLastSeen());
-        map.put("seenFirst", getFirstSeen());
-        map.put("inLobby", isInLobby());
-        map.put("pName", getPlayerName());
-        map.put("isSeen", isSeen());
-        return map;
+    protected PlayerSettings(PlayerType pt, Long firstS, Long lastS, boolean inLobby, String name, boolean seenBefore,
+                             PlayerLocation pl, String world, boolean isOp, int k, int d, double kd, int w, int gp) {
 
-    }
-
-    /**
-     * Deserialize player test.
-     *
-     * @param map the map
-     * @return the player test
-     */
-    public static PlayerSettings deserialize(Map<String, Object> map) {
-
-        Object typeObject = map.get("plType"),
-                firstObject = map.get("seenFirst"),
-                lastObject = map.get("seenLast"),
-                inLobbyObject = map.get("inLobby"),
-                pNameObject = map.get("pName"),
-                pIsSeenObject = map.get("isSeen");
-        if (pNameObject == null || lastObject == null || firstObject == null || typeObject == null) {
-            return null;
-        }
-
-        PlayerType playerType = PlayerType.valueOf((String) typeObject);
-        boolean seen = (boolean) pIsSeenObject;
-        Long firstSeen = (Long) firstObject;
-        Long lastSeen = System.currentTimeMillis();
-        boolean isInLobby = (boolean) inLobbyObject;
-        String playerName = (String) pNameObject;
-
-
-        return new PlayerSettings(playerType, firstSeen, lastSeen, isInLobby, playerName, true);
-
-
-    }
-
-    protected PlayerSettings(PlayerType pt, Long firstS, Long lastS, boolean inLobby, String name, boolean seenBefore) {
-
-        playerType = pt;
-        seen = seenBefore;
-        lastSeen = lastS;
-        firstSeen = firstS;
-        isInLobby = inLobby;
-        playerName = name;
+        this.playerType = pt;
+        this.seen = seenBefore;
+        this.lastSeen = lastS;
+        this.firstSeen = firstS;
+        this.isInLobby = inLobby;
+        this.playerName = name;
+        this.playerLocation = pl;
+        this.world = world;
+        this.isOp = isOp;
+        this.kills = k;
+        this.deaths = d;
+        this.kdr = kd;
+        this.wins = w;
+        this.gamesPlayed = gp;
 
     }
 
@@ -98,7 +85,6 @@ public class PlayerSettings implements ConfigurationSerializable {
 
     }
 
-
     /**
      * Player test.
      *
@@ -115,6 +101,93 @@ public class PlayerSettings implements ConfigurationSerializable {
 
     }
 
+    /**
+     * Deserialize player test.
+     *
+     * @param map the map
+     * @return the player test
+     */
+    public static PlayerSettings deserialize(Map<String, Object> map) {
+
+        Object typeObject = map.get("GamerType"),
+                firstObject = map.get("seenFirst"),
+                lastObject = map.get("seenLast"),
+                inLobbyObject = map.get("inLobby"),
+                pNameObject = map.get("Gamer"),
+                pIsSeenObject = map.get("isSeen"),
+                pLocationObject = map.get("GamerLocation"),
+                pIsOpObject = map.get("isOp"),
+                pWorldObject = map.get("World"),
+                pKillsObject = map.get("kills"),
+                pDeathsObject = map.get("deaths"),
+                pKdrObject = map.get("kdr"),
+                pWinsObject = map.get("wins"),
+                pGamesPlayedObject = map.get("gamesPlayed");
+
+
+        if (pNameObject == null || lastObject == null || firstObject == null || typeObject == null || pLocationObject == null
+                || pIsOpObject == null || pWorldObject == null || pKillsObject == null || pDeathsObject == null || pKdrObject == null
+                || pWinsObject == null || pGamesPlayedObject == null) {
+            return null;
+        }
+
+        PlayerType playerType = PlayerType.valueOf((String) typeObject);
+        boolean seen = (boolean) pIsSeenObject;
+        Long firstSeen = (Long) firstObject;
+        Long lastSeen = System.currentTimeMillis();
+        boolean isInLobby = (boolean) inLobbyObject;
+        String playerName = (String) pNameObject;
+        String world = (String) pWorldObject;
+        boolean isOp = (boolean) pIsOpObject;
+        PlayerLocation pl = PlayerLocation.valueOf((String) pLocationObject);
+        int kill = (int) pKillsObject;
+        int death = (int) pDeathsObject;
+        double kd = (double) pKdrObject;
+        int win = (int) pWinsObject;
+        int gamePlayed = (int) pGamesPlayedObject;
+
+
+        return new PlayerSettings(playerType, firstSeen, lastSeen, isInLobby, playerName, true, pl, world, isOp, kill, death, kd, win, gamePlayed);
+
+
+    }
+
+    /**
+     * Serialize map.
+     *
+     * @return the map
+     */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("GamerType", getPlayerType().name());
+        this.setLastSeen();
+        map.put("seenLast", getLastSeen());
+        map.put("seenFirst", getFirstSeen());
+        map.put("inLobby", isInLobby());
+        map.put("Gamer", getPlayerName());
+        map.put("isSeen", isSeen());
+        map.put("GamerLocation", getPlayerLocation().name());
+        map.put("World", getWorld());
+        map.put("isOp", isOp());
+        map.put("kills", getKills());
+        map.put("deaths", getDeaths());
+        this.setKdr();
+        map.put("kdr", getKdr());
+        map.put("wins", getWins());
+        map.put("gamesPlayed", getGamesPlayed());
+        return map;
+
+    }
+
+    public PlayerLocation getPlayerLocation() {
+        return playerLocation;
+    }
+
+    public PlayerSettings setPlayerLocation(PlayerLocation playerLocation) {
+        this.playerLocation = playerLocation;
+        return this;
+    }
 
     /**
      * Gets player type.
@@ -225,5 +298,151 @@ public class PlayerSettings implements ConfigurationSerializable {
 
         SkyApi.getSCB().getConfig().set("player." + getPlayerName(), this);
         SkyApi.getSCB().saveConfig();
+    }
+
+    /**
+     * Gets world.
+     *
+     * @return the world
+     */
+    public String getWorld() {
+        return world;
+    }
+
+    /**
+     * Sets world.
+     *
+     * @param world the world
+     * @return the world
+     */
+    public PlayerSettings setWorld(String world) {
+        this.world = world;
+        return this;
+    }
+
+    /**
+     * Is op.
+     *
+     * @return the boolean
+     */
+    public boolean isOp() {
+        return isOp;
+    }
+
+    /**
+     * Sets op.
+     *
+     * @param isOp the is op
+     * @return the op
+     */
+    public PlayerSettings setOp(boolean isOp) {
+        this.isOp = isOp;
+        return this;
+    }
+
+    /**
+     * Gets games played.
+     *
+     * @return the games played
+     */
+    public int getGamesPlayed() {
+        return gamesPlayed;
+    }
+
+    /**
+     * Sets games played.
+     *
+     * @param gamesPlayed the games played
+     * @return the games played
+     */
+    public PlayerSettings setGamesPlayed(int gamesPlayed) {
+        this.gamesPlayed += gamesPlayed;
+        return this;
+    }
+
+    /**
+     * Gets wins.
+     *
+     * @return the wins
+     */
+    public int getWins() {
+        return wins;
+    }
+
+    /**
+     * Sets wins.
+     *
+     * @param wins the wins
+     * @return the wins
+     */
+    public PlayerSettings setWins(int wins) {
+        this.wins += wins;
+        return this;
+    }
+
+    /**
+     * Gets kdr.
+     *
+     * @return the kdr
+     */
+    public double getKdr() {
+        return kdr;
+    }
+
+    /**
+     * Sets kdr.
+     *
+     * @return the kdr
+     */
+    public PlayerSettings setKdr() {
+        if (getDeaths() == 0) {
+            this.kdr = getKills();
+        } else if (getDeaths() > 0 && getKills() == 0) {
+            this.kdr = 0.0;
+        } else {
+            this.kdr = getKills() / getDeaths();
+        }
+
+        return this;
+    }
+
+    /**
+     * Gets deaths.
+     *
+     * @return the deaths
+     */
+    public int getDeaths() {
+        return deaths;
+    }
+
+    /**
+     * Sets deaths.
+     *
+     * @param deaths the deaths
+     * @return the deaths
+     */
+    public PlayerSettings setDeaths(int deaths) {
+        this.deaths += deaths;
+        return this;
+    }
+
+    /**
+     * Gets kills.
+     *
+     * @return the kills
+     */
+    public int getKills() {
+        return kills;
+    }
+
+    /**
+     * Sets kills.
+     *
+     * @param kills the kills
+     * @return the kills
+     */
+    public PlayerSettings setKills(int kills) {
+        this.kills += kills;
+        return this;
     }
 }

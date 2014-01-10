@@ -74,6 +74,8 @@ public class setarenalobby extends SubBase {
         if (SkyApi.getSCB().getConfig().getString("serverStatus").equalsIgnoreCase(ServerStatus.SETAREALOBBY.name())) {
             SkyApi.getSCB().getConfig().set("serverStatus", ServerStatus.SETENABLE.name());
             SkyApi.getSCB().saveConfig();
+            player.sendMessage("");
+            player.sendMessage(SkyApi.getMessageManager().getMessage("setup.enable"));
 
         }
         wm = null;

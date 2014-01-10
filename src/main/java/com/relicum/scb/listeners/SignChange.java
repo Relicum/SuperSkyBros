@@ -133,10 +133,16 @@ public class SignChange implements Listener {
                 e.getPlayer().sendMessage(
                         SCB.getMessageManager().getAdminMessage(
                                 "listeners.signchange" + ".arenaSignSuccess").replace("%MAP%", config.getString("map")));
+
+                SCB.getInstance().getLogger().info("An Arena Join Sign has been place by " + e.getPlayer().getName());
+
                 if (SkyApi.getSCB().getConfig().getString("serverStatus").equalsIgnoreCase(ServerStatus.CREATEJOINSIGN.name())) {
                     SkyApi.getSCB().getConfig().set("serverStatus", ServerStatus.READY.name());
+                    SkyApi.getSCB().saveConfig();
+                    SkyApi.getSCB().reloadConfig();
+                    e.getPlayer().sendMessage("");
+                    e.getPlayer().sendMessage(SkyApi.getMessageManager().getMessage("setup.ready"));
                 }
-                SCB.getInstance().getLogger().info("An Arena Join Sign has been place by " + e.getPlayer().getName());
 
             } else {
                 e.setCancelled(true);
