@@ -1,6 +1,8 @@
 SuperSkyBros Updated To CraftBukkit 1.7.2_R0.3
 ==============
 
+[![Build Status](https://travis-ci.org/Relicum/SuperSkyBros.png?branch=master)](https://travis-ci.org/Relicum/SuperSkyBros)
+
 <blockquote>This build has know bugs around inventory saving. They will be fixed shortly</blockquote>
 
 <blockquote>To run this you MUST be using the latest version of CraftBukkit 1.7.2</blockquote>
