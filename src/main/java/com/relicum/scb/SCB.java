@@ -1,10 +1,20 @@
 package com.relicum.scb;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import lombok.Getter;
+import net.milkbowl.vault.permission.Permission;
 import com.relicum.scb.commands.CommandManagerFirstJoin;
 import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.configs.SignConfig;
 import com.relicum.scb.configs.SignFormat;
+import com.relicum.scb.database.SQLManager;
 import com.relicum.scb.listeners.*;
 import com.relicum.scb.mini.SignLocationStore;
 import com.relicum.scb.objects.inventory.StorePlayerSettings;
@@ -12,8 +22,7 @@ import com.relicum.scb.objects.location.LobbyBase;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.*;
 import com.relicum.scb.we.WorldEditPlugin;
-import lombok.Getter;
-import net.milkbowl.vault.permission.Permission;
+
 import org.bukkit.*;
 import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandExecutor;
@@ -24,13 +33,6 @@ import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
 
 
 /**
@@ -171,7 +173,15 @@ public class SCB extends JavaPlugin implements Listener {
         SkyApi.getCMsg().INFO("ServerStatus is set to " + getConfig().getString("serverStatus"));
         useLoginService = getConfig().getBoolean("threads.useLoginService");
 
-        if (useLoginService) {
+        if (getConfig().getBoolean("mysql")) {
+            try {
+                SQLManager sqlManager = new SQLManager(this);
+                SkyApi.getCMsg().INFO("SQL Has Connected");
+            } catch (ClassNotFoundException | SQLException e) {
+                e.printStackTrace();
+            }
+        }
+      if (useLoginService) {
 
             try {
                 loginService = ScheduledManager.loginService(getConfig().getInt("threads.loginThreads"));
@@ -399,7 +409,7 @@ public class SCB extends JavaPlugin implements Listener {
             //p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
             //p.pm.registerEvents(new BlockDamage(p), p);
             p.pm.registerEvents(new PlayerJoinLobby(), p);
-
+            // p.pm.registerEvents(new ShopManager(p), p);
             p.pm.registerEvents(new SignChange(p), p);
             p.pm.registerEvents(new PlayerInteract(p), p);
             p.pm.registerEvents(new ShopManager(p), p);

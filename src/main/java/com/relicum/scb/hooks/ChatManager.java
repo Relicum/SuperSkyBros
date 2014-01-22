@@ -10,7 +10,14 @@ import net.milkbowl.vault.chat.Chat;
  */
 public class ChatManager {
 
+    Chat chat;
+
     public static Chat getChat() {
         return VaultManager.getChat();
+    }
+
+    public ChatManager() {
+        chat = getChat();
+
     }
 }

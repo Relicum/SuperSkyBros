@@ -1,5 +1,12 @@
 package com.relicum.scb.listeners;
 
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
+import net.minecraft.server.v1_7_R1.EntityPlayer;
+import net.minecraft.server.v1_7_R1.NBTTagCompound;
 import com.relicum.scb.*;
 import com.relicum.scb.classes.PlayerType;
 import com.relicum.scb.configs.PlayerConfig;
@@ -10,22 +17,16 @@ import com.relicum.scb.objects.inventory.StorePlayerSettings;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.PlayerSt;
 import com.relicum.scb.utils.timers.StartTimer;
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_7_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-
-
 /**
  * Bukkit-SCB
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
@@ -47,11 +48,9 @@ public class PlayerJoin implements Listener {
         mode = plugin.getConfig().getBoolean("dedicatedSSB");
     }
 
-
     public void playJoin(PlayerJoinEvent e) {
 
-
-        //Testing StorePlayerSettings
+        // Testing StorePlayerSettings
         Player p = e.getPlayer();
         playerSettings = new StorePlayerSettings();
         playerSettings.setGameMode(p.getGameMode());
@@ -75,9 +74,9 @@ public class PlayerJoin implements Listener {
         SkyApi.getSCB().getConfig().set(p.getName(), playerSettings);
         SkyApi.getSCB().saveConfig();
 
-        //End test
+        // End test
 
-        //Test Player Profiles
+        // Test Player Profiles
         if (PlayerLoginManager.hasProfile(e.getPlayer().getName())) {
             this.relicum = (PlayerSettings) relfile.getConfig().get("player." + e.getPlayer().getName());
 
@@ -86,17 +85,13 @@ public class PlayerJoin implements Listener {
         } else {
             this.relfile = new PlayerConfig(PlayerLoginManager.profilePath(e.getPlayer().getName()));
 
-            this.relicum = new PlayerSettings()
-                    .setPlayerName(e.getPlayer().getName())
-                    .setPlayerType(PlayerType.PLAYER)
-                    .setInLobby(true);
+            this.relicum = new PlayerSettings().setPlayerName(e.getPlayer().getName()).setPlayerType(PlayerType.PLAYER).setInLobby(true);
             this.relfile.getConfig().set("player." + e.getPlayer().getName(), this.relicum);
             this.relfile.saveConfig();
             SkyApi.getCMsg().INFO("No profile found for player " + e.getPlayer().getName());
             SkyApi.getCMsg().WARNING(Paths.get(PlayerLoginManager.path).resolve(e.getPlayer().getName() + ".yml").toString());
         }
-        //End test player profiles
-
+        // End test player profiles
 
         if (firstTimeOverride && !e.getPlayer().hasPlayedBefore() && !e.getPlayer().isOp()) {
             if (VaultManager.perms.has(e.getPlayer(), "ssb.player.join") && (!mode)) {
@@ -105,36 +100,36 @@ public class PlayerJoin implements Listener {
 
         }
 
+        CraftPlayer player1 = (CraftPlayer) e.getPlayer();
+        EntityPlayer player = player1.getHandle();
+        NBTTagCompound nbtTagCompound = new NBTTagCompound();
+        NBTTagCompound nbtTagCompound2 = new NBTTagCompound();
+        // playerAbilities.a(nbtTagCompound);
+        player.abilities.isInvulnerable = false;
+        player.abilities.mayBuild = false;
+        player.abilities.canFly = false;
+        player.abilities.canInstantlyBuild = false;
+        player.updateAbilities();
 
-        //CraftPlayer player1 = (CraftPlayer) e.getPlayer();
-        // EntityPlayer player = player1.getHandle();
-        //NBTTagCompound nbtTagCompound = new NBTTagCompound();
-        // NBTTagCompound nbtTagCompound2 = new NBTTagCompound();
-        //playerAbilities.a(nbtTagCompound);
-        // player.abilities.isInvulnerable = false;
-        // player.abilities.mayBuild = false;
-        //  player.abilities.canFly = true;
-        // player.abilities.canInstantlyBuild = false;
-        // player.updateAbilities();
-
-        //  player.b(nbtTagCompound2);
-        List<String> st = Arrays.asList(
-                "    " + "\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<",
-                ChatColor.GOLD +
-                        e.getPlayer().getName() + " welcome to the server");
+        player.b(nbtTagCompound2);
+        List<String> st = Arrays.asList("    "
+                + "\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<",
+                ChatColor.GOLD + e.getPlayer().getName() + " welcome to the server");
 
         if (SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB)) {
             SmashPl pl = new SmashPl(e.getPlayer());
-/*            if (VaultManager.perms.has(pl.getPlayer(), "ssba.admin") || pl.getPlayer().isOp()) {
-                ChatColor b = ChatColor.BOLD;
-                String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
-                pl.sendMessage(
-                        pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros Beta " +
-                                SCB.getInstance().getDescription().getVersion() + " this should not be run on " +
-                                "a live server be warned");
-
-            }*/
-
+            /*
+             * if (VaultManager.perms.has(pl.getPlayer(), "ssba.admin") ||
+             * pl.getPlayer().isOp()) { ChatColor b = ChatColor.BOLD; String pre
+             * = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB"
+             * + ChatColor.GRAY + "" + b + "]"; pl.sendMessage( pre +
+             * ChatColor.GREEN +
+             * "This server currently has installed Super Sky Bros Beta " +
+             * SCB.getInstance().getDescription().getVersion() +
+             * " this should not be run on " + "a live server be warned");
+             * 
+             * }
+             */
 
             if (VaultManager.perms.has(pl.getPlayer(), "ssb.player.join") || pl.isOp()) {
                 e.setJoinMessage("");
@@ -152,36 +147,36 @@ public class PlayerJoin implements Listener {
                 return;
             }
 
-
         }
-
 
         if (SettingsManager.getInstance().notWorlds().contains(e.getPlayer().getWorld().getName()) && !e.getPlayer().isOp()) {
             System.out.println("Player Join Returned right at the top");
             return;
         }
-        if (SettingsManager.getInstance().notWorlds().contains(e.getPlayer().getWorld().getName()) && plugin.getConfig().getBoolean(SCB.DEDICATED_SSB) && !VaultManager.perms.has(
-                e.getPlayer(), "ssba.admin")) {
+        if (SettingsManager.getInstance().notWorlds().contains(e.getPlayer().getWorld().getName()) && plugin.getConfig().getBoolean(SCB.DEDICATED_SSB)
+                && !VaultManager.perms.has(e.getPlayer(), "ssba.admin")) {
             e.setJoinMessage("");
             System.out.println("Player Join Event has been thrown");
             e.getPlayer().kickPlayer(SCB.getMessageManager().getErrorMessage("system.kickJoinWorldBlacklisted"));
-            System.out.println(
-                    "Player " + e.getPlayer().getName() + " was kicked trying from the world " + e.getPlayer().getWorld().getName() + " which is on the black list you can change this in the config.yml");
+            System.out.println("Player " + e.getPlayer().getName() + " was kicked trying from the world " + e.getPlayer().getWorld().getName()
+                    + " which is on the black list you can change this in the config.yml");
             return;
         }
 
-
-/*        if (VaultManager.perms.has(e.getPlayer(), "ssba.admin") || e.getPlayer().isOp()) {
-
-            ChatColor b = ChatColor.BOLD;
-            String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
-            e.getPlayer().sendMessage(
-                    pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros " +
-                            "Beta " + SCB.getInstance().getDescription().getVersion() + " this " +
-                            "should not be run on a live server be warned");
-
-
-        }*/
+        /*
+         * if (VaultManager.perms.has(e.getPlayer(), "ssba.admin") ||
+         * e.getPlayer().isOp()) {
+         * 
+         * ChatColor b = ChatColor.BOLD; String pre = ChatColor.GRAY + "" + b +
+         * "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
+         * e.getPlayer().sendMessage( pre + ChatColor.GREEN +
+         * "This server currently has installed Super Sky Bros " + "Beta " +
+         * SCB.getInstance().getDescription().getVersion() + " this " +
+         * "should not be run on a live server be warned");
+         * 
+         * 
+         * }
+         */
 
         if (!SkyApi.getSm().getLobbyConfig().getConfig().contains("LOBBY.REGION")) {
             if (e.getPlayer().isOp()) {
@@ -193,16 +188,13 @@ public class PlayerJoin implements Listener {
 
                 e.setJoinMessage("");
                 e.getPlayer().kickPlayer(SCB.getMessageManager().getErrorMessage("system.noLobby"));
-                plugin.getLogger().severe(
-                        e.getPlayer().getName() + " has been kicked as you have not set a Lobby " +
-                                "Spawn yet");
+                plugin.getLogger().severe(e.getPlayer().getName() + " has been kicked as you have not set a Lobby " + "Spawn yet");
                 return;
             }
 
         }
 
-
-        //Display Special Message Advertising the plugin only to new players
+        // Display Special Message Advertising the plugin only to new players
         for (String s : plugin.getConfig().getStringList("rel.lines.line")) {
             e.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', s));
         }
@@ -210,27 +202,21 @@ public class PlayerJoin implements Listener {
         System.out.println("Player passed right through all Join event conditions ???");
     }
 
-
     protected int testTimer(int x, int y, int z) {
 
         StartTimer.makeTimer(1, 1, 31);
         return 1;
     }
 
-
     public boolean displayBetaMessage(PlayerJoinEvent e) {
-
 
         e.setJoinMessage(null);
         ChatColor b = ChatColor.BOLD;
         String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
-        e.getPlayer().sendMessage(
-                pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros Beta " + SCB.getInstance().getDescription().getVersion() + " this should not be " +
-                        "run on a live server be warned");
-
+        e.getPlayer().sendMessage(pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros Beta " + SCB.getInstance().getDescription().getVersion()
+                + " this should not be " + "run on a live server be warned");
 
         return true;
     }
 
 }
-

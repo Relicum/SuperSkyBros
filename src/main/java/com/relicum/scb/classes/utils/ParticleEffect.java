@@ -1,23 +1,18 @@
 package com.relicum.scb.classes.utils;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 /**
  * ParticleEffect Library v1.0
- * <p/>
- * This particle effect library was created by DarkBlade12 based off content from microgeek You are free to use it,
- * modify it and redistribute it under the condition to give credit to me and microgeek
  *
- * @author DarkBlade12
  */
 public enum ParticleEffect {
     HUGE_EXPLOSION("hugeexplosion", 0),

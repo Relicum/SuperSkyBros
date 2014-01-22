@@ -1,9 +1,12 @@
 package com.relicum.scb.listeners;
 
+import java.util.Arrays;
+import java.util.List;
 import com.relicum.scb.SCB;
 import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.types.SkyApi;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,9 +14,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * PlayerJoin Listener that is only enabled at the started to force them to do a basic setup
@@ -36,7 +36,22 @@ public class SetupPlayerJoin implements Listener {
     public void onSetUpJoin(PlayerJoinEvent e) {
 
         Player p = e.getPlayer();
-
+        /*
+         * CraftPlayer p = (CraftPlayer) e.getPlayer(); EntityPlayer player =
+         * p.getHandle(); NBTTagCompound nbtTagCompound = new NBTTagCompound();
+         * NBTTagCompound nbtTagCompound2 = new NBTTagCompound(); //
+         * playerAbilities.a(nbtTagCompound);
+         * player.abilities.canInstantlyBuild=false;
+         * player.abilities.isInvulnerable=true; player.abilities.mayBuild =
+         * true; player.abilities.canFly = true;
+         * player.abilities.canInstantlyBuild = false; player.updateAbilities();
+         * p =(CraftPlayer) player.getBukkitEntity();
+         * p.setPlayerListName("TheKing");
+         * 
+         * System.out.println("Inv is set to" + player.isInvulnerable() +
+         * " instbuild is " + player.abilities.canInstantlyBuild); player=null;
+         */
+       // player.b(nbtTagCompound2);
         if (p.isOp() || VaultManager.perms.has(p, "ssba.admin")) {
 
             e.setJoinMessage("");

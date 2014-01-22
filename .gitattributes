@@ -1,5 +1,6 @@
 ﻿# Auto detect text files and perform LF normalization
 * text=auto
+*.java   text diff=java
 
 # Custom for Visual Studio
 *.cs     diff=csharp
@@ -18,5 +19,5 @@
 *.DOT  diff=astextplain
 *.pdf  diff=astextplain
 *.PDF	 diff=astextplain
-*.rtf	 diff=astextplain
-*.RTF	 diff=astextplain
+*.rtf    diff=astextplain
+*.RTF    diff=astextplain

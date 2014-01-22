@@ -1,5 +1,9 @@
 package com.relicum.scb.commands;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 import com.relicum.scb.SCB;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.types.SkyApi;
@@ -14,38 +18,70 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.util.StringUtil;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-
 /**
- * Custom Command Handler This deals with all events connect to Commands, including command help
- *
+ * Custom Command Handler This deals with all events connect to Commands,
+ * including command help
+ * 
  * @version 0.1
  */
 public class CommandManager implements TabExecutor {
 
+    public static MessageManager mm = SCB.getMessageManager();
     private final List<String> PLAYER = new ArrayList<>();
-
     private final List<String> ADMIN = new ArrayList<>();
-
     private final List<String> WADMIN = new ArrayList<>();
-
-    private List<String> WSET = new ArrayList<>(8);
-
-    private List<String> WSETTING = null;
-
-
     /**
      * Stores an instance of the main plugin class
      */
     public SCB plugin;
-
     /**
      * Stores a HashMap of commands
      */
     public Map<String, SubBase> clist = new HashMap<String, SubBase>();
+    private List<String> WSET = new ArrayList<>(8);
+    private List<String> WSETTING = null;
+
+    /**
+     * Class that handles all the clist and redirects Them to the correct class
+     * 
+     * @param p SCB
+     */
+    public CommandManager() {
+
+        this.plugin = SkyApi.getSCB();
+
+        // Only Load world management commands if enabled
+
+        if (SkyApi.getSm().isUseWorldManagement()) {
+            resetWhiteList();
+
+            clist.put("modifyworld", new modifyworld());
+            clist.put("autosetup", new autosetup());
+            clist.put("saveworld", new saveworld());
+            clist.put("createworld", new createworld());
+            clist.put("set", new set());
+
+            WSETTING = new ArrayList<>();
+            WSETTING.add("spawn");
+            WSETTING.add("time");
+        }
+
+        loadCommands();
+
+        for (Map.Entry<String, SubBase> entry : clist.entrySet()) {
+
+            registerCommand(entry.getKey(), entry.getValue());
+            String[] sp = entry.getValue().getCmd().split(" ");
+            if (sp[0].equalsIgnoreCase("ssba")) {
+                ADMIN.add(sp[1]);
+            } else if (sp[0].equalsIgnoreCase("ssbw")) {
+                WADMIN.add(sp[1]);
+            } else if (sp[0].equalsIgnoreCase("ssb")) {
+                PLAYER.add(sp[1]);
+            }
+        }
+
+    }
 
     public boolean addWorld(String w) {
         SkyApi.getCMsg().INFO("We got here with world " + w);
@@ -81,60 +117,10 @@ public class CommandManager implements TabExecutor {
         }
     }
 
-
-    public static MessageManager mm = SCB.getMessageManager();
-
-
-    /**
-     * Class that handles all the clist and redirects Them to the correct class
-     *
-     * @param p SCB
-     */
-    public CommandManager() {
-
-        this.plugin = SkyApi.getSCB();
-
-
-        //Only Load world management commands if enabled
-
-        if (SkyApi.getSm().isUseWorldManagement()) {
-            resetWhiteList();
-
-            clist.put("modifyworld", new modifyworld());
-            clist.put("autosetup", new autosetup());
-            clist.put("saveworld", new saveworld());
-            clist.put("createworld", new createworld());
-            clist.put("set", new set());
-
-            WSETTING = new ArrayList<>();
-            WSETTING.add("spawn");
-            WSETTING.add("time");
-        }
-
-        loadCommands();
-
-        for (Map.Entry<String, SubBase> entry : clist.entrySet()) {
-
-            registerCommand(entry.getKey(), entry.getValue());
-            String[] sp = entry.getValue().getCmd().split(" ");
-            if (sp[0].equalsIgnoreCase("ssba")) {
-                ADMIN.
-                        add(sp[1]);
-            } else if (sp[0].equalsIgnoreCase("ssbw")) {
-                WADMIN.add(sp[1]);
-            } else if (sp[0].equalsIgnoreCase("ssb")) {
-                PLAYER.add(sp[1]);
-            }
-        }
-
-    }
-
-
     /**
      * This adds all of the clist into a hash map
      */
     private void loadCommands() {
-
 
         clist.put("createarena", new createarena());
         clist.put("setspawn", new setspawn());
@@ -158,13 +144,12 @@ public class CommandManager implements TabExecutor {
 
     }
 
-
     /**
      * Custom Command Executor
-     *
-     * @param cs      CommandSender
-     * @param cmnd    Command
-     * @param string  String
+     * 
+     * @param cs CommandSender
+     * @param cmnd Command
+     * @param string String
      * @param strings String[]
      * @return boolean
      */
@@ -176,9 +161,7 @@ public class CommandManager implements TabExecutor {
             return true;
         }
 
-
         Player player = (Player) cs;
-
 
         if (plugin.getConfig().contains(player.getWorld().getName())) {
             player.sendMessage(mm.getErrorMessage("command.message.worldOnBlackList"));
@@ -221,9 +204,7 @@ public class CommandManager implements TabExecutor {
 
         try {
 
-
             clist.get(sub).onCommand(player, strings);
-
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -234,10 +215,10 @@ public class CommandManager implements TabExecutor {
 
     }
 
-
     /**
-     * Send Message to player Have still to add in my own custom messaging system
-     *
+     * Send Message to player Have still to add in my own custom messaging
+     * system
+     * 
      * @param p Player
      * @param s String
      */
@@ -246,19 +227,17 @@ public class CommandManager implements TabExecutor {
         p.sendMessage(ChatColor.DARK_GREEN + "[" + ChatColor.DARK_PURPLE + "SSB" + ChatColor.DARK_GREEN + "]" + ChatColor.DARK_PURPLE + s);
     }
 
-
     /**
-     * This function will register all the clist With Bukkit as well as setting the Description, Useage Permission and
-     * label of the command
-     *
+     * This function will register all the clist With Bukkit as well as setting
+     * the Description, Useage Permission and label of the command
+     * 
      * @param name String
-     * @param sb   SubBase
+     * @param sb SubBase
      */
     public boolean registerCommand(String name, SubBase sb) {
 
         String[] ps = sb.getPerm().split("\\.");
         String ubPerm = ps[0] + "." + ps[1];
-
 
         String des = mm.getStringConfig(sb.getDescription());
         des = ChatColor.translateAlternateColorCodes('&', des);
@@ -278,10 +257,8 @@ public class CommandManager implements TabExecutor {
         cd.setExecutor(this);
         cd.setPermission(sb.getPerm());
 
-
         if (cmp.register(sb.getLabel(), "mc", (Command) cd)) {
             plugin.getLogger().info("Command: /" + sb.getLabel() + " has successfully been registered");
-
 
             return true;
         }
@@ -290,25 +267,23 @@ public class CommandManager implements TabExecutor {
 
         return false;
 
-
     }
 
-
     /**
-     * Returns an instance of Command object setup For the command name you give it.
-     *
+     * Returns an instance of Command object setup For the command name you give
+     * it.
+     * 
      * @param name String
      * @return PluginCommand
      */
     public PluginCommand getCommand(String name) {
 
-
         PluginCommand command = null;
         try {
-            Constructor c = PluginCommand.class.getDeclaredConstructor(new Class[]{String.class, Plugin.class});
+            Constructor c = PluginCommand.class.getDeclaredConstructor(new Class[] { String.class, Plugin.class });
             c.setAccessible(true);
 
-            command = (PluginCommand) c.newInstance(new Object[]{name, plugin});
+            command = (PluginCommand) c.newInstance(new Object[] { name, plugin });
         } catch (SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -316,17 +291,15 @@ public class CommandManager implements TabExecutor {
         return command;
     }
 
-
     /**
-     * Returns an instance of CommandMap which Can then be used to correctly register the command and details with
-     * Bukkit
-     *
+     * Returns an instance of CommandMap which Can then be used to correctly
+     * register the command and details with Bukkit
+     * 
      * @return CommandMap
      */
     public CommandMap getCommandMap() {
         CommandMap commandMap = null;
         PluginManager pm = Bukkit.getServer().getPluginManager();
-
 
         try {
             if (pm instanceof PluginManager) {
@@ -341,7 +314,6 @@ public class CommandManager implements TabExecutor {
 
         return commandMap;
     }
-
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String s, String[] strings) {

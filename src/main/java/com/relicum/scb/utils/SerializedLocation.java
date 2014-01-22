@@ -1,59 +1,40 @@
 package com.relicum.scb.utils;
 
+import java.util.HashMap;
+import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.util.Vector;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
- * The type SerializedLocation.
+ * SerializedLocation Used to store Locations in a standard Configuration file
+ * <p>
+ * You are not required to call the serialize and deserialize when saving or
+ * loading the Location
+ * 
+ * @author TheCommunitySurvivalGames
+ * @version 0.0.2
  */
 @SerializableAs("SerializedLocation")
 public class SerializedLocation implements ConfigurationSerializable {
 
-    /**
-     * The X.
-     */
     private final int x;
-
-    /**
-     * The Y.
-     */
     private final int y;
-
-    /**
-     * The Z.
-     */
     private final int z;
-
-    /**
-     * The Yaw.
-     */
     private final float yaw;
-
-    /**
-     * The Pitch.
-     */
     private final float pitch;
-
-    /**
-     * The World.
-     */
     private final String world;
-
 
     /**
      * Instantiates a new Serialized location.
-     *
+     * 
      * @param world the world
-     * @param x     the x
-     * @param y     the y
-     * @param z     the z
-     * @param yaw   the yaw
+     * @param x the x
+     * @param y the y
+     * @param z the z
+     * @param yaw the yaw
      * @param pitch the pitch
      */
     public SerializedLocation(String world, int x, int y, int z, float yaw, float pitch) {
@@ -65,10 +46,9 @@ public class SerializedLocation implements ConfigurationSerializable {
         this.pitch = pitch;
     }
 
-
     /**
      * Instantiates a new Serialized location.
-     *
+     * 
      * @param location the location
      */
     public SerializedLocation(Location location) {
@@ -80,22 +60,18 @@ public class SerializedLocation implements ConfigurationSerializable {
         this.pitch = location.getPitch();
     }
 
-
     /**
-     * Deserialize serialized location.
-     *
+     * Deserialize serialized location. <b>Should never need to call this
+     * directly</b>
+     * 
      * @param map the map
      * @return the serialized location
      */
     public static SerializedLocation deserialize(Map<String, Object> map) {
-        Object xObject = map.get("xpos"),
-                yObject = map.get("ypos"),
-                zObject = map.get("zpos"),
-                worldObject = map.get("world"),
-                yawObject = map.get("yawpos"),
-                pitchObject = map.get("pitchpos");
-        if (xObject == null || yObject == null || zObject == null || worldObject == null || !(xObject instanceof Integer) || !(yObject instanceof Integer) || !(zObject instanceof Integer)) {
-            return null;
+        Object xObject = map.get("xpos"), yObject = map.get("ypos"), zObject = map.get("zpos"), worldObject = map.get("world"), yawObject = map.get("yawpos"), pitchObject = map.get("pitchpos");
+        if (xObject == null || yObject == null || zObject == null || worldObject == null || !(xObject instanceof Integer) || !(yObject instanceof Integer)
+                || !(zObject instanceof Integer)) {
+           return null;
         }
         Integer x = (Integer) xObject, y = (Integer) yObject, z = (Integer) zObject;
         Double yaw = (Double) yawObject, pitch = (Double) pitchObject;
@@ -105,30 +81,29 @@ public class SerializedLocation implements ConfigurationSerializable {
 
     }
 
-
     /**
-     * Gets location.
-     *
+     * Gets {@link org.bukkit.Location}
+     * 
      * @return the location
      */
     public Location getLocation() {
         return new Location(Bukkit.getServer().getWorld(world), x + 0.5, y + 0.5, z + 0.5, yaw, pitch);
     }
 
-
     /**
-     * Get vector.
-     *
+     * Get the location as a {@link org.bukkit.util.Vector}
+     * 
      * @return the vector
      */
     public Vector getVector() {
         return new Vector(x, y, z);
     }
 
-
     /**
      * Serialize map.
-     *
+     * 
+     * <b>This should never be called directly</b>
+     * 
      * @return the map ready to be serialised
      */
     @Override
@@ -143,70 +118,63 @@ public class SerializedLocation implements ConfigurationSerializable {
         return map;
     }
 
-
     /**
-     * Gets x.
-     *
-     * @return the x
+     * Get the X coordinate of the {@link org.bukkit.Location}
+     * 
+     * @return the x coordinate as an int
      */
     public int getX() {
         return x;
     }
 
-
     /**
      * Gets world.
-     *
+     * 
      * @return the world as a string
      */
     public String getWorld() {
         return world;
     }
 
-
     /**
-     * Gets z.
-     *
-     * @return the z
+     * Get the Z coordinate of the {@link org.bukkit.Location}
+     * 
+     * @return the z coordinate as an int
      */
     public int getZ() {
         return z;
     }
 
-
     /**
-     * Gets y.
-     *
-     * @return the y
+     * Get the Y coordinate of the {@link org.bukkit.Location}
+     * 
+     * @return the y coordinate as an int
      */
     public int getY() {
         return y;
     }
 
-
     /**
-     * Gets yaw.
-     *
-     * @return the yaw
+     * Gets the yaw to set the {@link org.bukkit.Location} to
+     * 
+     * @return the yaw as a float
      */
     public float getYaw() {
         return yaw;
     }
 
-
     /**
-     * Gets pitch.
-     *
-     * @return the pitch
+     * Gets the pitch to set the {@link org.bukkit.Location} to
+     * 
+     * @return the pitch as a float
      */
     public float getPitch() {
         return pitch;
     }
 
-
     /**
      * String representation of SerializedLocation
-     *
+     * 
      * @return the string
      */
     @Override

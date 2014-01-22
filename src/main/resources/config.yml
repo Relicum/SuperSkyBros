@@ -9,6 +9,13 @@ enableLobbyProtection: false
 saving: true
 serverStatus: MODEUNSET
 autosetupRun: false
+mysql: false
+database:
+    host: "localhost"
+    username: "superskybros"
+    password: "golf99"
+    dbname: "superskybros"
+    port: "3306"
 ignoreWorlds:
   - 'world_the_end'
   - 'world_nether'

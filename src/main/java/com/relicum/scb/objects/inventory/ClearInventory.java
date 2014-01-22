@@ -1,7 +1,11 @@
 package com.relicum.scb.objects.inventory;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import com.relicum.scb.SCB;
 import com.relicum.scb.objects.signs.utils.Col;
+
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -9,10 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * SuperSkyBros First Created 03/10/13
@@ -75,7 +75,8 @@ public class ClearInventory {
         lo.add(Col.Light_Purple() + "Hope to be open soon");
         iem.setLore(lo);
         em.setItemMeta(iem);
-        player.setMaximumNoDamageTicks(12000);
+
+       player.setMaximumNoDamageTicks(12000);
         player.setHealth(20.0D);
         player.setFoodLevel(20);
         player.setFlying(false);

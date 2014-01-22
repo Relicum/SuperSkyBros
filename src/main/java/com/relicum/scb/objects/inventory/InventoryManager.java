@@ -1,18 +1,10 @@
 package com.relicum.scb.objects.inventory;
 
-import com.relicum.scb.SCB;
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.Xpp3Driver;
-import com.thoughtworks.xstream.persistence.FilePersistenceStrategy;
-import com.thoughtworks.xstream.persistence.PersistenceStrategy;
-import com.thoughtworks.xstream.persistence.XmlMap;
-import org.bukkit.entity.Player;
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
+import org.bukkit.entity.Player;
 
 /**
  * SuperSkyBros First Created 03/10/13
@@ -30,10 +22,9 @@ public class InventoryManager {
 
     private Map<String, StorePlayerSettings> playerStore = new HashMap<>();
 
-    private XmlMap xmap;
+    // private XmlMap xmap;
 
-    private PersistenceStrategy strategy;
-
+    // private PersistenceStrategy strategy;
 
     public InventoryManager() {
 
@@ -41,31 +32,31 @@ public class InventoryManager {
         // this.reader = XStreamReader.getFi(path);
         //this.writer = XStreamWriter.getFos(path);
 
-        XStream xstream = new XStream(new Xpp3Driver());
+        // XStream xstream = new XStream(new Xpp3Driver());
 
-        xstream.alias("Storage", StorePlayerSettings.class);
+        // xstream.alias("Storage", StorePlayerSettings.class);
 
-
-        this.strategy = new FilePersistenceStrategy(new File(SCB.getInstance().getDataFolder() + "/players/"), xstream);
-        this.xmap = new XmlMap(this.strategy);
+        // this.strategy = new FilePersistenceStrategy(new
+        // File(SCB.getInstance().getDataFolder() + "/players/"), xstream);
+        // this.xmap = new XmlMap(this.strategy);
 
     }
 
 
     public boolean isInStore(String name) {
-        return this.xmap.containsKey(name);
+        return false; // this.xmap.containsKey(name);
     }
 
 
     public StorePlayerSettings getPlayersStore(String name) {
-
-        return (StorePlayerSettings) xmap.get(name);
+        return null;
+        // return (StorePlayerSettings) xmap.get(name);
 
     }
 
 
     public void removePlayerFromStore(String name) {
-        this.xmap.remove(name);
+        // this.xmap.remove(name);
     }
 
 
@@ -77,8 +68,7 @@ public class InventoryManager {
 
         StorePlayerSettings ps = PlayerStore.storePlayer(player);
 
-
-        this.xmap.put(player.getName(), ps);
+        // this.xmap.put(player.getName(), ps);
 
         return true;
 
