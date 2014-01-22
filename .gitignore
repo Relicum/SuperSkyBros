@@ -1,5 +1,5 @@
 ﻿#################
-## Eclipse
+## Eclipse and IntelliJ
 #################
 .idea/
 test/
@@ -10,6 +10,8 @@ tmp/
 target/
 production/
 META-INF/
+*.class
+*.iml
 *.tmp
 *.bak
 *.swp
