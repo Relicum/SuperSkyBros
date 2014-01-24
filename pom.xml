@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.relicum</groupId>
     <artifactId>SuperSkyBros</artifactId>
-    <version>0.4.06</version>
+    <version>0.4.07</version>
     <name>SuperSkyBros</name>
     <description>Super Sky Bros Brawl Mini-Game based off Seth Blings project. This is a Bukkit Plugin Version designed
         to run in Minecraft
@@ -108,6 +108,7 @@
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>
                     <finalName>SuperSkyBros.Beta.${project.version}</finalName>
+                    <useDefaultManifestFile>true</useDefaultManifestFile>
                 </configuration>
             </plugin>
         </plugins>
