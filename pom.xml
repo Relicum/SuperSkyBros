@@ -90,7 +90,8 @@
         </repository>
     </repositories>
     <build>
-        <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+        <defaultGoal>clean install</defaultGoal>
+        <sourceDirectory>${project.basedir}/src/main/java</sourceDirectory>
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -142,14 +143,6 @@
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
-                <executions>
-                    <execution>
-                        <phase>clean</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
