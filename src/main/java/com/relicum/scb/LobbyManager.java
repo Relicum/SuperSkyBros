@@ -1,5 +1,6 @@
 package com.relicum.scb;
 
+import java.util.*;
 import com.relicum.scb.configs.LobbyConfig;
 import com.relicum.scb.objects.LobbyRg;
 import com.relicum.scb.types.SkyApi;
@@ -8,8 +9,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
-
-import java.util.*;
 
 /**
  * The type Lobby manager.
@@ -26,11 +25,6 @@ public class LobbyManager implements Listener {
      */
     private LobbyConfig config;
 
-    /**
-     * The Hash list of spawn protection.
-     */
-    private List<String> hashList = new ArrayList<>();
-
     private ArrayList<String> pname = new ArrayList<>();
 
     /**
@@ -42,7 +36,6 @@ public class LobbyManager implements Listener {
 
     private LobbyRg lobbyRg;
 
-
     /**
      * Constructor
      */
@@ -51,37 +44,32 @@ public class LobbyManager implements Listener {
         setup();
     }
 
-
     /**
      * Initial setup, loads lobbyspawn from file and creates lobbyspawn object
      */
     public void setup() {
 
-        //sp = SCB.getInstance().Spawns;
+        // sp = SCB.getInstance().Spawns;
         this.config = SkyApi.getSm().getLobbyConfig();
-
 
         loadLobbySpawn();
 
     }
 
-
     /**
      * Loads the lobbyspawn and passes it to lobbyspawn object
-     *
+     * 
      * @return boolean
      */
     public boolean loadLobbySpawn() {
-
 
         if (config.getConfig().contains("LOBBY.REGION")) {
             Map<String, Object> lrc = config.getConfig().getConfigurationSection("LOBBY.REGION").getValues(true);
             Double ya = (Double) lrc.get("YAW");
 
             Double pit = (Double) lrc.get("PITCH");
-            this.lobbyRg = new LobbyRg(
-                    (org.bukkit.util.Vector) lrc.get("MIN"), (org.bukkit.util.Vector) lrc.get("MAX"), (org.bukkit.util.Vector) lrc.get("SPAWN"), (String) lrc.get("WORLD"),
-                    (String) lrc.get("PERM"), (float) ya.floatValue());
+            this.lobbyRg = new LobbyRg((org.bukkit.util.Vector) lrc.get("MIN"), (org.bukkit.util.Vector) lrc.get("MAX"), (org.bukkit.util.Vector) lrc.get("SPAWN"),
+                                       (String) lrc.get("WORLD"), (String) lrc.get("PERM"), (float) ya.floatValue());
 
             SkyApi.getCMsg().INFO("Lobby and Lobby Spawn have successfully been loaded");
 
@@ -93,10 +81,9 @@ public class LobbyManager implements Listener {
         return false;
     }
 
-
     /**
      * Save spawns file.
-     *
+     * 
      * @return boolean
      */
     public boolean saveLobbyFile() {
@@ -114,14 +101,12 @@ public class LobbyManager implements Listener {
 
     }
 
-
     /**
      * Adds a player to the lobby
-     *
+     * 
      * @param play String
      */
     public void addPlayer(SmashPl player) {
-
 
         if (!isInLobby(player)) {
             System.out.println(player.getName());
@@ -133,10 +118,9 @@ public class LobbyManager implements Listener {
 
     }
 
-
     /**
      * removes a player from the lobby using SmashPl as input
-     *
+     * 
      * @param play String
      */
     public void removePlayer(SmashPl play) {
@@ -149,10 +133,9 @@ public class LobbyManager implements Listener {
         }
     }
 
-
     /**
      * Remove player. Using Bukkit Player as input
-     *
+     * 
      * @param player the Player
      */
     public void removePlayer(Player player) {
@@ -165,23 +148,21 @@ public class LobbyManager implements Listener {
         }
     }
 
-
     /**
      * Checks to see if a player is already in the lobby using the players name
-     *
+     * 
      * @param play String
      * @return boolean
      */
     public boolean isInLobby(String play) {
         return pname.contains(play);
 
-
     }
 
-
     /**
-     * Checks to see if a player is already in the lobby using the SmashPl object
-     *
+     * Checks to see if a player is already in the lobby using the SmashPl
+     * object
+     * 
      * @param player the SmashPl
      * @return the boolean
      */
@@ -189,17 +170,16 @@ public class LobbyManager implements Listener {
         return pname.contains(player.getName());
     }
 
-
     /**
-     * Checks to see if a player is already in the lobby using the Players object
-     *
+     * Checks to see if a player is already in the lobby using the Players
+     * object
+     * 
      * @param player the Player
      * @return the boolean
      */
     public boolean isInLobby(Player player) {
         return pname.contains(player.getName());
     }
-
 
     /**
      * Removes all Players from LobbyManager List
@@ -217,10 +197,9 @@ public class LobbyManager implements Listener {
         }
     }
 
-
     /**
      * Check to see if the given path exists
-     *
+     * 
      * @param path String
      * @return boolean
      */
@@ -234,10 +213,9 @@ public class LobbyManager implements Listener {
         return false;
     }
 
-
     /**
      * Takes a String and returns the matching World Object
-     *
+     * 
      * @param wo String
      * @return World
      */
@@ -247,10 +225,9 @@ public class LobbyManager implements Listener {
 
     }
 
-
     /**
      * Get players in lobby.
-     *
+     * 
      * @return the list
      */
     public Collection<SmashPl> getPlayersInLobby() {
@@ -258,22 +235,19 @@ public class LobbyManager implements Listener {
         return players.values();
     }
 
-
     public List<String> getPlayerNamesInLobby() {
 
         return pname;
     }
-
 
     public List<UUID> getPlayersInUUIDList() {
 
         return players2;
     }
 
-
     /**
      * Returns the direction you are looking
-     *
+     * 
      * @param yaw float
      * @return float
      */
@@ -296,10 +270,9 @@ public class LobbyManager implements Listener {
         return 5.00F;
     }
 
-
     /**
      * Get lobby save object.
-     *
+     * 
      * @return LobbyConfig
      */
     public LobbyConfig getLobbySaveObject() {
@@ -307,11 +280,10 @@ public class LobbyManager implements Listener {
         return this.config;
     }
 
-
     /**
-     * Store lobby region. and make a List of Chunks Encoded in Base64 to allow for easy testing if a block is in the
-     * region
-     *
+     * Store lobby region. and make a List of Chunks Encoded in Base64 to allow
+     * for easy testing if a block is in the region
+     * 
      * @param cu
      * @return boolean
      */
@@ -324,42 +296,38 @@ public class LobbyManager implements Listener {
 
     /**
      * Gets world as string.
-     *
+     * 
      * @return the world as string
      */
     public String getWorldAsString() {
         return this.world;
     }
 
-
     /**
      * Sets world as string.
-     *
+     * 
      * @param wo the wo
      */
     public void setWorldAsString(String wo) {
         this.world = wo;
     }
 
-
     /**
      * Gets lobby region.
-     *
+     * 
      * @return LobbyRg lobby region
      */
     public LobbyRg getLobbyRg() {
         return lobbyRg;
     }
 
-
     public void setLobbyRg(LobbyRg l) {
         this.lobbyRg = l;
     }
 
-
     /**
      * Teleports the player to the given location
-     *
+     * 
      * @param p Player
      * @param l Location
      * @return boolean
@@ -367,8 +335,7 @@ public class LobbyManager implements Listener {
      */
     public boolean teleportToLobby(final Player p, final Location l) {
 
-        SCB.getInstance().getServer().getScheduler().runTaskLater(
-                SCB.getInstance(), new Runnable() {
+        SCB.getInstance().getServer().getScheduler().runTaskLater(SCB.getInstance(), new Runnable() {
 
             @Override
             public void run() {
@@ -381,19 +348,17 @@ public class LobbyManager implements Listener {
         return true;
     }
 
-
     public boolean isSmashPlayer(String name) {
-        if (pname != null && pname.size() > 0) if (pname.contains(name)) {
-            return true;
-        }
+        if (pname != null && pname.size() > 0)
+            if (pname.contains(name)) {
+                return true;
+            }
         return false;
     }
-
 
     public SmashPl getSmashPlayer(String name) {
         return players.get(name);
     }
-
 
     public static Permission getLobbyBroadCastPerm() {
         return BroadcastManager.getLobby();
