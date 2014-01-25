@@ -30,6 +30,8 @@ public class CommandManager implements TabExecutor {
     private final List<String> PLAYER = new ArrayList<>();
     private final List<String> ADMIN = new ArrayList<>();
     private final List<String> WADMIN = new ArrayList<>();
+    private boolean saveCommands;
+
     /**
      * Stores an instance of the main plugin class
      */
@@ -49,6 +51,7 @@ public class CommandManager implements TabExecutor {
     public CommandManager() {
 
         this.plugin = SkyApi.getSCB();
+        saveCommands = plugin.getConfig().getBoolean("storeCmds");
 
         // Only Load world management commands if enabled
 
@@ -259,7 +262,9 @@ public class CommandManager implements TabExecutor {
 
         if (cmp.register(sb.getLabel(), "mc", (Command) cd)) {
             plugin.getLogger().info("Command: /" + sb.getLabel() + " has successfully been registered");
-
+            if (this.saveCommands) {
+                plugin.saver.addToStore(cd, per);
+            }
             return true;
         }
 

@@ -3,6 +3,7 @@ firstRun: true
 firstRunDone: false
 modeSet: false
 debugCommands: true
+storeCmds: false
 enable: true
 storageType: FLATFILE
 enableLobbyProtection: false
@@ -13,7 +14,7 @@ mysql: false
 database:
     host: "localhost"
     username: "superskybros"
-    password: "golf99"
+    password: "yourpassword"
     dbname: "superskybros"
     port: "3306"
 ignoreWorlds:

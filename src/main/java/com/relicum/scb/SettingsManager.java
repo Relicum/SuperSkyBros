@@ -1,14 +1,14 @@
 package com.relicum.scb;
 
 
-import com.relicum.scb.types.SkyApi;
-import com.relicum.scb.utils.MessageManager;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import com.relicum.scb.types.SkyApi;
+import com.relicum.scb.utils.MessageManager;
+
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 
 /**
@@ -114,57 +114,6 @@ public class SettingsManager {
         mess = new MessageManager();
 
     }
-
-/*	public MessageManager getMessageManager2() {
-
-		return mess;
-	}*/
-
-/*    private void setupLobbyManager(SCB p) {
-
-        lobby = new LobbyManager(p);
-    }*/
-
-/*    public LobbyManager getLobbyManager() {
-
-        return lobby;
-    }*/
-
-/*	public ArenaManager getArenaManager() {
-
-		return arena;
-	}
-
-	*//**
-     * Chain this with getInstance to access all Arena settings
-     *
-     * @return Arena
-     *//*
-    public Arena getArena() {
-
-		return arenaCon;
-	}*/
-
-    /**
-     Chain this with getInstance to access Message Settings
-
-     @return Messages
-     */
-/*	public Messages getMessages() {
-
-		return messCon;
-	}*/
-
-    /**
-     * Chain this with getInstance to access Spawns Settings
-     *
-     * @return Spawns
-     */
-/*    public Spawns getSpawns() {
-
-        return spawnCon;
-    }*/
-
 
     /**
      * Chain this with getInstance to access default configs

@@ -1,14 +1,14 @@
 package com.relicum.scb.utils;
 
 
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Level;
+
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Easy Access for non default config files
@@ -35,7 +35,7 @@ public class ConfigAccessor {
     public ConfigAccessor(JavaPlugin plugin, String fileName) {
 
         if (plugin == null) throw new IllegalArgumentException("plugin cannot be null");
-        if (!plugin.isInitialized()) throw new IllegalArgumentException("plugin must be initiaized");
+
         this.plugin = plugin;
         this.fileName = fileName;
         File dataFolder = plugin.getDataFolder();
@@ -101,4 +101,3 @@ public class ConfigAccessor {
         }
     }
 }
-

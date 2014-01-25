@@ -9,7 +9,7 @@ SuperSkyBros Updated To CraftBukkit 1.7.2_R0.3
 
 SuperSkyBros Minecraft Minigame Github Repository
 
-Developed by **Relicum** **ThaPengwin** **slideroller** **abalabahaha**
+Developed by **Relicum** - **ThaPengwin** - **slideroller** - **abalabahaha**
 
 Testers: **michaelbaldes12**
 

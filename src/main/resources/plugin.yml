@@ -39,6 +39,8 @@ permissions:
         description: Gives access to all admin commands
         children:
             ssba.admin: true
+            ssbw.admin: true
+            ssb.player: true
     ssbw.admin.*:
         description: Give all world managment perms
         children:
