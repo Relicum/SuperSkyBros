@@ -1,9 +1,9 @@
 /**
- * Name: CommandSaver.java Edited: 24 January 2014
+ * Name: CommandSaver.java Edited: 25 January 2014
  *
  * @version 1.0.0
  */
-package com.relicum.scb.utils;
+package com.relicum.scb.configs;
 
 import java.io.File;
 import java.io.IOException;
@@ -98,6 +98,6 @@ public class CommandSaver {
     }
 
     private void saveAllPermsToFile() {
-
+        String st = "";
     }
 }

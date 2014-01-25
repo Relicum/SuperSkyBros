@@ -3,7 +3,6 @@ package com.relicum.scb.database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import lombok.Getter;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -14,7 +13,6 @@ public final class SQLManager {
     /**
      * The Sql settings.
      */
-    @Getter
     private final SQLSettings sqlSettings;
 
     private Connection connection;
@@ -39,5 +37,9 @@ public final class SQLManager {
 
         this.connection = DriverManager.getConnection(sqlSettings.getUrl(), sqlSettings.getUsername(), sqlSettings.getPassword());
 
+    }
+
+    public SQLSettings getSqlSettings() {
+        return sqlSettings;
     }
 }

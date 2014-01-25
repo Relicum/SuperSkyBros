@@ -1,6 +1,5 @@
 package com.relicum.scb.database;
 
-import lombok.Getter;
 import lombok.ToString;
 import org.bukkit.plugin.Plugin;
 
@@ -15,37 +14,30 @@ public final class SQLSettings {
     /**
      * The Host.
      */
-    @Getter
     private final String host;
     /**
      * The Username.
      */
-    @Getter
     private final String username;
     /**
      * The Password.
      */
-    @Getter
     private final String password;
     /**
      * The Dbname.
      */
-    @Getter
     private final String dbname;
     /**
      * The Port.
      */
-    @Getter
     private final String port;
     /**
      * The Connector.
      */
-    @Getter
     private final String connector = "jdbc:mysql://";
     /**
      * The Url.
      */
-    @Getter
     private final String url;
 
     /**
@@ -64,4 +56,31 @@ public final class SQLSettings {
 
     }
 
+    public String getHost() {
+        return host;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getDbname() {
+        return dbname;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public String getConnector() {
+        return connector;
+    }
+
+    public String getUrl() {
+        return url;
+    }
 }
