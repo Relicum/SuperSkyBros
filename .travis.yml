@@ -1,6 +1,6 @@
 language: java
 jdk:
   - oraclejdk7
-script: "mvn clean install"
+script: "mvn clean install --settings settings.xml"
 notifications:
   email: false
