@@ -60,7 +60,6 @@
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
     <repositories>
@@ -143,11 +142,15 @@
                     <source>1.7</source>
                     <target>1.7</target>
                 </configuration>
+                <executions>
+                    <execution>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
-    <ciManagement>
-        <system>Jenkins</system>
-        <url>ssh://git@git.cloudbees.com/relicum/SuperSkyBros.git</url>
-    </ciManagement>
 </project>
