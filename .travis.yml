@@ -4,3 +4,7 @@ jdk:
 script: "mvn clean deploy --settings settings.xml"
 notifications:
   email: false
+env:
+  global:
+    - secure: "Ex5OcSpOHPeeCPR7/oVOkqn20x420p8zzDvdbijtg8SRvq5S5foy7nML6CUqvckPgggb4z+byY8tmEmnwRaATtr3ZFzChA7t40prfaV4kH+6PH1iHrdcD8nh2AJDWsvnI45/fj3Z8zMr2YRLaWkgWc8PQhOACZ1rNJYb2n+zTv8="
+    - secure: "Ws4s3Z7JjLqVMxBXSiAxjgA9STEuaTOMUO5hkp4YGg4VI6dt3P6RtlwMjggSh84NiyK2c3wFZVUUcMoSHEna6cG8XE1v0/XRplMTSXstvJsidZkvy22Ti8zdXVoPFy30m8ipf3Sn9wl2wl5m3BNJVwdTnqD9bKoZMfSH8qV21E8="
