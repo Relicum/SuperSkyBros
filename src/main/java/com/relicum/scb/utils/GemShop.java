@@ -1,14 +1,16 @@
 package com.relicum.scb.utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import com.relicum.scb.SCB;
+import com.relicum.scb.objects.items.testItem;
 import com.relicum.scb.utils.IconMenu.OptionClickEventHandler;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * SuperSkyBros First Created 04/10/13
@@ -58,7 +60,12 @@ public class GemShop {
         spiderDescription.add("Invisibility");
         spiderDescription.add("VIP");
 
-        iconMenu = new IconMenu(
+        testItem mytest = new testItem(Material.DIAMOND_AXE);
+        mytest.setDisplayName(ChatColor.GREEN + "The Big Axe");
+        mytest.setLore(Arrays.asList("The Axe Class", ChatColor.BLUE + "Super Jumping", ChatColor.RED + "Killer mann"));
+        ItemStack axe = mytest.asItemStack();
+
+       iconMenu = new IconMenu(
                 "Classes", 27, new OptionClickEventHandler() {
 
             @Override
@@ -66,13 +73,15 @@ public class GemShop {
                 Player p = event.getPlayer();
                 if (event.getPosition() == 0) setClass(p, "Creeper");
                 if (event.getPosition() == 1) setClass(p, "Spider");
-                event.setWillClose(true);
+                if (event.getPosition() == 2)
+                    setClass(p, "BigAxe");
+              event.setWillClose(true);
                 event.setWillDestroy(true);
 
             }
         }, scb).setOption(0, new ItemStack(Material.CACTUS, 1), "Creeper", creeperDescription.toArray(new String[creeperDescription.size()])).setOption(
-                1, new ItemStack(
-                Material.SPIDER_EYE, 1), "Spider", spiderDescription.toArray(new String[spiderDescription.size()]));
+1, new ItemStack(Material.SPIDER_EYE, 1), "Spider", spiderDescription.toArray(new String[spiderDescription.size()]))
+               .setOption(2, axe, axe.getItemMeta().getDisplayName(), axe.getItemMeta().getLore().toArray((new String[axe.getItemMeta().getLore().size()])));
 
         iconMenu.open(player);
 

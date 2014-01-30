@@ -48,6 +48,7 @@ command:
     createworld: "&bUsed to create a new world just need to provide the name for the new world"
     set: "&bUsed to set world settings &e/ssbw set [world] [setting] [value]$a do $a/ssbw worldhelp&b for more info"
     modifyworld: "&bUsed to load,unload,remove and delete a world &e/ssbw modifyworld [world] [load|unload|remove|delete] $a/ssbw worldhelp&b for more info"
+    arenadetails: "&bDisplay the current settings for the specified arena. Set the arenaid to the id of the arena you want."
   message:
     worldOnBlackList: "Sorry this world is on the world blacklist. Remove it and restart the server and try again."
     joinNoLocation: "You can not use this as the Lobby Location has not been set yet"

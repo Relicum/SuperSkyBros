@@ -1,5 +1,6 @@
 package com.relicum.scb.utils;
 
+import java.util.Arrays;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,12 +14,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
-import java.util.Arrays;
-
 /**
  * SuperSkyBros First Created 04/10/13
- *
- * @author Relicum
+ * 
+ * @author Unknown
  * @version 0.1
  */
 public class IconMenu implements Listener {
