@@ -421,8 +421,8 @@ public class SCB extends JavaPlugin implements Listener {
             p.pm.registerEvents(new ShopManager(p), p);
             // p.pm.registerEvents(new ArenaChangeStatusOld(p), p);
             // List<String> wol = new ArrayList<>();
-            // wol.add("world_the_end");
-            // p.pm.registerEvents(new PlayerToggleFly(p),p);
+
+           // p.pm.registerEvents(new PlayerToggleFly(p),p);
             // p.pm.registerEvents(new Generator(),p);
 
             BroadcastManager.setup();
