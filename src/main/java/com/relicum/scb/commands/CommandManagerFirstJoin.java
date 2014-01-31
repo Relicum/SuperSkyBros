@@ -11,6 +11,7 @@ import com.relicum.scb.conversations.setmode.SetModeStart;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.signs.utils.Col;
 import com.relicum.scb.types.SkyApi;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
@@ -110,8 +111,8 @@ public class CommandManagerFirstJoin implements CommandExecutor {
         if (cmp.register(label, "mc", (Command) cd)) {
             plugin.getLogger().info("Command: /" + label + " has successfully been registered");
             if (saveCommands) {
-                plugin.saver.addToStore(cd, per);
-            }
+                plugin.getSaver().addToStore(cd, per);
+           }
             return true;
         }
 

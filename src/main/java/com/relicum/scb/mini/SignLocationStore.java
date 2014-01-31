@@ -2,6 +2,7 @@ package com.relicum.scb.mini;
 
 import com.relicum.scb.SCB;
 import com.relicum.scb.configs.SignConfig;
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.SerializedLocation;
 
 /**
@@ -21,8 +22,7 @@ public class SignLocationStore {
 
     public SignLocationStore(SCB plugin) {
         this.plugin = plugin;
-        this.storage = plugin.SNC;
-
+        this.storage = SkyApi.getSm().getSignConfig();
 
     }
 

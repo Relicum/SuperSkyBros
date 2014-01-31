@@ -1,7 +1,6 @@
 package com.relicum.scb.listeners;
 
 import java.util.List;
-import com.relicum.scb.SCB;
 import com.relicum.scb.SmashPl;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.hooks.VaultManager;
@@ -25,13 +24,10 @@ import org.bukkit.event.player.PlayerInteractEvent;
  */
 public class onBlockClick implements Listener {
 
-    private SCB plugin;
-
     private List<String> blacklist;
 
-    public onBlockClick(SCB p) {
-        this.plugin = p;
-        this.blacklist = plugin.getBlackList();
+    public onBlockClick() {
+        this.blacklist = SkyApi.getSm().blackListed();
     }
 
     @EventHandler(priority = EventPriority.LOW)

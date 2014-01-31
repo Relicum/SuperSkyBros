@@ -3,17 +3,11 @@ package com.relicum.scb;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
-import lombok.Getter;
-import net.milkbowl.vault.permission.Permission;
 import com.relicum.scb.commands.CommandManagerFirstJoin;
 import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.ServerStatus;
-import com.relicum.scb.configs.SignConfig;
-import com.relicum.scb.configs.SignFormat;
 import com.relicum.scb.database.SQLManager;
 import com.relicum.scb.listeners.*;
 import com.relicum.scb.mini.SignLocationStore;
@@ -21,6 +15,7 @@ import com.relicum.scb.objects.inventory.StorePlayerSettings;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.*;
 import com.relicum.scb.we.WorldEditPlugin;
+
 import org.bukkit.*;
 import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandExecutor;
@@ -42,63 +37,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SCB extends JavaPlugin implements Listener {
 
     public long primaryThread = Thread.currentThread().getId();
-    /**
-     * Holds a static p of itself as a JavaPlugin object
-     */
     @SuppressWarnings("StaticVariableOfConcreteClass")
     private static SCB p;
-
-    /**
-     * BaseSign Config Manager
-     */
-    public SignConfig SNC;
     public boolean saveOnDisable = true;
-
-    @Getter
     public boolean isUpdatesEnabled = true;
-    protected ArrayList<Permission> plist = new ArrayList<>();
-
-    /**
-     * The BaseSign Formatter Config.
-     */
-
-    /**
-     * Type of thread management to use for login management Either Fixed or
-     * Cached
-     */
-    public boolean useLoginService;
     public ExecutorService loginService;
-    private SignFormat SFM;
     private WorldManager worldManager;
     private PluginManager pm = Bukkit.getServer().getPluginManager();
-    private List<String> bWorlds = new ArrayList<>();
-    // public SM settings;
-    public CommandSaver saver = null;
+    protected CommandSaver saver = null;
 
-    /**
-     * Gets instance of WorldEdit to use
-     * 
-     * @return the WorldEdit plugin api
-     */
-    public static WorldEditPlugin getWorldEdit() {
-
-        Plugin WE = BukkitInterface.getServer().getPluginManager().getPlugin("WorldEdit");
-
-        if ((WE instanceof WorldEditPlugin)) {
-            return (WorldEditPlugin) WE;
-
-        }
-        return null;
-    }
-
-    public List<String> getBlackList() {
-        return bWorlds;
-    }
-
-    /**
-     * On load. Registers any ConfigurationSerializable files at onLoad Before
-     * other things have started to load
-     */
     @SuppressWarnings("RefusedBequest")
     @Override
     public void onLoad() {
@@ -134,8 +81,6 @@ public class SCB extends JavaPlugin implements Listener {
         SkyApi.getCMsg().INFO("Main Thread ID is " + primaryThread);
         SkyApi.getCMsg().INFO("ServerStatus is set to " + getConfig().getString("serverStatus"));
 
-        useLoginService = getConfig().getBoolean("threads.useLoginService");
-
         if (getConfig().getBoolean("mysql")) {
             try {
                 SQLManager sqlManager = new SQLManager(this);
@@ -144,9 +89,9 @@ public class SCB extends JavaPlugin implements Listener {
                 e.printStackTrace();
             }
         }
-        if (useLoginService) {
+        if (getConfig().getBoolean("threads.useLoginService")) {
 
-            try {
+          try {
                 loginService = ScheduledManager.loginService(getConfig().getInt("threads.loginThreads"));
                 SkyApi.getCMsg().INFO("New Login ExecutorService created");
             } catch (Exception e) {
@@ -200,8 +145,8 @@ public class SCB extends JavaPlugin implements Listener {
 
             CommandExecutor cm = SkyApi.getCommandManager();
 
-            // SkyApi.getCommandManager().addWorld(SkyApi.getSm().getSsbWorlds());
-            p.getCommand("ssb").setExecutor(cm);
+            SkyApi.getCommandManager().addWorld(SkyApi.getSm().getSsbWorlds());
+       p.getCommand("ssb").setExecutor(cm);
             p.getCommand("ssba").setExecutor(cm);
             p.getCommand("ssbw").setExecutor(cm);
             p.getCommand("ssb").setPermissionMessage(SkyApi.getMessageManager().getNoPerm());
@@ -216,9 +161,7 @@ public class SCB extends JavaPlugin implements Listener {
 
     }
 
-    /**
-     * On disable.
-     */
+
     @SuppressWarnings("RefusedBequest")
     @Override
     public void onDisable() {
@@ -232,8 +175,8 @@ public class SCB extends JavaPlugin implements Listener {
             SkyApi.getSm().getWorldConfig().saveConfig();
             SkyApi.getSm().getSignConfig().saveConfig();
             SkyApi.getSm().getSignFormatConfig().saveConfig();
-            if (useLoginService) {
-                if (ScheduledManager.loginServiceForShutDown()) {
+            if (getConfig().getBoolean("threads.useLoginService")) {
+      if (ScheduledManager.loginServiceForShutDown()) {
                     SkyApi.getCMsg().INFO("Login Service Shutdown successfully");
                 } else {
                     SkyApi.getCMsg().SERVE("Fatal error shutting down Login Service");
@@ -249,7 +192,7 @@ public class SCB extends JavaPlugin implements Listener {
                 SkyApi.getSm().getSignFormatConfig().saveConfig();
                 SkyApi.getSm().getArenaConfig().saveConfig();
                 SkyApi.getSm().getSpawnConfig().saveConfig();
-                if (useLoginService) {
+                if (getConfig().getBoolean("threads.useLoginService")) {
                     if (ScheduledManager.loginServiceForShutDown()) {
                         SkyApi.getCMsg().INFO("Login Service Shutdown successfully");
                     } else {
@@ -268,16 +211,14 @@ public class SCB extends JavaPlugin implements Listener {
 
         if (!this.getConfig().getBoolean("dedicatedSSB")) {
             SkyApi.getCMsg().INFO("Loading Lobby Events in SSB");
-            p.pm.registerEvents(new LobbyBlockPlace(p), p);
-            p.pm.registerEvents(new LobbyBlockBreak(p), p);
-
-            // p.pm.registerEvents(new PlayerBlockDamage(), p);
+            pm.registerEvents(new LobbyBlockPlace(p), p);
+            pm.registerEvents(new LobbyBlockBreak(p), p);
 
         }
 
     }
 
-    public void unloadLobbyEvents() {
+   public void unloadLobbyEvents() {
         if (!this.getConfig().getBoolean("dedicatedSSB")) {
             LobbyBlockBreak bl = new LobbyBlockBreak(this);
             LobbyBlockPlace bp = new LobbyBlockPlace(this);
@@ -291,9 +232,7 @@ public class SCB extends JavaPlugin implements Listener {
         per.setDescription(des);
         per.addParent(parent, true);
         per.setDefault(PermissionDefault.OP);
-
         p.pm.addPermission(per);
-
     }
 
     class Startup implements Runnable {
@@ -302,12 +241,6 @@ public class SCB extends JavaPlugin implements Listener {
 
         @Override
         public void run() {
-
-            p.bWorlds = p.getConfig().getStringList("ignoreWorlds");
-            for (String w : p.bWorlds) {
-
-                System.out.println("World " + w + " is in the blacklist");
-            }
 
             SkyApi.getWorldManager().loadEnabledWorlds();
             SkyApi.loadManagers();
@@ -350,15 +283,15 @@ public class SCB extends JavaPlugin implements Listener {
             }
 
             p.pm.registerEvents(new WorldListeners(), p);
-            p.pm.registerEvents(new onBlockClick(p), p);
+            p.pm.registerEvents(new onBlockClick(), p);
             // p.pm.registerEvents(new PlayerJoin(p), p);
             p.pm.registerEvents(new PlayerQuit(p), p);
             // p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
-            // p.pm.registerEvents(new BlockDamage(p), p);
+            // p.pm.registerEvents(new BlockDamage(), p);
             p.pm.registerEvents(new PlayerJoinLobby(), p);
             // p.pm.registerEvents(new ShopManager(p), p);
-            p.pm.registerEvents(new SignChange(p), p);
-            p.pm.registerEvents(new PlayerInteract(p), p);
+            p.pm.registerEvents(new SignChange(), p);
+            p.pm.registerEvents(new PlayerInteract(), p);
             p.pm.registerEvents(new ShopManager(p), p);
             // p.pm.registerEvents(new ArenaChangeStatusOld(p), p);
             // List<String> wol = new ArrayList<>();
@@ -379,8 +312,6 @@ public class SCB extends JavaPlugin implements Listener {
             registerNewPerm("ssb.player.uselobbyleave", "Allows user to use a lobby leave sign", "ssb.player");
             registerNewPerm("ssb.player.usearenajoin", "Allows user to use a arena leave sign", "ssb.player");
             registerNewPerm("ssb.player.usearenareturn", "Allows user to use a Arena lobby return to main lobby signs", "ssb.player");
-
-            World ju = SkyApi.getWM().createNewVoid("Will");
 
             if (getConfig().getBoolean("storeCmds")) {
                 saver.saveStoreToFile();
@@ -528,5 +459,29 @@ public class SCB extends JavaPlugin implements Listener {
      */
     public WorldCreator getWorldCreator(String name) {
         return new WorldCreator(name);
+    }
+
+    /**
+     * Gets instance of WorldEdit to use
+     * 
+     * @return the WorldEdit plugin api
+     */
+    public static WorldEditPlugin getWorldEdit() {
+
+        Plugin WE = BukkitInterface.getServer().getPluginManager().getPlugin("WorldEdit");
+
+        if ((WE instanceof WorldEditPlugin)) {
+            return (WorldEditPlugin) WE;
+
+        }
+        return null;
+    }
+
+    public CommandSaver getSaver() {
+        return saver;
+    }
+
+    public void setSaver(CommandSaver saver) {
+        this.saver = saver;
     }
 }

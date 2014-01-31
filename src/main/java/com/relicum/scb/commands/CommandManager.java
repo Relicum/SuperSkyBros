@@ -8,6 +8,7 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.MessageManager;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
@@ -263,8 +264,8 @@ public class CommandManager implements TabExecutor {
         if (cmp.register(sb.getLabel(), "mc", (Command) cd)) {
             plugin.getLogger().info("Command: /" + sb.getLabel() + " has successfully been registered");
             if (this.saveCommands) {
-                plugin.saver.addToStore(cd, per);
-            }
+                plugin.getSaver().addToStore(cd, per);
+           }
             return true;
         }
 

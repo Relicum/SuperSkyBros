@@ -6,6 +6,7 @@ import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.signs.utils.Col;
 import com.relicum.scb.types.SkyApi;
+
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,12 +25,11 @@ public class SignChange implements Listener {
 
     public boolean isDedicated;
 
-    private SCB plugin;
+    private SCB plugin = SkyApi.getSCB();
 
-    public SignChange(SCB p) {
-        this.plugin = p;
-        blacklist = plugin.getBlackList();
-        this.isDedicated = plugin.getConfig().getBoolean("dedicatedSSB");
+    public SignChange() {
+        blacklist = SkyApi.getSm().blackListed();
+        this.isDedicated = SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB");
 
     }
 

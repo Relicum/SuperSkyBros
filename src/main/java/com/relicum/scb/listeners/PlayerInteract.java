@@ -1,8 +1,9 @@
 package com.relicum.scb.listeners;
 
-import com.relicum.scb.SCB;
+import java.util.List;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.GemShop;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,8 +14,6 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.List;
-
 /**
  * SuperSkyBros First Created 09/10/13
  *
@@ -23,15 +22,12 @@ import java.util.List;
  */
 public class PlayerInteract implements Listener {
 
-    private SCB plugin;
 
     private List<String> blacklist;
 
 
-    public PlayerInteract(SCB p) {
-
-        this.plugin = p;
-        this.blacklist = plugin.getBlackList();
+    public PlayerInteract() {
+        this.blacklist = SkyApi.getSm().blackListed();
 
     }
 

@@ -7,6 +7,7 @@ import com.relicum.scb.SCB;
 import com.relicum.scb.SmashPl;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.PermissionSaver;
+
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
@@ -170,8 +171,8 @@ public class DebugManager implements CommandExecutor {
 
         if(list.equalsIgnoreCase("cmds")){
             if(plugin.getConfig().getBoolean("storeCmds")){
-                plugin.saver.saveStoreToFile();
-                return;
+                plugin.getSaver().saveStoreToFile();
+               return;
             }
             System.out.println("You need to set storeCmds to true in config.yml");
             System.out.println("This is automatically set to false after each run");

@@ -1,7 +1,6 @@
 package com.relicum.scb.listeners;
 
 import java.util.List;
-import com.relicum.scb.SCB;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
@@ -20,17 +19,14 @@ import org.bukkit.potion.PotionEffectType;
  */
 public class BlockDamage implements Listener {
 
-    private SCB plugin;
-
     private List<String> blacklist;
 
     private PotionEffect pe = PotionEffectType.SLOW_DIGGING.createEffect(100, 1);
 
     private PotionEffect ps = PotionEffectType.SLOW.createEffect(100, 1);
 
-    public BlockDamage(SCB p) {
-        this.plugin = p;
-        this.blacklist = plugin.getBlackList();
+    public BlockDamage() {
+        this.blacklist = SkyApi.getSm().blackListed();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
