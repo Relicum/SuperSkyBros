@@ -1,5 +1,6 @@
 package com.relicum.scb.listeners;
 
+import java.util.List;
 import com.relicum.scb.SCB;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.types.SkyApi;
@@ -12,16 +13,13 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
-import java.util.List;
-
 /**
  * Bukkit-SCB
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
 public class LobbyBlockPlace implements Listener, Cancellable {
-
 
     /**
      * The Plugin.
@@ -40,10 +38,9 @@ public class LobbyBlockPlace implements Listener, Cancellable {
 
     private boolean protectionSet;
 
-
     /**
      * Instantiates a new Lobby block break.
-     *
+     * 
      * @param pl the pl
      */
     public LobbyBlockPlace(JavaPlugin pl) {
@@ -56,16 +53,17 @@ public class LobbyBlockPlace implements Listener, Cancellable {
 
     }
 
-
     /**
      * Lobby break.
-     *
+     * 
      * @param BlockBreakEvent the event
      */
     @EventHandler(priority = EventPriority.LOW)
     public void lobbyBreak(BlockPlaceEvent e) {
-        if (this.blacklist.contains(e.getPlayer().getWorld().getName())) return;
-        if (!this.protectionSet) return;
+        if (this.blacklist.contains(e.getPlayer().getWorld().getName()))
+            return;
+        if (!this.protectionSet)
+            return;
 
         Player player = e.getPlayer();
         String wo = player.getWorld().getName();
@@ -73,16 +71,15 @@ public class LobbyBlockPlace implements Listener, Cancellable {
         if (!VaultManager.perms.has(player, "ssba.admin.placeblocks")) {
             if (SkyApi.getLobbyManager().getLobbyRg().isAABB(e.getBlock().getLocation().toVector())) {
                 e.setCancelled(true);
-                player.sendMessage(SCB.MM.getErrorMessage("listeners.blockplace.lobbyPlace"));
+                player.sendMessage(SkyApi.getMessageManager().getErrorMessage("listeners.blockplace.lobbyPlace"));
             }
         }
 
     }
 
-
     /**
      * Is cancelled.
-     *
+     * 
      * @return the boolean
      */
     @Override
@@ -90,10 +87,9 @@ public class LobbyBlockPlace implements Listener, Cancellable {
         return cancel;
     }
 
-
     /**
      * Sets cancelled.
-     *
+     * 
      * @param b the b
      */
     @Override

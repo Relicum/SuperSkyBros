@@ -1,5 +1,6 @@
 package com.relicum.scb;
 
+import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.consoleColors;
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -22,8 +23,8 @@ public class cMsg implements consoleColors {
 
 
     public cMsg() {
-        ConfigurationSection consoleSection = SCB.getInstance().getConfig().getConfigurationSection("coloredConsole");
-        useColor = consoleSection.getBoolean("colorConsole");
+        ConfigurationSection consoleSection = SkyApi.getSCB().getConfig().getConfigurationSection("coloredConsole");
+       useColor = consoleSection.getBoolean("colorConsole");
 
         if (useColor) {
             useInfo = consoleSection.getBoolean("infoColor");
@@ -39,9 +40,9 @@ public class cMsg implements consoleColors {
         }
 
 
-        if (SCB.getInstance().getDescription().getPrefix() != null) {
-            prefix = BOLDMAGENTA + "[" + SCB.getInstance().getDescription().getPrefix() + "]" + " " + consoleColors.RESET;
-        } else
+        if (SkyApi.getSCB().getDescription().getPrefix() != null) {
+            prefix = BOLDMAGENTA + "[" + SkyApi.getSCB().getDescription().getPrefix() + "]" + " " + consoleColors.RESET;
+      } else
             prefix = "";
         warning = BOLDGREEN;
         serve = BOLDRED;

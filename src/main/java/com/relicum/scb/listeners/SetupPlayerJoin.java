@@ -2,11 +2,9 @@ package com.relicum.scb.listeners;
 
 import java.util.Arrays;
 import java.util.List;
-import com.relicum.scb.SCB;
 import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.types.SkyApi;
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,11 +14,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 /**
- * PlayerJoin Listener that is only enabled at the started to force them to do a basic setup
- * This is so they know rough how to then setup arenas. During this time normal players won't be able to login
+ * PlayerJoin Listener that is only enabled at the started to force them to do a
+ * basic setup This is so they know rough how to then setup arenas. During this
+ * time normal players won't be able to login
  * <p/>
  * First Created 08/01/14
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
@@ -51,7 +50,7 @@ public class SetupPlayerJoin implements Listener {
          * System.out.println("Inv is set to" + player.isInvulnerable() +
          * " instbuild is " + player.abilities.canInstantlyBuild); player=null;
          */
-       // player.b(nbtTagCompound2);
+        // player.b(nbtTagCompound2);
         if (p.isOp() || VaultManager.perms.has(p, "ssba.admin")) {
 
             e.setJoinMessage("");
@@ -60,10 +59,8 @@ public class SetupPlayerJoin implements Listener {
             p.sendMessage((String[]) st.toArray());
             ChatColor b = ChatColor.BOLD;
             String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
-            p.sendMessage(
-                    pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros " +
-                            "Beta " + SCB.getInstance().getDescription().getVersion() + " this " +
-                            "should not be run on a live server be warned");
+            p.sendMessage(pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros " + "Beta " + SkyApi.getSCB().getDescription().getVersion() + " this "
+                    + "should not be run on a live server be warned");
 
             p.sendMessage("");
             int sts = status.ordinal();
@@ -73,7 +70,6 @@ public class SetupPlayerJoin implements Listener {
                 p.sendMessage(ChatColor.GREEN + "To find out more run " + ChatColor.GOLD + "/ssbw autosetup " + ChatColor.GREEN + " for more details");
                 p.sendMessage("");
             }
-
 
             switch (sts) {
                 case 1:
@@ -101,19 +97,16 @@ public class SetupPlayerJoin implements Listener {
 
             }
 
-
         }
-
 
     }
 
-
-    //Kicks all players without admin or op until at least a single arena is set up
+    // Kicks all players without admin or op until at least a single arena is
+    // set up
     @EventHandler(priority = EventPriority.LOWEST)
     public void playerJoin(PlayerLoginEvent event) {
         if (!event.getPlayer().isOp() || !VaultManager.perms.has(event.getPlayer(), "ssba.admin")) {
             event.disallow(PlayerLoginEvent.Result.KICK_FULL, SkyApi.getMessageManager().getMessage("system.kickJoinNoPerm"));
-
 
         }
     }

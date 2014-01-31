@@ -1,6 +1,9 @@
 package com.relicum.scb.commands;
 
-import com.relicum.scb.SCB;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import com.relicum.scb.arena.ArenaIO;
 import com.relicum.scb.arena.ArenaRegion;
 import com.relicum.scb.configs.ArenaConfig;
@@ -15,15 +18,9 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-
 /**
  * Create a new Arena
- *
+ * 
  * @author Relicum
  * @version 0.4
  */
@@ -34,10 +31,9 @@ public class createarena extends SubBase {
      */
     private Map<String, Object> map = new HashMap<>();
 
-
     /**
      * @param player Player
-     * @param args   String[]
+     * @param args String[]
      * @return boolean
      */
     @Override
@@ -59,7 +55,6 @@ public class createarena extends SubBase {
             return true;
         }
 
-
         ArenaConfig ac = SkyApi.getSm().getArenaConfig();
 
         Integer last = ac.getConfig().getInt("arena.lastId");
@@ -76,12 +71,13 @@ public class createarena extends SubBase {
         chunks.add(S.getMaximumPoint().toVector());
         chunks.get(0).setY(radmin.getY());
 
-        AER = new ArenaRegion(rmin, rmax, radmin, last, player.getWorld().getName(), aname, new SerializedLocation(S.getMaximumPoint()), new SerializedLocation(S.getMinimumPoint()), new SerializedLocation(radmin.toLocation(player.getWorld())));
+        AER = new ArenaRegion(rmin, rmax, radmin, last, player.getWorld().getName(), aname, new SerializedLocation(S.getMaximumPoint()),
+                              new SerializedLocation(S.getMinimumPoint()), new SerializedLocation(radmin.toLocation(player.getWorld())));
 
         ArenaIO AIO = new ArenaIO();
         if (AIO.newCreate(AER, chunks)) {
             SkyApi.getCMsg().INFO("Region has been created");
-            //player.sendMessage("A new arena has been created and stored");
+            // player.sendMessage("A new arena has been created and stored");
         } else {
             SkyApi.getCMsg().SERVE("Error creating or saving new Arena");
             player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.failedToCreateArena"));
@@ -99,24 +95,24 @@ public class createarena extends SubBase {
         player.sendMessage(SkyApi.getMessageManager().getMessage("setup.setspawns"));
         return true;
 
-
     }
 
-
     /**
-     * Simplify set this function to set the field descNode with the commands description will come from in the
-     * messages.yml file You do not need to enter the full node as it will be prefixed for you. Eg is the full node is
-     * command.description.createarena you only need to set this to createarena
+     * Simplify set this function to set the field descNode with the commands
+     * description will come from in the messages.yml file You do not need to
+     * enter the full node as it will be prefixed for you. Eg is the full node
+     * is command.description.createarena you only need to set this to
+     * createarena
      */
     @Override
     public void setmDescription() {
         mNode = "createarena";
     }
 
-
     /**
-     * Simply set this to return the the number of arguments The command should receive
-     *
+     * Simply set this to return the the number of arguments The command should
+     * receive
+     * 
      * @return Integer
      */
     @Override
@@ -124,10 +120,9 @@ public class createarena extends SubBase {
         return 1;
     }
 
-
     /**
      * Simply set this to return the clist permission
-     *
+     * 
      * @return String
      */
     @Override
@@ -135,10 +130,9 @@ public class createarena extends SubBase {
         return "ssba.admin.createarena";
     }
 
-
     /**
      * Simply set this to return the clist Usage
-     *
+     * 
      * @return String
      */
     @Override
@@ -146,10 +140,9 @@ public class createarena extends SubBase {
         return "/ssba createarena [name]";
     }
 
-
     /**
      * Set this to the label of the command
-     *
+     * 
      * @return String
      */
     @Override
@@ -157,10 +150,9 @@ public class createarena extends SubBase {
         return "ssba createarena";
     }
 
-
     /**
      * Set com
-     *
+     * 
      * @return String
      */
     @Override
@@ -168,9 +160,8 @@ public class createarena extends SubBase {
         return "ssba createarena";
     }
 
-
     @Override
     public Plugin getPlugin() {
-        return SCB.getInstance();
+        return SkyApi.getSCB();
     }
 }

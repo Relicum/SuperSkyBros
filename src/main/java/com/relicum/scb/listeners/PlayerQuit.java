@@ -4,6 +4,7 @@ import com.relicum.scb.PlayerLoginManager;
 import com.relicum.scb.PlayerSettings;
 import com.relicum.scb.SCB;
 import com.relicum.scb.configs.PlayerConfig;
+import com.relicum.scb.objects.PlayerLocation;
 import com.relicum.scb.objects.inventory.RestoreInventory;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.event.EventHandler;
@@ -14,7 +15,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
  * Bukkit-SCB
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
@@ -22,12 +23,10 @@ public class PlayerQuit implements Listener {
 
     private SCB plugin;
 
-
     public PlayerQuit(SCB pl) {
 
         plugin = pl;
     }
-
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void playQuit(PlayerQuitEvent e) {
@@ -48,7 +47,9 @@ public class PlayerQuit implements Listener {
                 PlayerConfig relfile = new PlayerConfig(PlayerLoginManager.profilePath(e.getPlayer().getName()));
 
                 PlayerSettings playerTest = (PlayerSettings) relfile.getConfig().get("player." + e.getPlayer().getName());
-                //playerTest.save();
+                playerTest.setPlayerLocation(PlayerLocation.LOGOUT);
+
+                // playerTest.save();
             }
 
         }

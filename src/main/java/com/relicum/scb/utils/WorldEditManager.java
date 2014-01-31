@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 /**
  * Used to Create and Manage World Edit
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
@@ -26,19 +26,16 @@ public class WorldEditManager {
 
     private WorldEditPlugin WEP;
 
-
     /**
      * Default Constructor DO NOT USE
      */
     public WorldEditManager() {
 
-
     }
-
 
     /**
      * Gets a instance of WorldEditManager
-     *
+     * 
      * @return WorldEditManager
      */
     public static WorldEditManager getInstance() {
@@ -47,29 +44,26 @@ public class WorldEditManager {
 
     }
 
-
     /**
      * Sets up WorldEditManager Just pass it instance of SCB
-     *
+     * 
      * @param p SCB
      */
     public void setup(SCB p) {
 
         WorldEditManager.p = p;
-        org.bukkit.plugin.Plugin WE = WorldEditManager.p.getServer().getPluginManager().getPlugin(SCB.WORLD_EDIT);
+        org.bukkit.plugin.Plugin WE = WorldEditManager.p.getServer().getPluginManager().getPlugin("WorldEdit");
 
         if (WE instanceof WorldEditPlugin) {
 
             WEP = (WorldEditPlugin) WE;
         }
 
-
     }
-
 
     /**
      * Get the current Selection as region
-     *
+     * 
      * @param pl Player
      * @return IRegion
      */
@@ -90,6 +84,5 @@ public class WorldEditManager {
         }
         return r;
     }
-
 
 }

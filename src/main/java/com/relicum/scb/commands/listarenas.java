@@ -1,16 +1,14 @@
 package com.relicum.scb.commands;
 
+import java.util.ArrayList;
 import com.relicum.scb.ArenaManager;
-import com.relicum.scb.SCB;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
-
 /**
  * Bukkit-SCB
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
@@ -18,7 +16,7 @@ public class listarenas extends SubBase {
 
     /**
      * @param player Player
-     * @param args   String[]
+     * @param args String[]
      * @return boolean
      */
     @Override
@@ -26,7 +24,8 @@ public class listarenas extends SubBase {
 
         ArenaManager aman = SkyApi.getArenaManager();
         ArrayList<String> arl = aman.getListMessages();
-        if (arl.isEmpty()) return true;
+        if (arl.isEmpty())
+            return true;
         for (String m : arl) {
             player.sendMessage(m);
         }
@@ -34,21 +33,22 @@ public class listarenas extends SubBase {
         return true;
     }
 
-
     /**
-     * Simplify set this function to set the field mNode with the commands description will come from in the
-     * messages.yml file You do not need to enter the full node as it will be prefixed for you. Eg is the full node is
-     * command.description.createarena you only need to set this to createarena
+     * Simplify set this function to set the field mNode with the commands
+     * description will come from in the messages.yml file You do not need to
+     * enter the full node as it will be prefixed for you. Eg is the full node
+     * is command.description.createarena you only need to set this to
+     * createarena
      */
     @Override
     public void setmDescription() {
         mNode = "listarenas";
     }
 
-
     /**
-     * Simply set this to return the the number of arguments The command should receive
-     *
+     * Simply set this to return the the number of arguments The command should
+     * receive
+     * 
      * @return Integer
      */
     @Override
@@ -56,10 +56,9 @@ public class listarenas extends SubBase {
         return 0;
     }
 
-
     /**
      * Simply set this to return the clist permission
-     *
+     * 
      * @return String
      */
     @Override
@@ -67,10 +66,9 @@ public class listarenas extends SubBase {
         return "ssba.admin.listarenas";
     }
 
-
     /**
      * Simply set this to return the clist Usage
-     *
+     * 
      * @return String
      */
     @Override
@@ -78,10 +76,9 @@ public class listarenas extends SubBase {
         return "/ssba listarenas";
     }
 
-
     /**
      * Set this to the label of the command
-     *
+     * 
      * @return String
      */
     @Override
@@ -89,10 +86,9 @@ public class listarenas extends SubBase {
         return "ssba listarenas";
     }
 
-
     /**
      * Set com
-     *
+     * 
      * @return String
      */
     @Override
@@ -100,9 +96,8 @@ public class listarenas extends SubBase {
         return "ssba listarenas";
     }
 
-
     @Override
     public Plugin getPlugin() {
-        return SCB.getInstance();
+        return SkyApi.getSCB();
     }
 }

@@ -1,5 +1,6 @@
 package com.relicum.scb.listeners;
 
+import java.util.List;
 import com.relicum.scb.SCB;
 import com.relicum.scb.SmashPl;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
@@ -16,11 +17,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.List;
-
 /**
  * SuperSkyBros First Created 09/10/13
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
@@ -30,12 +29,10 @@ public class onBlockClick implements Listener {
 
     private List<String> blacklist;
 
-
     public onBlockClick(SCB p) {
         this.plugin = p;
         this.blacklist = plugin.getBlackList();
     }
-
 
     @EventHandler(priority = EventPriority.LOW)
     public void onClick(PlayerInteractEvent e) {
@@ -44,7 +41,8 @@ public class onBlockClick implements Listener {
 
             return;
         Block clicked = e.getClickedBlock();
-        if (!clicked.getType().toString().contains("SIGN")) return;
+        if (!clicked.getType().toString().contains("SIGN"))
+            return;
 
         org.bukkit.block.Sign sign = (org.bukkit.block.Sign) clicked.getState();
 
@@ -53,20 +51,18 @@ public class onBlockClick implements Listener {
         if (this.blacklist.contains(e.getPlayer().getWorld().getName()) && (!ChatColor.stripColor(lines[0]).equalsIgnoreCase("[JOIN LOBBY]")))
             return;
 
-
         if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[JOIN LOBBY]"))) {
 
             if (SkyApi.getLobbyManager().isInLobby(e.getPlayer())) {
-                e.getPlayer().sendMessage(SCB.getMessageManager().getErrorMessage("listeners.playerJoin.alreadyInLobby"));
+                e.getPlayer().sendMessage(SkyApi.getMessageManager().getErrorMessage("listeners.playerJoin.alreadyInLobby"));
                 return;
             }
 
             SmashPl splayer = SmashPl.wrap(e.getPlayer());
 
             splayer.pStatus = PlayerSt.UNKNOWN;
-            PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "SIGN", SCB.getInstance().getConfig().getBoolean(SCB.DEDICATED_SSB));
+            PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "SIGN", SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB"));
             Bukkit.getServer().getPluginManager().callEvent(event);
-
 
             return;
         }
@@ -79,7 +75,7 @@ public class onBlockClick implements Listener {
 
         if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.usearenareturn") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[RETURN]"))) {
             ClearInventory.applyLobbyInv(e.getPlayer());
-            e.getPlayer().sendMessage(SCB.getMessageManager().getMessage("listeners.onblockclick.returnToLobby"));
+            e.getPlayer().sendMessage(SkyApi.getMessageManager().getMessage("listeners.onblockclick.returnToLobby"));
             SkyApi.getLobbyManager().teleportToLobby(e.getPlayer(), SkyApi.getLobbyManager().getLobbyRg().getWorld().getSpawnLocation());
 
         }
@@ -92,11 +88,9 @@ public class onBlockClick implements Listener {
             e.getPlayer().sendMessage("Sorry sign status is not correct");
             return;
 
-
         }
 
         return;
     }
-
 
 }

@@ -5,7 +5,7 @@ import com.relicum.scb.types.SkyApi;
 
 /**
  * SuperSkyBros First Created 10/09/13
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
@@ -18,17 +18,16 @@ public class SignManager {
         setup();
     }
 
-
     /**
      * Internal function used to setup SignManager
      */
     private void setup() {
 
         /*
-      Stores BaseSign Config Object
-     */
+         * Stores BaseSign Config Object
+         */
         config = SkyApi.getSm().getSignConfig();
-        SCB.getInstance().getLogger().info("New BaseSign Manager has been created");
+        SkyApi.getSCB().getLogger().info("New BaseSign Manager has been created");
 
     }
 }

@@ -26,7 +26,7 @@ import org.bukkit.util.StringUtil;
  */
 public class CommandManager implements TabExecutor {
 
-    public static MessageManager mm = SCB.getMessageManager();
+    public static MessageManager mm = SkyApi.getMessageManager();
     private final List<String> PLAYER = new ArrayList<>();
     private final List<String> ADMIN = new ArrayList<>();
     private final List<String> WADMIN = new ArrayList<>();

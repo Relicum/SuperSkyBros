@@ -49,7 +49,7 @@ public class LobbyManager implements Listener {
      */
     public void setup() {
 
-        // sp = SCB.getInstance().Spawns;
+        // sp = SkyApi.getSCB().Spawns;
         this.config = SkyApi.getSm().getLobbyConfig();
 
         loadLobbySpawn();
@@ -335,7 +335,7 @@ public class LobbyManager implements Listener {
      */
     public boolean teleportToLobby(final Player p, final Location l) {
 
-        SCB.getInstance().getServer().getScheduler().runTaskLater(SCB.getInstance(), new Runnable() {
+        SkyApi.getSCB().getServer().getScheduler().runTaskLater(SkyApi.getSCB(), new Runnable() {
 
             @Override
             public void run() {

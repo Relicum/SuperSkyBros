@@ -1,6 +1,7 @@
 package com.relicum.scb;
 
 import com.relicum.scb.mini.scoreboards.ScoreboardType;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -104,7 +105,7 @@ public class ShopManager implements Listener {
 
     public void pq(PlayerQuitEvent event) {
 
-        event.getPlayer().setScoreboard(SCB.getInstance().getServer().getScoreboardManager().getMainScoreboard());
-    }
+        event.getPlayer().setScoreboard(SkyApi.getSCB().getServer().getScoreboardManager().getMainScoreboard());
+   }
 
 }

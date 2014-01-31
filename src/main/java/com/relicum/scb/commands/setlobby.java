@@ -1,6 +1,5 @@
 package com.relicum.scb.commands;
 
-import com.relicum.scb.SCB;
 import com.relicum.scb.configs.Lobby2Config;
 import com.relicum.scb.configs.LobbyConfig;
 import com.relicum.scb.configs.ServerStatus;
@@ -23,7 +22,7 @@ import org.bukkit.util.Vector;
 
 /**
  * Bukkit-SCB
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
@@ -31,7 +30,7 @@ public class setlobby extends SubBase {
 
     /**
      * @param player Player
-     * @param args   String[]
+     * @param args String[]
      * @return boolean
      */
     @Override
@@ -41,8 +40,7 @@ public class setlobby extends SubBase {
         Selection cr = wm.getSelection(player);
         Vector rmin;
         try {
-            rmin = new Vector(
-                    cr.getMinimumPoint().getBlockX(), cr.getMinimumPoint().getBlockY(), cr.getMinimumPoint().getBlockZ());
+            rmin = new Vector(cr.getMinimumPoint().getBlockX(), cr.getMinimumPoint().getBlockY(), cr.getMinimumPoint().getBlockZ());
 
         } catch (Exception e) {
             player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.setlobbyNoSel"));
@@ -51,18 +49,14 @@ public class setlobby extends SubBase {
             return true;
         }
 
-
         Vector rmax;
 
-        rmax = new Vector(
-                cr.getMaximumPoint().getBlockX(), cr.getMaximumPoint().getBlockY(), cr.getMaximumPoint().getBlockZ());
+        rmax = new Vector(cr.getMaximumPoint().getBlockX(), cr.getMaximumPoint().getBlockY(), cr.getMaximumPoint().getBlockZ());
 
-        Vector lobbySpawn = new Vector(
-                player.getLocation().getBlockX() + 0.5, player.getLocation().getBlockY() + 0.5, player.getLocation().getBlockZ() + 0.5);
+        Vector lobbySpawn = new Vector(player.getLocation().getBlockX() + 0.5, player.getLocation().getBlockY() + 0.5, player.getLocation().getBlockZ() + 0.5);
         Float dir = SkyApi.getLobbyManager().getDirection(player.getLocation().getYaw());
 
-        LobbyRg region = new LobbyRg(
-                rmin, rmax, lobbySpawn, player.getWorld().getName(), perm, player.getLocation().getYaw());
+        LobbyRg region = new LobbyRg(rmin, rmax, lobbySpawn, player.getWorld().getName(), perm, player.getLocation().getYaw());
 
         LobbyConfig LC = SkyApi.getLobbyManager().getLobbySaveObject();
 
@@ -75,7 +69,7 @@ public class setlobby extends SubBase {
         SerializedLocation sspawn = new SerializedLocation(location);
         LocationChecker lc = new LocationChecker(cr.getMaximumPoint().toVector(), cr.getMinimumPoint().toVector(), "LOBBY", 1);
 
-        //TEMP TESTING ON NEW NODES
+        // TEMP TESTING ON NEW NODES
         Lobby2Config lobby2Config = SkyApi.getSm().getLobby2Config();
         lobby2Config.getConfig().set("LOBBYSET", true);
         ConfigurationSection l2 = lobby2Config.getConfig().createSection("main-lobby");
@@ -84,27 +78,25 @@ public class setlobby extends SubBase {
         l2.set("permission", "ssb.player.join");
         l2.set("type", LocationType.LOBBYSPAWN.toString());
         l2.set("status", LobbyStatus.ONLINE.toString());
-        l2.set("settings.can-fly", false);
-        l2.set("settings.can-build", false);
-        l2.set("settings.can-jump", true);
-        l2.set("settings.god-mode", true);
-        l2.set("settings.give-book", true);
-        l2.set("settings.give-gem", true);
+        l2.set("settings.can_fly", false);
+        l2.set("settings.can_build", false);
+        l2.set("settings.can_jump", true);
+        l2.set("settings.god_mode", true);
+        l2.set("settings.give_book", true);
+        l2.set("settings.give_gem", true);
         l2.set("settings.scoreboard", false);
-        l2.set("settings.boss-bar", false);
-        l2.set("settings.dedicated-leave", false);
-        l2.set("settings.random-join", false);
-        l2.set("settings.join-full", false);
-        l2.set("settings.colored-names", false);
-        l2.set("settings.hide-players", false);
-        l2.set("settings.mute-players", false);
-        l2.set("settings.join-message", true);
-
+        l2.set("settings.boss_bar", false);
+        l2.set("settings.dedicated_leave", false);
+        l2.set("settings.random_join", false);
+        l2.set("settings.join_full", false);
+        l2.set("settings.colored_names", false);
+        l2.set("settings.hide_players", false);
+        l2.set("settings.mute_players", false);
+        l2.set("settings.join_message", true);
 
         lobby2Config.saveConfig();
         lobby2Config.reloadConfig();
-        //END TEMP TESTING
-
+        // END TEMP TESTING
 
         try {
             if (!LC.getConfig().contains("LOBBY")) {
@@ -129,10 +121,10 @@ public class setlobby extends SubBase {
             box.set("perm", "ssb.player.join");
             box.set("checker", lc);
 
-            if (!LC.getConfig().contains(SCB.LOBBYSET)) {
-                LC.getConfig().createSection(SCB.LOBBYSET);
+            if (!LC.getConfig().contains("LOBBYSET")) {
+                LC.getConfig().createSection("LOBBYSET");
             }
-            LC.getConfig().set(SCB.LOBBYSET, true);
+            LC.getConfig().set("LOBBYSET", true);
             LC.saveConfig();
             LC.reloadConfig();
         } catch (Exception e) {
@@ -145,7 +137,7 @@ public class setlobby extends SubBase {
         ApplyWorldSettings.apply(player.getWorld());
         SkyApi.getLobbyManager().setLobbyRg(region);
 
-        SCB.getInstance().getConfig().set("enableLobbyProtection", true);
+        SkyApi.getSCB().getConfig().set("enableLobbyProtection", true);
         if (SkyApi.getSCB().getConfig().getString("serverStatus").equalsIgnoreCase(ServerStatus.SETLOBBY.name())) {
             SkyApi.getSCB().getConfig().set("serverStatus", ServerStatus.SETARENA.name());
         }
@@ -164,21 +156,22 @@ public class setlobby extends SubBase {
         return true;
     }
 
-
     /**
-     * Simplify set this function to set the field mNode with the commands description will come from in the
-     * messages.yml file You do not need to enter the full node as it will be prefixed for you. Eg is the full node is
-     * command.description.createarena you only need to set this to createarena
+     * Simplify set this function to set the field mNode with the commands
+     * description will come from in the messages.yml file You do not need to
+     * enter the full node as it will be prefixed for you. Eg is the full node
+     * is command.description.createarena you only need to set this to
+     * createarena
      */
     @Override
     public void setmDescription() {
         mNode = "setlobby";
     }
 
-
     /**
-     * Simply set this to return the the number of arguments The command should receive
-     *
+     * Simply set this to return the the number of arguments The command should
+     * receive
+     * 
      * @return Integer
      */
     @Override
@@ -186,10 +179,9 @@ public class setlobby extends SubBase {
         return 0;
     }
 
-
     /**
      * Simply set this to return the clist permission
-     *
+     * 
      * @return String
      */
     @Override
@@ -197,10 +189,9 @@ public class setlobby extends SubBase {
         return "ssba.admin.setlobby";
     }
 
-
     /**
      * Simply set this to return the clist Usage
-     *
+     * 
      * @return String
      */
     @Override
@@ -208,10 +199,9 @@ public class setlobby extends SubBase {
         return "/ssba setlobby";
     }
 
-
     /**
      * Set this to the label of the command
-     *
+     * 
      * @return String
      */
     @Override
@@ -219,10 +209,9 @@ public class setlobby extends SubBase {
         return "ssba setlobby";
     }
 
-
     /**
      * Set com
-     *
+     * 
      * @return String
      */
     @Override
@@ -230,9 +219,8 @@ public class setlobby extends SubBase {
         return "ssba setlobby";
     }
 
-
     @Override
     public Plugin getPlugin() {
-        return SCB.getInstance();
+        return SkyApi.getSCB();
     }
 }

@@ -1,7 +1,6 @@
 package com.relicum.scb.commands;
 
 import com.relicum.scb.ArenaManager;
-import com.relicum.scb.SCB;
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.SpawnIO;
 import com.relicum.scb.configs.ServerStatus;
@@ -15,16 +14,15 @@ import org.bukkit.util.Vector;
 
 /**
  * Bukkit-SCB
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
 public class setspawn extends SubBase {
 
-
     /**
      * @param player Player
-     * @param args   String[]
+     * @param args String[]
      * @return boolean
      */
     public boolean onCommand(Player player, String[] args) {
@@ -46,9 +44,7 @@ public class setspawn extends SubBase {
                 Vector vt = new Vector(Math.round(player.getLocation().getX()) + 0.5, player.getLocation().getY() + 0.5, Math.round(player.getLocation().getZ()) + 0.5);
                 ArenaSpawn as = new ArenaSpawn(vt, ar.getCurrent(), player.getWorld().getName(), new SerializedLocation(player.getLocation().add(0.5, 0.5, 0.5)));
 
-
                 if (sio.createNewGroup(as)) {
-
 
                     player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.setSpawnSuccess").replace("%ID%", "1"));
 
@@ -58,7 +54,6 @@ public class setspawn extends SubBase {
                     player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.setspawnFail"));
                     return true;
                 }
-
 
             } else {
 
@@ -91,76 +86,69 @@ public class setspawn extends SubBase {
 
             }
 
-
         } else {
 
-
             player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.setspawnNotInArena"));
-
 
         }
         return true;
     }
 
-
     /**
-     * Simplify set this function to set the field descNode with the commands description will come from in the
-     * messages.yml file You do not need to enter the full node as it will be prefixed for you. Eg is the full node is
-     * command.description.createarena you only need to set this to createarena
+     * Simplify set this function to set the field descNode with the commands
+     * description will come from in the messages.yml file You do not need to
+     * enter the full node as it will be prefixed for you. Eg is the full node
+     * is command.description.createarena you only need to set this to
+     * createarena
      */
     @Override
     public void setmDescription() {
         mNode = "setspawn";
     }
 
-
     /**
-     * Simply set this to return the the number of arguments The command should receive
-     *
+     * Simply set this to return the the number of arguments The command should
+     * receive
+     * 
      * @return Integer
      */
     public Integer setNumArgs() {
         return 0;
     }
 
-
     /**
      * Simply set this to return the clist permission
-     *
+     * 
      * @return String
      */
     public String setPermission() {
         return "ssba.admin.setspawn";
     }
 
-
     /**
      * Simply set this to return the clist Usage
-     *
+     * 
      * @return String
      */
     public String setUsage() {
         return "/ssba setspawn";
     }
 
-
     /**
      * Set this to the label of the command
-     *
+     * 
      * @return String
      */
     public String setLabel() {
         return "ssba setspawn";
     }
 
-
     public String setCmd() {
         return "ssba setspawn";
     }
 
-
     @Override
     public Plugin getPlugin() {
-        return SCB.getInstance();
+        return SkyApi.getSCB();
     }
 }

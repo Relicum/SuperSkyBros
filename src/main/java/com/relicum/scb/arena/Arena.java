@@ -1,5 +1,6 @@
 package com.relicum.scb.arena;
 
+import java.util.List;
 import com.relicum.scb.events.ArenaStatusChangeEvent;
 import com.relicum.scb.objects.ArenaLobby;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
@@ -10,11 +11,9 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
 
-import java.util.List;
-
 /**
  * Bukkit-SCB
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
@@ -85,90 +84,84 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     private ArenaLobby arenaLobby;
 
-
     public Arena(Integer id) {
         this.id = id;
 
     }
-
 
     public Arena(String na) {
         setArenaName(na);
 
     }
 
-
     @Override
     public void loadArena() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        // To change body of implemented methods use File | Settings | File
+        // Templates.
     }
-
 
     @Override
     public void saveArena() {
         SkyApi.getArenaManager().saveArenaById(getArenaId());
     }
 
-
     /**
      * Sets arena name.
-     *
+     * 
      * @param String
      */
     public void setArenaName(String n) {
-        if (n != null) this.aname = n;
+        if (n != null)
+            this.aname = n;
     }
-
 
     /**
      * Gets arena name.
-     *
+     * 
      * @return String
      */
     @Override
     public String getArenaName() {
-        if (this.aname != null) return this.aname;
+        if (this.aname != null)
+            return this.aname;
 
         return "";
     }
-
 
     public ArenaLobby getArenaLobby() {
         return arenaLobby;
     }
 
-
     public void setArenaLobby(ArenaLobby arenaLobby) {
         this.arenaLobby = arenaLobby;
     }
 
-
     /**
      * Set arena id.
-     *
+     * 
      * @param i Integer
      */
     public void setArenaId(Integer i) {
-        if (i != null) this.id = i;
+        if (i != null)
+            this.id = i;
     }
-
 
     /**
      * Gets arena id.
-     *
+     * 
      * @return Integer
      */
     @Override
     public Integer getArenaId() {
-        if (this.id != null) return this.id;
+        if (this.id != null)
+            return this.id;
 
         return 0;
     }
 
-
     /**
      * Needs to be a valid ArenaStatus option
-     *
+     * 
      * @param String
      */
     public void setStatus(String em) {
@@ -179,10 +172,9 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
         status = ArenaStatus.valueOf(em);
     }
 
-
     /**
      * Gets arena status.
-     *
+     * 
      * @return the ArenaStatus
      */
     @Override
@@ -191,21 +183,21 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
         return this.status;
     }
 
-
     /**
      * Set enable.
-     *
+     * 
      * @param boolean
      */
     public void setEnable(boolean bo) {
-        if (bo) this.enable = true;
-        else this.enable = false;
+        if (bo)
+            this.enable = true;
+        else
+            this.enable = false;
     }
-
 
     /**
      * Set arena spawn group. If Arena wasn't created using ID
-     *
+     * 
      * @param Integer the ars
      */
     public void setArenaSpawnGroup(Integer id) {
@@ -213,16 +205,14 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
         this.spawns = new ArenaGroupSpawn(id);
     }
 
-
     public void setArenaSpawnGroup(ArenaGroupSpawn ag) {
 
         this.spawns = ag;
     }
 
-
     /**
      * Is enabled.
-     *
+     * 
      * @return boolean
      */
     @Override
@@ -230,27 +220,24 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
         return this.enable;
     }
 
-
     /**
      * Add spawn location.
-     *
+     * 
      * @param ArenaSpawn
      */
     public void addSpawnLocation(ArenaSpawn arenaspawn) {
         this.spawns.addSpawn(arenaspawn);
     }
 
-
     /**
      * Gets spawn group.
-     *
+     * 
      * @return ArenaGroupSpawn
      */
     @Override
     public ArenaGroupSpawn getSpawnGroup() {
         return this.spawns;
     }
-
 
     public boolean hasGroupSpawn() {
         if (spawns == null) {
@@ -259,20 +246,18 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
         return true;
     }
 
-
     /**
      * Set max players.
-     *
+     * 
      * @param int
      */
     public void setMaxPlayers(int i) {
         this.maxPlayers = i;
     }
 
-
     /**
      * Gets max players.
-     *
+     * 
      * @return int
      */
     @Override
@@ -281,20 +266,18 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     }
 
-
     /**
      * Set min players.
-     *
+     * 
      * @param int
      */
     public void setMinPlayers(int i) {
         this.minPlayers = i;
     }
 
-
     /**
      * Gets min players.
-     *
+     * 
      * @return int
      */
     @Override
@@ -302,20 +285,18 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
         return this.minPlayers;
     }
 
-
     /**
      * Set perm.
-     *
+     * 
      * @param String
      */
     public void setPerm(String s) {
         this.perm = s;
     }
 
-
     /**
      * Gets permission.
-     *
+     * 
      * @return String
      */
     @Override
@@ -323,20 +304,18 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
         return this.perm;
     }
 
-
     /**
      * Set max time.
-     *
+     * 
      * @param Long
      */
     public void setMaxTime(Long l) {
         this.maxTime = l;
     }
 
-
     /**
      * Gets max game time.
-     *
+     * 
      * @return Long
      */
     @Override
@@ -344,41 +323,35 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
         return this.maxTime;
     }
 
-
     /**
      * Set world name as string
-     *
+     * 
      * @param String
      */
     public void setWorldName(String s) {
         this.worldName = s;
     }
 
-
     @Override
     public Vector getAdminSpawn() {
         return this.adminSpawn;
     }
 
-
     public void setAdminSpawn(Vector v) {
         this.adminSpawn = v;
     }
-
 
     public boolean getDoubleJump() {
         return doubleJump;
     }
 
-
     public void setDoubleJump(boolean doubleJump) {
         this.doubleJump = doubleJump;
     }
 
-
     /**
      * Gets arena world. As Bukkit world
-     *
+     * 
      * @return World
      */
     @Override
@@ -387,75 +360,72 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     }
 
-
     /**
      * Returns The region object
-     *
+     * 
      * @return ArenaRegion
      */
     public ArenaRegion getAreg() {
         return areg;
     }
 
-
     /**
      * Set the region object
-     *
+     * 
      * @param ArenaRegion
      */
     public void setAreg(ArenaRegion areg) {
         this.areg = areg;
     }
 
-
     /**
      * Returns a Status message
-     *
+     * 
      * @return String
      */
     public String getArenaListMessage() {
-        //String AL = SCB.getMessageManager().getAdminMessage("command.message.listArenasMessage");
+        // String AL =
+        // SkyApi.getMessageManager().getAdminMessage("command.message.listArenasMessage");
         String en;
-        if (isEnabled()) en = "True";
-        else en = "False";
+        if (isEnabled())
+            en = "True";
+        else
+            en = "False";
 
-        return ChatColor.GREEN + "Arena " + ChatColor.WHITE + getArenaId() + ChatColor.GREEN + " in world " + ChatColor.WHITE + getArenaWorld().getName() + ChatColor.GREEN + ". Enabled = " + ChatColor.WHITE + en + ChatColor.GREEN + " status = " + ChatColor.WHITE + getArenaStatus().name() + ChatColor.RESET;
+        return ChatColor.GREEN + "Arena " + ChatColor.WHITE + getArenaId() + ChatColor.GREEN + " in world " + ChatColor.WHITE + getArenaWorld().getName() + ChatColor.GREEN
+                + ". Enabled = " + ChatColor.WHITE + en + ChatColor.GREEN + " status = " + ChatColor.WHITE + getArenaStatus().name() + ChatColor.RESET;
     }
-
 
     /**
      * Gets chunks.
-     *
+     * 
      * @return List<Vector> chunk
      */
     public List<Vector> getChunk() {
         return chunk;
     }
 
-
     /**
      * Sets chunk.
-     *
+     * 
      * @param List<Vector>the chunk
      */
     public void setChunk(List<Vector> chunk) {
         this.chunk = chunk;
     }
 
-
     /**
      * Gets unique map.
-     *
+     * 
      * @return String the unique map
      */
     public String getUniqueMap() {
         return uniqueMap;
     }
 
-
     /**
      * Sets unique map.
-     *
+     * 
      * @param String the unique map
      */
     public void setUniqueMap(String uniqueMap) {

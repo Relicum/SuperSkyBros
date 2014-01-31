@@ -1,6 +1,6 @@
 package com.relicum.scb.utils;
 
-import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.Bukkit;
 
 /**
@@ -15,8 +15,8 @@ public class DelayedShutDown {
 
     public static void shutDown() {
 
-        Bukkit.getServer().getScheduler().runTaskLater(SCB.getInstance(), new Runnable() {
-            @Override
+        Bukkit.getServer().getScheduler().runTaskLater(SkyApi.getSCB(), new Runnable() {
+           @Override
             public void run() {
 
                 Bukkit.getServer().shutdown();

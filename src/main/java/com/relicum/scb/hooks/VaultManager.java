@@ -1,15 +1,14 @@
 package com.relicum.scb.hooks;
 
-import com.relicum.scb.SCB;
-import com.relicum.scb.types.SkyApi;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 /**
  * SuperSkyBros First Created 19/11/13
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
@@ -28,75 +27,65 @@ public class VaultManager {
         setupEconomy();
     }
 
-
     /**
      * Gets econ.
-     *
+     * 
      * @return the econ
      */
     public static Economy getEcon() {
         return econ;
     }
 
-
     /**
      * Gets chat.
-     *
+     * 
      * @return the chat
      */
     public static Chat getChat() {
         return chat;
     }
 
-
     /**
      * Gets perms.
-     *
+     * 
      * @return the perms
      */
     public static Permission getPerms() {
         return perms;
     }
 
-
     private void setupEconomy() {
 
-        RegisteredServiceProvider<Economy> rsp = SkyApi.getSCB().getServer().getServicesManager().getRegistration(
-                net.milkbowl.vault.economy.Economy
-                        .class);
+        RegisteredServiceProvider<Economy> rsp = SkyApi.getSCB().getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
 
         if (rsp != null) {
             econ = rsp.getProvider();
-            SkyApi.getCMsg().INFO(SCB.SUCCESSFULLY_HOOKED_INTO_ECONOMY_PLUGIN);
+            SkyApi.getCMsg().INFO("Successfully Hooked into Economy Plugin");
         } else {
-            SkyApi.getCMsg().WARNING(SCB.VAULT_COULD_NOT_HOOK_INTO_ECONOMY_PLUGIN);
+            SkyApi.getCMsg().WARNING("Vault could not hook into Economy Plugin");
         }
 
     }
-
 
     private void setupChat() {
         RegisteredServiceProvider<Chat> rsp = SkyApi.getSCB().getServer().getServicesManager().getRegistration(Chat.class);
         if (rsp != null) {
             chat = rsp.getProvider();
-            SkyApi.getCMsg().INFO(SCB.SUCCESSFULLY_HOOKED_INTO_CHAT_PLUGIN);
+            SkyApi.getCMsg().INFO("Successfully Hooked into Chat Plugin");
         } else {
-            SkyApi.getCMsg().WARNING(SCB.VAULT_COULD_NOT_HOOK_INTO_CHAT_PLUGIN);
+            SkyApi.getCMsg().WARNING("Vault could not hook into Chat Plugin");
         }
 
-
     }
-
 
     private void setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = SkyApi.getSCB().getServer().getServicesManager().getRegistration(Permission.class);
 
-
         if (rsp != null) {
             perms = rsp.getProvider();
-            SkyApi.getCMsg().INFO(SCB.SUCCESSFULLY_HOOKED_INTO_PERMISSIONS_PLUGIN);
+            SkyApi.getCMsg().INFO("Successfully Hooked into Permissions Plugin");
         } else {
-            SkyApi.getCMsg().WARNING(SCB.VAULT_COULD_NOT_HOOK_INTO_PERMISSIONS_PLUGIN);
+            SkyApi.getCMsg().WARNING("Vault could not hook into Permissions Plugin");
         }
 
     }

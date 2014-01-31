@@ -1,14 +1,12 @@
 package com.relicum.scb.utils;
 
-
+import java.util.Arrays;
 import com.relicum.scb.configs.MessConfig;
 import org.bukkit.ChatColor;
 
-import java.util.Arrays;
-
 /**
  * Bukkit-SCB
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
@@ -26,11 +24,9 @@ public class MessageManager {
 
     private String noPerm;
 
-
     /**
-     * Used to setup the Message Manager You should not need to ever call this as it is automatically setup in the
-     * SettingsManager class.
-     *
+     * Used to setup the Message Manager You should not need to ever call this
+     * 
      * @param p SCB
      */
     public MessageManager() {
@@ -43,12 +39,11 @@ public class MessageManager {
         setPrefix("system.prefix");
         noPerm = setNoPermMessage();
 
-
     }
 
     /**
      * Gets string config.
-     *
+     * 
      * @param String takes a string
      * @return String a string
      */
@@ -56,7 +51,6 @@ public class MessageManager {
 
         return messConfig.getConfig().getString(s);
     }
-
 
     private void setupMessageColors(String s) {
 
@@ -67,20 +61,19 @@ public class MessageManager {
         adminColor = convertColor(sp[2]);
     }
 
-
     /**
-     * Gets the Prefix for all messages This has already had the Color codes translated
-     *
+     * Gets the Prefix for all messages This has already had the Color codes
+     * translated
+     * 
      * @return String
      */
     public String getPrefix() {
         return prefix;
     }
 
-
     /**
      * Gets the prefix and message color for standard messages
-     *
+     * 
      * @return String
      */
     public String standardColor() {
@@ -88,26 +81,23 @@ public class MessageManager {
         return prefix + standardColor;
     }
 
-
     /**
      * Gets the prefix and message color for error messages
-     *
+     * 
      * @return String
      */
     public String getErrorCol() {
         return prefix + errorColor;
     }
 
-
     /**
      * Gets the prefix and message color for admin messages
-     *
+     * 
      * @return String
      */
     public String getAdminCol() {
         return prefix + adminColor;
     }
-
 
     private void setPrefix(String s) {
         String pre;
@@ -116,10 +106,9 @@ public class MessageManager {
         prefix = pre;
     }
 
-
     /**
      * Converts color code formats to the correct character
-     *
+     * 
      * @param s String
      * @return String
      */
@@ -130,11 +119,11 @@ public class MessageManager {
         return tmp;
     }
 
-
     /**
-     * This is used to get a standard message pre-formatted Pass it the message path and it returns a string which You
-     * send direct to the player. Handel's all errors automatically.
-     *
+     * This is used to get a standard message pre-formatted Pass it the message
+     * path and it returns a string which You send direct to the player.
+     * Handel's all errors automatically.
+     * 
      * @param s String
      * @return String
      */
@@ -143,11 +132,11 @@ public class MessageManager {
         return sendBack(standardColor(), tmp);
     }
 
-
     /**
-     * This is used to get a admin when admin commands are run it is pre-formatted Pass it the message path and it
-     * returns a string which You send direct to the player. Handel's all errors automatically.
-     *
+     * This is used to get a admin when admin commands are run it is
+     * pre-formatted Pass it the message path and it returns a string which You
+     * send direct to the player. Handel's all errors automatically.
+     * 
      * @param s String
      * @return String
      */
@@ -156,10 +145,9 @@ public class MessageManager {
         return sendBack(getAdminCol(), tmp);
     }
 
-
     /**
      * Send Error Message
-     *
+     * 
      * @param s String
      * @return String
      */
@@ -169,10 +157,9 @@ public class MessageManager {
         return sendBack(getErrorCol(), tmp);
     }
 
-
     /**
      * This is used to send the default No Permission Message on commands
-     *
+     * 
      * @return String
      */
     private String setNoPermMessage() {
@@ -181,16 +168,15 @@ public class MessageManager {
         return sendBack(getErrorCol(), tmp);
     }
 
-
     /**
-     * Returns the user a standard message pre-formatted if they do not have permission to do something.
-     *
+     * Returns the user a standard message pre-formatted if they do not have
+     * permission to do something.
+     * 
      * @return String
      */
     public String getNoPerm() {
         return noPerm;
     }
-
 
     public String noConsole() {
 
@@ -199,10 +185,9 @@ public class MessageManager {
         return sendBack(stripColor(prefix), stripColor(tmp));
     }
 
-
     /**
      * Internal method that does all the checking and formatting of the string
-     *
+     * 
      * @param s String
      * @return String
      */
@@ -231,10 +216,10 @@ public class MessageManager {
 
     }
 
-
     /**
-     * Checks if the requested method actually exists. Returns True if it exists and false if it doesn't
-     *
+     * Checks if the requested method actually exists. Returns True if it exists
+     * and false if it doesn't
+     * 
      * @param s String
      * @return boolean
      */
@@ -244,10 +229,10 @@ public class MessageManager {
 
     }
 
-
     /**
-     * Internal function to see if the method has been based a string True if it is a string and false if it isn't
-     *
+     * Internal function to see if the method has been based a string True if it
+     * is a string and false if it isn't
+     * 
      * @param s String
      * @return boolean
      * @throws Exception
@@ -258,10 +243,10 @@ public class MessageManager {
 
     }
 
-
     /**
-     * Central function that concatenates the formatted prefix and message text into a single string
-     *
+     * Central function that concatenates the formatted prefix and message text
+     * into a single string
+     * 
      * @param start String
      * @param messa String
      * @return String
@@ -271,10 +256,9 @@ public class MessageManager {
         return start + messa;
     }
 
-
     /**
      * Strips all color formatting from a string
-     *
+     * 
      * @param s String
      * @return String
      */
@@ -283,10 +267,9 @@ public class MessageManager {
         return ChatColor.stripColor(s);
     }
 
-
     /**
      * Get raw message.
-     *
+     * 
      * @param String
      * @return String the string
      */

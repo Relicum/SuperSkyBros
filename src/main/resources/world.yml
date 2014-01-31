@@ -1,0 +1,47 @@
+# Stores default settings to apply to new worlds
+autosetup:
+  properties:
+    force-gamemode: 'true'
+    allow-nether: 'false'
+    level-name: world
+    spawn-npcs: 'true'
+    pvp: 'true'
+    generate-structures: 'false'
+    difficulty: '2'
+    gamemode: '2'
+    view-distance: '7'
+    level-type: FLAT
+    allow-flight: 'true'
+    spawn-animals: 'true'
+    spawn-monsters: 'true'
+    announce-player-achievements: 'false'
+  bukkit:
+    generator: 'CleanroomGenerator'
+    allow-end: 'false'
+    warn-on-overload: 'false'
+world:
+  setspawn: 0,31,0
+  keepSpawnInMemory: true
+  spawnBlock: GOLD_BLOCK
+  blockLocation: 0,32,0
+  setTime: 6000
+  autoSave: true
+  difficulty: HARD
+  pvp: true
+  setStorm: false
+  setThundering: false
+  gameRules:
+    doFireTick: false
+    mobGriefing: false
+    doMobSpawning: false
+    doDaylightCycle: false
+newCreator:
+  type: FLAT
+  environment: NORMAL
+  generator: CleanroomGenerator
+  structures: 'false'
+
+
+
+
+

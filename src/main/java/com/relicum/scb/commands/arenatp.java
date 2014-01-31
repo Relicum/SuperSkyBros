@@ -1,6 +1,6 @@
 package com.relicum.scb.commands;
 
-import com.relicum.scb.SCB;
+import java.io.IOException;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -9,11 +9,9 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.io.IOException;
-
 /**
  * Bukkit-SCB
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
@@ -21,7 +19,7 @@ public class arenatp extends SubBase {
 
     /**
      * @param player Player
-     * @param args   String[]
+     * @param args String[]
      * @return boolean
      */
     @Override
@@ -42,41 +40,37 @@ public class arenatp extends SubBase {
             b = below.getBlock();
             b.setType(Material.GLASS);
             ch = tpto.getChunk();
-            player.sendMessage(SCB.getMessageManager().getAdminMessage("command.message.arenatpLoading"));
+            player.sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.arenatpLoading"));
             if (!ch.load()) {
-                player.sendMessage(SCB.getMessageManager().getErrorMessage("command.message.arenatpLoadingFail"));
+                player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.arenatpLoadingFail"));
             } else {
-
 
                 teleportToLobby(player, tpto, args[0]);
 
             }
         } catch (Exception e) {
-            String me = SCB.getMessageManager().getErrorMessage("command.message.arenatpDoesNotExist");
+            String me = SkyApi.getMessageManager().getErrorMessage("command.message.arenatpDoesNotExist");
             String tmp = me.replace("%ID%", args[0]);
             player.sendMessage(tmp);
             e.printStackTrace();
 
         }
 
-
         return true;
     }
 
-
     /**
      * Teleports the player to the given location
-     *
+     * 
      * @param p Player
      * @param l Location
      * @return boolean
      * @throws IllegalArgumentException
      */
     public boolean teleportToLobby(final Player p, final Location l, final String a) {
-        String mess = SCB.getMessageManager().getAdminMessage("command.message.arenatpSuccess");
+        String mess = SkyApi.getMessageManager().getAdminMessage("command.message.arenatpSuccess");
         final String tmp = mess.replace("%ID%", a);
-        SCB.getInstance().getServer().getScheduler().runTaskLater(
-                SCB.getInstance(), new Runnable() {
+        SkyApi.getSCB().getServer().getScheduler().runTaskLater(SkyApi.getSCB(), new Runnable() {
 
             @Override
             public void run() {
@@ -91,21 +85,22 @@ public class arenatp extends SubBase {
         return true;
     }
 
-
     /**
-     * Simplify set this function to set the field mNode with the commands description will come from in the
-     * messages.yml file You do not need to enter the full node as it will be prefixed for you. Eg is the full node is
-     * command.description.createarena you only need to set this to createarena
+     * Simplify set this function to set the field mNode with the commands
+     * description will come from in the messages.yml file You do not need to
+     * enter the full node as it will be prefixed for you. Eg is the full node
+     * is command.description.createarena you only need to set this to
+     * createarena
      */
     @Override
     public void setmDescription() {
         mNode = "arenatp";
     }
 
-
     /**
-     * Simply set this to return the the number of arguments The command should receive
-     *
+     * Simply set this to return the the number of arguments The command should
+     * receive
+     * 
      * @return Integer
      */
     @Override
@@ -113,10 +108,9 @@ public class arenatp extends SubBase {
         return 1;
     }
 
-
     /**
      * Simply set this to return the clist permission
-     *
+     * 
      * @return String
      */
     @Override
@@ -124,10 +118,9 @@ public class arenatp extends SubBase {
         return "ssba.admin.arenatp";
     }
 
-
     /**
      * Simply set this to return the clist Usage
-     *
+     * 
      * @return String
      */
     @Override
@@ -135,10 +128,9 @@ public class arenatp extends SubBase {
         return "/ssba arenatp [id]";
     }
 
-
     /**
      * Set this to the label of the command
-     *
+     * 
      * @return String
      */
     @Override
@@ -146,10 +138,9 @@ public class arenatp extends SubBase {
         return "ssba arenatp";
     }
 
-
     /**
      * Set com
-     *
+     * 
      * @return String
      */
     @Override
@@ -157,9 +148,8 @@ public class arenatp extends SubBase {
         return "ssba arenatp";
     }
 
-
     @Override
     public Plugin getPlugin() {
-        return SCB.getInstance();
+        return SkyApi.getSCB();
     }
 }

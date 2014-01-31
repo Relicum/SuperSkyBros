@@ -3,9 +3,8 @@ package com.relicum.scb.objects.inventory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import com.relicum.scb.SCB;
 import com.relicum.scb.objects.signs.utils.Col;
-
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -110,10 +109,9 @@ public class ClearInventory {
 
     public static void UpdateInv(final Player p) {
 
-        SCB.getInstance().getServer().getScheduler().runTask(
-                SCB.getInstance(), new Runnable() {
+        SkyApi.getSCB().getServer().getScheduler().runTask(SkyApi.getSCB(), new Runnable() {
 
-            @Override
+           @Override
             public void run() {
                 p.updateInventory();
 

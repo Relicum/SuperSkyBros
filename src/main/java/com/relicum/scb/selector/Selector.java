@@ -1,6 +1,6 @@
 package com.relicum.scb.selector;
 
-import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.Material;
 
 
@@ -22,7 +22,7 @@ public class Selector implements AutoCloseable {
 
     private void loadItem() {
 
-        item = SCB.getInstance().getConfig().getString("selectorId");
+        item = SkyApi.getSCB().getConfig().getString("selectorId");
 
     }
 

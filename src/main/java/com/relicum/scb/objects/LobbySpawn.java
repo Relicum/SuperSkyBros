@@ -1,26 +1,24 @@
 package com.relicum.scb.objects;
 
-import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 /**
  * Bukkit-SCB
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
 public class LobbySpawn extends ISpawn {
 
-
     public LobbySpawn(Location lo) {
         super(lo);
     }
 
-
     /**
-     * Set the permission to go to  spawn
-     *
+     * Set the permission to go to spawn
+     * 
      * @param per String
      */
     @Override
@@ -28,10 +26,9 @@ public class LobbySpawn extends ISpawn {
         this.Perm = per;
     }
 
-
     /**
      * Get the permission to use the spawn.
-     *
+     * 
      * @return boolean
      */
     @Override
@@ -39,10 +36,9 @@ public class LobbySpawn extends ISpawn {
         return this.Perm;
     }
 
-
     /**
      * Teleports the player to the given location
-     *
+     * 
      * @param p Player
      * @param l Location
      * @return boolean
@@ -50,8 +46,7 @@ public class LobbySpawn extends ISpawn {
      */
     @Override
     public boolean teleportToLobby(final Player p, final Location l) {
-        SCB.getInstance().getServer().getScheduler().runTask(
-                SCB.getInstance(), new Runnable() {
+        SkyApi.getSCB().getServer().getScheduler().runTask(SkyApi.getSCB(), new Runnable() {
 
             @Override
             public void run() {
@@ -64,31 +59,28 @@ public class LobbySpawn extends ISpawn {
         return true;
     }
 
-
     /**
      * Method used to save the data to storage
-     *
+     * 
      * @return boolean
      */
     @Override
     public boolean save() {
 
-
         return true;
     }
 
-
     /**
      * Method used to load the data from storage
-     *
+     * 
      * @return boolean
      */
     @Override
     public boolean load() {
 
-        //new Location(getWorld(), (double) getX(), (double) getY(), (double) getZ(), (float) getYaw(), (float) getPitch());
+        // new Location(getWorld(), (double) getX(), (double) getY(), (double)
+        // getZ(), (float) getYaw(), (float) getPitch());
         return false;
     }
-
 
 }

@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 /**
  * SuperSkyBros First Created 03/10/13
- *
+ * 
  * @author Relicum
  * @version 0.1
  */
@@ -28,25 +28,23 @@ public class InventoryManager {
 
     public InventoryManager() {
 
-        //path = SCB.getInstance().getDataFolder() + "/players/players.xml";
+        // path = SkyApi.getSCB().getDataFolder() + "/players/players.xml";
         // this.reader = XStreamReader.getFi(path);
-        //this.writer = XStreamWriter.getFos(path);
+        // this.writer = XStreamWriter.getFos(path);
 
         // XStream xstream = new XStream(new Xpp3Driver());
 
         // xstream.alias("Storage", StorePlayerSettings.class);
 
         // this.strategy = new FilePersistenceStrategy(new
-        // File(SCB.getInstance().getDataFolder() + "/players/"), xstream);
+        // File(SkyApi.getSCB().getDataFolder() + "/players/"), xstream);
         // this.xmap = new XmlMap(this.strategy);
 
     }
 
-
     public boolean isInStore(String name) {
         return false; // this.xmap.containsKey(name);
     }
-
 
     public StorePlayerSettings getPlayersStore(String name) {
         return null;
@@ -54,14 +52,11 @@ public class InventoryManager {
 
     }
 
-
     public void removePlayerFromStore(String name) {
         // this.xmap.remove(name);
     }
 
-
     public boolean storeOldInventory(Player player) {
-
 
         if (this.playerStore.containsKey(player.getName()))
             System.out.println("Player already stored but we will update it");
@@ -73,6 +68,5 @@ public class InventoryManager {
         return true;
 
     }
-
 
 }

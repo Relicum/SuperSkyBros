@@ -1,6 +1,6 @@
 package com.relicum.scb.arena;
 
-import com.relicum.scb.SCB;
+import java.util.*;
 import com.relicum.scb.configs.ArenaConfig;
 import com.relicum.scb.objects.ArenaLobby;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
@@ -8,8 +8,6 @@ import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.SerializedLocation;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.util.Vector;
-
-import java.util.*;
 
 /**
  * The type ArenaIO.
@@ -81,7 +79,6 @@ public class ArenaIO {
      */
     private ArenaConfig config;
 
-
     public ArenaIO() {
         this.config = SkyApi.getSm().getArenaConfig();
         if (!this.config.getConfig().contains("ARENADEFAULTS")) {
@@ -108,7 +105,7 @@ public class ArenaIO {
 
     /**
      * New create.
-     *
+     * 
      * @param ar the ar
      * @param ch the ch
      * @return the boolean
@@ -122,7 +119,7 @@ public class ArenaIO {
 
         setWorld(ar.getWorld().getName());
         setMap(ar.getMn());
-        //setEnable(this.defaults.getBoolean("isEnabled"));
+        // setEnable(this.defaults.getBoolean("isEnabled"));
         setMinPlayers(this.defaults.getInt("minPlayers"));
         setMaxPlayers(this.defaults.getInt("maxPlayers"));
         setMaxTime(this.defaults.getLong("maxTime"));
@@ -162,7 +159,6 @@ public class ArenaIO {
         return true;
     }
 
-
     @SuppressWarnings("unchecked")
     public Map<String, Object> getArenaHash() {
 
@@ -190,10 +186,8 @@ public class ArenaIO {
         return arena;
     }
 
-
     @SuppressWarnings("unchecked")
     public Map<Integer, Arena> loadArenas() {
-
 
         Set<String> f = getArenaKeys();
         Map<Integer, Arena> ar = new HashMap<>(f.size());
@@ -205,40 +199,42 @@ public class ArenaIO {
             ConfigurationSection st = config.getConfig().getConfigurationSection(path);
             Arena na = makeArena(Integer.parseInt(k), st);
             ar.put(Integer.parseInt(k), na);
-            SCB.getInstance().getLogger().info("Arena " + k + " has been loaded");
+            SkyApi.getSCB().getLogger().info("Arena " + k + " has been loaded");
 
             if (na.hasGroupSpawn()) {
                 ArenaGroupSpawn ags = SIO.makeGroupSpawn(Integer.parseInt(k), spn);
                 na.setArenaSpawnGroup(ags);
-                SCB.getInstance().getLogger().info("ArenaSpawnGroup for arena " + k + " has been loaded and applied");
+                SkyApi.getSCB().getLogger().info("ArenaSpawnGroup for arena " + k + " has been loaded and applied");
             }
             if (spn != null) {
                 ArenaGroupSpawn ags = SIO.makeGroupSpawn(Integer.parseInt(k), spn);
                 na.setArenaSpawnGroup(ags);
-                SCB.getInstance().getLogger().info("ArenaSpawnGroup for arena " + k + " has been loaded and applied");
+                SkyApi.getSCB().getLogger().info("ArenaSpawnGroup for arena " + k + " has been loaded and applied");
 
             }
-/*			if (config.getConfig().getInt("arena.total") > 0 || na.hasGroupSpawn()) {
-
-				ArenaGroupSpawn ags = SIO.makeGroupSpawn(Integer.parseInt(k), spn);
-				na.setArenaSpawnGroup(ags);
-				SCB.getInstance().getLogger().info("ArenaSpawnGroup for arena " + k + " has been loaded and applied");
-
-			}*/
+            /*
+             * if (config.getConfig().getInt("arena.total") > 0 ||
+             * na.hasGroupSpawn()) {
+             * 
+             * ArenaGroupSpawn ags = SIO.makeGroupSpawn(Integer.parseInt(k),
+             * spn); na.setArenaSpawnGroup(ags);
+             * SkyApi.getSCB().getLogger().info("ArenaSpawnGroup for arena " + k
+             * + " has been loaded and applied");
+             * 
+             * }
+             */
 
         }
         return ar;
     }
 
-
     public Set<String> getArenaKeys() {
         return config.getConfig().getConfigurationSection("arena.arenas").getKeys(false);
     }
 
-
     /**
      * Get a String representing Vector Containing min
-     *
+     * 
      * @return String
      * @throws IllegalArgumentException if the new value is not acceptable.
      */
@@ -246,10 +242,9 @@ public class ArenaIO {
         return min;
     }
 
-
     /**
      * Get a Vector Containing max
-     *
+     * 
      * @return String
      * @throws IllegalArgumentException if the new value is not acceptable.
      */
@@ -257,10 +252,9 @@ public class ArenaIO {
         return max;
     }
 
-
     /**
      * Set Vector for min
-     *
+     * 
      * @param pos1 String
      * @throws IllegalArgumentException if the new value is not acceptable.
      */
@@ -268,10 +262,9 @@ public class ArenaIO {
         this.min = pos1;
     }
 
-
     /**
      * Set Vector for max
-     *
+     * 
      * @param pos2 String
      * @throws IllegalArgumentException
      */
@@ -279,107 +272,96 @@ public class ArenaIO {
         this.max = pos2;
     }
 
-
     /**
      * Get the world name as a string
-     *
+     * 
      * @return String
      */
     public String getWorld() {
         return world;
     }
 
-
     /**
      * Set the world name as a string
-     *
+     * 
      * @param world String
      */
     public void setWorld(String world) {
         this.world = world;
     }
 
-
     /**
      * Returns if the arena is enabled
-     *
+     * 
      * @return boolean
      */
     public boolean isEnable() {
         return enable;
     }
 
-
     /**
      * If to set this arena to enable or not
-     *
+     * 
      * @param enable boolean
      */
     public void setEnable(boolean enable) {
         this.enable = enable;
     }
 
-
     /**
      * Returns the map name of the arena
-     *
+     * 
      * @return String
      */
     public String getMap() {
         return map;
     }
 
-
     /**
      * Sets the map name of the arena
-     *
+     * 
      * @param map String
      */
     public void setMap(String map) {
         this.map = map;
     }
 
-
     /**
      * Get the permission of the arena
-     *
+     * 
      * @return String
      */
     public String getPerm() {
         return Perm;
     }
 
-
     /**
      * Set the permission of the arena
-     *
+     * 
      * @param perm String
      */
     public void setPerm(String perm) {
         Perm = perm;
     }
 
-
     /**
      * Get the arena id
-     *
+     * 
      * @return Integer
      */
     public Integer getArenaId() {
         return arenaId;
     }
 
-
     /**
      * Set the arena id
-     *
+     * 
      * @param arenaId Integer
      */
     public void setArenaId(Integer arenaId) {
         this.arenaId = arenaId;
         this.setArenaPath();
     }
-
 
     /**
      * Set the arena path for storage
@@ -389,80 +371,72 @@ public class ArenaIO {
         this.arenaPath = (this.defaults.getString("arenaPath") + "." + getArenaId());
     }
 
-
     /**
      * Get the arena path for to use for looking up from storage
-     *
+     * 
      * @return String
      */
     public String getArenaPath() {
         return arenaPath;
     }
 
-
     /**
      * Returns Max Points as a Vector
-     *
+     * 
      * @return Vector
      */
     public Vector getvMax() {
         return vMaxs;
     }
 
-
     /**
      * Set Vector for the max points
-     *
+     * 
      * @param vMax Vector
      */
     public void setvMax(Vector vMax) {
         this.vMaxs = vMax;
     }
 
-
     /**
      * Returns Min Points as a Vector
-     *
+     * 
      * @return Vector
      */
     public Vector getvMin() {
         return vMins;
     }
 
-
     /**
      * Set Vector for the min points
-     *
+     * 
      * @param vMin Vector
      */
     public void setvMin(Vector vMins) {
         this.vMins = vMins;
     }
 
-
     /**
      * AdminSpawn Vector
-     *
+     * 
      * @return Vector
      */
     public Vector getvTop() {
         return vTops;
     }
 
-
     /**
      * Set Vector for admin spawn
-     *
+     * 
      * @param vTop Vector
      */
     public void setvTop(Vector vTop) {
         this.vTops = vTop;
     }
 
-
     /**
      * Set Admin Spawn as string
-     *
+     * 
      * @param st String
      */
     public void setTop(String st) {
@@ -470,10 +444,9 @@ public class ArenaIO {
         this.top = st;
     }
 
-
     /**
      * Get Admin Spawn as a String representing a Vector
-     *
+     * 
      * @return String
      */
     public String getTop() {
@@ -481,100 +454,88 @@ public class ArenaIO {
         return this.top;
     }
 
-
     /**
      * Get the max time of game
-     *
+     * 
      * @return Long
      */
     public Long getMaxTime() {
         return maxTime;
     }
 
-
     /**
      * Set the max time of game
-     *
+     * 
      * @param Long
      */
     public void setMaxTime(Long maxTime) {
         this.maxTime = maxTime;
     }
 
-
     /**
      * Get the minimum number player for game
-     *
+     * 
      * @return int
      */
     public int getMinPlayers() {
         return minPlayers;
     }
 
-
     /**
      * Set the minimum number players for game
-     *
+     * 
      * @param int
      */
     public void setMinPlayers(int minPlayers) {
         this.minPlayers = minPlayers;
     }
 
-
     /**
      * Get the maximum number players for game
-     *
+     * 
      * @return int
      */
     public int getMaxPlayers() {
         return maxPlayers;
     }
 
-
     /**
      * Set the maximum number players for game
-     *
+     * 
      * @param int
      */
     public void setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
     }
 
-
     public boolean getDoubleJump() {
         return doubleJump;
     }
-
 
     public void setDoubleJump(boolean doubleJump) {
         this.doubleJump = doubleJump;
     }
 
-
     public ArenaLobby getArenaLobby() {
         return arenaLobby;
     }
-
 
     public void setArenaLobby(ArenaLobby arenaLobby) {
         this.arenaLobby = arenaLobby;
     }
 
-
     /**
      * Get the ArenaStatus
-     *
+     * 
      * @return ArenaStatus
      */
     public ArenaStatus getStatus() {
         return status;
     }
 
-
     /**
      * Set the ArenaStatus
-     *
+     * 
      * @param ArenaStatus
      */
     public void setStatus(ArenaStatus status) {
@@ -584,53 +545,48 @@ public class ArenaIO {
         }
     }
 
-
     /**
      * Set chunks list
-     *
+     * 
      * @param List<Vector> the chunks
      */
     public void setChunks(List<Vector> chunks) {
 
         this.chunk = new ArrayList<>(chunks.size());
 
-        for (Vector s : chunks) this.chunk.add(s);
+        for (Vector s : chunks)
+            this.chunk.add(s);
     }
-
 
     /**
      * Get chunks list
-     *
+     * 
      * @return List<Vector> the list
      */
     public List<Vector> getChunks() {
         return this.chunk;
     }
 
-
     /**
      * Gets unique map.
-     *
+     * 
      * @return String the unique map
      */
     public String getUniqueMap() {
         return uniqueMap;
     }
 
-
     /**
      * Sets unique map.
-     *
+     * 
      * @param String
      */
     public void setUniqueMap(String m) {
         this.uniqueMap = m;
     }
 
-
     @SuppressWarnings("unchecked")
     public Arena makeArena(Integer id, ConfigurationSection st) {
-
 
         Arena arena = new Arena(id);
         arena.setArenaName(st.getString("map"));
@@ -643,7 +599,8 @@ public class ArenaIO {
         arena.setPerm(st.getString("permission"));
         arena.setStatus(st.getString("status"));
         arena.setUniqueMap(st.getString("umap"));
-        ArenaRegion ag = new ArenaRegion(st.getVector("region.min"), st.getVector("region.max"), st.getVector("region.top"), id, st.getString("world"), st.getString("map"), (SerializedLocation) st.get("lmax"), (SerializedLocation) st.get("lmin"), (SerializedLocation) st.get("lad"));
+        ArenaRegion ag = new ArenaRegion(st.getVector("region.min"), st.getVector("region.max"), st.getVector("region.top"), id, st.getString("world"), st.getString("map"),
+                                         (SerializedLocation) st.get("lmax"), (SerializedLocation) st.get("lmin"), (SerializedLocation) st.get("lad"));
         arena.setChunk((List<Vector>) st.get("chunks"));
         arena.setAreg(ag);
         arena.setWorldName(st.getString("world"));
@@ -654,126 +611,113 @@ public class ArenaIO {
 
     }
 
-
     /**
      * Gets lobby max.
-     *
+     * 
      * @return the lobby max
      */
     public Vector getLobbyMax() {
         return lobbyMax;
     }
 
-
     /**
      * Sets lobby max.
-     *
+     * 
      * @param lobbyMax the lobby max
      */
     public void setLobbyMax(Vector lobbyMax) {
         this.lobbyMax = lobbyMax;
     }
 
-
     /**
      * Gets lobby min.
-     *
+     * 
      * @return the lobby min
      */
     public Vector getLobbyMin() {
         return lobbyMin;
     }
 
-
     /**
      * Sets lobby min.
-     *
+     * 
      * @param lobbyMin the lobby min
      */
     public void setLobbyMin(Vector lobbyMin) {
         this.lobbyMin = lobbyMin;
     }
 
-
     /**
      * Gets lobby spawn.
-     *
+     * 
      * @return the lobby spawn
      */
     public Vector getLobbySpawn() {
         return lobbySpawn;
     }
 
-
     /**
      * Sets lobby spawn.
-     *
+     * 
      * @param lobbySpawn the lobby spawn
      */
     public void setLobbySpawn(Vector lobbySpawn) {
         this.lobbySpawn = lobbySpawn;
     }
 
-
     /**
      * Gets lobby id.
-     *
+     * 
      * @return the lobby id
      */
     public Integer getLobbyId() {
         return lobbyId;
     }
 
-
     /**
      * Sets lobby id.
-     *
+     * 
      * @param lobbyId the lobby id
      */
     public void setLobbyId(Integer lobbyId) {
         this.lobbyId = lobbyId;
     }
 
-
     /**
      * Gets lobby world.
-     *
+     * 
      * @return the lobby world
      */
     public String getLobbyWorld() {
         return lobbyWorld;
     }
 
-
     /**
      * Sets lobby world.
-     *
+     * 
      * @param lobbyWorld the lobby world
      */
     public void setLobbyWorld(String lobbyWorld) {
         this.lobbyWorld = lobbyWorld;
     }
 
-
     /**
      * Gets Arena Group Spawn
-     *
+     * 
      * @return ArenaGroupSpawn
      */
     public ArenaGroupSpawn getAGP() {
         return AGP;
     }
 
-
     /**
      * Sets Arena Group Spawn
-     *
+     * 
      * @param ArenaGroupSpawn the aGP
      */
     public void setAGP(ArenaGroupSpawn a) {
         this.AGP = a;
     }
-
 
     public boolean saveArena(Arena arena) {
 

@@ -2,7 +2,7 @@ package com.relicum.scb.objects.inventory;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +38,7 @@ public class Settings {
     }
 
     public void setInv() {
-        this.inv = SCB.getInstance().getServer().createInventory(null, InventoryType.PLAYER);
+        this.inv = SkyApi.getSCB().getServer().createInventory(null, InventoryType.PLAYER);
     }
 
     public Inventory getInv() {

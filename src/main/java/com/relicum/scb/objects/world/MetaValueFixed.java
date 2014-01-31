@@ -1,6 +1,6 @@
 package com.relicum.scb.objects.world;
 
-import com.relicum.scb.SCB;
+import com.relicum.scb.types.SkyApi;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
@@ -56,7 +56,7 @@ public class MetaValueFixed {
 
 
     public MetaValueFixed(Plugin owningPlugin, Object value) {
-        FixedMetadataValue fv = new FixedMetadataValue(SCB.getInstance(), SCB.getInstance().getServer().getWorld("Template"));
+        FixedMetadataValue fv = new FixedMetadataValue(SkyApi.getSCB(), SkyApi.getSCB().getServer().getWorld("Template"));
 
         WorldMeta wm = new WorldMeta();
         wm.getMetadata("ssbworldV1");
