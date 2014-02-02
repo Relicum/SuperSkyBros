@@ -51,10 +51,7 @@ public class GameManager {
         return SkyApi.getLobbyManager();
     }
 
-    public void addPlayer(SmashPl sp) {
 
-        this.players.put(sp.getPlayer().getUniqueId().toString(), sp.getStatus().toString());
-    }
 
     public ArenaStatus getArenaStatus(Integer i) {
 

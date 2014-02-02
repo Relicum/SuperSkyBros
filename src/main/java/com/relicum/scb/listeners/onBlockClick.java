@@ -1,12 +1,10 @@
 package com.relicum.scb.listeners;
 
 import java.util.List;
-import com.relicum.scb.SmashPl;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.inventory.ClearInventory;
 import com.relicum.scb.types.SkyApi;
-import com.relicum.scb.utils.PlayerSt;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.block.Block;
@@ -54,10 +52,7 @@ public class onBlockClick implements Listener {
                 return;
             }
 
-            SmashPl splayer = SmashPl.wrap(e.getPlayer());
-
-            splayer.pStatus = PlayerSt.UNKNOWN;
-            PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(splayer, "SIGN", SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB"));
+            PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(e.getPlayer(), "SIGN", SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB"));
             Bukkit.getServer().getPluginManager().callEvent(event);
 
             return;

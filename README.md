@@ -3,7 +3,12 @@ SuperSkyBros Updated To CraftBukkit 1.7.2_R0.3
 
 [![Build Status](https://travis-ci.org/Relicum/SuperSkyBros.png?branch=master)](https://travis-ci.org/Relicum/SuperSkyBros)
 
-<blockquote>Now making player classes</blockquote>
+<blockquote>WARNING CURRENTLY UNSAFE DUE TO INTERNAL DATA RESTRUCTURING.
+
+ONLY USE THE COMPILED VERSIONS FROM THE LINK BELOW
+
+THIS SHOULD ONLY BE LIKE THIS FOR A FEW DAYS
+</blockquote>
 
 <blockquote>To run this you MUST be using the latest version of CraftBukkit 1.7.2</blockquote>
 

@@ -1,7 +1,7 @@
 package com.relicum.scb.objects.signs.interfaces;
 
-import com.relicum.scb.SmashPl;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
 
 /**
  * SuperSkyBros First Created 11/09/13
@@ -27,11 +27,11 @@ public interface PSign {
 
     /**
      * Player Interacts with sign this function deals with it.
-     *
+     * 
      * @param Sign
-     * @param SmashPlayer
+     * @param Player
      * @return boolean
      */
-    boolean useSign(Sign sign, SmashPl player);
+    boolean useSign(Sign sign, Player player);
 
 }

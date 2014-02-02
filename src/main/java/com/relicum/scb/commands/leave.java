@@ -1,6 +1,5 @@
 package com.relicum.scb.commands;
 
-import com.relicum.scb.SmashPl;
 import com.relicum.scb.objects.inventory.RestoreInventory;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
@@ -23,8 +22,6 @@ public class leave extends SubBase {
     public boolean onCommand(Player player, String[] args) {
 
         if (SkyApi.getLobbyManager().isInLobby(player)) {
-            if (!(player instanceof SmashPl)) {
-                SmashPl splayer = SkyApi.getLobbyManager().getSmashPlayer(player.getName());
                 if (SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB")) {
                     if (!SkyApi.getSm().getAdminMode().contains(player.getPlayer().getName())) {
                         String tmp;
@@ -32,18 +29,14 @@ public class leave extends SubBase {
                         return true;
                     }
                 }
-                player.removeAttachment(splayer.getPermissionAttachment());
-                RestoreInventory.restore(player);
+
+               RestoreInventory.restore(player);
                 SkyApi.getInventoryManager().removePlayerFromStore(player.getName());
-                SkyApi.getLobbyManager().removePlayer(splayer);
+            SkyApi.getLobbyManager().removePlayer(player);
 
-                player.teleport(SkyApi.getLobbyManager().getLobbyRg().getWorld().getSpawnLocation());
-                splayer.sendMessage(SkyApi.getMessageManager().getMessage("command.message.leaveSuccess"));
-            } else {
-
-                player.sendMessage(SkyApi.getMessageManager().getErrorMessage("command.message.leaveNoWhereToGo"));
-            }
-        }
+               player.teleport(SkyApi.getLobbyManager().getLobbyRg().getWorld().getSpawnLocation());
+            player.sendMessage(SkyApi.getMessageManager().getMessage("command.message.leaveSuccess"));
+ }
         return true;
     }
 

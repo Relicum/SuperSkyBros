@@ -3,7 +3,6 @@ package com.relicum.scb.listeners;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.objects.inventory.ClearInventory;
 import com.relicum.scb.types.SkyApi;
-import com.relicum.scb.utils.PlayerSt;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -31,13 +30,13 @@ public class PlayerJoinLobby implements Listener {
     public void playerJoin(PlayerJoinLobbyEvent e) {
         if (e.joinFrom().equalsIgnoreCase("JOINEDSERVER") || e.joinFrom().equalsIgnoreCase("sign") || e.joinFrom().equalsIgnoreCase("command")) {
 
-            e.getPlayer().setPermissionAttachment(e.getPlayer().getPlayer().addAttachment(SkyApi.getSCB(), "bukkit.broadcast.ssblobby", true));
+            e.getPlayer().addAttachment(SkyApi.getSCB(), "bukkit.broadcast.ssblobby", true);
 
             SkyApi.getInventoryManager().storeOldInventory(e.getPlayer().getPlayer());
             ClearInventory.applyLobbyInv(e.getPlayer().getPlayer());
             SkyApi.getLobbyManager().addPlayer(e.getPlayer());
-            e.getPlayer().pStatus = PlayerSt.LOBBY;
-            if (!e.isDedicated()) {
+
+           if (!e.isDedicated()) {
                 e.getPlayer().sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.teleportToLobby"));
             }
             this.teleportToLobby(e.getPlayer().getPlayer(), SkyApi.getLobbyManager().getLobbyRg().getLobbySpawn().add(0.5, 0.5, 0.5));

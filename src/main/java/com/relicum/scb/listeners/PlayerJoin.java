@@ -8,7 +8,6 @@ import lombok.Setter;
 import com.relicum.scb.PlayerLoginManager;
 import com.relicum.scb.PlayerSettings;
 import com.relicum.scb.SCB;
-import com.relicum.scb.SmashPl;
 import com.relicum.scb.classes.PlayerType;
 import com.relicum.scb.configs.PlayerConfig;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
@@ -112,10 +111,10 @@ public class PlayerJoin {
          */
         List<String> st = Arrays.asList("    "
                 + "\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<",
-                ChatColor.GOLD + e.getPlayer().getName() + " welcome to the server");
+                ChatColor.GOLD + p.getName() + " welcome to the server");
 
         if (SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB")) {
-            SmashPl pl = new SmashPl(e.getPlayer());
+
             /*
              * if (VaultManager.perms.has(pl.getPlayer(), "ssba.admin") ||
              * pl.getPlayer().isOp()) { ChatColor b = ChatColor.BOLD; String pre
@@ -129,19 +128,17 @@ public class PlayerJoin {
              * }
              */
 
-            if (VaultManager.perms.has(pl.getPlayer(), "ssb.player.join") || pl.isOp()) {
+            if (VaultManager.perms.has(p, "ssb.player.join") || p.isOp()) {
                 e.setJoinMessage("");
 
-                pl.setpStatus(PlayerSt.JOINEDSERVER);
-                pl.setMyLocation("JOINEDSERVER");
-                PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(pl, "JOINEDSERVER", SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB"));
+                PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(p, "JOINEDSERVER", SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB"));
                 Bukkit.getServer().getPluginManager().callEvent(event);
                 System.out.println("Gets to the dedicatedssb section");
                 return;
             } else {
                 e.setJoinMessage("");
 
-                pl.kickPlayer(SkyApi.getMessageManager().getErrorMessage("system.noJoinPerm"));
+                p.kickPlayer(SkyApi.getMessageManager().getErrorMessage("system.noJoinPerm"));
                 return;
             }
 

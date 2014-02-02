@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.UUID;
 import com.relicum.scb.SCB;
-import com.relicum.scb.SmashPl;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.PermissionSaver;
 
@@ -72,7 +71,7 @@ public class DebugManager implements CommandExecutor {
                 System.out.println("There are no players in Lobby List");
                 return;
             }
-            for (SmashPl sm : SkyApi.getLobbyManager().getPlayersInLobby()) {
+            for (Player sm : SkyApi.getLobbyManager().getPlayersInLobby()) {
 
                 System.out.println("Player " + sm.getName() + " is in the Lobby List");
             }

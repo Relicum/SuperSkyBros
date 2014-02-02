@@ -4,6 +4,7 @@ import java.util.*;
 import com.relicum.scb.configs.LobbyConfig;
 import com.relicum.scb.objects.LobbyRg;
 import com.relicum.scb.types.SkyApi;
+
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -30,7 +31,7 @@ public class LobbyManager implements Listener {
     /**
      * Stores List of players in the Lobby
      */
-    private Map<String, SmashPl> players = new HashMap<>();
+    private Map<String, Player> players = new HashMap<>();
 
     private ArrayList<UUID> players2 = new ArrayList<>();
 
@@ -106,32 +107,18 @@ public class LobbyManager implements Listener {
      * 
      * @param play String
      */
-    public void addPlayer(SmashPl player) {
+    public void addPlayer(Player player) {
 
         if (!isInLobby(player)) {
             System.out.println(player.getName());
             players.put(player.getName(), player);
             pname.add(player.getName());
-            players2.add(player.getUUID());
-            System.out.println("Player " + player.getName() + " added to lobby list from line 124 of player lobby");
+            players2.add(player.getUniqueId());
+           System.out.println("Player " + player.getName() + " added to lobby list from line 124 of player lobby");
         }
 
     }
 
-    /**
-     * removes a player from the lobby using SmashPl as input
-     * 
-     * @param play String
-     */
-    public void removePlayer(SmashPl play) {
-
-        if (isInLobby(play.getName())) {
-            players.remove(play.getName());
-            players2.remove(play.getUUID());
-            pname.remove(play.getName());
-            System.out.println("Player " + play + " removed from lobby list");
-        }
-    }
 
     /**
      * Remove player. Using Bukkit Player as input
@@ -159,16 +146,6 @@ public class LobbyManager implements Listener {
 
     }
 
-    /**
-     * Checks to see if a player is already in the lobby using the SmashPl
-     * object
-     * 
-     * @param player the SmashPl
-     * @return the boolean
-     */
-    public boolean isInLobby(SmashPl player) {
-        return pname.contains(player.getName());
-    }
 
     /**
      * Checks to see if a player is already in the lobby using the Players
@@ -230,9 +207,9 @@ public class LobbyManager implements Listener {
      * 
      * @return the list
      */
-    public Collection<SmashPl> getPlayersInLobby() {
+    public Collection<Player> getPlayersInLobby() {
 
-        return players.values();
+       return players.values();
     }
 
     public List<String> getPlayerNamesInLobby() {
@@ -356,9 +333,6 @@ public class LobbyManager implements Listener {
         return false;
     }
 
-    public SmashPl getSmashPlayer(String name) {
-        return players.get(name);
-    }
 
     public static Permission getLobbyBroadCastPerm() {
         return BroadcastManager.getLobby();
