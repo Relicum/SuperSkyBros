@@ -1,6 +1,6 @@
 package com.relicum.scb.objects.spawns;
 
-import com.relicum.scb.BukkitInterface;
+import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
 
@@ -52,7 +52,7 @@ public abstract class SpawnInst implements ISpawnable, ISpawnableInstance, Seria
      * @return World
      */
     public World getWorld() {
-        return BukkitInterface.getWorld(this.getWorldString());
+        return Bukkit.getServer().getWorld(this.getWorldString());
     }
 
 

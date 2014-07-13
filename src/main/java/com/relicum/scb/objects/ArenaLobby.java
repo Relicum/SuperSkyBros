@@ -1,6 +1,6 @@
 package com.relicum.scb.objects;
 
-import com.relicum.scb.BukkitInterface;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
@@ -102,7 +102,7 @@ public class ArenaLobby {
      */
     public World getWorld() {
 
-        return BukkitInterface.getServer().getWorld(this.world);
+        return Bukkit.getServer().getWorld(this.world);
     }
 
 

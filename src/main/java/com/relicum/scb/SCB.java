@@ -1,10 +1,5 @@
 package com.relicum.scb;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
 import com.relicum.scb.commands.CommandManagerFirstJoin;
 import com.relicum.scb.commands.DebugManager;
 import com.relicum.scb.configs.ServerStatus;
@@ -15,7 +10,6 @@ import com.relicum.scb.objects.inventory.StorePlayerSettings;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.*;
 import com.relicum.scb.we.WorldEditPlugin;
-
 import org.bukkit.*;
 import org.bukkit.block.BlockState;
 import org.bukkit.command.CommandExecutor;
@@ -27,9 +21,15 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+
 /**
  * Main SSB Class
- * 
+ *
  * @author Relicum
  * @version 0.9
  */
@@ -91,7 +91,7 @@ public class SCB extends JavaPlugin implements Listener {
         }
         if (getConfig().getBoolean("threads.useLoginService")) {
 
-          try {
+            try {
                 loginService = ScheduledManager.loginService(getConfig().getInt("threads.loginThreads"));
                 SkyApi.getCMsg().INFO("New Login ExecutorService created");
             } catch (Exception e) {
@@ -105,7 +105,6 @@ public class SCB extends JavaPlugin implements Listener {
         saveResource("messages.properties", true);
         // SkyApi.getCMsg().INFO("New Message Properties file saved");
 
-        BukkitInterface.setServer(this.getServer());
 
         SkyApi.getVaultManager();
 
@@ -146,7 +145,7 @@ public class SCB extends JavaPlugin implements Listener {
             CommandExecutor cm = SkyApi.getCommandManager();
 
             SkyApi.getCommandManager().addWorld(SkyApi.getSm().getSsbWorlds());
-       p.getCommand("ssb").setExecutor(cm);
+            p.getCommand("ssb").setExecutor(cm);
             p.getCommand("ssba").setExecutor(cm);
             p.getCommand("ssbw").setExecutor(cm);
             p.getCommand("ssb").setPermissionMessage(SkyApi.getMessageManager().getNoPerm());
@@ -176,7 +175,7 @@ public class SCB extends JavaPlugin implements Listener {
             SkyApi.getSm().getSignConfig().saveConfig();
             SkyApi.getSm().getSignFormatConfig().saveConfig();
             if (getConfig().getBoolean("threads.useLoginService")) {
-      if (ScheduledManager.loginServiceForShutDown()) {
+                if (ScheduledManager.loginServiceForShutDown()) {
                     SkyApi.getCMsg().INFO("Login Service Shutdown successfully");
                 } else {
                     SkyApi.getCMsg().SERVE("Fatal error shutting down Login Service");
@@ -218,7 +217,7 @@ public class SCB extends JavaPlugin implements Listener {
 
     }
 
-   public void unloadLobbyEvents() {
+    public void unloadLobbyEvents() {
         if (!this.getConfig().getBoolean("dedicatedSSB")) {
             LobbyBlockBreak bl = new LobbyBlockBreak(this);
             LobbyBlockPlace bp = new LobbyBlockPlace(this);
@@ -293,7 +292,6 @@ public class SCB extends JavaPlugin implements Listener {
             p.pm.registerEvents(new SignChange(), p);
             p.pm.registerEvents(new PlayerInteract(), p);
             p.pm.registerEvents(new ShopManager(p), p);
-            // p.pm.registerEvents(new ArenaChangeStatusOld(p), p);
             // List<String> wol = new ArrayList<>();
 
             // p.pm.registerEvents(new PlayerToggleFly(p),p);
@@ -453,7 +451,7 @@ public class SCB extends JavaPlugin implements Listener {
 
     /**
      * Get world creator.
-     * 
+     *
      * @param name the name of the world
      * @return the world creator
      */
@@ -463,12 +461,12 @@ public class SCB extends JavaPlugin implements Listener {
 
     /**
      * Gets instance of WorldEdit to use
-     * 
+     *
      * @return the WorldEdit plugin api
      */
     public static WorldEditPlugin getWorldEdit() {
 
-        Plugin WE = BukkitInterface.getServer().getPluginManager().getPlugin("WorldEdit");
+        Plugin WE = Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
 
         if ((WE instanceof WorldEditPlugin)) {
             return (WorldEditPlugin) WE;

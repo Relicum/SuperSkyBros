@@ -1,12 +1,13 @@
 package com.relicum.scb.utils;
 
+import com.relicum.scb.types.SkyApi;
+
 import java.text.BreakIterator;
 import java.util.Locale;
-import com.relicum.scb.types.SkyApi;
 
 /**
  * SuperSkyBros First Created 27/11/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -24,7 +25,8 @@ public class StringUtils {
                 c = 0;
             }
             c += (s.length() + 1);
-            sb.append(s).append(" ");
+            if (c != 0)
+                sb.append(s).append(" ");
         }
 
         SkyApi.getCMsg().INFO(sb.toString());
@@ -32,9 +34,9 @@ public class StringUtils {
 
     /**
      * Format lines.
-     * 
-     * @param target the target
-     * @param maxLength the max length
+     *
+     * @param target        the target
+     * @param maxLength     the max length
      * @param currentLocale the current locale
      */
     public static void formatLines(String target, int maxLength, Locale currentLocale) {
@@ -60,7 +62,7 @@ public class StringUtils {
 
     /**
      * Returns the direction you are looking
-     * 
+     *
      * @param yaw float
      * @return float
      */

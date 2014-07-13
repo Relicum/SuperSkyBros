@@ -13,7 +13,7 @@ import com.relicum.scb.we.WEManager;
 /**
  * Central Class to access all managers without have multiple additions of the
  * same class being created. Is class uses the singleton patten to achieve this.
- * 
+ *
  * @author Relicum
  * @version 0.3
  */
@@ -38,7 +38,7 @@ public class SkyApi {
 
     /**
      * Get command manager.
-     * 
+     *
      * @return the command manager
      */
     public static CommandManager getCommandManager() {
@@ -50,7 +50,7 @@ public class SkyApi {
 
     /**
      * Get lobby manager.
-     * 
+     *
      * @return the lobby manager
      */
     public static LobbyManager getLobbyManager() {
@@ -62,7 +62,7 @@ public class SkyApi {
 
     /**
      * Get settings manager.
-     * 
+     *
      * @return the settings manager
      */
     public static SM getSm() {
@@ -74,7 +74,7 @@ public class SkyApi {
 
     /**
      * Get arena manager.
-     * 
+     *
      * @return the arena manager
      */
     public static ArenaManager getArenaManager() {
@@ -87,7 +87,7 @@ public class SkyApi {
 
     /**
      * Get the Colored Console Writer
-     * 
+     *
      * @return consoleColor the colored console manager
      */
     public static cMsg getCMsg() {
@@ -99,7 +99,7 @@ public class SkyApi {
 
     /**
      * Get sign manager.
-     * 
+     *
      * @return the sign manager
      */
     public static SignManager getSignManager() {
@@ -111,7 +111,7 @@ public class SkyApi {
 
     /**
      * Get world edit manager.
-     * 
+     *
      * @return the world edit manager
      */
     public static WEManager getWorldEditManager() {
@@ -123,7 +123,7 @@ public class SkyApi {
 
     /**
      * Get message manager.
-     * 
+     *
      * @return the message manager
      */
     public static MessageManager getMessageManager() {
@@ -136,7 +136,7 @@ public class SkyApi {
 
     /**
      * Gets inventory manager.
-     * 
+     *
      * @return the inventory manager
      */
     public static InventoryManager getInventoryManager() {
@@ -148,7 +148,7 @@ public class SkyApi {
 
     /**
      * Get world manager.
-     * 
+     *
      * @return the world manager
      */
     public static WorldManager getWorldManager() {
@@ -161,7 +161,7 @@ public class SkyApi {
 
     /**
      * Get World Manager V2 This is still in construction
-     * 
+     *
      * @return the World Manager V2
      */
     public static WManager getWM() {
@@ -173,7 +173,7 @@ public class SkyApi {
 
     /**
      * Get perms manager.
-     * 
+     *
      * @return the perms manager
      */
     public static PermsManager getPermsManager() {
@@ -185,7 +185,7 @@ public class SkyApi {
 
     /**
      * Get chat manager.
-     * 
+     *
      * @return the chat manager
      */
     public static ChatManager getChatManager() {
@@ -197,7 +197,7 @@ public class SkyApi {
 
     /**
      * Gets properties manager.
-     * 
+     *
      * @return the properties manager
      */
     public static PropertiesManager getPropertiesManager() {
@@ -213,7 +213,7 @@ public class SkyApi {
 
     /**
      * Gets vault manager.
-     * 
+     *
      * @return the vault manager
      */
     public static VaultManager getVaultManager() {
@@ -222,7 +222,7 @@ public class SkyApi {
 
     /**
      * Get main plugin.
-     * 
+     *
      * @return the SCB
      */
     public static SCB getSCB() {
@@ -231,7 +231,7 @@ public class SkyApi {
 
     /**
      * Init void.
-     * 
+     *
      * @param scb the scb
      */
     public static void init(SCB sCb) {
@@ -241,15 +241,14 @@ public class SkyApi {
 
     public static void loadManagers() {
         SkyApi.getMessageManager();
+        SkyApi.getLobbyManager();
         SkyApi.getArenaManager();
         SkyApi.getVaultManager();
         SkyApi.getChatManager();
         SkyApi.getPermsManager();
         SkyApi.getCMsg();
         SkyApi.getCommandManager();
-        SkyApi.getLobbyManager();
         SkyApi.getSignManager();
-        SkyApi.getWorldEditManager();
         SkyApi.getPropertiesManager();
         SkyApi.getInventoryManager();
     }

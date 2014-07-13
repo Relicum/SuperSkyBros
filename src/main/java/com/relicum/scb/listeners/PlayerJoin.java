@@ -1,10 +1,5 @@
 package com.relicum.scb.listeners;
 
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import lombok.Getter;
-import lombok.Setter;
 import com.relicum.scb.PlayerLoginManager;
 import com.relicum.scb.PlayerSettings;
 import com.relicum.scb.SCB;
@@ -15,16 +10,21 @@ import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.inventory.SerializableInventory;
 import com.relicum.scb.objects.inventory.StorePlayerSettings;
 import com.relicum.scb.types.SkyApi;
-import com.relicum.scb.utils.PlayerSt;
 import com.relicum.scb.utils.timers.StartTimer;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Bukkit-SCB
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -34,7 +34,6 @@ public class PlayerJoin {
 
     private SCB plugin;
     private boolean firstTimeOverride;
-    private PlayerSt status;
     private boolean mode;
     public PlayerSettings relicum;
     public StorePlayerSettings playerSettings;
@@ -110,7 +109,7 @@ public class PlayerJoin {
          * player.b(nbtTagCompound2);
          */
         List<String> st = Arrays.asList("    "
-                + "\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<",
+                        + "\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<",
                 ChatColor.GOLD + p.getName() + " welcome to the server");
 
         if (SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB")) {

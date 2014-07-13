@@ -1,6 +1,6 @@
 package com.relicum.scb.utils;
 
-import com.relicum.scb.BukkitInterface;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
@@ -54,7 +54,7 @@ public class SerializerUtil {
         }
         World world = null;
         if (w != null) {
-            world = BukkitInterface.getWorld(w);
+            world = Bukkit.getServer().getWorld(w);
         }
         if (world == null) {
             throw new IllegalArgumentException("Error parsing location, World '" + locstr + "' does not exist");

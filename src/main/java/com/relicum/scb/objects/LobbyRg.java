@@ -1,13 +1,13 @@
 package com.relicum.scb.objects;
 
-import com.relicum.scb.BukkitInterface;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
 
 /**
  * SuperSkyBros
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -36,7 +36,7 @@ public class LobbyRg {
 
     /**
      * Set the Lobby Spawn Location
-     * 
+     *
      * @return Location
      */
     public Location getLobbySpawn() {
@@ -46,7 +46,7 @@ public class LobbyRg {
 
     /**
      * set The Max Location
-     * 
+     *
      * @return Location
      */
     public Location getMaxLocation() {
@@ -56,7 +56,7 @@ public class LobbyRg {
 
     /**
      * Set the min Location
-     * 
+     *
      * @return Location
      */
     public Location setMinLocation() {
@@ -66,7 +66,7 @@ public class LobbyRg {
 
     /**
      * Returns the Max vector
-     * 
+     *
      * @return Vector
      */
     public Vector getMaxVector() {
@@ -75,7 +75,7 @@ public class LobbyRg {
 
     /**
      * Returns the Min Vector
-     * 
+     *
      * @return Vector
      */
     public Vector getMinVector() {
@@ -84,7 +84,7 @@ public class LobbyRg {
 
     /**
      * Returns the AdminSpawn as Vector
-     * 
+     *
      * @return Vector
      */
     public Vector getLobbySpawnVector() {
@@ -93,17 +93,17 @@ public class LobbyRg {
 
     /**
      * Returns bukkit world from string
-     * 
+     *
      * @return World
      */
     public World getWorld() {
 
-        return BukkitInterface.getServer().getWorld(this.world);
+        return Bukkit.getServer().getWorld(this.world);
     }
 
     /**
      * Checks if a location is in a Arena Region
-     * 
+     *
      * @param Vector
      * @return boolean
      */
@@ -114,7 +114,7 @@ public class LobbyRg {
 
     /**
      * Gets perm.
-     * 
+     *
      * @return String
      */
     public String getPerm() {
@@ -123,7 +123,7 @@ public class LobbyRg {
 
     /**
      * Sets perm.
-     * 
+     *
      * @param String the perm
      */
     public void setPerm(String perm) {
@@ -132,7 +132,7 @@ public class LobbyRg {
 
     /**
      * Gets yaw for the spawn location
-     * 
+     *
      * @return float the yaw
      */
     public float getYaw() {
@@ -143,7 +143,7 @@ public class LobbyRg {
 
     /**
      * Sets yaw for spawn location
-     * 
+     *
      * @param float the yaw
      */
     public void setYaw(float yaw) {
@@ -152,7 +152,7 @@ public class LobbyRg {
 
     /**
      * Returns the direction you are looking
-     * 
+     *
      * @param yaw float
      * @return float
      */

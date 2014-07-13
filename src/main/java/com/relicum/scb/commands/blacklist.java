@@ -1,14 +1,15 @@
 package com.relicum.scb.commands;
 
-import java.io.IOException;
-import com.relicum.scb.BukkitInterface;
 import com.relicum.scb.types.SkyApi;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.io.IOException;
+
 /**
  * SuperSkyBros First Created 08/10/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -16,7 +17,7 @@ public class blacklist extends SubBase {
 
     /**
      * @param player Player
-     * @param args String[]
+     * @param args   String[]
      * @return boolean
      */
     @Override
@@ -29,7 +30,7 @@ public class blacklist extends SubBase {
 
         if (args[0].equalsIgnoreCase("add")) {
 
-            if (BukkitInterface.getWorld(args[1]) != null) {
+            if (Bukkit.getServer().getWorld(args[1]) != null) {
                 if (SkyApi.getSm().addWorldToBlackList(args[1])) {
                     SkyApi.getSCB().saveConfig();
                     SkyApi.getSCB().reloadConfig();
@@ -69,7 +70,7 @@ public class blacklist extends SubBase {
     /**
      * Simply set this to return the the number of arguments The command should
      * receive
-     * 
+     *
      * @return Integer
      */
     @Override
@@ -79,7 +80,7 @@ public class blacklist extends SubBase {
 
     /**
      * Simply set this to return the clist permission
-     * 
+     *
      * @return String
      */
     @Override
@@ -90,7 +91,7 @@ public class blacklist extends SubBase {
 
     /**
      * Simply set this to return the clist Usage
-     * 
+     *
      * @return String
      */
     @Override
@@ -101,7 +102,7 @@ public class blacklist extends SubBase {
 
     /**
      * Set this to the label of the command
-     * 
+     *
      * @return String
      */
     @Override
@@ -111,7 +112,7 @@ public class blacklist extends SubBase {
 
     /**
      * Set com
-     * 
+     *
      * @return String
      */
     @Override

@@ -1,7 +1,7 @@
 package com.relicum.scb.objects;
 
-import com.relicum.scb.BukkitInterface;
 import com.relicum.scb.utils.SerializedLocation;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
@@ -160,7 +160,7 @@ public class IRegion {
      */
     public World getWorld() {
 
-        return BukkitInterface.getServer().getWorld(this.world);
+        return Bukkit.getServer().getWorld(this.world);
     }
 
 
