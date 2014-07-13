@@ -1,12 +1,13 @@
 package com.relicum.scb.utils;
 
-import java.util.HashMap;
-import java.util.Map;
 import com.relicum.scb.types.SkyApi;
-import com.sk89q.worldedit.LocalWorld;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.regions.Region;
+import com.sk89q.worldedit.world.World;
 import org.bukkit.Location;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Used to Manage WorldEdit Regions
@@ -22,7 +23,7 @@ public class RegionManager {
 
     private static MessageManager mm = SkyApi.getMessageManager();
 
-    private LocalWorld lw;
+    private World lw;
 
     private Location lo;
 
@@ -46,7 +47,7 @@ public class RegionManager {
         r = reg;
     }
 
-    public LocalWorld getLocalWorldOfRegion(Region reg) {
+    public World getLocalWorldOfRegion(Region reg) {
 
         lw = r.getWorld();
         return lw;

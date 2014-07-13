@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.relicum</groupId>
     <artifactId>SuperSkyBros</artifactId>
-    <version>0.4.16</version>
+    <version>0.5.01</version>
     <packaging>jar</packaging>
     <name>SuperSkyBros</name>
     <description>Super Sky Bros Brawl Mini-Game based off Seth Blings project. This is a Bukkit Plugin Version designed
@@ -69,8 +69,8 @@
             <url>http://repo.bukkit.org/content/groups/public</url>
         </repository>
         <repository>
-            <id>comphenix-releases</id>
-            <name>Comphenix Maven Releases</name>
+            <id>comphenix-snapshots</id>
+            <name>Comphenix Maven Snapshots</name>
             <url>http://repo.comphenix.net/content/repositories/snapshots/</url>
         </repository>
         <repository>
