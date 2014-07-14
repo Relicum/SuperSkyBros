@@ -1,6 +1,5 @@
 package com.relicum.scb.listeners;
 
-import java.util.List;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
@@ -11,9 +10,11 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.List;
+
 /**
  * SuperSkyBros First Created 29/09/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -35,7 +36,7 @@ public class BlockDamage implements Listener {
             return;
 
         Player player = e.getPlayer();
-        if (SkyApi.getLobbyManager().isInLobby(player) && !VaultManager.perms.has(player, "ssba.admin.breakblocks")) {
+        if (SkyApi.getLobbyManager().isInLobby(player) && !VaultManager.getInstance().perms.has(player, "ssba.admin.breakblocks")) {
             e.setCancelled(true);
             player.addPotionEffect(pe, true);
             player.addPotionEffect(ps);
@@ -50,7 +51,7 @@ public class BlockDamage implements Listener {
             return;
 
         Player player = e.getPlayer();
-        if (SkyApi.getLobbyManager().isInLobby(player) && !VaultManager.perms.has(player, "ssba.admin.breakblocks")) {
+        if (SkyApi.getLobbyManager().isInLobby(player) && !VaultManager.getInstance().perms.has(player, "ssba.admin.breakblocks")) {
             e.setCancelled(true);
             player.addPotionEffect(pe);
             player.sendMessage(SkyApi.getMessageManager().getErrorMessage("listeners.blockbreak.lobbyBreak"));

@@ -1,17 +1,10 @@
 package com.relicum.scb.commands;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
-import java.util.Map;
 import com.relicum.scb.SCB;
 import com.relicum.scb.conversations.DefaultConversationFactory;
 import com.relicum.scb.conversations.setmode.SetModeStart;
-import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.signs.utils.Col;
 import com.relicum.scb.types.SkyApi;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
@@ -21,11 +14,16 @@ import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * SuperSkyBros First Created 28/09/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -53,17 +51,17 @@ public class CommandManagerFirstJoin implements CommandExecutor {
 
     /**
      * Executes the given command, returning its success
-     * 
-     * @param sender Source of the command
+     *
+     * @param sender  Source of the command
      * @param command Command which was executed
-     * @param label Alias of the command which was used
-     * @param args Passed command arguments
+     * @param label   Alias of the command which was used
+     * @param args    Passed command arguments
      * @return true if a valid command, otherwise false
      */
     @Override
     public boolean onCommand(CommandSender cs, Command command, String label, String[] args) {
         if (cs instanceof Player) {
-            if (!VaultManager.perms.has(cs, "ssba.admin.setmode")) {
+            if (!cs.hasPermission("ssba.admin.setmode")) {
                 cs.sendMessage(Col.Dark_Red() + "You do not have permission to run setmode");
                 return true;
             }
@@ -112,7 +110,7 @@ public class CommandManagerFirstJoin implements CommandExecutor {
             plugin.getLogger().info("Command: /" + label + " has successfully been registered");
             if (saveCommands) {
                 plugin.getSaver().addToStore(cd, per);
-           }
+            }
             return true;
         }
 
@@ -125,7 +123,7 @@ public class CommandManagerFirstJoin implements CommandExecutor {
     /**
      * Returns an instance of Command object setup For the command name you give
      * it.
-     * 
+     *
      * @param name String
      * @return PluginCommand
      */
@@ -133,10 +131,11 @@ public class CommandManagerFirstJoin implements CommandExecutor {
 
         PluginCommand command = null;
         try {
-            Constructor c = PluginCommand.class.getDeclaredConstructor(new Class[] { String.class, Plugin.class });
+            Constructor c = PluginCommand.class.getDeclaredConstructor(new Class[]{String.class, Plugin.class});
             c.setAccessible(true);
 
-            command = (PluginCommand) c.newInstance(new Object[] { name, plugin });
+            command = (PluginCommand) c.newInstance(name, plugin);
+            //command = (PluginCommand) c.newInstance(new Object[]{name , plugin});
         } catch (SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -147,19 +146,20 @@ public class CommandManagerFirstJoin implements CommandExecutor {
     /**
      * Returns an instance of CommandMap which Can then be used to correctly
      * register the command and details with Bukkit
-     * 
+     *
      * @return CommandMap
      */
     public CommandMap getCommandMap() {
-        CommandMap commandMap = null;
-        PluginManager pm = Bukkit.getServer().getPluginManager();
-        try {
-            if (pm instanceof PluginManager) {
-                Field f = pm.getClass().getDeclaredField("commandMap");
-                f.setAccessible(true);
 
-                commandMap = (CommandMap) f.get(pm);
-            }
+        CommandMap commandMap = null;
+
+        try {
+
+            Field f = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+            f.setAccessible(true);
+
+            commandMap = (CommandMap) f.get(Bukkit.getServer());
+
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
         }

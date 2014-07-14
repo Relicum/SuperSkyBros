@@ -1,14 +1,9 @@
 package com.relicum.scb.commands;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.*;
 import com.relicum.scb.SCB;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.MessageManager;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
@@ -19,10 +14,15 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.util.StringUtil;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
+
 /**
  * Custom Command Handler This deals with all events connect to Commands,
  * including command help
- * 
+ *
  * @version 0.1
  */
 public class CommandManager implements TabExecutor {
@@ -46,7 +46,7 @@ public class CommandManager implements TabExecutor {
 
     /**
      * Class that handles all the clist and redirects Them to the correct class
-     * 
+     *
      * @param p SCB
      */
     public CommandManager() {
@@ -150,10 +150,10 @@ public class CommandManager implements TabExecutor {
 
     /**
      * Custom Command Executor
-     * 
-     * @param cs CommandSender
-     * @param cmnd Command
-     * @param string String
+     *
+     * @param cs      CommandSender
+     * @param cmnd    Command
+     * @param string  String
      * @param strings String[]
      * @return boolean
      */
@@ -194,7 +194,7 @@ public class CommandManager implements TabExecutor {
         // Pre Execute command checks
         SubBase subCom = clist.get(sub);
         // Has the user the permission
-        if ((!player.isOp()) && (!VaultManager.perms.has(player, subCom.getPerm()))) {
+        if ((!player.isOp()) && (!VaultManager.getInstance().perms.has(player, subCom.getPerm()))) {
             player.sendMessage(mm.getNoPerm());
             return true;
         }
@@ -222,7 +222,7 @@ public class CommandManager implements TabExecutor {
     /**
      * Send Message to player Have still to add in my own custom messaging
      * system
-     * 
+     *
      * @param p Player
      * @param s String
      */
@@ -234,9 +234,9 @@ public class CommandManager implements TabExecutor {
     /**
      * This function will register all the clist With Bukkit as well as setting
      * the Description, Useage Permission and label of the command
-     * 
+     *
      * @param name String
-     * @param sb SubBase
+     * @param sb   SubBase
      */
     public boolean registerCommand(String name, SubBase sb) {
 
@@ -265,7 +265,7 @@ public class CommandManager implements TabExecutor {
             plugin.getLogger().info("Command: /" + sb.getLabel() + " has successfully been registered");
             if (this.saveCommands) {
                 plugin.getSaver().addToStore(cd, per);
-           }
+            }
             return true;
         }
 
@@ -278,7 +278,7 @@ public class CommandManager implements TabExecutor {
     /**
      * Returns an instance of Command object setup For the command name you give
      * it.
-     * 
+     *
      * @param name String
      * @return PluginCommand
      */
@@ -286,10 +286,10 @@ public class CommandManager implements TabExecutor {
 
         PluginCommand command = null;
         try {
-            Constructor c = PluginCommand.class.getDeclaredConstructor(new Class[] { String.class, Plugin.class });
+            Constructor c = PluginCommand.class.getDeclaredConstructor(new Class[]{String.class, Plugin.class});
             c.setAccessible(true);
 
-            command = (PluginCommand) c.newInstance(new Object[] { name, plugin });
+            command = (PluginCommand) c.newInstance(new Object[]{name, plugin});
         } catch (SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -300,7 +300,7 @@ public class CommandManager implements TabExecutor {
     /**
      * Returns an instance of CommandMap which Can then be used to correctly
      * register the command and details with Bukkit
-     * 
+     *
      * @return CommandMap
      */
     public CommandMap getCommandMap() {

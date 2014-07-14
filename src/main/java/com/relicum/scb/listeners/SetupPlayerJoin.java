@@ -1,10 +1,9 @@
 package com.relicum.scb.listeners;
 
-import java.util.Arrays;
-import java.util.List;
 import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.types.SkyApi;
+import com.relicum.scb.utils.StrStyles;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +11,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
+import org.codemine.jchatter.JChat;
+
+import static org.bukkit.ChatColor.*;
 
 /**
  * PlayerJoin Listener that is only enabled at the started to force them to do a
@@ -19,7 +21,7 @@ import org.bukkit.event.player.PlayerLoginEvent;
  * time normal players won't be able to login
  * <p/>
  * First Created 08/01/14
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -51,18 +53,24 @@ public class SetupPlayerJoin implements Listener {
          * " instbuild is " + player.abilities.canInstantlyBuild); player=null;
          */
         // player.b(nbtTagCompound2);
-        if (p.isOp() || VaultManager.perms.has(p, "ssba.admin")) {
+        if (p.isOp() || VaultManager.getInstance().getPerms().has(p, "ssba.admin")) {
 
             e.setJoinMessage("");
-            List<String> st = Arrays.asList("\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros-Setup\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<",
-                    ChatColor.GOLD + e.getPlayer().getName() + " welcome to the server");
-            p.sendMessage((String[]) st.toArray());
+            JChat jChat = new JChat();
+            p.sendMessage(StrStyles.multiColoredHeader(GREEN, RED, ITALIC, '-'));
+            p.sendMessage(StrStyles.centeredHeading(GOLD, ITALIC, "Welcome a SuperSkyBros Server"));
+            p.sendMessage("");
+
+            //List<String> st = Arrays.asList("\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros-Setup\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<",
+            //        ChatColor.GOLD + e.getPlayer().getName() + " welcome to the server");
+            //p.sendMessage((String[]) st.toArray());
             ChatColor b = ChatColor.BOLD;
             String pre = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB" + ChatColor.GRAY + "" + b + "]";
             p.sendMessage(pre + ChatColor.GREEN + "This server currently has installed Super Sky Bros " + "Beta " + SkyApi.getSCB().getDescription().getVersion() + " this "
                     + "should not be run on a live server be warned");
 
             p.sendMessage("");
+            p.sendMessage(StrStyles.multiColoredHeader(RED, GREEN, ITALIC, '-'));
             int sts = status.ordinal();
 
             if (SkyApi.getSm().isDedicated() && sts == 1 && !SkyApi.getSCB().getConfig().getBoolean("autosetupRun")) {
@@ -105,7 +113,8 @@ public class SetupPlayerJoin implements Listener {
     // set up
     @EventHandler(priority = EventPriority.LOWEST)
     public void playerJoin(PlayerLoginEvent event) {
-        if (!event.getPlayer().isOp() || !VaultManager.perms.has(event.getPlayer(), "ssba.admin")) {
+        SkyApi.getPermsManager();
+        if (!event.getPlayer().isOp() || !event.getPlayer().hasPermission("ssba.admin")) {
             event.disallow(PlayerLoginEvent.Result.KICK_FULL, SkyApi.getMessageManager().getMessage("system.kickJoinNoPerm"));
 
         }

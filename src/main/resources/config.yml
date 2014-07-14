@@ -28,7 +28,7 @@ useWorldManager: true
 worldGenerator: false
 generateDefaultWorld: false
 worldGenerateStage: 1
-worldGeneratorPlugin: 'CleanroomGenerator:.'
+worldGeneratorPlugin: 'SuperSkyBros'
 worldDefault: 'world'
 newWorldDefault: 'SSB'
 disableTheEnd: false

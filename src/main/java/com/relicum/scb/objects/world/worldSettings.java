@@ -47,7 +47,7 @@ public class worldSettings {
 
     private int protection = 16;
 
-    private String generator = "CleanroomGenerator";
+    private String generator = "SuperSkyBros";
 
     private boolean hardcore = false;
 
@@ -92,7 +92,7 @@ public class worldSettings {
         map.put("pvp", true);
         map.put("gameMode", 2);
         map.put("structures", false);
-        map.put("generator", "CleanroomGenerator");
+        map.put("generator", "SuperSkyBros");
         map.put("hardcore", false);
         map.put("autoSave", true);
         map.put("WorldName", name);

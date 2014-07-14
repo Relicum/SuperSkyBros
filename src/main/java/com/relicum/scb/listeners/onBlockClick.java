@@ -1,6 +1,5 @@
 package com.relicum.scb.listeners;
 
-import java.util.List;
 import com.relicum.scb.events.PlayerJoinLobbyEvent;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.inventory.ClearInventory;
@@ -14,9 +13,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.List;
+
 /**
  * SuperSkyBros First Created 09/10/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -45,7 +46,7 @@ public class onBlockClick implements Listener {
         if (this.blacklist.contains(e.getPlayer().getWorld().getName()) && (!ChatColor.stripColor(lines[0]).equalsIgnoreCase("[JOIN LOBBY]")))
             return;
 
-        if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[JOIN LOBBY]"))) {
+        if ((VaultManager.getInstance().perms.has(e.getPlayer(), "ssb.player.uselobbysign") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[JOIN LOBBY]"))) {
 
             if (SkyApi.getLobbyManager().isInLobby(e.getPlayer())) {
                 e.getPlayer().sendMessage(SkyApi.getMessageManager().getErrorMessage("listeners.playerJoin.alreadyInLobby"));
@@ -58,20 +59,20 @@ public class onBlockClick implements Listener {
             return;
         }
 
-        if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.uselobbyleave") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[LEAVE LOBBY]"))) {
+        if ((VaultManager.getInstance().perms.has(e.getPlayer(), "ssb.player.uselobbyleave") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[LEAVE LOBBY]"))) {
 
             e.getPlayer().performCommand("ssb leave");
 
         }
 
-        if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.usearenareturn") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[RETURN]"))) {
+        if ((VaultManager.getInstance().perms.has(e.getPlayer(), "ssb.player.usearenareturn") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).equalsIgnoreCase("[RETURN]"))) {
             ClearInventory.applyLobbyInv(e.getPlayer());
             e.getPlayer().sendMessage(SkyApi.getMessageManager().getMessage("listeners.onblockclick.returnToLobby"));
             SkyApi.getLobbyManager().teleportToLobby(e.getPlayer(), SkyApi.getLobbyManager().getLobbyRg().getWorld().getSpawnLocation());
 
         }
 
-        if ((VaultManager.perms.has(e.getPlayer(), "ssb.player.usearenajoin") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).startsWith("[Arena"))) {
+        if ((VaultManager.getInstance().perms.has(e.getPlayer(), "ssb.player.usearenajoin") || e.getPlayer().isOp()) && (ChatColor.stripColor(lines[0]).startsWith("[Arena"))) {
             if (ChatColor.stripColor(lines[3]).equalsIgnoreCase("waiting")) {
                 e.getPlayer().sendMessage("Sign Starts with [Arena and status is waiting");
                 return;

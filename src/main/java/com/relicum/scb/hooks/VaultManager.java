@@ -1,58 +1,65 @@
 package com.relicum.scb.hooks;
 
+import com.relicum.scb.types.SkyApi;
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.permission.Permission;
-import com.relicum.scb.types.SkyApi;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
 /**
  * SuperSkyBros First Created 19/11/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
 public class VaultManager {
 
-    private static Economy econ = null;
+    public static VaultManager instance;
 
-    public static Permission perms = null;
+    private Economy econ = null;
 
-    private static Chat chat = null;
+    public Permission perms = null;
+
+    private Chat chat = null;
 
     public VaultManager() {
-
+        instance = this;
         setupPermissions();
         setupChat();
         setupEconomy();
     }
 
+    public static VaultManager getInstance() {
+        return instance;
+    }
+
     /**
      * Gets econ.
-     * 
+     *
      * @return the econ
      */
-    public static Economy getEcon() {
+    public Permission getPerms() {
+        return perms;
+    }
+
+    /**
+     * Gets econ.
+     *
+     * @return the econ
+     */
+    public Economy getEcon() {
         return econ;
     }
 
     /**
      * Gets chat.
-     * 
+     *
      * @return the chat
      */
-    public static Chat getChat() {
+    public Chat getChat() {
         return chat;
     }
 
-    /**
-     * Gets perms.
-     * 
-     * @return the perms
-     */
-    public static Permission getPerms() {
-        return perms;
-    }
 
     private void setupEconomy() {
 

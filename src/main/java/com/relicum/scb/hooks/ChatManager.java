@@ -13,7 +13,7 @@ public class ChatManager {
     Chat chat;
 
     public static Chat getChat() {
-        return VaultManager.getChat();
+        return VaultManager.getInstance().getChat();
     }
 
     public ChatManager() {

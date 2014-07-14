@@ -1,21 +1,21 @@
 package com.relicum.scb.listeners;
 
-import java.util.List;
 import com.relicum.scb.SCB;
 import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.objects.signs.utils.Col;
 import com.relicum.scb.types.SkyApi;
-
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
 
+import java.util.List;
+
 /**
  * Manages the creation of Interactive Game Signs
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -42,7 +42,7 @@ public class SignChange implements Listener {
         // Lobby Join Sign
         if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("join")) {
 
-            if (VaultManager.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
+            if (VaultManager.getInstance().perms.has(e.getPlayer(), "ssba.admin.createsign")) {
                 e.setLine(0, Col.Dark_Red() + "[JOIN LOBBY]");
                 e.setLine(1, "CLICK TO JOIN");
                 e.setLine(2, Col.Aqua() + Col.Italic() + "SUPER");
@@ -62,7 +62,7 @@ public class SignChange implements Listener {
         // Lobby Leave Sign
         if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("leave")) {
 
-            if (VaultManager.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
+            if (VaultManager.getInstance().perms.has(e.getPlayer(), "ssba.admin.createsign")) {
                 e.setLine(0, Col.Dark_Red() + "[LEAVE LOBBY]");
                 e.setLine(1, "CLICK TO LEAVE");
                 e.setLine(2, Col.Aqua() + Col.Italic() + "SUPER");
@@ -82,7 +82,7 @@ public class SignChange implements Listener {
         // the main lobby
         if (lines[0].equalsIgnoreCase("[SSBLOBBY]") && lines[1].equalsIgnoreCase("return")) {
 
-            if (VaultManager.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
+            if (VaultManager.getInstance().perms.has(e.getPlayer(), "ssba.admin.createsign")) {
                 e.setLine(0, Col.Dark_Red() + "[RETURN]");
                 e.setLine(1, "CLICK TO RETURN");
                 e.setLine(2, "TO LOBBY");
@@ -101,7 +101,7 @@ public class SignChange implements Listener {
         // Arena Join Sign updates to show game status, number of players etc
         if (lines[0].equalsIgnoreCase("[SSBARENA]") && lines[1].equalsIgnoreCase("join") && Integer.parseInt(lines[2]) > 0) {
 
-            if (VaultManager.perms.has(e.getPlayer(), "ssba.admin.createsign")) {
+            if (VaultManager.getInstance().perms.has(e.getPlayer(), "ssba.admin.createsign")) {
 
                 Integer arenaID = Integer.parseInt(lines[2]);
                 if (!SkyApi.getSm().getArenaConfig().getConfig().contains("arena.arenas." + arenaID.toString())) {

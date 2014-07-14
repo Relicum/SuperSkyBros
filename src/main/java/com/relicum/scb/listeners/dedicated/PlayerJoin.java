@@ -21,7 +21,7 @@ import org.bukkit.scoreboard.Scoreboard;
 
 /**
  * Player Join Listener when server is in dedicated mode First Created 06/01/14
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -78,9 +78,9 @@ public class PlayerJoin implements Listener {
         Objective obj = scoreboard.registerNewObjective("Points", "dummy");
         obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         obj.setDisplayName(ChatColor.ITALIC + "" + ChatColor.GREEN + "SUPER" + ChatColor.ITALIC + "" + ChatColor.AQUA + "SKY" + ChatColor.ITALIC + "" + ChatColor.GREEN + "BROS");
-        Score sc = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.LIGHT_PURPLE + "Kills:"));
-        Score sc2 = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.LIGHT_PURPLE + "Deaths:"));
-        Score sc3 = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.LIGHT_PURPLE + "GamesPlayed:"));
+        Score sc = obj.getScore(ChatColor.LIGHT_PURPLE + "Kills:");
+        Score sc2 = obj.getScore(ChatColor.LIGHT_PURPLE + "Deaths:");
+        Score sc3 = obj.getScore(ChatColor.LIGHT_PURPLE + "GamesPlayed:");
         sc.setScore(playerSettings.getKills());
         sc2.setScore(playerSettings.getDeaths());
         sc3.setScore(playerSettings.getGamesPlayed());

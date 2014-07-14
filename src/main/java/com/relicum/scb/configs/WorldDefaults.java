@@ -30,7 +30,7 @@ public class WorldDefaults {
     public final static WorldType worldType = WorldType.FLAT;
     public final static World.Environment environment = World.Environment.NORMAL;
     public final static boolean generate_structures = false;
-    public final static String generatorString = "CleanroomGenerator:.";
+    public final static String generatorString = "SuperSkyBros";
 
     public WorldDefaults() {
 

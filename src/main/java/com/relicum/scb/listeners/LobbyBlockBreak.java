@@ -1,6 +1,5 @@
 package com.relicum.scb.listeners;
 
-import java.util.List;
 import com.relicum.scb.SCB;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.types.SkyApi;
@@ -13,9 +12,11 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.Vector;
 
+import java.util.List;
+
 /**
  * The type LobbyBlockBreak.
- * 
+ *
  * @author Relicum
  * @version 0.2
  */
@@ -34,7 +35,7 @@ public class LobbyBlockBreak implements Listener, Cancellable {
 
     /**
      * Instantiates a new Lobby block break.
-     * 
+     *
      * @param pl the pl
      */
     public LobbyBlockBreak(JavaPlugin pl) {
@@ -49,7 +50,7 @@ public class LobbyBlockBreak implements Listener, Cancellable {
 
     /**
      * Lobby break.
-     * 
+     *
      * @param BlockBreakEvent the event
      */
     @EventHandler(priority = EventPriority.LOW)
@@ -62,7 +63,7 @@ public class LobbyBlockBreak implements Listener, Cancellable {
         Player player = e.getPlayer();
         String wo = player.getWorld().getName();
 
-        if (!VaultManager.perms.has(player, "ssba.admin.breakblocks")) {
+        if (!VaultManager.getInstance().perms.has(player, "ssba.admin.breakblocks")) {
             if (SkyApi.getLobbyManager().getLobbyRg().isAABB(e.getBlock().getLocation().toVector())) {
                 e.setCancelled(true);
                 player.sendMessage(SkyApi.getMessageManager().getErrorMessage("listeners.blockbreak.lobbyBreak"));
@@ -73,7 +74,7 @@ public class LobbyBlockBreak implements Listener, Cancellable {
 
     /**
      * Is cancelled.
-     * 
+     *
      * @return the boolean
      */
     @Override
@@ -83,7 +84,7 @@ public class LobbyBlockBreak implements Listener, Cancellable {
 
     /**
      * Sets cancelled.
-     * 
+     *
      * @param b the b
      */
     @Override

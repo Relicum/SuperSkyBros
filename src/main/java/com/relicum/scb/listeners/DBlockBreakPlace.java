@@ -10,7 +10,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 
 /**
  * SuperSkyBros First Created 09/10/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -29,7 +29,7 @@ public class DBlockBreakPlace implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBreak(BlockBreakEvent e) {
 
-        if (!VaultManager.perms.has(e.getPlayer(), "ssba.admin.breakbypass") && !e.getPlayer().isOp()) {
+        if (!VaultManager.getInstance().perms.has(e.getPlayer(), "ssba.admin.breakbypass") && !e.getPlayer().isOp()) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(this.breakMessage);
         }
@@ -38,7 +38,7 @@ public class DBlockBreakPlace implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlace(BlockPlaceEvent e) {
 
-        if (!VaultManager.perms.has(e.getPlayer(), "ssba.admin.placebypass") && !e.getPlayer().isOp()) {
+        if (!VaultManager.getInstance().perms.has(e.getPlayer(), "ssba.admin.placebypass") && !e.getPlayer().isOp()) {
             e.setCancelled(true);
             e.getPlayer().sendMessage(this.placeMessage);
         }

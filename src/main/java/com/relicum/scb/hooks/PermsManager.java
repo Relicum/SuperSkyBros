@@ -18,6 +18,6 @@ public class PermsManager {
 
     public static Permission getPerms() {
         SkyApi.getVaultManager();
-        return VaultManager.getPerms();
+        return VaultManager.getInstance().perms;
     }
 }

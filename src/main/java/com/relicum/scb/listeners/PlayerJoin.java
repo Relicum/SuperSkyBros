@@ -91,7 +91,7 @@ public class PlayerJoin {
         // End test player profiles
 
         if (firstTimeOverride && !e.getPlayer().hasPlayedBefore() && !e.getPlayer().isOp()) {
-            if (VaultManager.perms.has(e.getPlayer(), "ssb.player.join") && (!mode)) {
+            if (VaultManager.getInstance().perms.has(e.getPlayer(), "ssb.player.join") && (!mode)) {
                 e.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation().add(0.5, 0.5, 0.5));
             }
 
@@ -115,7 +115,7 @@ public class PlayerJoin {
         if (SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB")) {
 
             /*
-             * if (VaultManager.perms.has(pl.getPlayer(), "ssba.admin") ||
+             * if (VaultManager.getInstance().perms.has(pl.getPlayer(), "ssba.admin") ||
              * pl.getPlayer().isOp()) { ChatColor b = ChatColor.BOLD; String pre
              * = ChatColor.GRAY + "" + b + "[" + ChatColor.RED + "" + b + "SSB"
              * + ChatColor.GRAY + "" + b + "]"; pl.sendMessage( pre +
@@ -127,7 +127,7 @@ public class PlayerJoin {
              * }
              */
 
-            if (VaultManager.perms.has(p, "ssb.player.join") || p.isOp()) {
+            if (VaultManager.getInstance().perms.has(p, "ssb.player.join") || p.isOp()) {
                 e.setJoinMessage("");
 
                 PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(p, "JOINEDSERVER", SkyApi.getSCB().getConfig().getBoolean("dedicatedSSB"));
@@ -148,7 +148,7 @@ public class PlayerJoin {
             return;
         }
         if (SkyApi.getSm().blackListed().contains(e.getPlayer().getWorld().getName()) && plugin.getConfig().getBoolean("dedicatedSSB")
-                && !VaultManager.perms.has(e.getPlayer(), "ssba.admin")) {
+                && !VaultManager.getInstance().perms.has(e.getPlayer(), "ssba.admin")) {
             e.setJoinMessage("");
             System.out.println("Player Join Event has been thrown");
             e.getPlayer().kickPlayer(SkyApi.getMessageManager().getErrorMessage("system.kickJoinWorldBlacklisted"));
@@ -158,7 +158,7 @@ public class PlayerJoin {
         }
 
         /*
-         * if (VaultManager.perms.has(e.getPlayer(), "ssba.admin") ||
+         * if (VaultManager.getInstance().perms.has(e.getPlayer(), "ssba.admin") ||
          * e.getPlayer().isOp()) {
          * 
          * ChatColor b = ChatColor.BOLD; String pre = ChatColor.GRAY + "" + b +

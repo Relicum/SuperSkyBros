@@ -7,6 +7,7 @@ import com.relicum.scb.database.SQLManager;
 import com.relicum.scb.listeners.*;
 import com.relicum.scb.mini.SignLocationStore;
 import com.relicum.scb.objects.inventory.StorePlayerSettings;
+import com.relicum.scb.objects.world.WorldGenerator;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.*;
 import com.relicum.scb.we.WorldEditPlugin;
@@ -45,6 +46,7 @@ public class SCB extends JavaPlugin implements Listener {
     private WorldManager worldManager;
     private PluginManager pm = Bukkit.getServer().getPluginManager();
     protected CommandSaver saver = null;
+
 
     @SuppressWarnings("RefusedBequest")
     @Override
@@ -344,7 +346,7 @@ public class SCB extends JavaPlugin implements Listener {
         }
         YamlConfiguration config = YamlConfiguration.loadConfiguration(new File("bukkit.yml"));
 
-        config.set("worlds.world.generator", "CleanroomGenerator:.");
+        config.set("worlds.world.generator", "SuperSkyBros");
 
         try {
             config.save(new File("bukkit.yml"));
@@ -481,5 +483,11 @@ public class SCB extends JavaPlugin implements Listener {
 
     public void setSaver(CommandSaver saver) {
         this.saver = saver;
+    }
+
+    @Override
+    public WorldGenerator getDefaultWorldGenerator(String worldName, String id) {
+
+        return new WorldGenerator();
     }
 }

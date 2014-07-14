@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.relicum</groupId>
     <artifactId>SuperSkyBros</artifactId>
-    <version>0.5.01</version>
+    <version>0.5.02</version>
     <packaging>jar</packaging>
     <name>SuperSkyBros</name>
     <description>Super Sky Bros Brawl Mini-Game based off Seth Blings project. This is a Bukkit Plugin Version designed
@@ -62,6 +62,18 @@
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.codemine</groupId>
+            <artifactId>BukkitRun</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.codemine</groupId>
+            <artifactId>jchat</artifactId>
+            <version>1.0.2-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
@@ -78,7 +90,7 @@
             <url>https://repository-relicum.forge.cloudbees.com/release/</url>
         </repository>
         <repository>
-            <id>cloudbees-private-snapshot-repository</id>
+            <id>snapshot</id>
             <url>https://repository-relicum.forge.cloudbees.com/snapshot/</url>
         </repository>
         <repository>
@@ -150,6 +162,15 @@
                         <phase>deploy</phase>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <finalName>${project.name}-${project.version}</finalName>
+                    <outputDirectory>./dist/plugins/</outputDirectory>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

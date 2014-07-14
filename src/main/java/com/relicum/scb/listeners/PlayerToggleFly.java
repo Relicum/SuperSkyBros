@@ -61,7 +61,7 @@ public class PlayerToggleFly extends Event implements Listener {
         PlayerToggleFlightEvent event = new PlayerToggleFlightEvent(e.getPlayer().getPlayer(), false);
         Bukkit.getServer().getPluginManager().callEvent(event);
 
-/*        if (!VaultManager.perms.has(e.getPlayer(), "scb.mario.use") && (!VaultManager.perms.has(e.getPlayer(), "scb.mario.triple")))
+/*        if (!VaultManager.getInstance().perms.has(e.getPlayer(), "scb.mario.use") && (!VaultManager.getInstance().perms.has(e.getPlayer(), "scb.mario.triple")))
             return;
 
   */

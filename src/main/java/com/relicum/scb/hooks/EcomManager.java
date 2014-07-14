@@ -11,7 +11,7 @@ import net.milkbowl.vault.economy.Economy;
  */
 public class EcomManager {
     public static Economy getEconomy() {
-        return VaultManager.getEcon();
+        return VaultManager.getInstance().getEcon();
     }
 
 }

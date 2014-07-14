@@ -129,7 +129,7 @@ public class WorldManager {
         worldCreator.type(WorldType.FLAT);
         worldCreator.environment(Environment.NORMAL);
         worldCreator.generateStructures(false);
-        worldCreator.generator("CleanroomGenerator:.");
+        worldCreator.generator("SuperSkyBros");
         worldCreator.seed(this.randomSeed());
 
         return worldCreator;
