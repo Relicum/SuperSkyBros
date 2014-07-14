@@ -5,7 +5,7 @@ import com.relicum.scb.types.SkyApi;
 
 /**
  * SuperSkyBros First Created 10/09/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */

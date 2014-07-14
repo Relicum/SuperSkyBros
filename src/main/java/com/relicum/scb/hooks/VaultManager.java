@@ -15,11 +15,8 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 public class VaultManager {
 
     public static VaultManager instance;
-
-    private Economy econ = null;
-
     public Permission perms = null;
-
+    private Economy econ = null;
     private Chat chat = null;
 
     public VaultManager() {

@@ -5,7 +5,7 @@ import org.bukkit.plugin.Plugin;
 
 /**
  * Stores details of MySQL connection settings First Created 10/01/14
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -42,7 +42,7 @@ public final class SQLSettings {
 
     /**
      * Instantiates a new SQL settings.
-     * 
+     *
      * @param pl the main plugin class
      */
     public SQLSettings(Plugin pl) {

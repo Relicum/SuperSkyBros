@@ -3,7 +3,7 @@ package com.relicum.scb.objects.world;
 /**
  * SuperSkyBros First Created 03/10/13 Used to save data from XStream
  * serialization output
- * 
+ *
  * @author Relicum
  * @version 0.1
  */

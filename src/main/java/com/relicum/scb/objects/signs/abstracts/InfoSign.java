@@ -25,10 +25,6 @@ public abstract class InfoSign extends BaseSign implements ISubType {
         this.type = TSign.INFO;
     }
 
-
-    protected abstract void setSubType(ESign e);
-
-
     /**
      * Gets Sub type. From the enum ESign
      *
@@ -38,4 +34,6 @@ public abstract class InfoSign extends BaseSign implements ISubType {
     public ESign getSubType() {
         return this.subType;
     }
+
+    protected abstract void setSubType(ESign e);
 }

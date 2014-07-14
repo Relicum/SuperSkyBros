@@ -16,12 +16,9 @@ import java.util.List;
  */
 public class EntitySpawn extends SpawnInstance {
 
-    private EntityType et;
-
     int number = 1;
-
-
     List<LivingEntity> uids = new ArrayList<LivingEntity>();
+    private EntityType et;
 
 
     /**

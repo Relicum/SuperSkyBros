@@ -1,9 +1,10 @@
 package com.relicum.scb.database;
 
+import org.bukkit.plugin.Plugin;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import org.bukkit.plugin.Plugin;
 
 /**
  * The type SQL manager.
@@ -19,7 +20,7 @@ public final class SQLManager {
 
     /**
      * Instantiates a new SQL manager.
-     * 
+     *
      * @param pl the pl
      */
     public SQLManager(Plugin pl) throws ClassNotFoundException, SQLException {

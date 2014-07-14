@@ -37,7 +37,7 @@ public class SignLocationStore {
         this.lobby = (SerializedLocation) storage.getConfig().get("lobby");
         storage.getConfig().set(
                 "worldSpawn", new SerializedLocation(
-                plugin.getServer().getWorld("world").getSpawnLocation()));
+                        plugin.getServer().getWorld("world").getSpawnLocation()));
         storage.saveConfig();
         storage.reloadConfig();
         System.out.println(storage.getConfig().get("worldSpawn").toString());

@@ -2,7 +2,7 @@ package com.relicum.scb.configs;
 
 /**
  * Bukkit-SCB
- * 
+ *
  * @author Relicum
  * @version 0.1
  */

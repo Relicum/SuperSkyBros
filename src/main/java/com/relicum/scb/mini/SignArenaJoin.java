@@ -24,21 +24,17 @@ public class SignArenaJoin {
 
     }
 
-
-    public void setArenaLobby(SerializedLocation arenaLobby) {
-        this.arenaLobby = arenaLobby;
-    }
-
-
     public void addArenaJoinSignLocation(SerializedLocation location) {
         this.arenaJoinSigns.add(location);
     }
-
 
     public SerializedLocation getArenaLobby() {
         return arenaLobby;
     }
 
+    public void setArenaLobby(SerializedLocation arenaLobby) {
+        this.arenaLobby = arenaLobby;
+    }
 
     public List<SerializedLocation> getArenaJoinSigns() {
         return arenaJoinSigns;

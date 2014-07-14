@@ -88,6 +88,69 @@ public class StorePlayerSettings implements IISettings, ConfigurationSerializabl
      */
     private int fireTicks;
 
+    public StorePlayerSettings(Long playerTime, float exhaustion, float saturation, double playerHealth, float playerDamage, int foodLevel, int totalExperience, int level, float xp, boolean allowedFlight, boolean isFlying, float flySpeed, float walkSpeed, String playerName, String displayName, String gameMode, int fireTicks, SerializableInventory serializableInventory) {
+        this.playerTime = playerTime;
+        this.exhaustion = exhaustion;
+        this.saturation = saturation;
+        this.playerHealth = playerHealth;
+        this.playerDamage = playerDamage;
+        this.foodLevel = foodLevel;
+        this.totalExperience = totalExperience;
+        this.level = level;
+        this.xp = xp;
+        this.allowedFlight = allowedFlight;
+        this.isFlying = isFlying;
+        this.flySpeed = flySpeed;
+        this.walkSpeed = walkSpeed;
+        this.playerName = playerName;
+        this.displayName = displayName;
+        this.inventory = serializableInventory;
+        this.gameMode = gameMode;
+        this.fireTicks = fireTicks;
+    }
+
+    public StorePlayerSettings() {
+
+    }
+
+    /**
+     * Deserialize store player settings.
+     *
+     * @param map the map
+     * @return the store player settings
+     */
+    public static StorePlayerSettings deserialize(Map<String, Object> map) {
+
+
+        Long OTime = (Long) map.get("playerTime");
+
+        float OSaturation = (float) map.get("saturation"),
+                OExhaustion = (float) map.get("exhaustion"),
+                ODamage = (float) map.get("playerDamage"),
+                OXp = (float) map.get("xp"),
+                OWalkSpeed = (float) map.get("walkSpeed"),
+                OFlySpeed = (float) map.get("flySpeed");
+
+        double OHealth = (double) map.get("playerHealth");
+
+        int OFood = (int) map.get("foodLevel"),
+                OLevel = (int) map.get("level"),
+                OExperience = (int) map.get("totalExperience"),
+                OFireTicks = (int) map.get("fireTicks");
+
+        boolean OIsflying = (boolean) map.get("isFlying"),
+                OFlyAllowed = (boolean) map.get("allowedFlight");
+
+        SerializableInventory OInv = (SerializableInventory) map.get("inventory");
+
+        String OName = (String) map.get("playerName"),
+                ODisplayName = (String) map.get("displayName"),
+                OGameMode = (String) map.get("gameMode");
+
+
+        return new StorePlayerSettings(OTime, OExhaustion, OSaturation, OHealth, ODamage, OFood, OExperience, OLevel, OXp, OFlyAllowed, OIsflying, OFlySpeed, OWalkSpeed, OName, ODisplayName, OGameMode, OFireTicks, OInv);
+    }
+
     /**
      * Gets walk speed.
      *
@@ -420,31 +483,6 @@ public class StorePlayerSettings implements IISettings, ConfigurationSerializabl
         this.saturation = saturation;
     }
 
-    public StorePlayerSettings(Long playerTime, float exhaustion, float saturation, double playerHealth, float playerDamage, int foodLevel, int totalExperience, int level, float xp, boolean allowedFlight, boolean isFlying, float flySpeed, float walkSpeed, String playerName, String displayName, String gameMode, int fireTicks, SerializableInventory serializableInventory) {
-        this.playerTime = playerTime;
-        this.exhaustion = exhaustion;
-        this.saturation = saturation;
-        this.playerHealth = playerHealth;
-        this.playerDamage = playerDamage;
-        this.foodLevel = foodLevel;
-        this.totalExperience = totalExperience;
-        this.level = level;
-        this.xp = xp;
-        this.allowedFlight = allowedFlight;
-        this.isFlying = isFlying;
-        this.flySpeed = flySpeed;
-        this.walkSpeed = walkSpeed;
-        this.playerName = playerName;
-        this.displayName = displayName;
-        this.inventory = serializableInventory;
-        this.gameMode = gameMode;
-        this.fireTicks = fireTicks;
-    }
-
-    public StorePlayerSettings() {
-
-    }
-
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> map = new HashMap<>();
@@ -468,44 +506,6 @@ public class StorePlayerSettings implements IISettings, ConfigurationSerializabl
         map.put("fireTicks", this.fireTicks);
 
         return map;
-    }
-
-    /**
-     * Deserialize store player settings.
-     *
-     * @param map the map
-     * @return the store player settings
-     */
-    public static StorePlayerSettings deserialize(Map<String, Object> map) {
-
-
-        Long OTime = (Long) map.get("playerTime");
-
-        float OSaturation = (float) map.get("saturation"),
-                OExhaustion = (float) map.get("exhaustion"),
-                ODamage = (float) map.get("playerDamage"),
-                OXp = (float) map.get("xp"),
-                OWalkSpeed = (float) map.get("walkSpeed"),
-                OFlySpeed = (float) map.get("flySpeed");
-
-        double OHealth = (double) map.get("playerHealth");
-
-        int OFood = (int) map.get("foodLevel"),
-                OLevel = (int) map.get("level"),
-                OExperience = (int) map.get("totalExperience"),
-                OFireTicks = (int) map.get("fireTicks");
-
-        boolean OIsflying = (boolean) map.get("isFlying"),
-                OFlyAllowed = (boolean) map.get("allowedFlight");
-
-        SerializableInventory OInv = (SerializableInventory) map.get("inventory");
-
-        String OName = (String) map.get("playerName"),
-                ODisplayName = (String) map.get("displayName"),
-                OGameMode = (String) map.get("gameMode");
-
-
-        return new StorePlayerSettings(OTime, OExhaustion, OSaturation, OHealth, ODamage, OFood, OExperience, OLevel, OXp, OFlyAllowed, OIsflying, OFlySpeed, OWalkSpeed, OName, ODisplayName, OGameMode, OFireTicks, OInv);
     }
 }
 

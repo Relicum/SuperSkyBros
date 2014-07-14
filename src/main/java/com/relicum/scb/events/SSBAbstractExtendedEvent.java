@@ -24,6 +24,9 @@ public abstract class SSBAbstractExtendedEvent extends Event {
         this.rootEvent = event;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
     /**
      * Returns the root event that was called
@@ -33,11 +36,6 @@ public abstract class SSBAbstractExtendedEvent extends Event {
     public Event getRootEvent() {
         return rootEvent;
     }
-
-    public static HandlerList getHandlerList() {
-        return handlers;
-    }
-
 
     @Override
     public HandlerList getHandlers() {

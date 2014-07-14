@@ -1,5 +1,6 @@
 package com.relicum.scb.commands;
 
+import com.relicum.scb.I18N;
 import com.relicum.scb.SCB;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.types.SkyApi;
@@ -31,8 +32,6 @@ public class CommandManager implements TabExecutor {
     private final List<String> PLAYER = new ArrayList<>();
     private final List<String> ADMIN = new ArrayList<>();
     private final List<String> WADMIN = new ArrayList<>();
-    private boolean saveCommands;
-
     /**
      * Stores an instance of the main plugin class
      */
@@ -41,6 +40,7 @@ public class CommandManager implements TabExecutor {
      * Stores a HashMap of commands
      */
     public Map<String, SubBase> clist = new HashMap<String, SubBase>();
+    private boolean saveCommands;
     private List<String> WSET = new ArrayList<>(8);
     private List<String> WSETTING = null;
 
@@ -168,14 +168,14 @@ public class CommandManager implements TabExecutor {
         Player player = (Player) cs;
 
         if (plugin.getConfig().contains(player.getWorld().getName())) {
-            player.sendMessage(mm.getErrorMessage("command.message.worldOnBlackList"));
+            player.sendMessage(ChatColor.RED + I18N.STRING("command.message.worldOnBlackList"));
             plugin.getLogger().info("You can not run commands in world " + player.getWorld().getName() + " as the world is on the world blacklist remove it from config.yml");
             return true;
         }
 
         if (strings == null || strings.length < 1L) {
 
-            player.sendMessage(ChatColor.DARK_RED + "No arguments passed");
+            player.sendMessage(ChatColor.DARK_RED + I18N.STRING("command.general.incorrectars"));
             return false;
         }
 
@@ -289,7 +289,7 @@ public class CommandManager implements TabExecutor {
             Constructor c = PluginCommand.class.getDeclaredConstructor(new Class[]{String.class, Plugin.class});
             c.setAccessible(true);
 
-            command = (PluginCommand) c.newInstance(new Object[]{name, plugin});
+            command = (PluginCommand) c.newInstance(name, plugin);
         } catch (SecurityException | IllegalArgumentException | IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
             e.printStackTrace();
         }
@@ -308,7 +308,7 @@ public class CommandManager implements TabExecutor {
         PluginManager pm = Bukkit.getServer().getPluginManager();
 
         try {
-            if (pm instanceof PluginManager) {
+            if (pm != null) {
                 Field f = pm.getClass().getDeclaredField("commandMap");
                 f.setAccessible(true);
 

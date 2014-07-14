@@ -55,6 +55,54 @@ public class LobbyBase implements ILobby, ConfigurationSerializable {
     private Map<String, Object> players;
 
     /**
+     * Instantiates a new Lobby base.
+     *
+     * @param filename        the filename
+     * @param min             the min
+     * @param max             the max
+     * @param spawn           the spawn
+     * @param lobbyPermission the lobby permission
+     * @param type            the type
+     * @param status          the status
+     * @param canFly          the can fly
+     * @param canBuild        the can build
+     * @param players         the players
+     */
+    public LobbyBase(Vector min, Vector max, SerializedLocation spawn, String lobbyPermission, LocationType type, LobbyStatus status, boolean canFly, boolean canBuild, Map<String, Object> players) {
+        this.min = min;
+        this.max = max;
+        this.spawn = spawn;
+        this.lobbyPermission = lobbyPermission;
+        this.type = type;
+        this.status = status;
+        this.canFly = canFly;
+        this.canBuild = canBuild;
+        this.players = players;
+    }
+
+    /**
+     * Deserialize lobby base.
+     *
+     * @param map the map
+     * @return the lobby base
+     */
+    public static LobbyBase deserialize(Map<String, Object> map) {
+        Map<String, Object> players = new HashMap<>();
+        Vector min = (Vector) map.get("min");
+        Vector max = (Vector) map.get("max");
+        SerializedLocation spawn = (SerializedLocation) map.get("spawn");
+        String lobbyPermission = (String) map.get("perms");
+        LocationType type = LocationType.valueOf((String) map.get("type"));
+        LobbyStatus status = LobbyStatus.valueOf((String) map.get("status"));
+        boolean canFly = (Boolean) map.get("canFly");
+        boolean canBuild = (Boolean) map.get("canBuild");
+        players = (Map<String, Object>) map.get("players");
+
+        return new LobbyBase(min, max, spawn, lobbyPermission, type, status, canFly, canBuild, players);
+
+    }
+
+    /**
      * Gets min vector.
      *
      * @return the min vector
@@ -85,6 +133,15 @@ public class LobbyBase implements ILobby, ConfigurationSerializable {
     }
 
     /**
+     * Sets spawn.
+     *
+     * @param spawn the spawn
+     */
+    public void setSpawn(SerializedLocation spawn) {
+        this.spawn = spawn;
+    }
+
+    /**
      * Gets lobby permission.
      *
      * @return the lobby permission
@@ -92,6 +149,15 @@ public class LobbyBase implements ILobby, ConfigurationSerializable {
     @Override
     public String getLobbyPermission() {
         return this.lobbyPermission;
+    }
+
+    /**
+     * Sets lobby permission.
+     *
+     * @param lobbyPermission the lobby permission
+     */
+    public void setLobbyPermission(String lobbyPermission) {
+        this.lobbyPermission = lobbyPermission;
     }
 
     /**
@@ -112,6 +178,15 @@ public class LobbyBase implements ILobby, ConfigurationSerializable {
     @Override
     public LobbyStatus getStatus() {
         return this.status;
+    }
+
+    /**
+     * Sets status.
+     *
+     * @param status the status
+     */
+    public void setStatus(LobbyStatus status) {
+        this.status = status;
     }
 
     /**
@@ -164,39 +239,12 @@ public class LobbyBase implements ILobby, ConfigurationSerializable {
     }
 
     /**
-     * Sets spawn.
-     *
-     * @param spawn the spawn
-     */
-    public void setSpawn(SerializedLocation spawn) {
-        this.spawn = spawn;
-    }
-
-    /**
-     * Sets lobby permission.
-     *
-     * @param lobbyPermission the lobby permission
-     */
-    public void setLobbyPermission(String lobbyPermission) {
-        this.lobbyPermission = lobbyPermission;
-    }
-
-    /**
      * Sets type.
      *
      * @param type the type
      */
     public void setType(LocationType type) {
         this.type = type;
-    }
-
-    /**
-     * Sets status.
-     *
-     * @param status the status
-     */
-    public void setStatus(LobbyStatus status) {
-        this.status = status;
     }
 
     /**
@@ -236,55 +284,5 @@ public class LobbyBase implements ILobby, ConfigurationSerializable {
         map.put("players", players);
 
         return map;
-    }
-
-
-    /**
-     * Instantiates a new Lobby base.
-     *
-     * @param filename        the filename
-     * @param min             the min
-     * @param max             the max
-     * @param spawn           the spawn
-     * @param lobbyPermission the lobby permission
-     * @param type            the type
-     * @param status          the status
-     * @param canFly          the can fly
-     * @param canBuild        the can build
-     * @param players         the players
-     */
-    public LobbyBase(Vector min, Vector max, SerializedLocation spawn, String lobbyPermission, LocationType type, LobbyStatus status, boolean canFly, boolean canBuild, Map<String, Object> players) {
-        this.min = min;
-        this.max = max;
-        this.spawn = spawn;
-        this.lobbyPermission = lobbyPermission;
-        this.type = type;
-        this.status = status;
-        this.canFly = canFly;
-        this.canBuild = canBuild;
-        this.players = players;
-    }
-
-
-    /**
-     * Deserialize lobby base.
-     *
-     * @param map the map
-     * @return the lobby base
-     */
-    public static LobbyBase deserialize(Map<String, Object> map) {
-        Map<String, Object> players = new HashMap<>();
-        Vector min = (Vector) map.get("min");
-        Vector max = (Vector) map.get("max");
-        SerializedLocation spawn = (SerializedLocation) map.get("spawn");
-        String lobbyPermission = (String) map.get("perms");
-        LocationType type = LocationType.valueOf((String) map.get("type"));
-        LobbyStatus status = LobbyStatus.valueOf((String) map.get("status"));
-        boolean canFly = (Boolean) map.get("canFly");
-        boolean canBuild = (Boolean) map.get("canBuild");
-        players = (Map<String, Object>) map.get("players");
-
-        return new LobbyBase(min, max, spawn, lobbyPermission, type, status, canFly, canBuild, players);
-
     }
 }

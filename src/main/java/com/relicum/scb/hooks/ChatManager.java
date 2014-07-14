@@ -12,12 +12,12 @@ public class ChatManager {
 
     Chat chat;
 
-    public static Chat getChat() {
-        return VaultManager.getInstance().getChat();
-    }
-
     public ChatManager() {
         chat = getChat();
 
+    }
+
+    public static Chat getChat() {
+        return VaultManager.getInstance().getChat();
     }
 }

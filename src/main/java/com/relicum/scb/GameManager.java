@@ -1,15 +1,16 @@
 package com.relicum.scb;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaStatus;
 import com.relicum.scb.types.SkyApi;
 
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * SuperSkyBros First Created 11/09/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -43,14 +44,13 @@ public class GameManager {
 
     /**
      * Returns a reference to the LobbyManager
-     * 
+     *
      * @return LobbyManager
      */
     public LobbyManager getLobbyManager() {
 
         return SkyApi.getLobbyManager();
     }
-
 
 
     public ArenaStatus getArenaStatus(Integer i) {
@@ -60,7 +60,7 @@ public class GameManager {
 
     /**
      * In black listed world.
-     * 
+     *
      * @param world the world
      * @return the boolean false if they are in a blacklisted world
      */

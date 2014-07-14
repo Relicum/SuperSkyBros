@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 /**
  * SuperSkyBros First Created 03/10/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */

@@ -15,27 +15,21 @@ import org.bukkit.scoreboard.Scoreboard;
 
 /**
  * SuperSkyBros First Created 05/10/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
 public class ShopManager implements Listener {
 
-    private String econ;
-
     public Scoreboard sb;
-
     public Objective ob;
-
     public Objective ob2;
-
     public Score score;
-
     public Score score2;
-
     public int task;
-
+    public int blink = 30;
     SCB plugin;
+    private String econ;
 
     public ShopManager(SCB pl) {
         this.plugin = pl;
@@ -43,16 +37,14 @@ public class ShopManager implements Listener {
 
     }
 
-    public int blink = 30;
-
     /**
      * Gets scoreboard type.
-     * 
+     *
      * @return the scoreboard type
      */
     public ScoreboardType getScoreboardType() {
         return null; // To change body of implemented methods use File |
-                     // Settings | File Templates.
+        // Settings | File Templates.
     }
 
     public void setBoard() {
@@ -106,6 +98,6 @@ public class ShopManager implements Listener {
     public void pq(PlayerQuitEvent event) {
 
         event.getPlayer().setScoreboard(SkyApi.getSCB().getServer().getScoreboardManager().getMainScoreboard());
-   }
+    }
 
 }

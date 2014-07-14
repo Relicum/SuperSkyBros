@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 /**
  * Bukkit-SCB
- * 
+ *
  * @author Relicum
  * @version 0.1
  */

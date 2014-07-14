@@ -9,32 +9,6 @@ import java.util.*;
  */
 public class FrameBuilder {
 
-    public enum Option {
-        CENTER,
-        RIGHT
-    }
-
-    private class Line {
-
-        final String line;
-        final Set<Option> options;
-
-        Line(String line, Set<Option> options) {
-            this.line = line;
-            this.options = options;
-        }
-
-        String parse(int toSize) {
-            if (options.contains(Option.CENTER)) {
-                return center(line, toSize);
-            } else if (options.contains(Option.RIGHT)) {
-                return right(line, toSize);
-            } else {
-                return left(line, toSize);
-            }
-        }
-    }
-
     private final List<Line> lines;
     private int maxLength;
 
@@ -117,5 +91,31 @@ public class FrameBuilder {
         }
         result[result.length - 1] = result[0];
         return result;
+    }
+
+    public enum Option {
+        CENTER,
+        RIGHT
+    }
+
+    private class Line {
+
+        final String line;
+        final Set<Option> options;
+
+        Line(String line, Set<Option> options) {
+            this.line = line;
+            this.options = options;
+        }
+
+        String parse(int toSize) {
+            if (options.contains(Option.CENTER)) {
+                return center(line, toSize);
+            } else if (options.contains(Option.RIGHT)) {
+                return right(line, toSize);
+            } else {
+                return left(line, toSize);
+            }
+        }
     }
 }

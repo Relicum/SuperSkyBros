@@ -1,6 +1,5 @@
 package com.relicum.scb.arena;
 
-import java.util.List;
 import com.relicum.scb.events.ArenaStatusChangeEvent;
 import com.relicum.scb.objects.ArenaLobby;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
@@ -11,9 +10,11 @@ import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
 
+import java.util.List;
+
 /**
  * Bukkit-SCB
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -106,18 +107,8 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
     }
 
     /**
-     * Sets arena name.
-     * 
-     * @param String
-     */
-    public void setArenaName(String n) {
-        if (n != null)
-            this.aname = n;
-    }
-
-    /**
      * Gets arena name.
-     * 
+     *
      * @return String
      */
     @Override
@@ -126,6 +117,16 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
             return this.aname;
 
         return "";
+    }
+
+    /**
+     * Sets arena name.
+     *
+     * @param String
+     */
+    public void setArenaName(String n) {
+        if (n != null)
+            this.aname = n;
     }
 
     public ArenaLobby getArenaLobby() {
@@ -137,18 +138,8 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
     }
 
     /**
-     * Set arena id.
-     * 
-     * @param i Integer
-     */
-    public void setArenaId(Integer i) {
-        if (i != null)
-            this.id = i;
-    }
-
-    /**
      * Gets arena id.
-     * 
+     *
      * @return Integer
      */
     @Override
@@ -160,8 +151,18 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
     }
 
     /**
+     * Set arena id.
+     *
+     * @param i Integer
+     */
+    public void setArenaId(Integer i) {
+        if (i != null)
+            this.id = i;
+    }
+
+    /**
      * Needs to be a valid ArenaStatus option
-     * 
+     *
      * @param String
      */
     public void setStatus(String em) {
@@ -174,7 +175,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Gets arena status.
-     * 
+     *
      * @return the ArenaStatus
      */
     @Override
@@ -185,7 +186,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Set enable.
-     * 
+     *
      * @param boolean
      */
     public void setEnable(boolean bo) {
@@ -197,7 +198,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Set arena spawn group. If Arena wasn't created using ID
-     * 
+     *
      * @param Integer the ars
      */
     public void setArenaSpawnGroup(Integer id) {
@@ -212,7 +213,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Is enabled.
-     * 
+     *
      * @return boolean
      */
     @Override
@@ -222,7 +223,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Add spawn location.
-     * 
+     *
      * @param ArenaSpawn
      */
     public void addSpawnLocation(ArenaSpawn arenaspawn) {
@@ -231,7 +232,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Gets spawn group.
-     * 
+     *
      * @return ArenaGroupSpawn
      */
     @Override
@@ -247,17 +248,8 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
     }
 
     /**
-     * Set max players.
-     * 
-     * @param int
-     */
-    public void setMaxPlayers(int i) {
-        this.maxPlayers = i;
-    }
-
-    /**
      * Gets max players.
-     * 
+     *
      * @return int
      */
     @Override
@@ -267,17 +259,17 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
     }
 
     /**
-     * Set min players.
-     * 
+     * Set max players.
+     *
      * @param int
      */
-    public void setMinPlayers(int i) {
-        this.minPlayers = i;
+    public void setMaxPlayers(int i) {
+        this.maxPlayers = i;
     }
 
     /**
      * Gets min players.
-     * 
+     *
      * @return int
      */
     @Override
@@ -286,8 +278,17 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
     }
 
     /**
+     * Set min players.
+     *
+     * @param int
+     */
+    public void setMinPlayers(int i) {
+        this.minPlayers = i;
+    }
+
+    /**
      * Set perm.
-     * 
+     *
      * @param String
      */
     public void setPerm(String s) {
@@ -296,7 +297,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Gets permission.
-     * 
+     *
      * @return String
      */
     @Override
@@ -306,7 +307,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Set max time.
-     * 
+     *
      * @param Long
      */
     public void setMaxTime(Long l) {
@@ -315,7 +316,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Gets max game time.
-     * 
+     *
      * @return Long
      */
     @Override
@@ -325,7 +326,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Set world name as string
-     * 
+     *
      * @param String
      */
     public void setWorldName(String s) {
@@ -351,7 +352,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Gets arena world. As Bukkit world
-     * 
+     *
      * @return World
      */
     @Override
@@ -362,7 +363,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Returns The region object
-     * 
+     *
      * @return ArenaRegion
      */
     public ArenaRegion getAreg() {
@@ -371,7 +372,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Set the region object
-     * 
+     *
      * @param ArenaRegion
      */
     public void setAreg(ArenaRegion areg) {
@@ -380,7 +381,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Returns a Status message
-     * 
+     *
      * @return String
      */
     public String getArenaListMessage() {
@@ -398,7 +399,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Gets chunks.
-     * 
+     *
      * @return List<Vector> chunk
      */
     public List<Vector> getChunk() {
@@ -407,7 +408,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Sets chunk.
-     * 
+     *
      * @param List<Vector>the chunk
      */
     public void setChunk(List<Vector> chunk) {
@@ -416,7 +417,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Gets unique map.
-     * 
+     *
      * @return String the unique map
      */
     public String getUniqueMap() {
@@ -425,7 +426,7 @@ public class Arena implements com.relicum.scb.arena.IArena, Cloneable {
 
     /**
      * Sets unique map.
-     * 
+     *
      * @param String the unique map
      */
     public void setUniqueMap(String uniqueMap) {

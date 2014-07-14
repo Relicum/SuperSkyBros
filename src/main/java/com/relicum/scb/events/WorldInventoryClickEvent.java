@@ -42,6 +42,9 @@ public class WorldInventoryClickEvent extends InventoryClickEvent {
         this.world = getWhoClicked().getWorld();
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
     /**
      * Get world.
@@ -53,7 +56,6 @@ public class WorldInventoryClickEvent extends InventoryClickEvent {
 
     }
 
-
     /**
      * Is world black listed.
      *
@@ -64,24 +66,16 @@ public class WorldInventoryClickEvent extends InventoryClickEvent {
         return this.isBlackListed;
     }
 
-
     public boolean isCancelled() {
         return cancel;
     }
-
 
     public void setCancelled(boolean cancel) {
         this.cancel = cancel;
     }
 
-
     @Override
     public HandlerList getHandlers() {
-        return handlers;
-    }
-
-
-    public static HandlerList getHandlerList() {
         return handlers;
     }
 }

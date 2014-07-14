@@ -11,16 +11,9 @@ import org.bukkit.Location;
 public interface ILocation {
 
     /**
-     * Set Location
-     */
-    public void setLocation(Location l);
-
-
-    /**
      * Set LocationType
      */
     public void setLocationType();
-
 
     /**
      * Get the World the Location is in
@@ -35,5 +28,10 @@ public interface ILocation {
      * @return Location
      */
     public Location getLocation();
+
+    /**
+     * Set Location
+     */
+    public void setLocation(Location l);
 
 }

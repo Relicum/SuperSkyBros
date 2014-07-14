@@ -22,10 +22,6 @@ public abstract class ActionSign extends BaseSign implements ISubType, PSign {
         this.setSuperType();
     }
 
-
-    protected abstract void setSubType(ESign e);
-
-
     /**
      * Gets Sub type. From the enum ESign
      *
@@ -35,4 +31,6 @@ public abstract class ActionSign extends BaseSign implements ISubType, PSign {
     public ESign getSubType() {
         return this.subType;
     }
+
+    protected abstract void setSubType(ESign e);
 }

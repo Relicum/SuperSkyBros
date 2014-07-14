@@ -16,27 +16,17 @@ import java.util.UUID;
  */
 public abstract class Armour implements IArmour, IColoredArmourMeta {
 
-    private UUID armourId;
-
     protected Armour armour;
-
     protected ItemStack[] itemStack;
-
     protected ArmourMaterial armourMaterial;
-
     protected ArmourType armourType;
-
     protected ArmourMeta armourMeta;
-
     protected boolean isVip;
-
     protected boolean isPremium;
-
     protected boolean isYouTuber;
-
     protected boolean isPlayer;
-
     protected boolean isOwner;
+    private UUID armourId;
 
 
     protected Armour() {

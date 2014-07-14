@@ -6,7 +6,7 @@ import org.bukkit.event.HandlerList;
 
 /**
  * SuperSkyBros First Created 03/10/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -28,6 +28,10 @@ public class PlayerJoinLobbyEvent extends Event {
 
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
+
     public Player getPlayer() {
         return this.player;
     }
@@ -38,10 +42,6 @@ public class PlayerJoinLobbyEvent extends Event {
 
     public boolean isDedicated() {
         return isdedicated;
-    }
-
-    public static HandlerList getHandlerList() {
-        return handlers;
     }
 
     @Override

@@ -19,26 +19,6 @@ public class ALobbyIO {
     private Arena arena;
 
 
-    public ArenaLobby getArenaLobby() {
-        return arenaLobby;
-    }
-
-
-    public ConfigurationSection getSection() {
-        return section;
-    }
-
-
-    public void setSection(ConfigurationSection section) {
-        this.section = section;
-    }
-
-
-    public void setArenaLobby(ArenaLobby arenaLobby) {
-        this.arenaLobby = arenaLobby;
-    }
-
-
     public ALobbyIO(ArenaLobby arenaLobby) {
 
         this.arenaLobby = arenaLobby;
@@ -46,6 +26,21 @@ public class ALobbyIO {
         this.arena = SkyApi.getArenaManager().getArenaById(arenaLobby.getArenaId());
     }
 
+    public ArenaLobby getArenaLobby() {
+        return arenaLobby;
+    }
+
+    public void setArenaLobby(ArenaLobby arenaLobby) {
+        this.arenaLobby = arenaLobby;
+    }
+
+    public ConfigurationSection getSection() {
+        return section;
+    }
+
+    public void setSection(ConfigurationSection section) {
+        this.section = section;
+    }
 
     public void saveLobby() {
 

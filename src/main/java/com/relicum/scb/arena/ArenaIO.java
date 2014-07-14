@@ -1,6 +1,5 @@
 package com.relicum.scb.arena;
 
-import java.util.*;
 import com.relicum.scb.configs.ArenaConfig;
 import com.relicum.scb.objects.ArenaLobby;
 import com.relicum.scb.objects.spawns.ArenaGroupSpawn;
@@ -8,6 +7,8 @@ import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.SerializedLocation;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.util.Vector;
+
+import java.util.*;
 
 /**
  * The type ArenaIO.
@@ -105,7 +106,7 @@ public class ArenaIO {
 
     /**
      * New create.
-     * 
+     *
      * @param ar the ar
      * @param ch the ch
      * @return the boolean
@@ -234,7 +235,7 @@ public class ArenaIO {
 
     /**
      * Get a String representing Vector Containing min
-     * 
+     *
      * @return String
      * @throws IllegalArgumentException if the new value is not acceptable.
      */
@@ -243,18 +244,8 @@ public class ArenaIO {
     }
 
     /**
-     * Get a Vector Containing max
-     * 
-     * @return String
-     * @throws IllegalArgumentException if the new value is not acceptable.
-     */
-    public String getMax() {
-        return max;
-    }
-
-    /**
      * Set Vector for min
-     * 
+     *
      * @param pos1 String
      * @throws IllegalArgumentException if the new value is not acceptable.
      */
@@ -263,8 +254,18 @@ public class ArenaIO {
     }
 
     /**
+     * Get a Vector Containing max
+     *
+     * @return String
+     * @throws IllegalArgumentException if the new value is not acceptable.
+     */
+    public String getMax() {
+        return max;
+    }
+
+    /**
      * Set Vector for max
-     * 
+     *
      * @param pos2 String
      * @throws IllegalArgumentException
      */
@@ -274,7 +275,7 @@ public class ArenaIO {
 
     /**
      * Get the world name as a string
-     * 
+     *
      * @return String
      */
     public String getWorld() {
@@ -283,7 +284,7 @@ public class ArenaIO {
 
     /**
      * Set the world name as a string
-     * 
+     *
      * @param world String
      */
     public void setWorld(String world) {
@@ -292,7 +293,7 @@ public class ArenaIO {
 
     /**
      * Returns if the arena is enabled
-     * 
+     *
      * @return boolean
      */
     public boolean isEnable() {
@@ -301,7 +302,7 @@ public class ArenaIO {
 
     /**
      * If to set this arena to enable or not
-     * 
+     *
      * @param enable boolean
      */
     public void setEnable(boolean enable) {
@@ -310,7 +311,7 @@ public class ArenaIO {
 
     /**
      * Returns the map name of the arena
-     * 
+     *
      * @return String
      */
     public String getMap() {
@@ -319,7 +320,7 @@ public class ArenaIO {
 
     /**
      * Sets the map name of the arena
-     * 
+     *
      * @param map String
      */
     public void setMap(String map) {
@@ -328,7 +329,7 @@ public class ArenaIO {
 
     /**
      * Get the permission of the arena
-     * 
+     *
      * @return String
      */
     public String getPerm() {
@@ -337,7 +338,7 @@ public class ArenaIO {
 
     /**
      * Set the permission of the arena
-     * 
+     *
      * @param perm String
      */
     public void setPerm(String perm) {
@@ -346,7 +347,7 @@ public class ArenaIO {
 
     /**
      * Get the arena id
-     * 
+     *
      * @return Integer
      */
     public Integer getArenaId() {
@@ -355,7 +356,7 @@ public class ArenaIO {
 
     /**
      * Set the arena id
-     * 
+     *
      * @param arenaId Integer
      */
     public void setArenaId(Integer arenaId) {
@@ -373,7 +374,7 @@ public class ArenaIO {
 
     /**
      * Get the arena path for to use for looking up from storage
-     * 
+     *
      * @return String
      */
     public String getArenaPath() {
@@ -382,7 +383,7 @@ public class ArenaIO {
 
     /**
      * Returns Max Points as a Vector
-     * 
+     *
      * @return Vector
      */
     public Vector getvMax() {
@@ -391,7 +392,7 @@ public class ArenaIO {
 
     /**
      * Set Vector for the max points
-     * 
+     *
      * @param vMax Vector
      */
     public void setvMax(Vector vMax) {
@@ -400,7 +401,7 @@ public class ArenaIO {
 
     /**
      * Returns Min Points as a Vector
-     * 
+     *
      * @return Vector
      */
     public Vector getvMin() {
@@ -409,7 +410,7 @@ public class ArenaIO {
 
     /**
      * Set Vector for the min points
-     * 
+     *
      * @param vMin Vector
      */
     public void setvMin(Vector vMins) {
@@ -418,7 +419,7 @@ public class ArenaIO {
 
     /**
      * AdminSpawn Vector
-     * 
+     *
      * @return Vector
      */
     public Vector getvTop() {
@@ -427,7 +428,7 @@ public class ArenaIO {
 
     /**
      * Set Vector for admin spawn
-     * 
+     *
      * @param vTop Vector
      */
     public void setvTop(Vector vTop) {
@@ -435,18 +436,8 @@ public class ArenaIO {
     }
 
     /**
-     * Set Admin Spawn as string
-     * 
-     * @param st String
-     */
-    public void setTop(String st) {
-
-        this.top = st;
-    }
-
-    /**
      * Get Admin Spawn as a String representing a Vector
-     * 
+     *
      * @return String
      */
     public String getTop() {
@@ -455,8 +446,18 @@ public class ArenaIO {
     }
 
     /**
+     * Set Admin Spawn as string
+     *
+     * @param st String
+     */
+    public void setTop(String st) {
+
+        this.top = st;
+    }
+
+    /**
      * Get the max time of game
-     * 
+     *
      * @return Long
      */
     public Long getMaxTime() {
@@ -465,7 +466,7 @@ public class ArenaIO {
 
     /**
      * Set the max time of game
-     * 
+     *
      * @param Long
      */
     public void setMaxTime(Long maxTime) {
@@ -474,7 +475,7 @@ public class ArenaIO {
 
     /**
      * Get the minimum number player for game
-     * 
+     *
      * @return int
      */
     public int getMinPlayers() {
@@ -483,7 +484,7 @@ public class ArenaIO {
 
     /**
      * Set the minimum number players for game
-     * 
+     *
      * @param int
      */
     public void setMinPlayers(int minPlayers) {
@@ -492,7 +493,7 @@ public class ArenaIO {
 
     /**
      * Get the maximum number players for game
-     * 
+     *
      * @return int
      */
     public int getMaxPlayers() {
@@ -501,7 +502,7 @@ public class ArenaIO {
 
     /**
      * Set the maximum number players for game
-     * 
+     *
      * @param int
      */
     public void setMaxPlayers(int maxPlayers) {
@@ -526,7 +527,7 @@ public class ArenaIO {
 
     /**
      * Get the ArenaStatus
-     * 
+     *
      * @return ArenaStatus
      */
     public ArenaStatus getStatus() {
@@ -535,7 +536,7 @@ public class ArenaIO {
 
     /**
      * Set the ArenaStatus
-     * 
+     *
      * @param ArenaStatus
      */
     public void setStatus(ArenaStatus status) {
@@ -546,8 +547,17 @@ public class ArenaIO {
     }
 
     /**
+     * Get chunks list
+     *
+     * @return List<Vector> the list
+     */
+    public List<Vector> getChunks() {
+        return this.chunk;
+    }
+
+    /**
      * Set chunks list
-     * 
+     *
      * @param List<Vector> the chunks
      */
     public void setChunks(List<Vector> chunks) {
@@ -559,17 +569,8 @@ public class ArenaIO {
     }
 
     /**
-     * Get chunks list
-     * 
-     * @return List<Vector> the list
-     */
-    public List<Vector> getChunks() {
-        return this.chunk;
-    }
-
-    /**
      * Gets unique map.
-     * 
+     *
      * @return String the unique map
      */
     public String getUniqueMap() {
@@ -578,7 +579,7 @@ public class ArenaIO {
 
     /**
      * Sets unique map.
-     * 
+     *
      * @param String
      */
     public void setUniqueMap(String m) {
@@ -600,7 +601,7 @@ public class ArenaIO {
         arena.setStatus(st.getString("status"));
         arena.setUniqueMap(st.getString("umap"));
         ArenaRegion ag = new ArenaRegion(st.getVector("region.min"), st.getVector("region.max"), st.getVector("region.top"), id, st.getString("world"), st.getString("map"),
-                                         (SerializedLocation) st.get("lmax"), (SerializedLocation) st.get("lmin"), (SerializedLocation) st.get("lad"));
+                (SerializedLocation) st.get("lmax"), (SerializedLocation) st.get("lmin"), (SerializedLocation) st.get("lad"));
         arena.setChunk((List<Vector>) st.get("chunks"));
         arena.setAreg(ag);
         arena.setWorldName(st.getString("world"));
@@ -613,7 +614,7 @@ public class ArenaIO {
 
     /**
      * Gets lobby max.
-     * 
+     *
      * @return the lobby max
      */
     public Vector getLobbyMax() {
@@ -622,7 +623,7 @@ public class ArenaIO {
 
     /**
      * Sets lobby max.
-     * 
+     *
      * @param lobbyMax the lobby max
      */
     public void setLobbyMax(Vector lobbyMax) {
@@ -631,7 +632,7 @@ public class ArenaIO {
 
     /**
      * Gets lobby min.
-     * 
+     *
      * @return the lobby min
      */
     public Vector getLobbyMin() {
@@ -640,7 +641,7 @@ public class ArenaIO {
 
     /**
      * Sets lobby min.
-     * 
+     *
      * @param lobbyMin the lobby min
      */
     public void setLobbyMin(Vector lobbyMin) {
@@ -649,7 +650,7 @@ public class ArenaIO {
 
     /**
      * Gets lobby spawn.
-     * 
+     *
      * @return the lobby spawn
      */
     public Vector getLobbySpawn() {
@@ -658,7 +659,7 @@ public class ArenaIO {
 
     /**
      * Sets lobby spawn.
-     * 
+     *
      * @param lobbySpawn the lobby spawn
      */
     public void setLobbySpawn(Vector lobbySpawn) {
@@ -667,7 +668,7 @@ public class ArenaIO {
 
     /**
      * Gets lobby id.
-     * 
+     *
      * @return the lobby id
      */
     public Integer getLobbyId() {
@@ -676,7 +677,7 @@ public class ArenaIO {
 
     /**
      * Sets lobby id.
-     * 
+     *
      * @param lobbyId the lobby id
      */
     public void setLobbyId(Integer lobbyId) {
@@ -685,7 +686,7 @@ public class ArenaIO {
 
     /**
      * Gets lobby world.
-     * 
+     *
      * @return the lobby world
      */
     public String getLobbyWorld() {
@@ -694,7 +695,7 @@ public class ArenaIO {
 
     /**
      * Sets lobby world.
-     * 
+     *
      * @param lobbyWorld the lobby world
      */
     public void setLobbyWorld(String lobbyWorld) {
@@ -703,7 +704,7 @@ public class ArenaIO {
 
     /**
      * Gets Arena Group Spawn
-     * 
+     *
      * @return ArenaGroupSpawn
      */
     public ArenaGroupSpawn getAGP() {
@@ -712,7 +713,7 @@ public class ArenaIO {
 
     /**
      * Sets Arena Group Spawn
-     * 
+     *
      * @param ArenaGroupSpawn the aGP
      */
     public void setAGP(ArenaGroupSpawn a) {

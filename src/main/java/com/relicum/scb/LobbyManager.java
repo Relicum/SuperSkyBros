@@ -1,15 +1,15 @@
 package com.relicum.scb;
 
-import java.util.*;
 import com.relicum.scb.configs.LobbyConfig;
 import com.relicum.scb.objects.LobbyRg;
 import com.relicum.scb.types.SkyApi;
-
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
+
+import java.util.*;
 
 /**
  * The type Lobby manager.
@@ -45,6 +45,10 @@ public class LobbyManager implements Listener {
         setup();
     }
 
+    public static Permission getLobbyBroadCastPerm() {
+        return BroadcastManager.getLobby();
+    }
+
     /**
      * Initial setup, loads lobbyspawn from file and creates lobbyspawn object
      */
@@ -59,7 +63,7 @@ public class LobbyManager implements Listener {
 
     /**
      * Loads the lobbyspawn and passes it to lobbyspawn object
-     * 
+     *
      * @return boolean
      */
     public boolean loadLobbySpawn() {
@@ -70,7 +74,7 @@ public class LobbyManager implements Listener {
 
             Double pit = (Double) lrc.get("PITCH");
             this.lobbyRg = new LobbyRg((org.bukkit.util.Vector) lrc.get("MIN"), (org.bukkit.util.Vector) lrc.get("MAX"), (org.bukkit.util.Vector) lrc.get("SPAWN"),
-                                       (String) lrc.get("WORLD"), (String) lrc.get("PERM"), (float) ya.floatValue());
+                    (String) lrc.get("WORLD"), (String) lrc.get("PERM"), (float) ya.floatValue());
 
             SkyApi.getCMsg().INFO("Lobby and Lobby Spawn have successfully been loaded");
 
@@ -84,7 +88,7 @@ public class LobbyManager implements Listener {
 
     /**
      * Save spawns file.
-     * 
+     *
      * @return boolean
      */
     public boolean saveLobbyFile() {
@@ -104,7 +108,7 @@ public class LobbyManager implements Listener {
 
     /**
      * Adds a player to the lobby
-     * 
+     *
      * @param play String
      */
     public void addPlayer(Player player) {
@@ -114,15 +118,14 @@ public class LobbyManager implements Listener {
             players.put(player.getName(), player);
             pname.add(player.getName());
             players2.add(player.getUniqueId());
-           System.out.println("Player " + player.getName() + " added to lobby list from line 124 of player lobby");
+            System.out.println("Player " + player.getName() + " added to lobby list from line 124 of player lobby");
         }
 
     }
 
-
     /**
      * Remove player. Using Bukkit Player as input
-     * 
+     *
      * @param player the Player
      */
     public void removePlayer(Player player) {
@@ -137,7 +140,7 @@ public class LobbyManager implements Listener {
 
     /**
      * Checks to see if a player is already in the lobby using the players name
-     * 
+     *
      * @param play String
      * @return boolean
      */
@@ -146,11 +149,10 @@ public class LobbyManager implements Listener {
 
     }
 
-
     /**
      * Checks to see if a player is already in the lobby using the Players
      * object
-     * 
+     *
      * @param player the Player
      * @return the boolean
      */
@@ -176,7 +178,7 @@ public class LobbyManager implements Listener {
 
     /**
      * Check to see if the given path exists
-     * 
+     *
      * @param path String
      * @return boolean
      */
@@ -192,7 +194,7 @@ public class LobbyManager implements Listener {
 
     /**
      * Takes a String and returns the matching World Object
-     * 
+     *
      * @param wo String
      * @return World
      */
@@ -204,12 +206,12 @@ public class LobbyManager implements Listener {
 
     /**
      * Get players in lobby.
-     * 
+     *
      * @return the list
      */
     public Collection<Player> getPlayersInLobby() {
 
-       return players.values();
+        return players.values();
     }
 
     public List<String> getPlayerNamesInLobby() {
@@ -224,7 +226,7 @@ public class LobbyManager implements Listener {
 
     /**
      * Returns the direction you are looking
-     * 
+     *
      * @param yaw float
      * @return float
      */
@@ -249,7 +251,7 @@ public class LobbyManager implements Listener {
 
     /**
      * Get lobby save object.
-     * 
+     *
      * @return LobbyConfig
      */
     public LobbyConfig getLobbySaveObject() {
@@ -260,7 +262,7 @@ public class LobbyManager implements Listener {
     /**
      * Store lobby region. and make a List of Chunks Encoded in Base64 to allow
      * for easy testing if a block is in the region
-     * 
+     *
      * @param cu
      * @return boolean
      */
@@ -273,7 +275,7 @@ public class LobbyManager implements Listener {
 
     /**
      * Gets world as string.
-     * 
+     *
      * @return the world as string
      */
     public String getWorldAsString() {
@@ -282,7 +284,7 @@ public class LobbyManager implements Listener {
 
     /**
      * Sets world as string.
-     * 
+     *
      * @param wo the wo
      */
     public void setWorldAsString(String wo) {
@@ -291,7 +293,7 @@ public class LobbyManager implements Listener {
 
     /**
      * Gets lobby region.
-     * 
+     *
      * @return LobbyRg lobby region
      */
     public LobbyRg getLobbyRg() {
@@ -304,7 +306,7 @@ public class LobbyManager implements Listener {
 
     /**
      * Teleports the player to the given location
-     * 
+     *
      * @param p Player
      * @param l Location
      * @return boolean
@@ -331,10 +333,5 @@ public class LobbyManager implements Listener {
                 return true;
             }
         return false;
-    }
-
-
-    public static Permission getLobbyBroadCastPerm() {
-        return BroadcastManager.getLobby();
     }
 }

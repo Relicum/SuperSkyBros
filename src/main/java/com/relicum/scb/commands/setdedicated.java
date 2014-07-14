@@ -6,7 +6,7 @@ import org.bukkit.plugin.Plugin;
 
 /**
  * Bukkit-SCB
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -14,7 +14,7 @@ public class setdedicated extends SubBase {
 
     /**
      * @param player Player
-     * @param args String[]
+     * @param args   String[]
      * @return boolean
      */
     @Override
@@ -58,7 +58,7 @@ public class setdedicated extends SubBase {
     /**
      * Simply set this to return the the number of arguments The command should
      * receive
-     * 
+     *
      * @return Integer
      */
     @Override
@@ -68,7 +68,7 @@ public class setdedicated extends SubBase {
 
     /**
      * Simply set this to return the clist permission
-     * 
+     *
      * @return String
      */
     @Override
@@ -78,7 +78,7 @@ public class setdedicated extends SubBase {
 
     /**
      * Simply set this to return the clist Usage
-     * 
+     *
      * @return String
      */
     @Override
@@ -88,7 +88,7 @@ public class setdedicated extends SubBase {
 
     /**
      * Set this to the label of the command
-     * 
+     *
      * @return String
      */
     @Override
@@ -98,7 +98,7 @@ public class setdedicated extends SubBase {
 
     /**
      * Set com
-     * 
+     *
      * @return String
      */
     @Override

@@ -44,19 +44,18 @@ public interface IOnchange {
     public void setCreatePermMessage(String s);
 
     /**
-     * Set permission prefix.
-     *
-     * @param s the string
-     */
-    public void setPermPrefix(String s);
-
-    /**
      * Get create permission prefix.
      *
      * @return the string
      */
     public String getPermPrefix();
 
+    /**
+     * Set permission prefix.
+     *
+     * @param s the string
+     */
+    public void setPermPrefix(String s);
 
     /**
      * Sets sign lines.

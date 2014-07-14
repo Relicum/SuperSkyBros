@@ -1,14 +1,15 @@
 package com.relicum.scb.utils;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * The type LocationChecker. Checks if a location is in a
- * <p>
+ * <p/>
  * Bound region. Can be used for tracking or block breaking/place checking Just
  * call the isAABB method passing the location you want to check. Each
  * Lobby,Arera will have theit Is they efficient to.
@@ -23,11 +24,11 @@ public class LocationChecker implements ConfigurationSerializable {
 
     /**
      * Instantiates a new Location checker.
-     * 
-     * @param max the max vector
-     * @param min the min Vector
+     *
+     * @param max  the max vector
+     * @param min  the min Vector
      * @param type the type of Object
-     * @param id the id Id of object
+     * @param id   the id Id of object
      */
     public LocationChecker(Vector max, Vector min, String type, Integer id) {
         this.max = max;
@@ -38,7 +39,7 @@ public class LocationChecker implements ConfigurationSerializable {
 
     /**
      * Instantiates a new Location checker.
-     * 
+     *
      * @param locationChecker the location checker
      */
     public LocationChecker(LocationChecker locationChecker) {
@@ -48,20 +49,9 @@ public class LocationChecker implements ConfigurationSerializable {
         this.id = locationChecker.id;
     }
 
-    @Override
-    public Map<String, Object> serialize() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("max", max);
-        map.put("min", min);
-        map.put("type", type);
-        map.put("id", id);
-
-        return map;
-    }
-
     /**
      * Deserialize location checker.
-     * 
+     *
      * @param map the map
      * @return the location checker
      */
@@ -77,9 +67,20 @@ public class LocationChecker implements ConfigurationSerializable {
 
     }
 
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("max", max);
+        map.put("min", min);
+        map.put("type", type);
+        map.put("id", id);
+
+        return map;
+    }
+
     /**
      * Get location checker.
-     * 
+     *
      * @return the location checker
      */
     public LocationChecker getChecker() {
@@ -88,7 +89,7 @@ public class LocationChecker implements ConfigurationSerializable {
 
     /**
      * Is Checks to see if the give vector is in The bounded Box
-     * 
+     *
      * @param vector the vector
      * @return the boolean true if the vector is in the box
      */
@@ -98,7 +99,7 @@ public class LocationChecker implements ConfigurationSerializable {
 
     /**
      * Gets max.
-     * 
+     *
      * @return the max
      */
     public Vector getMax() {
@@ -107,7 +108,7 @@ public class LocationChecker implements ConfigurationSerializable {
 
     /**
      * Gets min.
-     * 
+     *
      * @return the min
      */
     public Vector getMin() {
@@ -116,7 +117,7 @@ public class LocationChecker implements ConfigurationSerializable {
 
     /**
      * Gets type.
-     * 
+     *
      * @return the type
      */
     public String getType() {
@@ -125,7 +126,7 @@ public class LocationChecker implements ConfigurationSerializable {
 
     /**
      * Gets id.
-     * 
+     *
      * @return the id
      */
     public Integer getId() {

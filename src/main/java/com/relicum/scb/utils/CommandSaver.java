@@ -5,20 +5,25 @@
  */
 package com.relicum.scb.utils;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.ChatColor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.permissions.Permission;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CommandSaver {
 
     private Map<PluginCommand, Permission> store = new HashMap<>();
 
     private String fileName;
+
+    public CommandSaver(String name) {
+        this.fileName = name;
+    }
 
     public void addToStore(PluginCommand cmd, Permission per) {
         store.put(cmd, per);
@@ -91,10 +96,6 @@ public class CommandSaver {
 
     public Map<PluginCommand, Permission> getStore() {
         return store;
-    }
-
-    public CommandSaver(String name) {
-        this.fileName = name;
     }
 
     private void saveAllPermsToFile() {

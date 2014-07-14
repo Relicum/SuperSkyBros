@@ -21,14 +21,13 @@ public interface IClassArmour {
      */
     public ItemEnum getItemType();
 
+    public Color getArmourColor();
 
     public void setArmourColor(Color co);
 
-    public Color getArmourColor();
+    public ArmourMaterial getArmourMaterial();
 
     public void setArmourMaterial(Material mat);
-
-    public ArmourMaterial getArmourMaterial();
 
     public ItemStack[] getAllArmour(ArmourMaterial em);
 

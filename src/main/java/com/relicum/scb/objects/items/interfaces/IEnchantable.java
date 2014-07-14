@@ -5,13 +5,14 @@
  */
 package com.relicum.scb.objects.items.interfaces;
 
-import java.util.List;
 import org.bukkit.enchantments.Enchantment;
+
+import java.util.List;
 
 public interface IEnchantable extends IMetable {
     /**
      * Gets enchants.
-     * 
+     *
      * @return the enchants
      */
     List<Enchantment> getEnchants();

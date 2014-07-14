@@ -1,14 +1,15 @@
 package com.relicum.scb.we;
 
-import java.util.logging.Level;
 import com.sk89q.worldedit.bukkit.WorldEditPlugin;
 import com.sk89q.worldedit.bukkit.selections.CuboidSelection;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.logging.Level;
+
 /**
  * Bukkit-SCB
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -35,7 +36,7 @@ public class WEManager {
     /**
      * Gets a new instance of CuboidRegionSelector This can't be static as it is
      * unique to the Arena
-     * 
+     *
      * @return CuboidRegionSelector
      */
 

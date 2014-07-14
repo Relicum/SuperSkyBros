@@ -55,17 +55,6 @@ public abstract class SpawnInst implements ISpawnable, ISpawnableInstance, Seria
         return Bukkit.getServer().getWorld(this.getWorldString());
     }
 
-
-    /**
-     * Set vector.
-     *
-     * @param Vector
-     */
-    public void setVector(Vector v) {
-        this.vec = v;
-    }
-
-
     /**
      * Get world string.
      *
@@ -74,7 +63,6 @@ public abstract class SpawnInst implements ISpawnable, ISpawnableInstance, Seria
     public String getWorldString() {
         return this.world;
     }
-
 
     /**
      * Returns the Location Object
@@ -85,6 +73,14 @@ public abstract class SpawnInst implements ISpawnable, ISpawnableInstance, Seria
         return this.vec;
     }
 
+    /**
+     * Set vector.
+     *
+     * @param Vector
+     */
+    public void setVector(Vector v) {
+        this.vec = v;
+    }
 
     /**
      * Gets x.

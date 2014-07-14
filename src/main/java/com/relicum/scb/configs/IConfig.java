@@ -1,16 +1,17 @@
 package com.relicum.scb.configs;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+
 /**
  * Custom config to match functionality of default config file
- * 
+ *
  * @author Relicum
  * @version 0.3
  */
@@ -38,7 +39,7 @@ public class IConfig {
 
     /**
      * Get config as instance of FileConfiguration
-     * 
+     *
      * @return FileConfiguration
      */
     public FileConfiguration getConfig() {

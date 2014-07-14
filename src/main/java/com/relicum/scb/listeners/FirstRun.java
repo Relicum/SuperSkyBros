@@ -1,7 +1,5 @@
 package com.relicum.scb.listeners;
 
-import java.util.Arrays;
-import java.util.List;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,9 +11,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * SuperSkyBros First Created 28/09/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -70,7 +71,7 @@ public class FirstRun implements Listener {
         } else {
             e.setJoinMessage(null);
             List<String> st = Arrays.asList("    "
-                    + "\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<",
+                            + "\u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<",
                     ChatColor.GOLD + e.getPlayer().getName() + " welcome to the server");
             e.getPlayer().sendMessage((String[]) st.toArray());
             ChatColor b = ChatColor.BOLD;

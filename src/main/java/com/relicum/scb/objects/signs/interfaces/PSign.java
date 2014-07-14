@@ -27,7 +27,7 @@ public interface PSign {
 
     /**
      * Player Interacts with sign this function deals with it.
-     * 
+     *
      * @param Sign
      * @param Player
      * @return boolean

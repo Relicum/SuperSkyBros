@@ -1,16 +1,16 @@
 package com.relicum.scb.utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import com.relicum.scb.SCB;
 import com.relicum.scb.objects.items.testItem;
 import com.relicum.scb.utils.IconMenu.OptionClickEventHandler;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * SuperSkyBros First Created 04/10/13
@@ -20,11 +20,9 @@ import org.bukkit.inventory.ItemStack;
  */
 public class GemShop {
 
-    private Material gem;
-
     public static IconMenu iconMenu;
-
     public static SCB scb;
+    private Material gem;
 
 
     public GemShop(SCB p) {
@@ -65,7 +63,7 @@ public class GemShop {
         mytest.setLore(Arrays.asList("The Axe Class", ChatColor.BLUE + "Super Jumping", ChatColor.RED + "Killer mann"));
         ItemStack axe = mytest.asItemStack();
 
-       iconMenu = new IconMenu(
+        iconMenu = new IconMenu(
                 "Classes", 27, new OptionClickEventHandler() {
 
             @Override
@@ -75,13 +73,13 @@ public class GemShop {
                 if (event.getPosition() == 1) setClass(p, "Spider");
                 if (event.getPosition() == 2)
                     setClass(p, "BigAxe");
-              event.setWillClose(true);
+                event.setWillClose(true);
                 event.setWillDestroy(true);
 
             }
         }, scb).setOption(0, new ItemStack(Material.CACTUS, 1), "Creeper", creeperDescription.toArray(new String[creeperDescription.size()])).setOption(
-1, new ItemStack(Material.SPIDER_EYE, 1), "Spider", spiderDescription.toArray(new String[spiderDescription.size()]))
-               .setOption(2, axe, axe.getItemMeta().getDisplayName(), axe.getItemMeta().getLore().toArray((new String[axe.getItemMeta().getLore().size()])));
+                1, new ItemStack(Material.SPIDER_EYE, 1), "Spider", spiderDescription.toArray(new String[spiderDescription.size()]))
+                .setOption(2, axe, axe.getItemMeta().getDisplayName(), axe.getItemMeta().getLore().toArray((new String[axe.getItemMeta().getLore().size()])));
 
         iconMenu.open(player);
 

@@ -41,6 +41,14 @@ public abstract class SpawnInstance implements Spawnable, SpawnableInstance {
         return loc != null ? loc.getWorld() : null;
     }
 
+    /**
+     * Get Location
+     *
+     * @return Location
+     */
+    public Location getLocation() {
+        return loc;
+    }
 
     /**
      * Set Location
@@ -49,15 +57,5 @@ public abstract class SpawnInstance implements Spawnable, SpawnableInstance {
      */
     public void setLocation(Location l) {
         this.loc = l;
-    }
-
-
-    /**
-     * Get Location
-     *
-     * @return Location
-     */
-    public Location getLocation() {
-        return loc;
     }
 }

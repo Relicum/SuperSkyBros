@@ -207,10 +207,6 @@ public class SkyApi {
         return SkyApi.propertiesManager;
     }
 
-    private static class VaultManagerHolder {
-        private static final VaultManager vaultManager = new VaultManager();
-    }
-
     /**
      * Gets vault manager.
      *
@@ -251,6 +247,10 @@ public class SkyApi {
         SkyApi.getSignManager();
         SkyApi.getPropertiesManager();
         SkyApi.getInventoryManager();
+    }
+
+    private static class VaultManagerHolder {
+        private static final VaultManager vaultManager = new VaultManager();
     }
 
 }

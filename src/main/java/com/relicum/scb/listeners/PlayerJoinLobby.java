@@ -16,7 +16,7 @@ import org.bukkit.event.Listener;
  * SuperSkyBros First Created 04/10/13
  * <p/>
  * Handles Players Join the lobby from Login,Signs and Commands
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -36,14 +36,14 @@ public class PlayerJoinLobby implements Listener {
             ClearInventory.applyLobbyInv(e.getPlayer().getPlayer());
             SkyApi.getLobbyManager().addPlayer(e.getPlayer());
 
-           if (!e.isDedicated()) {
+            if (!e.isDedicated()) {
                 e.getPlayer().sendMessage(SkyApi.getMessageManager().getAdminMessage("command.message.teleportToLobby"));
             }
             this.teleportToLobby(e.getPlayer().getPlayer(), SkyApi.getLobbyManager().getLobbyRg().getLobbySpawn().add(0.5, 0.5, 0.5));
             System.out.println(e.getPlayer().getName() + " Has been transported to the lobby");
 
             Bukkit.broadcast(ChatColor.translateAlternateColorCodes('&',
-                    SkyApi.getMessageManager().getRawMessage("system.lobbyJoinWelcome").replace("%name%", e.getPlayer().getName())),
+                            SkyApi.getMessageManager().getRawMessage("system.lobbyJoinWelcome").replace("%name%", e.getPlayer().getName())),
                     "bukkit.broadcast.ssblobby");
 
         } else {
@@ -56,7 +56,7 @@ public class PlayerJoinLobby implements Listener {
 
     /**
      * Teleports the player to the given location
-     * 
+     *
      * @param p Player
      * @param l Location
      * @return boolean

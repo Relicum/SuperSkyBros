@@ -1,5 +1,6 @@
 package com.relicum.scb.listeners;
 
+import com.relicum.scb.I18N;
 import com.relicum.scb.configs.ServerStatus;
 import com.relicum.scb.hooks.VaultManager;
 import com.relicum.scb.types.SkyApi;
@@ -81,7 +82,7 @@ public class SetupPlayerJoin implements Listener {
 
             switch (sts) {
                 case 1:
-                    p.sendMessage(SkyApi.getMessageManager().getAdminMessage("setup.lobby"));
+                    p.sendMessage(I18N.STRING("setup.lobby"));
                     break;
                 case 2:
                     p.sendMessage(SkyApi.getMessageManager().getAdminMessage("setup.arena"));

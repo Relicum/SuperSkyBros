@@ -29,12 +29,11 @@ import java.util.Map;
  */
 public class CommandManagerFirstJoin implements CommandExecutor {
 
-    private SCB plugin;
-    private boolean saveCommands;
     public static ConversationFactory factory;
-
     private final String cHeader = "    \u00A72>\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC"
             + "[\u00A7b\u00A7lSuper-Sky-Bros\u00A72]\u25AC*\u25AC*\u25AC*\u25AC*\u25AC" + "*\u25AC*\u25AC*\u25AC*\u25AC*\u25AC<\n";
+    private SCB plugin;
+    private boolean saveCommands;
 
     public CommandManagerFirstJoin(SCB pl) {
 

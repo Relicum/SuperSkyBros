@@ -1,11 +1,12 @@
 package com.relicum.scb;
 
-import java.util.List;
 import com.relicum.scb.types.SkyApi;
+
+import java.util.List;
 
 /**
  * Bukkit-SCB
- * 
+ *
  * @author Relicum
  * @version 0.1
  */

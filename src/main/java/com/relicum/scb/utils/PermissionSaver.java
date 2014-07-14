@@ -5,13 +5,14 @@
  */
 package com.relicum.scb.utils;
 
+import com.relicum.scb.types.SkyApi;
+import org.bukkit.ChatColor;
+import org.bukkit.permissions.Permission;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
-import com.relicum.scb.types.SkyApi;
-import org.bukkit.ChatColor;
-import org.bukkit.permissions.Permission;
 
 public class PermissionSaver {
 

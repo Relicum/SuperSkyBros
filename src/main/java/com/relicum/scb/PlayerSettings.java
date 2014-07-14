@@ -35,20 +35,20 @@ public class PlayerSettings implements ConfigurationSerializable {
     /**
      * Instantiates a new Player settings.
      *
-     * @param pt the pt
-     * @param firstS the first s
-     * @param lastS the last s
-     * @param inLobby the in lobby
-     * @param name the name
+     * @param pt         the pt
+     * @param firstS     the first s
+     * @param lastS      the last s
+     * @param inLobby    the in lobby
+     * @param name       the name
      * @param seenBefore the seen before
-     * @param pl the pl
-     * @param world the world
-     * @param isOp the is op
-     * @param k the k
-     * @param d the d
-     * @param kd the kd
-     * @param w the w
-     * @param gp the gp
+     * @param pl         the pl
+     * @param world      the world
+     * @param isOp       the is op
+     * @param k          the k
+     * @param d          the d
+     * @param kd         the kd
+     * @param w          the w
+     * @param gp         the gp
      */
     protected PlayerSettings(PlayerType pt, Long firstS, Long lastS, boolean inLobby, String name, boolean seenBefore,
                              PlayerLocation pl, String world, boolean isOp, int k, int d, double kd, int w, int gp) {

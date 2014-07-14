@@ -21,6 +21,10 @@ public class LobbyRegion implements ConfigurationSerializable {
     private SerializedLocation spawn;
 
 
+    public LobbyRegion(Map<String, Object> map) {
+
+    }
+
     /**
      * Creates a Map representation of this class.
      * <p/>
@@ -38,9 +42,5 @@ public class LobbyRegion implements ConfigurationSerializable {
         boolean check = new Vector().isInAABB(mi.toVector(), ma.toVector());
 
         return null;
-    }
-
-    public LobbyRegion(Map<String, Object> map) {
-
     }
 }

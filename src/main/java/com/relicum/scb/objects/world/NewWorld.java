@@ -3,7 +3,7 @@ package com.relicum.scb.objects.world;
 /**
  * SuperSkyBros First Created 29/10/13 This class is used to create new worlds
  * They then get save as there own object.
- * 
+ *
  * @author Relicum
  * @version 0.1
  */

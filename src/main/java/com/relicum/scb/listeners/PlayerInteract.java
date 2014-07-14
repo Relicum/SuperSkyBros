@@ -1,9 +1,7 @@
 package com.relicum.scb.listeners;
 
-import java.util.List;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.GemShop;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,6 +11,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import java.util.List;
 
 /**
  * SuperSkyBros First Created 09/10/13

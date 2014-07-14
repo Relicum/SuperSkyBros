@@ -72,6 +72,14 @@ public class ArenaSpawn extends SpawnInst {
         return arenaId;
     }
 
+    /**
+     * Gets player.
+     *
+     * @return Player
+     */
+    public Player getPlayer() {
+        return this.pname;
+    }
 
     /**
      * Sets player.
@@ -82,17 +90,6 @@ public class ArenaSpawn extends SpawnInst {
 
         this.pname = s;
     }
-
-
-    /**
-     * Gets player.
-     *
-     * @return Player
-     */
-    public Player getPlayer() {
-        return this.pname;
-    }
-
 
     /**
      * Despawn

@@ -1,10 +1,11 @@
 package com.relicum.scb.objects.world;
 
-import java.util.List;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.metadata.Metadatable;
 import org.bukkit.plugin.Plugin;
+
+import java.util.List;
 
 /**
  * The type WorldMeta.
@@ -34,7 +35,7 @@ public class WorldMeta implements Metadatable {
         }
         SkyApi.getSCB().getLogger().info("New MetaData for world set");
 
-   }
+    }
 
 
     /**
@@ -83,5 +84,5 @@ public class WorldMeta implements Metadatable {
 
         if (this.hasMetadata(s))
             SkyApi.getSCB().getLogger().severe("Unable to remove the MetaData for plugin " + plugin.getName());
- }
+    }
 }

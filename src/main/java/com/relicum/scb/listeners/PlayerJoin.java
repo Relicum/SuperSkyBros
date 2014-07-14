@@ -32,12 +32,12 @@ import java.util.List;
 @Getter
 public class PlayerJoin {
 
-    private SCB plugin;
-    private boolean firstTimeOverride;
-    private boolean mode;
     public PlayerSettings relicum;
     public StorePlayerSettings playerSettings;
     public PlayerConfig relfile;
+    private SCB plugin;
+    private boolean firstTimeOverride;
+    private boolean mode;
 
     public PlayerJoin(SCB plugin) {
         this.plugin = plugin;

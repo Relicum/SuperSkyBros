@@ -25,6 +25,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 
@@ -37,16 +38,32 @@ import java.util.concurrent.ExecutorService;
 
 public class SCB extends JavaPlugin implements Listener {
 
-    public long primaryThread = Thread.currentThread().getId();
+    public static Locale locale;
     @SuppressWarnings("StaticVariableOfConcreteClass")
     private static SCB p;
+    public long primaryThread = Thread.currentThread().getId();
     public boolean saveOnDisable = true;
     public boolean isUpdatesEnabled = true;
     public ExecutorService loginService;
+    protected CommandSaver saver = null;
     private WorldManager worldManager;
     private PluginManager pm = Bukkit.getServer().getPluginManager();
-    protected CommandSaver saver = null;
 
+    /**
+     * Gets instance of WorldEdit to use
+     *
+     * @return the WorldEdit plugin api
+     */
+    public static WorldEditPlugin getWorldEdit() {
+
+        Plugin WE = Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
+
+        if ((WE instanceof WorldEditPlugin)) {
+            return (WorldEditPlugin) WE;
+
+        }
+        return null;
+    }
 
     @SuppressWarnings("RefusedBequest")
     @Override
@@ -69,6 +86,14 @@ public class SCB extends JavaPlugin implements Listener {
 
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
+
+        String[] l = getConfig().getString("locale", "en_GB").split("_");
+        locale = new Locale(l[0], l[1]);
+
+        Locale.setDefault(locale);
+        saveResource("MessagesBundle.properties", true);
+        saveResource("MessagesBundle_en_GB.properties", true);
+
 
         if (getConfig().getBoolean("storeCmds") && getConfig().getBoolean("modeSet")) {
             System.out.println("Command & Permission saver is being activated for full commands mode");
@@ -129,7 +154,6 @@ public class SCB extends JavaPlugin implements Listener {
                 CommandExecutor cm = new CommandManagerFirstJoin(p);
 
                 p.getCommand("ssba").setExecutor(cm);
-                p.getCommand("ssba").setPermissionMessage("You do not have permission to run this command");
 
                 p.pm.registerEvents(new FirstRun(), this);
 
@@ -161,7 +185,6 @@ public class SCB extends JavaPlugin implements Listener {
         }
 
     }
-
 
     @SuppressWarnings("RefusedBequest")
     @Override
@@ -236,96 +259,6 @@ public class SCB extends JavaPlugin implements Listener {
         p.pm.addPermission(per);
     }
 
-    class Startup implements Runnable {
-
-        SCB p = SkyApi.getSCB();
-
-        @Override
-        public void run() {
-
-            SkyApi.getWorldManager().loadEnabledWorlds();
-            SkyApi.loadManagers();
-
-            new SignLocationStore(p);
-
-            if (!p.getConfig().getBoolean("enable")) {
-                SkyApi.getCMsg().INFO("SCB is being disabled due to it enable being false in config.yml");
-                p.pm.disablePlugin(p);
-                return;
-
-            }
-
-            // Load PlayerJoin Listener dependant if server is setup thn, if
-            // it's dedicated mode or mixed mode
-            if (!getConfig().getString("serverStatus").equalsIgnoreCase("READY")) {
-
-                p.pm.registerEvents(new SetupPlayerJoin(ServerStatus.valueOf(getConfig().getString("serverStatus"))), p);
-                SkyApi.getCMsg().INFO("Player Join Listener loaded for setup");
-
-            } else if (getConfig().getString("serverStatus").equalsIgnoreCase("READY") && p.getConfig().getBoolean("dedicatedSSB")) {
-
-                p.pm.registerEvents(new com.relicum.scb.listeners.dedicated.PlayerJoin(ServerStatus.valueOf(getConfig().getString("serverStatus"))), p);
-                SkyApi.getCMsg().INFO("Player Join Listener loaded for dedicated");
-
-            } else {
-
-                p.pm.registerEvents(new com.relicum.scb.listeners.mixed.PlayerJoin(), p);
-                SkyApi.getCMsg().INFO("Player Join Listener loaded for mixed");
-            }
-
-            if (SkyApi.getSm().getLobbyConfig().getConfig().getBoolean("LOBBYSET")) {
-                if (p.getConfig().getBoolean("dedicatedSSB")) {
-                    p.pm.registerEvents(new DBlockBreakPlace(), p);
-                    SkyApi.getCMsg().INFO("Dedicated mode block place and break listener activated");
-                } else {
-
-                    p.loadLobbyEvents();
-                }
-            }
-
-            p.pm.registerEvents(new WorldListeners(), p);
-            p.pm.registerEvents(new onBlockClick(), p);
-            // p.pm.registerEvents(new PlayerJoin(p), p);
-            p.pm.registerEvents(new PlayerQuit(p), p);
-            // p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
-            // p.pm.registerEvents(new BlockDamage(), p);
-            p.pm.registerEvents(new PlayerJoinLobby(), p);
-            // p.pm.registerEvents(new ShopManager(p), p);
-            p.pm.registerEvents(new SignChange(), p);
-            p.pm.registerEvents(new PlayerInteract(), p);
-            p.pm.registerEvents(new ShopManager(p), p);
-            // List<String> wol = new ArrayList<>();
-
-            // p.pm.registerEvents(new PlayerToggleFly(p),p);
-            // p.pm.registerEvents(new Generator(),p);
-
-            BroadcastManager.setup();
-            GemShop gemShop = new GemShop(p);
-
-            registerNewPerm("ssba.admin.breakblocks", "Allows  user to break blocks", "ssba.admin");
-            registerNewPerm("ssba.admin.placeblocks", "Allow user to place blocks", "ssba.admin");
-            registerNewPerm("ssba.admin.breakbypass", "Allow user to bypass breaking of blocks anywhere", "ssba.admin");
-            registerNewPerm("ssba.admin.placebypass", "Allow user to bypass placing of blocks anywhere", "ssba.admin");
-
-            registerNewPerm("ssba.admin.createsign", "Allows user to create signs", "ssba.admin");
-            registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player");
-            registerNewPerm("ssb.player.uselobbyleave", "Allows user to use a lobby leave sign", "ssb.player");
-            registerNewPerm("ssb.player.usearenajoin", "Allows user to use a arena leave sign", "ssb.player");
-            registerNewPerm("ssb.player.usearenareturn", "Allows user to use a Arena lobby return to main lobby signs", "ssb.player");
-
-            if (getConfig().getBoolean("storeCmds")) {
-                saver.saveStoreToFile();
-                PermissionSaver.saveAllPermsToFile();
-            }
-
-            if (SkyApi.getSm().isUseWorldManagement() && SkyApi.getSm().isGenerateDefaultWorld()) {
-                SkyApi.getCMsg().INFO("Please restart the server as part of autosetup");
-            }
-
-        }
-
-    }
-
     /**
      * Update Main World Settings
      */
@@ -350,7 +283,7 @@ public class SCB extends JavaPlugin implements Listener {
 
         try {
             config.save(new File("bukkit.yml"));
-            SkyApi.getCMsg().INFO("CleanroomGenerator has been set to world in bukkit.yml");
+            SkyApi.getCMsg().INFO("SuperSkyBros has been set to world in bukkit.yml");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -461,22 +394,6 @@ public class SCB extends JavaPlugin implements Listener {
         return new WorldCreator(name);
     }
 
-    /**
-     * Gets instance of WorldEdit to use
-     *
-     * @return the WorldEdit plugin api
-     */
-    public static WorldEditPlugin getWorldEdit() {
-
-        Plugin WE = Bukkit.getServer().getPluginManager().getPlugin("WorldEdit");
-
-        if ((WE instanceof WorldEditPlugin)) {
-            return (WorldEditPlugin) WE;
-
-        }
-        return null;
-    }
-
     public CommandSaver getSaver() {
         return saver;
     }
@@ -489,5 +406,95 @@ public class SCB extends JavaPlugin implements Listener {
     public WorldGenerator getDefaultWorldGenerator(String worldName, String id) {
 
         return new WorldGenerator();
+    }
+
+    class Startup implements Runnable {
+
+        SCB p = SkyApi.getSCB();
+
+        @Override
+        public void run() {
+
+            SkyApi.getWorldManager().loadEnabledWorlds();
+            SkyApi.loadManagers();
+
+            new SignLocationStore(p);
+
+            if (!p.getConfig().getBoolean("enable")) {
+                SkyApi.getCMsg().INFO("SCB is being disabled due to it enable being false in config.yml");
+                p.pm.disablePlugin(p);
+                return;
+
+            }
+
+            // Load PlayerJoin Listener dependant if server is setup thn, if
+            // it's dedicated mode or mixed mode
+            if (!getConfig().getString("serverStatus").equalsIgnoreCase("READY")) {
+
+                p.pm.registerEvents(new SetupPlayerJoin(ServerStatus.valueOf(getConfig().getString("serverStatus"))), p);
+                SkyApi.getCMsg().INFO("Player Join Listener loaded for setup");
+
+            } else if (getConfig().getString("serverStatus").equalsIgnoreCase("READY") && p.getConfig().getBoolean("dedicatedSSB")) {
+
+                p.pm.registerEvents(new com.relicum.scb.listeners.dedicated.PlayerJoin(ServerStatus.valueOf(getConfig().getString("serverStatus"))), p);
+                SkyApi.getCMsg().INFO("Player Join Listener loaded for dedicated");
+
+            } else {
+
+                p.pm.registerEvents(new com.relicum.scb.listeners.mixed.PlayerJoin(), p);
+                SkyApi.getCMsg().INFO("Player Join Listener loaded for mixed");
+            }
+
+            if (SkyApi.getSm().getLobbyConfig().getConfig().getBoolean("LOBBYSET")) {
+                if (p.getConfig().getBoolean("dedicatedSSB")) {
+                    p.pm.registerEvents(new DBlockBreakPlace(), p);
+                    SkyApi.getCMsg().INFO("Dedicated mode block place and break listener activated");
+                } else {
+
+                    p.loadLobbyEvents();
+                }
+            }
+
+            p.pm.registerEvents(new WorldListeners(), p);
+            p.pm.registerEvents(new onBlockClick(), p);
+            // p.pm.registerEvents(new PlayerJoin(p), p);
+            p.pm.registerEvents(new PlayerQuit(p), p);
+            // p.pm.registerEvents(new PlayerLoginNoPerm(p), p);
+            // p.pm.registerEvents(new BlockDamage(), p);
+            p.pm.registerEvents(new PlayerJoinLobby(), p);
+            // p.pm.registerEvents(new ShopManager(p), p);
+            p.pm.registerEvents(new SignChange(), p);
+            p.pm.registerEvents(new PlayerInteract(), p);
+            p.pm.registerEvents(new ShopManager(p), p);
+            // List<String> wol = new ArrayList<>();
+
+            // p.pm.registerEvents(new PlayerToggleFly(p),p);
+            // p.pm.registerEvents(new Generator(),p);
+
+            BroadcastManager.setup();
+            GemShop gemShop = new GemShop(p);
+
+            registerNewPerm("ssba.admin.breakblocks", "Allows  user to break blocks", "ssba.admin");
+            registerNewPerm("ssba.admin.placeblocks", "Allow user to place blocks", "ssba.admin");
+            registerNewPerm("ssba.admin.breakbypass", "Allow user to bypass breaking of blocks anywhere", "ssba.admin");
+            registerNewPerm("ssba.admin.placebypass", "Allow user to bypass placing of blocks anywhere", "ssba.admin");
+
+            registerNewPerm("ssba.admin.createsign", "Allows user to create signs", "ssba.admin");
+            registerNewPerm("ssb.player.uselobbyjoin", "Allows user to use a lobby join sign", "ssb.player");
+            registerNewPerm("ssb.player.uselobbyleave", "Allows user to use a lobby leave sign", "ssb.player");
+            registerNewPerm("ssb.player.usearenajoin", "Allows user to use a arena leave sign", "ssb.player");
+            registerNewPerm("ssb.player.usearenareturn", "Allows user to use a Arena lobby return to main lobby signs", "ssb.player");
+
+            if (getConfig().getBoolean("storeCmds")) {
+                saver.saveStoreToFile();
+                PermissionSaver.saveAllPermsToFile();
+            }
+
+            if (SkyApi.getSm().isUseWorldManagement() && SkyApi.getSm().isGenerateDefaultWorld()) {
+                SkyApi.getCMsg().INFO("Please restart the server as part of autosetup");
+            }
+
+        }
+
     }
 }

@@ -1,16 +1,17 @@
 package com.relicum.scb.configs;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.logging.Level;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+
 /**
  * SuperSkyBros First Created 18/12/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -31,7 +32,7 @@ public class PlayerConfig {
 
     /**
      * Get config as instance of FileConfiguration
-     * 
+     *
      * @return FileConfiguration
      */
     public FileConfiguration getConfig() {

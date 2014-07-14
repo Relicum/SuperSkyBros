@@ -5,15 +5,16 @@
  */
 package com.relicum.scb;
 
-import java.util.Random;
 import com.relicum.scb.configs.WorldDefaults;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 
+import java.util.Random;
+
 /**
  * WManager - MiniGames World creator and manager
- * 
+ *
  * @author Relicum
  * @version 0.2
  */
@@ -28,10 +29,9 @@ public class WManager {
 
     /**
      * Instantiates a new {@link com.relicum.scb.WManager}.
-     * 
-     * <p>
+     * <p/>
+     * <p/>
      * NOT TO BE CALLED DIRECTLY
-     * 
      */
     public WManager() {
         new WorldDefaults();
@@ -39,14 +39,14 @@ public class WManager {
 
     /**
      * Create a New World
-     * 
-     * @param wname the name of the world as a {@link java.lang.String}
-     * @param worldType the world type {@link org.bukkit.WorldType}
-     * @param environment the world {@link org.bukkit.World.Environment}
+     *
+     * @param wname         the name of the world as a {@link java.lang.String}
+     * @param worldType     the world type {@link org.bukkit.WorldType}
+     * @param environment   the world {@link org.bukkit.World.Environment}
      * @param genStructures {@link java.lang.Boolean} true to generate
-     *        structures
-     * @param genSettings the generator settings as a {@link java.lang.String}
-     * @param theSeed the seed for the world
+     *                      structures
+     * @param genSettings   the generator settings as a {@link java.lang.String}
+     * @param theSeed       the seed for the world
      * @return the newly created {@link org.bukkit.World}
      */
     public World createNew(String wname, WorldType worldType, World.Environment environment, boolean genStructures, String genSettings, long theSeed) {
@@ -63,7 +63,7 @@ public class WManager {
 
     /**
      * Create New Void World
-     * 
+     *
      * @param wname the name of the world as a {@link java.lang.String}
      * @return the new {@link org.bukkit.World}
      */
@@ -107,7 +107,7 @@ public class WManager {
 
     /**
      * Gets a new instance of {@link org.bukkit.WorldCreator}
-     * 
+     *
      * @param wname the name of the world as a {@link java.lang.String}
      * @return the new {@link org.bukkit.WorldCreator}
      */
@@ -117,7 +117,7 @@ public class WManager {
 
     /**
      * Get a new Random seed for the world
-     * 
+     *
      * @return Random Long as a world seed
      */
     public long randomSeed() {

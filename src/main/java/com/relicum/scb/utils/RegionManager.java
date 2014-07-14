@@ -11,18 +11,15 @@ import java.util.Map;
 
 /**
  * Used to Manage WorldEdit Regions
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
 public class RegionManager {
 
-    private Region r;
-
-    private Map<String, Region> RS = new HashMap<String, Region>();
-
     private static MessageManager mm = SkyApi.getMessageManager();
-
+    private Region r;
+    private Map<String, Region> RS = new HashMap<String, Region>();
     private World lw;
 
     private Location lo;
@@ -74,7 +71,7 @@ public class RegionManager {
 
     /**
      * Converts a WorldEdit Vector into a Bukkit Location
-     * 
+     *
      * @param ve Vector
      * @return Location
      */
@@ -90,7 +87,7 @@ public class RegionManager {
      * Checks to see if the region and the players are in the same world returns
      * true if there not returns false if they aren't and sets the errorMessage
      * string
-     * 
+     *
      * @return boolean
      */
     private boolean worldCheck() {

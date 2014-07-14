@@ -10,7 +10,7 @@ import java.util.List;
 public interface ILore extends IMetable {
     /**
      * Gets lore.
-     * 
+     *
      * @return the lore
      */
     public List<String> getLore();
@@ -18,7 +18,7 @@ public interface ILore extends IMetable {
     /**
      * Sets the lore for the item as a {@link java.util.List} of
      * {@link java.lang.String}
-     * 
+     *
      * @param lore for the item passed as {@link java.util.List}
      */
     public void setLore(List<String> lore);

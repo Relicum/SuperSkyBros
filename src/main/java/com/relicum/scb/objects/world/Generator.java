@@ -1,12 +1,13 @@
 package com.relicum.scb.objects.world;
 
-import java.util.Random;
 import com.relicum.scb.types.SkyApi;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.event.Listener;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.plugin.Plugin;
+
+import java.util.Random;
 
 /**
  * SuperSkyBros First Created 11/11/13
@@ -18,7 +19,7 @@ public class Generator extends ChunkGenerator implements Listener {
 
     public Plugin ChunkGenerator() {
         return SkyApi.getSCB();
-  }
+    }
 
 
     @Override

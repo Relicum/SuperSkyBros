@@ -1,13 +1,13 @@
 package com.relicum.scb.objects.signs;
 
-import java.util.ArrayList;
 import com.relicum.scb.objects.signs.abstracts.JoinSign;
-
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.SignChangeEvent;
+
+import java.util.ArrayList;
 
 /**
  * SuperSkyBros First Created 29/09/13
@@ -57,7 +57,7 @@ public class JoinLobbySign extends JoinSign {
 
     /**
      * Player Interacts with sign this function deals with it.
-     * 
+     *
      * @param Sign
      * @param Player
      * @return boolean

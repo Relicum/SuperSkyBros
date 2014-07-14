@@ -8,22 +8,6 @@ import org.bukkit.scoreboard.Scoreboard;
 public interface IScoreBoard {
 
     /**
-     * The enum DISPLAYSLOT.
-     */
-    public enum DISPLAYSLOT {
-        /**
-         * The SIDEBAR.
-         */SIDEBAR,
-        /**
-         * The BELOW_NAME.
-         */BELOW_NAME,
-        /**
-         * The PLAYER_LIST.
-         */PLAYER_LIST
-    }
-
-
-    /**
      * Gets sB manager.
      *
      * @return the sB manager
@@ -67,7 +51,6 @@ public interface IScoreBoard {
      * @return the boolean
      */
     boolean removePlayerFromScoreboard(String player);
-
 
     /**
      * Sets player scoreboard.
@@ -141,4 +124,19 @@ public interface IScoreBoard {
      * @return boolean true on success
      */
     boolean loadScoreboard();
+
+    /**
+     * The enum DISPLAYSLOT.
+     */
+    public enum DISPLAYSLOT {
+        /**
+         * The SIDEBAR.
+         */SIDEBAR,
+        /**
+         * The BELOW_NAME.
+         */BELOW_NAME,
+        /**
+         * The PLAYER_LIST.
+         */PLAYER_LIST
+    }
 }

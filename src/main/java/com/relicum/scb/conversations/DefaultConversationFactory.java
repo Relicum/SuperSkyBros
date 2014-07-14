@@ -25,7 +25,7 @@ public class DefaultConversationFactory {
 
         ConversationFactory factory;
         factory = new ConversationFactory(SkyApi.getSCB()).withModality(true).withPrefix(new CustomPrefix()).withEscapeSequence("/quit")
-                                                          .thatExcludesNonPlayersWithMessage(               "Only players can run this conversation").withLocalEcho(false).addConversationAbandonedListener(new ConAbandonedEvent()).withTimeout(60);
+                .thatExcludesNonPlayersWithMessage("Only players can run this conversation").withLocalEcho(false).addConversationAbandonedListener(new ConAbandonedEvent()).withTimeout(60);
 
         return factory;
     }

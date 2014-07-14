@@ -23,17 +23,11 @@ import java.util.List;
 public class PlayerToggleFly extends Event implements Listener {
 
     private static final HandlerList handlers = new HandlerList();
-
-    private SCB plugin;
-
     public boolean isJumping = false;
-
     public Integer c = 0;
-
     public Integer hel;
-
     public Integer cooldown = 5;
-
+    private SCB plugin;
     private HashMap<String, Long> lastJumped = new HashMap<>();
 
     private HashMap<String, Boolean> jumping = new HashMap<>();

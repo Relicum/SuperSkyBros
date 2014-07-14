@@ -70,16 +70,6 @@ public class IRegion {
     }
 
     /**
-     * Set the Region ID must be same as Arena
-     *
-     * @param id Integer
-     */
-    public void setRegionID(Integer id) {
-        this.regionId = id;
-    }
-
-
-    /**
      * Get the Regions ID
      *
      * @return Integer
@@ -88,6 +78,14 @@ public class IRegion {
         return this.regionId;
     }
 
+    /**
+     * Set the Region ID must be same as Arena
+     *
+     * @param id Integer
+     */
+    public void setRegionID(Integer id) {
+        this.regionId = id;
+    }
 
     /**
      * Set the Admin Spawn Location for the Region This is the center block, max Y+2

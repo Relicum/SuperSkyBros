@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public class GameScoreBoard
         implements IScoreboardMaker {
+    public Scoreboard scoreboard;
     private ScoreboardType scoreboardType;
     private int maxPlayers;
     private int minPlayers;
@@ -17,7 +18,6 @@ public class GameScoreBoard
     private int maxView;
     private long gameLength;
     private long updateSchedule;
-    public Scoreboard scoreboard;
     private Map<String, Objective> objectiveMap = new HashMap();
 
     public GameScoreBoard(Scoreboard sb) {
@@ -30,6 +30,10 @@ public class GameScoreBoard
 
     public ScoreboardType getScoreboardType() {
         return null;
+    }
+
+    public void setScoreboardType(ScoreboardType scoreboardType) {
+        this.scoreboardType = scoreboardType;
     }
 
     public Scoreboard getNewScoreboard() {
@@ -78,73 +82,68 @@ public class GameScoreBoard
         return maxPlayers;
     }
 
-    public int getMinPlayers() {
-        return minPlayers;
-    }
-
-    public int getMaxLives() {
-        return maxLives;
-    }
-
-    public String getScoreBoardDisplayName() {
-        return scoreBoardDisplayName;
-    }
-
-    public int getMaxView() {
-        return maxView;
-    }
-
-    public long getGameLength() {
-        return gameLength;
-    }
-
-    public long getUpdateSchedule() {
-        return updateSchedule;
-    }
-
-    public Scoreboard getScoreboard() {
-        return scoreboard;
-    }
-
-    public Map<String, Objective> getObjectiveMap() {
-        return objectiveMap;
-    }
-
-
-    public void setScoreboardType(ScoreboardType scoreboardType) {
-        this.scoreboardType = scoreboardType;
-    }
-
     public void setMaxPlayers(int maxPlayers) {
         this.maxPlayers = maxPlayers;
+    }
+
+    public int getMinPlayers() {
+        return minPlayers;
     }
 
     public void setMinPlayers(int minPlayers) {
         this.minPlayers = minPlayers;
     }
 
+    public int getMaxLives() {
+        return maxLives;
+    }
+
     public void setMaxLives(int maxLives) {
         this.maxLives = maxLives;
+    }
+
+    public String getScoreBoardDisplayName() {
+        return scoreBoardDisplayName;
     }
 
     public void setScoreBoardDisplayName(String scoreBoardDisplayName) {
         this.scoreBoardDisplayName = scoreBoardDisplayName;
     }
 
+    public int getMaxView() {
+        return maxView;
+    }
+
     public void setMaxView(int maxView) {
         this.maxView = maxView;
+    }
+
+    public long getGameLength() {
+        return gameLength;
     }
 
     public void setGameLength(long gameLength) {
         this.gameLength = gameLength;
     }
 
+    public long getUpdateSchedule() {
+        return updateSchedule;
+    }
+
     public void setUpdateSchedule(long updateSchedule) {
         this.updateSchedule = updateSchedule;
     }
 
+    public Scoreboard getScoreboard() {
+        return scoreboard;
+    }
+
     public void setScoreboard(Scoreboard scoreboard) {
         this.scoreboard = scoreboard;
+    }
+
+    public Map<String, Objective> getObjectiveMap() {
+        return objectiveMap;
     }
 
     public void setObjectiveMap(Map<String, Objective> objectiveMap) {

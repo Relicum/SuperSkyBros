@@ -38,73 +38,55 @@ public class LocalLocation implements ISignLocation, ISignLocationExtra, ISignWo
         return this.X;
     }
 
+    public void setX(double x) {
+        this.X = x;
+    }
 
     @Override
     public double getY() {
         return this.Y;
     }
 
+    public void setY(double y) {
+        this.Y = y;
+    }
 
     @Override
     public double getZ() {
         return this.Z;
     }
 
+    public void setZ(double z) {
+        this.Z = z;
+    }
 
     @Override
     public float getYaw() {
         return this.Yaw;
     }
 
+    public void setYaw(float yaw) {
+        Yaw = yaw;
+    }
 
     @Override
     public float getPitch() {
         return this.Pitch;
     }
 
+    public void setPitch(float pitch) {
+        Pitch = pitch;
+    }
 
     @Override
     public String getWorldName() {
         return this.world;
     }
 
-
     @Override
     public World getWorld() {
         return Bukkit.getWorld(this.world);
     }
-
-
-    @Override
-    public UUID getWorldUniqueID() {
-        return this.worldUUID;
-    }
-
-
-    public void setX(double x) {
-        this.X = x;
-    }
-
-
-    public void setY(double y) {
-        this.Y = y;
-    }
-
-
-    public void setZ(double z) {
-        this.Z = z;
-    }
-
-
-    public void setYaw(float yaw) {
-        Yaw = yaw;
-    }
-
-
-    public void setPitch(float pitch) {
-        Pitch = pitch;
-    }
-
 
     /**
      * Sets world of the Location passing world name as a String
@@ -117,6 +99,10 @@ public class LocalLocation implements ISignLocation, ISignLocationExtra, ISignWo
 
     }
 
+    @Override
+    public UUID getWorldUniqueID() {
+        return this.worldUUID;
+    }
 
     /**
      * Get Bukkit Location.If yaw was set it will use the value if not it won't

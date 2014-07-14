@@ -1,6 +1,5 @@
 package com.relicum.scb.commands;
 
-import java.util.Set;
 import com.relicum.scb.ArenaManager;
 import com.relicum.scb.arena.Arena;
 import com.relicum.scb.arena.ArenaIO;
@@ -9,9 +8,11 @@ import com.relicum.scb.types.SkyApi;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Set;
+
 /**
  * SuperSkyBros Enable Command First Created 11/09/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -23,7 +24,7 @@ public class enable extends SubBase {
         ArenaManager ar = SkyApi.getArenaManager();
         if (ar.getCurrent() != Integer.parseInt(args[0])) {
             player.sendMessage(tmp = SkyApi.getMessageManager().getErrorMessage("command.message.enableMisMatch").replace("%ID%", args[0])
-                                           .replace("%MID%", ar.getCurrent().toString()));
+                    .replace("%MID%", ar.getCurrent().toString()));
             return true;
         }
 

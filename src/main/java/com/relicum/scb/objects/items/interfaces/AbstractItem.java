@@ -5,13 +5,14 @@
  */
 package com.relicum.scb.objects.items.interfaces;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AbstractItem implements ILore, IDisplayName {
 
@@ -26,7 +27,7 @@ public class AbstractItem implements ILore, IDisplayName {
 
     /**
      * Gets display name.
-     * 
+     *
      * @return the display name
      */
     @Override
@@ -38,7 +39,7 @@ public class AbstractItem implements ILore, IDisplayName {
 
     /**
      * Sets display name.
-     * 
+     *
      * @param name the name
      */
     @Override
@@ -50,7 +51,7 @@ public class AbstractItem implements ILore, IDisplayName {
 
     /**
      * Get the item as a single {@link org.bukkit.inventory.ItemStack}
-     * 
+     *
      * @return the {@link org.bukkit.inventory.ItemStack}
      */
     public ItemStack asItemStack() {
@@ -61,7 +62,7 @@ public class AbstractItem implements ILore, IDisplayName {
 
     /**
      * Get the item as a multi stack {@link org.bukkit.inventory.ItemStack}
-     * 
+     *
      * @param num the number of items in the stack between 1-64
      * @return the {@link org.bukkit.inventory.ItemStack}
      */
@@ -75,7 +76,7 @@ public class AbstractItem implements ILore, IDisplayName {
 
     /**
      * Gets lore.
-     * 
+     *
      * @return the lore
      */
     @Override
@@ -85,7 +86,7 @@ public class AbstractItem implements ILore, IDisplayName {
 
     /**
      * Sets the lore for the item as a {@link java.util.List} of {@link String}
-     * 
+     *
      * @param lore for the item passed as {@link java.util.List}
      */
     @Override
@@ -96,7 +97,7 @@ public class AbstractItem implements ILore, IDisplayName {
 
     /**
      * Gets the items {@link org.bukkit.inventory.meta.ItemMeta} connected to it
-     * 
+     *
      * @return the items {@link org.bukkit.inventory.meta.ItemMeta}
      */
     @Override
@@ -106,9 +107,9 @@ public class AbstractItem implements ILore, IDisplayName {
 
     /**
      * Sets the items {@link org.bukkit.inventory.meta.ItemMeta}
-     * 
+     *
      * @param material which is used to set the
-     *        {@link org.bukkit.inventory.meta.ItemMeta}
+     *                 {@link org.bukkit.inventory.meta.ItemMeta}
      */
     @Override
     public void setItemMeta(Material material) {
@@ -118,7 +119,7 @@ public class AbstractItem implements ILore, IDisplayName {
 
     /**
      * Gets material. The {@link org.bukkit.Material} the item is from
-     * 
+     *
      * @return the material {@link org.bukkit.Material} of the item
      */
     @Override
@@ -128,7 +129,7 @@ public class AbstractItem implements ILore, IDisplayName {
 
     /**
      * Set the Items {@link org.bukkit.Material}
-     * 
+     *
      * @param material the material of the item
      */
     @Override
@@ -138,7 +139,7 @@ public class AbstractItem implements ILore, IDisplayName {
 
     /**
      * Strip color.
-     * 
+     *
      * @param list the list
      * @return the list
      */

@@ -1,22 +1,22 @@
 package com.relicum.scb.commands;
 
-import java.lang.reflect.Field;
-import java.util.Map;
-import java.util.UUID;
 import com.relicum.scb.SCB;
 import com.relicum.scb.types.SkyApi;
 import com.relicum.scb.utils.PermissionSaver;
-
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.PluginManager;
 
+import java.lang.reflect.Field;
+import java.util.Map;
+import java.util.UUID;
+
 /**
  * SuperSkyBros First Created 20/09/13 Used to Execute Debug Commands from
  * Console only
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -168,10 +168,10 @@ public class DebugManager implements CommandExecutor {
 
         }
 
-        if(list.equalsIgnoreCase("cmds")){
-            if(plugin.getConfig().getBoolean("storeCmds")){
+        if (list.equalsIgnoreCase("cmds")) {
+            if (plugin.getConfig().getBoolean("storeCmds")) {
                 plugin.getSaver().saveStoreToFile();
-               return;
+                return;
             }
             System.out.println("You need to set storeCmds to true in config.yml");
             System.out.println("This is automatically set to false after each run");
@@ -182,7 +182,7 @@ public class DebugManager implements CommandExecutor {
     }
 
 
-    public Map<String, Boolean> getChild(Permission perm){
+    public Map<String, Boolean> getChild(Permission perm) {
 
         return perm.getChildren();
 
@@ -191,7 +191,7 @@ public class DebugManager implements CommandExecutor {
     /**
      * Returns an instance of CommandMap which Can then be used to correctly
      * register the command and details with Bukkit
-     * 
+     *
      * @return SimpleCommandMap
      */
     public SimpleCommandMap getCommandMap() {

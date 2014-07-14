@@ -10,9 +10,9 @@ public enum Tools {
 
     /**
      * Search the enum to see if a given item is on the list
-     * <p>
+     * <p/>
      * Return true if it is false if it's not
-     * 
+     *
      * @param item the item {@link org.bukkit.Material} in it's String format
      * @return the boolean
      */

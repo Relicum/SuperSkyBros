@@ -29,17 +29,6 @@ public abstract class BaseSign implements ISigns, ISuperType, ISubType, Listener
         //To change body of created methods use File | Settings | File Templates.
     }
 
-
-    protected void setSuperType(TSign t) {
-        this.type = t;
-    }
-
-
-    protected void setSubType(ESign e) {
-        this.subType = e;
-    }
-
-
     /**
      * Gets super type. From the enum TSign
      *
@@ -51,6 +40,9 @@ public abstract class BaseSign implements ISigns, ISuperType, ISubType, Listener
         return this.type;
     }
 
+    protected void setSuperType(TSign t) {
+        this.type = t;
+    }
 
     /**
      * Gets Sub type. From the enum ESign
@@ -62,6 +54,9 @@ public abstract class BaseSign implements ISigns, ISuperType, ISubType, Listener
         return this.subType;
     }
 
+    protected void setSubType(ESign e) {
+        this.subType = e;
+    }
 
     protected void setSuperType() {
         this.type = TSign.ACTION;

@@ -14,7 +14,7 @@ import org.bukkit.util.Vector;
 
 /**
  * Bukkit-SCB
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -22,7 +22,7 @@ public class setspawn extends SubBase {
 
     /**
      * @param player Player
-     * @param args String[]
+     * @param args   String[]
      * @return boolean
      */
     public boolean onCommand(Player player, String[] args) {
@@ -109,7 +109,7 @@ public class setspawn extends SubBase {
     /**
      * Simply set this to return the the number of arguments The command should
      * receive
-     * 
+     *
      * @return Integer
      */
     public Integer setNumArgs() {
@@ -118,7 +118,7 @@ public class setspawn extends SubBase {
 
     /**
      * Simply set this to return the clist permission
-     * 
+     *
      * @return String
      */
     public String setPermission() {
@@ -127,7 +127,7 @@ public class setspawn extends SubBase {
 
     /**
      * Simply set this to return the clist Usage
-     * 
+     *
      * @return String
      */
     public String setUsage() {
@@ -136,7 +136,7 @@ public class setspawn extends SubBase {
 
     /**
      * Set this to the label of the command
-     * 
+     *
      * @return String
      */
     public String setLabel() {

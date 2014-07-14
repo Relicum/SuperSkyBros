@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 
 /**
  * Used to Create and Manage World Edit
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
@@ -35,7 +35,7 @@ public class WorldEditManager {
 
     /**
      * Gets a instance of WorldEditManager
-     * 
+     *
      * @return WorldEditManager
      */
     public static WorldEditManager getInstance() {
@@ -46,7 +46,7 @@ public class WorldEditManager {
 
     /**
      * Sets up WorldEditManager Just pass it instance of SCB
-     * 
+     *
      * @param p SCB
      */
     public void setup(SCB p) {
@@ -63,7 +63,7 @@ public class WorldEditManager {
 
     /**
      * Get the current Selection as region
-     * 
+     *
      * @param pl Player
      * @return IRegion
      */

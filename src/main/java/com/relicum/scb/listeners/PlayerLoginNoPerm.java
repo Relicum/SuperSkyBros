@@ -10,7 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * SuperSkyBros
- * 
+ *
  * @author Relicum
  * @version 0.1
  */

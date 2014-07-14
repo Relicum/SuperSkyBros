@@ -33,6 +33,9 @@ public class ArenaStatusChangeEvent extends Event {
         this.arena = a;
     }
 
+    public static HandlerList getHandlerList() {
+        return handlers;
+    }
 
     /**
      * Gets the new Status the Arena has changed to
@@ -59,10 +62,6 @@ public class ArenaStatusChangeEvent extends Event {
      */
     public Arena getArena() {
         return arena;
-    }
-
-    public static HandlerList getHandlerList() {
-        return handlers;
     }
 
     @Override

@@ -11,6 +11,7 @@ saving: true
 serverStatus: MODEUNSET
 autosetupRun: false
 mysql: false
+locale: 'en_GB'
 database:
     host: "localhost"
     username: "superskybros"

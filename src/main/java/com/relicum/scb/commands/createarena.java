@@ -1,9 +1,5 @@
 package com.relicum.scb.commands;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import com.relicum.scb.arena.ArenaIO;
 import com.relicum.scb.arena.ArenaRegion;
 import com.relicum.scb.configs.ArenaConfig;
@@ -18,9 +14,14 @@ import com.sk89q.worldedit.bukkit.selections.Selection;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Create a new Arena
- * 
+ *
  * @author Relicum
  * @version 0.4
  */
@@ -33,7 +34,7 @@ public class createarena extends SubBase {
 
     /**
      * @param player Player
-     * @param args String[]
+     * @param args   String[]
      * @return boolean
      */
     @Override
@@ -72,7 +73,7 @@ public class createarena extends SubBase {
         chunks.get(0).setY(radmin.getY());
 
         AER = new ArenaRegion(rmin, rmax, radmin, last, player.getWorld().getName(), aname, new SerializedLocation(S.getMaximumPoint()),
-                              new SerializedLocation(S.getMinimumPoint()), new SerializedLocation(radmin.toLocation(player.getWorld())));
+                new SerializedLocation(S.getMinimumPoint()), new SerializedLocation(radmin.toLocation(player.getWorld())));
 
         ArenaIO AIO = new ArenaIO();
         if (AIO.newCreate(AER, chunks)) {
@@ -112,7 +113,7 @@ public class createarena extends SubBase {
     /**
      * Simply set this to return the the number of arguments The command should
      * receive
-     * 
+     *
      * @return Integer
      */
     @Override
@@ -122,7 +123,7 @@ public class createarena extends SubBase {
 
     /**
      * Simply set this to return the clist permission
-     * 
+     *
      * @return String
      */
     @Override
@@ -132,7 +133,7 @@ public class createarena extends SubBase {
 
     /**
      * Simply set this to return the clist Usage
-     * 
+     *
      * @return String
      */
     @Override
@@ -142,7 +143,7 @@ public class createarena extends SubBase {
 
     /**
      * Set this to the label of the command
-     * 
+     *
      * @return String
      */
     @Override
@@ -152,7 +153,7 @@ public class createarena extends SubBase {
 
     /**
      * Set com
-     * 
+     *
      * @return String
      */
     @Override

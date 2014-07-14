@@ -16,11 +16,11 @@ import org.bukkit.event.Listener;
  */
 public class ArenaChangeStatus implements Listener {
 
+    public NullPointerException isnull;
     private SCB plugin = SkyApi.getSCB();
     private String newStatus;
     private String previousStatus;
     private Arena arena;
-    public NullPointerException isnull;
 
     public void statusChange(ArenaStatusChangeEvent e) {
         if (isValid(e.getArenaStatus())) {

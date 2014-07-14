@@ -94,18 +94,6 @@ public class ArenaData {
         return min;
     }
 
-
-    /**
-     * Get a Vector Containing max
-     *
-     * @return String
-     * @throws IllegalArgumentException if the new value is not acceptable.
-     */
-    public String getMax() {
-        return max;
-    }
-
-
     /**
      * Set Vector for min
      *
@@ -116,6 +104,15 @@ public class ArenaData {
         this.min = pos1;
     }
 
+    /**
+     * Get a Vector Containing max
+     *
+     * @return String
+     * @throws IllegalArgumentException if the new value is not acceptable.
+     */
+    public String getMax() {
+        return max;
+    }
 
     /**
      * Set Vector for max
@@ -307,6 +304,15 @@ public class ArenaData {
         this.vTop = vTop;
     }
 
+    /**
+     * Get Admin Spawn as a String representing a Vector
+     *
+     * @return String
+     */
+    public String getTop() {
+
+        return this.top;
+    }
 
     /**
      * Set Admin Spawn as string
@@ -316,16 +322,5 @@ public class ArenaData {
     public void setTop(String st) {
 
         this.top = st;
-    }
-
-
-    /**
-     * Get Admin Spawn as a String representing a Vector
-     *
-     * @return String
-     */
-    public String getTop() {
-
-        return this.top;
     }
 }

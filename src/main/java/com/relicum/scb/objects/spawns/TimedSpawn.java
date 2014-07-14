@@ -5,11 +5,8 @@ import com.relicum.scb.utils.SerializerUtil;
 public class TimedSpawn {
 
     static int count = 0;
-
-    SpawnInstance sg;
-
     final int id = count++;
-
+    SpawnInstance sg;
     Long firstSpawnTime, respawnInterval, timeToDespawn;
 
 

@@ -1,14 +1,15 @@
 package com.relicum.scb.objects.inventory;
 
+import org.bukkit.entity.Player;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
-import org.bukkit.entity.Player;
 
 /**
  * SuperSkyBros First Created 03/10/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */

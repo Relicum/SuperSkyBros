@@ -66,6 +66,16 @@ public class SpawnGroup extends SpawnInstance implements Spawnable {
         return name;
     }
 
+    /**
+     * Used to set the group name
+     *
+     * @param nm String
+     */
+    public void setName(String nm) {
+
+        this.name = nm;
+
+    }
 
     /**
      * Despawn each spawn and remove entities
@@ -73,7 +83,6 @@ public class SpawnGroup extends SpawnInstance implements Spawnable {
     public void despawn() {
         for (Spawnable spawn : spawns) spawn.despawn();
     }
-
 
     /**
      * Spawn all the SpawnInstance's in group returning The Spawn Id
@@ -87,7 +96,6 @@ public class SpawnGroup extends SpawnInstance implements Spawnable {
         return spawnId;
     }
 
-
     /**
      * Set the Location for all the SpawnInstance's
      *
@@ -100,7 +108,6 @@ public class SpawnGroup extends SpawnInstance implements Spawnable {
             spawn.setLocation(l);
         }
     }
-
 
     /**
      * Custom toString to be used to store the SpawnGroup
@@ -118,17 +125,5 @@ public class SpawnGroup extends SpawnInstance implements Spawnable {
         }
         sb.append("]");
         return sb.toString();
-    }
-
-
-    /**
-     * Used to set the group name
-     *
-     * @param nm String
-     */
-    public void setName(String nm) {
-
-        this.name = nm;
-
     }
 }

@@ -37,6 +37,32 @@ public class ILocationImpl implements ILocation {
 
     }
 
+    /**
+     * Set LocationType
+     */
+    @Override
+    public void setLocationType() {
+
+        LT = LocationType.LOBBYSPAWN;
+    }
+
+    /**
+     * Get the World the Location is in
+     *
+     * @return String
+     */
+    @Override
+    public String getWorld() {
+        return Loc.getWorld().getName();
+    }
+
+    /**
+     * @return Location
+     */
+    @Override
+    public Location getLocation() {
+        return this.Loc;
+    }
 
     /**
      * Set Location
@@ -53,47 +79,14 @@ public class ILocationImpl implements ILocation {
         Loc.setYaw(getDirection(lo.getYaw()));
     }
 
-
-    /**
-     * Set LocationType
-     */
-    @Override
-    public void setLocationType() {
-
-        LT = LocationType.LOBBYSPAWN;
+    public String getName() {
+        return this.name;
     }
-
-
-    /**
-     * Get the World the Location is in
-     *
-     * @return String
-     */
-    @Override
-    public String getWorld() {
-        return Loc.getWorld().getName();
-    }
-
-
-    /**
-     * @return Location
-     */
-    @Override
-    public Location getLocation() {
-        return this.Loc;
-    }
-
 
     public void setName(String st) {
 
         this.name = st;
     }
-
-
-    public String getName() {
-        return this.name;
-    }
-
 
     public String getLocationTypeAsString() {
 

@@ -30,7 +30,7 @@ public class join extends SubBase {
 
 
         PlayerJoinLobbyEvent event = new PlayerJoinLobbyEvent(player, "COMMAND", SkyApi.getSm().isDedicated());
-       Bukkit.getServer().getPluginManager().callEvent(event);
+        Bukkit.getServer().getPluginManager().callEvent(event);
 
         return true;
 
@@ -50,16 +50,16 @@ public class join extends SubBase {
         SkyApi.getSCB().getServer().getScheduler().runTaskLater(
                 SkyApi.getSCB(), new Runnable() {
 
-            @Override
-            public void run() {
+                    @Override
+                    public void run() {
 
 
-                if (!p.teleport(l)) {
-                    SkyApi.getCMsg().SERVE("Error teleporting player to lobby");
-                }
-                p.sendMessage(SkyApi.getMessageManager().getMessage("command.message.teleportToLobby"));
-            }
-        }, 10L);
+                        if (!p.teleport(l)) {
+                            SkyApi.getCMsg().SERVE("Error teleporting player to lobby");
+                        }
+                        p.sendMessage(SkyApi.getMessageManager().getMessage("command.message.teleportToLobby"));
+                    }
+                }, 10L);
 
         return true;
     }

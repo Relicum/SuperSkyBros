@@ -15,9 +15,8 @@ import java.text.ParseException;
  */
 public abstract class ISpawn extends ILocationImpl {
 
-    protected String ty;
-
     public String Perm;
+    protected String ty;
 
 
     /**
@@ -36,18 +35,6 @@ public abstract class ISpawn extends ILocationImpl {
         return super.getDirection(yaw);
     }
 
-
-    /**
-     * Set The type of spawn
-     *
-     * @param lt String
-     */
-    public void setType(String lt) {
-
-        ty = LocationType.valueOf(lt).name();
-    }
-
-
     /**
      * Get the type of spawn
      *
@@ -59,13 +46,15 @@ public abstract class ISpawn extends ILocationImpl {
 
     }
 
-
     /**
-     * Set the permission to go to  spawn
+     * Set The type of spawn
      *
-     * @param per String
+     * @param lt String
      */
-    public abstract void setPerm(String per);
+    public void setType(String lt) {
+
+        ty = LocationType.valueOf(lt).name();
+    }
 
     /**
      * Get the permission to use the spawn.
@@ -73,6 +62,13 @@ public abstract class ISpawn extends ILocationImpl {
      * @return boolean
      */
     public abstract String getPerm();
+
+    /**
+     * Set the permission to go to  spawn
+     *
+     * @param per String
+     */
+    public abstract void setPerm(String per);
 
     /**
      * Teleports the player to the given location

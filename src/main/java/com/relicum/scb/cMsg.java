@@ -24,7 +24,7 @@ public class cMsg implements consoleColors {
 
     public cMsg() {
         ConfigurationSection consoleSection = SkyApi.getSCB().getConfig().getConfigurationSection("coloredConsole");
-       useColor = consoleSection.getBoolean("colorConsole");
+        useColor = consoleSection.getBoolean("colorConsole");
 
         if (useColor) {
             useInfo = consoleSection.getBoolean("infoColor");
@@ -42,10 +42,14 @@ public class cMsg implements consoleColors {
 
         if (SkyApi.getSCB().getDescription().getPrefix() != null) {
             prefix = BOLDMAGENTA + "[" + SkyApi.getSCB().getDescription().getPrefix() + "]" + " " + consoleColors.RESET;
-      } else
+        } else
             prefix = "";
         warning = BOLDGREEN;
         serve = BOLDRED;
+    }
+
+    private static void noColor(String msg) {
+        System.out.println(msg);
     }
 
     /**
@@ -85,10 +89,6 @@ public class cMsg implements consoleColors {
             return;
         }
         System.out.println(serve + prefix + BOLDRED + msg + consoleColors.RESET);
-    }
-
-    private static void noColor(String msg) {
-        System.out.println(msg);
     }
 
 }

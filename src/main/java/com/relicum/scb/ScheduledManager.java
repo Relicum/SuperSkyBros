@@ -12,11 +12,9 @@ import java.util.concurrent.ScheduledExecutorService;
  */
 public class ScheduledManager {
 
+    private static final boolean DONT_INTERRUPT_IF_RUNNING = false;
     static int SCHED_NUM_THREADS;
     static int LOGIN_NUM_THREADS;
-
-    private static final boolean DONT_INTERRUPT_IF_RUNNING = false;
-
     private static ScheduledExecutorService scheduler;
     private static ExecutorService loginExecutor = null;
 

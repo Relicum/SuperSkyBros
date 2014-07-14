@@ -1,5 +1,7 @@
 package com.relicum.scb.mini;
 
+import com.relicum.scb.utils.SerializedLocation;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -7,11 +9,10 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import com.relicum.scb.utils.SerializedLocation;
 
 /**
  * SuperSkyBros First Created 14/11/13
- * 
+ *
  * @author Relicum
  * @version 0.1
  */
