@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.relicum</groupId>
     <artifactId>SuperSkyBros</artifactId>
-    <version>0.5.03-SNAPSHOT</version>
+    <version>0.5.04-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>SuperSkyBros</name>
     <description>Super Sky Bros Brawl Mini-Game based off Seth Blings project. This is a Bukkit Plugin Version designed
@@ -107,7 +107,7 @@
         </repository>
     </repositories>
     <build>
-        <defaultGoal>clean package install</defaultGoal>
+        <defaultGoal>clean install</defaultGoal>
         <finalName>SuperSkyBros.Beta.${project.version}-b${BUILD_NUMBER}</finalName>
 
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
@@ -162,15 +162,6 @@
                         <phase>deploy</phase>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <finalName>${project.name}-${project.version}-b${BUILD_NUMBER}</finalName>
-                    <outputDirectory>./dist/plugins/</outputDirectory>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
