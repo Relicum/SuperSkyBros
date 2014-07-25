@@ -108,7 +108,7 @@
     </repositories>
     <build>
         <defaultGoal>clean install</defaultGoal>
-        <finalName>SuperSkyBros.Beta.${project.version}-b${BUILD_NUMBER}</finalName>
+        <finalName>SuperSkyBros.Beta.${project.version}</finalName>
 
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
 

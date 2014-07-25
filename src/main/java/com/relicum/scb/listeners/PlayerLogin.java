@@ -16,7 +16,7 @@ public class PlayerLogin implements Listener {
     public void preLogin(AsyncPlayerPreLoginEvent event) {
 
 
-        if (Bukkit.getPlayerExact(event.getName()) == null) {
+        if (Bukkit.getPlayer(event.getUniqueId()) == null) {
             System.out.println(event.getName() + " has not played before");
         } else {
 

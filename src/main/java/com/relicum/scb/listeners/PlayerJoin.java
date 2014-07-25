@@ -68,19 +68,19 @@ public class PlayerJoin {
         playerSettings.setDisplayName(p.getDisplayName());
         playerSettings.setFireTicks(p.getFireTicks());
 
-        SkyApi.getSCB().getConfig().set(p.getName(), playerSettings);
+        SkyApi.getSCB().getConfig().set(p.getUniqueId().toString(), playerSettings);
         SkyApi.getSCB().saveConfig();
 
         // End test
 
         // Test Player Profiles
-        if (PlayerLoginManager.hasProfile(e.getPlayer().getName())) {
-            this.relicum = (PlayerSettings) relfile.getConfig().get("player." + e.getPlayer().getName());
+        if (PlayerLoginManager.hasProfile(e.getPlayer().getUniqueId().toString())) {
+            this.relicum = (PlayerSettings) relfile.getConfig().get("player." + e.getPlayer().getUniqueId().toString());
 
             SkyApi.getCMsg().INFO("The player " + this.relicum.getPlayerName() + " has a profile");
-            SkyApi.getCMsg().WARNING(Paths.get(PlayerLoginManager.path).resolve(e.getPlayer().getName() + ".yml").toString());
+            SkyApi.getCMsg().WARNING(Paths.get(PlayerLoginManager.path).resolve(e.getPlayer().getUniqueId().toString() + ".yml").toString());
         } else {
-            this.relfile = new PlayerConfig(PlayerLoginManager.profilePath(e.getPlayer().getName()));
+            this.relfile = new PlayerConfig(PlayerLoginManager.profilePath(e.getPlayer().getUniqueId().toString()));
 
             this.relicum = new PlayerSettings().setPlayerName(e.getPlayer().getName()).setPlayerType(PlayerType.PLAYER).setInLobby(true);
             this.relfile.getConfig().set("player." + e.getPlayer().getName(), this.relicum);

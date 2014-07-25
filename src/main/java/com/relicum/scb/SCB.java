@@ -48,7 +48,7 @@ public class SCB extends JavaPlugin implements Listener {
     protected CommandSaver saver = null;
     private WorldManager worldManager;
     private PluginManager pm = Bukkit.getServer().getPluginManager();
-
+    private boolean debug = true;
     /**
      * Gets instance of WorldEdit to use
      *
@@ -134,6 +134,7 @@ public class SCB extends JavaPlugin implements Listener {
 
 
         SkyApi.getVaultManager();
+
 
         if (SkyApi.getSm().isUseWorldManagement() && SkyApi.getSm().isGenerateDefaultWorld()) {
             SkyApi.getCMsg().INFO("Starting auto setup for dedicated servers");
@@ -496,5 +497,23 @@ public class SCB extends JavaPlugin implements Listener {
 
         }
 
+    }
+
+    /**
+     * Sets new debug.
+     *
+     * @param debug New value of debug.
+     */
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
+    /**
+     * Gets debug.
+     *
+     * @return Value of debug.
+     */
+    public boolean isDebug() {
+        return debug;
     }
 }

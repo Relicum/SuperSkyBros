@@ -22,20 +22,20 @@ public class PlayerLoginManager {
         return player.hasPlayedBefore();
     }
 
-    public static boolean hasProfile(String name) {
-        //if(Files.exists((SkyApi.getSCB().getDataFolder()).toPath().resolve(File.separatorChar + File.separatorChar + "players" + File.separatorChar + name + ".yml"))){
-        if (Files.exists(Paths.get(path).resolve(name + ".yml"))) {
+    public static boolean hasProfile(String uuid) {
+        //if(Files.exists((SkyApi.getSCB().getDataFolder()).toPath().resolve(File.separatorChar + File.separatorChar + "players" + File.separatorChar + uuid + ".yml"))){
+        if (Files.exists(Paths.get(path).resolve(uuid + ".yml"))) {
 
             return true;
         }
-        SkyApi.getCMsg().SERVE("No file found here " + Paths.get(path).resolve(name + ".yml").toString());
+        SkyApi.getCMsg().SERVE("No file found here " + Paths.get(path).resolve(uuid + ".yml").toString());
 
         return false;
 
     }
 
-    public static String profilePath(String name) {
-        return name + ".yml";
+    public static String profilePath(String uuid) {
+        return uuid + ".yml";
 
     }
 

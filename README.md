@@ -6,14 +6,9 @@ SuperSkyBros Updated To CraftBukkit 1.7.9_R0.3
 UNTESTED SINCE UPGRADE BE WARNED
 =====
 
-<blockquote>WARNING CURRENTLY UNSAFE DUE TO INTERNAL DATA RESTRUCTURING.
 
-ONLY USE THE COMPILED VERSIONS FROM THE LINK BELOW
 
-THIS SHOULD ONLY BE LIKE THIS FOR A FEW DAYS
-</blockquote>
-
-<blockquote>To run this you MUST be using the latest version of CraftBukkit 1.7.9_R_2</blockquote>
+<blockquote>To run this you MUST be using the latest version of CraftBukkit 1.7.9_R_3</blockquote>
 
 SuperSkyBros Minecraft Minigame Github Repository
 

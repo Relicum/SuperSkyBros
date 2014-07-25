@@ -26,7 +26,7 @@ public class WorldManager {
     public WorldConfig config;
     private WorldCreator template;
     private World defaultWorld;
-    //Set PVP to True
+    //todo Set PVP to True
     //Stop pvp in lobbies
     //Difficulty Hard
     //GameMode Adventure
