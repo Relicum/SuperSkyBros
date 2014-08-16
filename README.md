@@ -1,4 +1,4 @@
-SuperSkyBros Updated To CraftBukkit 1.7.9_R0.3
+SuperSkyBros Updated To CraftBukkit 1.7.10_R0.1
 ==============
 
 [![Build Status](https://travis-ci.org/Relicum/SuperSkyBros.png?branch=master)](https://travis-ci.org/Relicum/SuperSkyBros)
@@ -8,7 +8,7 @@ UNTESTED SINCE UPGRADE BE WARNED
 
 
 
-<blockquote>To run this you MUST be using the latest version of CraftBukkit 1.7.9_R_3</blockquote>
+<blockquote>To run this you MUST be using the latest version of CraftBukkit 1.7.10_R_1</blockquote>
 
 SuperSkyBros Minecraft Minigame Github Repository
 

@@ -254,6 +254,7 @@ public class SCB extends JavaPlugin implements Listener {
 
     private void registerNewPerm(String name, String des, String parent) {
         org.bukkit.permissions.Permission per = new org.bukkit.permissions.Permission(name);
+
         per.setDescription(des);
         per.addParent(parent, true);
         per.setDefault(PermissionDefault.OP);

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.relicum</groupId>
     <artifactId>SuperSkyBros</artifactId>
-    <version>0.5.05-SNAPSHOT</version>
+    <version>0.5.06-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>SuperSkyBros</name>
     <description>Super Sky Bros Brawl Mini-Game based off Seth Blings project. This is a Bukkit Plugin Version designed
@@ -17,13 +17,13 @@
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.7.9-R0.2</version>
+            <version>1.7.10-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.bukkit</groupId>
             <artifactId>craftbukkit</artifactId>
-            <version>1.7.9-R0.2</version>
+            <version>1.7.10-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -90,7 +90,7 @@
             <url>https://repository-relicum.forge.cloudbees.com/release/</url>
         </repository>
         <repository>
-            <id>snapshot</id>
+            <id>relicum-snapshot</id>
             <url>https://repository-relicum.forge.cloudbees.com/snapshot/</url>
         </repository>
         <repository>
