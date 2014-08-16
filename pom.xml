@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.relicum</groupId>
     <artifactId>SuperSkyBros</artifactId>
-    <version>0.5.06-SNAPSHOT</version>
+    <version>0.5.07-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>SuperSkyBros</name>
     <description>Super Sky Bros Brawl Mini-Game based off Seth Blings project. This is a Bukkit Plugin Version designed
